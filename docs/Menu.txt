@@ -1,0 +1,121 @@
+Format: 1.35
+
+
+Title: Rhino Mocks
+SubTitle: Advance Mock Object Framework
+
+Footer: CopyRight © 2005 - Ayende Rahien
+
+
+# --------------------------------------------------------------------------
+# 
+# Cut and paste the lines below to change the order in which your files
+# appear on the menu.  Don't worry about adding or removing files, Natural
+# Docs will take care of that.
+# 
+# You can further organize the menu by grouping the entries.  Add a
+# "Group: [name] {" line to start a group, and add a "}" to end it.
+# 
+# You can add text and web links to the menu by adding "Text: [text]" and
+# "Link: [name] ([URL])" lines, respectively.
+# 
+# The formatting and comments are auto-generated, so don't worry about
+# neatness when editing the file.  Natural Docs will clean it up the next
+# time it is run.  When working with groups, just deal with the braces and
+# forget about the indentation and comments.
+# 
+# --------------------------------------------------------------------------
+
+
+File: MockRepository  (MockRepository.cs)
+File: MockRepository Generic Methods  (MocksRepositoryGenerics.cs)
+File: Expect  (no auto-title, Expect.cs)
+File: LastCall  (no auto-title, LastCall.cs)
+File: SetupResult  (no auto-title, SetupResult.cs)
+
+Group: Constraints  {
+
+   File: Is  (Constraints\Is.cs)
+   File: List  (Constraints\List.cs)
+   File: Property  (Constraints\Property.cs)
+   File: Text  (Constraints\Text.cs)
+   }  # Group: Constraints
+
+Group: Interfaces  {
+
+   File: IMethodOptions  (Interfaces\IMethodOptions.cs)
+   File: IRepeat  (Interfaces\IRepeat.cs)
+   }  # Group: Interfaces
+
+File: ExpectationViolationException  (no auto-title, Exceptions\ExpectationViolationException.cs)
+File: ObjectNotMockFromThisRepositoryException  (no auto-title, Exceptions\ObjectNotMockFromThisRepositoryException.cs)
+
+Group: Internals  {
+
+   Group: Constraints  {
+
+      File: Constraints.AbstractConstraint  (no auto-title, Constraints\AbstractConstraint.cs)
+      File: Constraints.PropertyIs  (no auto-title, Constraints\Constraints.cs)
+      }  # Group: Constraints
+
+   Group: Interfaces  {
+
+      File: IMethodRecorder  (Interfaces\IMethodRecorder.cs)
+      File: ICreateMethodExpectation  (Interfaces\ICreateMethodExpectation.cs)
+      File: IExpectation  (Interfaces\IExpectation.cs)
+      File: IMockedObject  (Interfaces\IMockedObject.cs)
+      File: IMockState  (Interfaces\IMockState.cs)
+      }  # Group: Interfaces
+
+   Group: Expectations  {
+
+      File: AbstractExpectation  (Expectations\AbstractExpectation.cs)
+      File: AnyArgsExpectation  (Expectations\AnyArgsExpectation.cs)
+      File: ArgsEqualExpectation  (Expectations\ArgsEqualExpectation.cs)
+      File: CallbackExpectation  (Expectations\CallbackExpectation.cs)
+      File: ConstraintsExpectation  (Expectations\ConstraintsExpectation.cs)
+      }  # Group: Expectations
+
+   Group: Impl  {
+
+      File: CreateMethodExpectation  (Impl\CreateMethodExpectation.cs)
+      File: CreateMethodExpectationForSetupResult  (Impl\CreateMethodExpectationForSetupResult.cs)
+      File: DelegateTargetInterfaceCreator  (Impl\DelegateTargetInterfaceCreator.cs)
+      File: MethodOptions  (Impl\MethodOptions.cs)
+      File: ProxyInstance  (Impl\ProxyInstance.cs)
+      File: Range  (Impl\Range.cs)
+      File: RecordDynamicMockState  (Impl\RecordDynamicMockState.cs)
+      File: RecordMockState  (Impl\RecordMockState.cs)
+      File: RecordPartialMockState  (Impl\RecordPartialMockState.cs)
+      File: ReplayDynamicMockState  (Impl\ReplayDynamicMockState.cs)
+      File: ReplayMockState  (Impl\ReplayMockState.cs)
+      File: ReplayPartialMockState  (Impl\ReplayPartialMockState.cs)
+      File: RhinoInterceptor  (Impl\RhinoInterceptor.cs)
+      File: VerifiedMockState  (Impl\VerifiedMockState.cs)
+      }  # Group: Impl
+
+   Group: MethodRecorders  {
+
+      File: MethodRecorderBase  (MethodRecorders\MethodRecorderBase.cs)
+      File: OrderedMethodRecorder  (MethodRecorders\OrderedMethodRecorder.cs)
+      File: ProxyMethodExpectationTriplet  (MethodRecorders\ProxyMethodExpectationTriplet.cs)
+      File: ProxyMethodPair  (MethodRecorders\ProxyMethodPair.cs)
+      File: RecorderChanger  (MethodRecorders\RecorderChanger.cs)
+      File: UnorderedMethodRecorder  (MethodRecorders\UnorderedMethodRecorder.cs)
+      }  # Group: MethodRecorders
+
+   File: ReturnValueUtil  (no auto-title, Utilities\ReturnValueUtil.cs)
+   }  # Group: Internals
+
+Group: Index  {
+
+   Index: Everything
+   Class Index: Classes
+   Function Index: Functions
+   Delegate Index: Delegates
+   Interface Index: Interfaces
+   Property Index: Properties
+   Variable Index: Variables
+   File Index: Files
+   }  # Group: Index
+

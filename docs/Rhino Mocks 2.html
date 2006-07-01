@@ -1,0 +1,1233 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Windows (vers 12 April 2005), see www.w3.org" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content=
+"text/html; charset=utf-8" />
+<title>Rhino Mocks Version 2.3</title>
+
+<style type="text/css">
+/*<![CDATA[*/
+<!--
+pre {
+                background-color: #FFFFCC;
+                border: 1px dotted #FFCCCC;
+        }
+.BAB_CPBodyStyleLocal {
+                                        padding : 0;
+                                        margin-left: 2pt;
+                                        margin-right: 2pt;
+                                        }
+
+.BAB_CPDefinitionStyle {
+                                                 margin-left: 10pt;
+                                                 margin-right: 10pt;
+                                                 padding-bottom: 2pt;
+                                                }
+
+-->
+/*]]>*/
+</style>
+</head>
+<body>
+<h1><img style="border: 2px dotted #f93" src="Rhino.jpg" width="345" height=
+"182" /></h1>
+<h2><a name="Top">Rhino Mocks Version 2.3</a></h2>
+<h3><a href=
+"http://www.ayende.com/projects/rhino-mocks.aspx">Project
+page.</a></h3>
+<h3><a href=
+"http://www.ayende.com/projects/rhino-mocks/downloads.aspx">Download
+Rhino Mocks</a></h3>
+<table border="0" width="697" height="174" cellspacing="0"
+cellpadding="0" id="table1">
+<tr>
+<td height="174" width="353">
+<ul>
+<li>
+<p><a href="#Changes">What is new?</a></p>
+</li>
+<li>
+<p><a href="#ElevatorSpeech">The Elevator Speech</a></p>
+</li>
+<li>
+<p><a href="#Capabilities">Rhino Mocks capabilities</a></p>
+</li>
+<li>
+<p><a href="#FirstCode">That is enough talking, let's see some
+code</a></p>
+</li>
+<li>
+<p><a href="#Mock_Objects_and_Dynamic_Mocks:">Mocks Object and
+Dynamic Mocks</a></p>
+</li>
+<li>
+<p><a href="#Ordering">Ordered / Unordered</a></p>
+</li>
+<li>
+<p><a href="#IDisposable">The IDisposable pattern</a></p>
+</li>
+<li>
+<p><a href="#MethodCalls">Method Calls</a></p>
+</li>
+<li>
+<p><a href="#Properties">Properties</a></p>
+</li>
+</ul>
+</td>
+<td height="174" width="328">
+<ul>
+<li>
+<p><a href="#Callbacks">Callbacks</a></p>
+</li>
+<li>
+<p><a href="#RecursiveExpectations">Recursive Expectations</a></p>
+</li>
+<li>
+<p><a href="#IMethodOptions">Method Options Interface</a></p>
+</li>
+<li>
+<p><a href="#Constraints">Constraints</a></p>
+</li>
+<li>
+<p><a href="#SetupResult">Setup Result</a></p>
+</li>
+<li>
+<p><a href="#MockingClasses">Mocking classes</a></p>
+</li>
+<li>
+<p><a href="#Limitations">Limitations</a></p>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<p><b>License</b>: BSD</p>
+<p><b>Last Updated At:</b> 
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%A, %d. %B %Y %H:%M:%S" startspan -->Wednesday, 17. August 2005 10:55:59<!--webbot bot="Timestamp" endspan i-checksum="1395" --></p>
+<h3><a name="ElevatorSpeech">Elevator Speech:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>Rhino Mocks allows you to easily create mock objects and setup a
+wide range of expectations on them using strongly typed notation
+instead of compiler opaque strings. It's as simple as:</p>
+<div>
+<pre>
+IProjectView projectView = (IProjectView)mocks.CreateMock(typeof(IProjectView));
+Expect.Call(projectView.Title).Return("Project's Title");
+</pre></div>
+<p><a name="Definations">Definitions:</a></p>
+<ul>
+<li>
+<p>Mock Object - an object that pretend to be another object, and
+allows to set expectations on its interactions with another
+object.</p>
+</li>
+<li>
+<p>Interaction Based Testing - you specify certain sequence of
+interactions between objects, initiate an action, and then verify
+that the sequence of interactions happened as you specified it.</p>
+</li>
+<li>
+<p>State Based Testing - you initiate an action, and then check for
+the expected results (return value, property, created object,
+etc).</p>
+</li>
+<li>
+<p>Expectation - general name for validation that a particular
+method call is the expected one.</p>
+</li>
+<li>
+<p>Record &amp; Replay model - a model that allows for recording
+actions on a mock object, and then replaying and verifying them.
+All mocking frameworks uses this model. Some (NMock, TypeMock.Net,
+NMock2) uses it implicitly and some (EasyMock.Net, Rhino Mocks)
+uses it explicitly.</p>
+</li>
+<li>
+<p>Ordering - The ability to specify that replaying a sequence of
+method calls will occur in a specific order (or disorder).</p>
+</li>
+</ul>
+<h3><a name="Changes">What is new?</a> <sup><span class=
+"c1"><a href="#Top">Top</a></span></sup></h3>
+<p>Version 2.3:</p>
+<ul>
+<li>Dynamic mocks - mock objects that verify only what they are
+told to verify.</li>
+</ul>
+<p>Version 2.2:</p>
+<ul>
+<li>
+<p>Explicit syntax for specifying method's options.</p>
+</li>
+<li>
+<ul>
+<li>
+<p>SetupResult.For() ...</p>
+</li>
+<li>
+<p>LastCall.Repeat</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Many bug fixes.</p>
+</li>
+</ul>
+<p>Version 2.1:</p>
+<ul>
+<li>Expect.Call() sytanx</li>
+</ul>
+<p>Version 2.0:</p>
+<ul>
+<li>
+<p>Explicit record &amp; replay model.</p>
+</li>
+<li>
+<p>Explicit LastCall model.</p>
+</li>
+<li>
+<p>Single repository for all mocks.</p>
+</li>
+<li>
+<p>Ability to specify an ordering for the methods under test.</p>
+</li>
+<li>
+<p>IDisposable implementation to make it easier to verify.</p>
+</li>
+<li>
+<p>Flexible constraints.</p>
+</li>
+<li>
+<p>Method callbacks.</p>
+</li>
+<li>
+<p>Easy extending of the framework.</p>
+</li>
+<li>
+<p>Early failing on errors.</p>
+</li>
+<li>
+<p>Mock classes as well as interfaces, and make sure that both
+behave <i>exactly</i> like they are supposed to (and <a href=
+"http://www.ayende.com/Blog/RhinoMockThinkingAboutNextVersion.aspx">
+not <i>sort of</i> like it</a>.)</p>
+</li>
+</ul>
+<h3><a name="Capabilities">Rhino Mocks
+capabilities:</a><sup><a href="#Top"><span class=
+"c1">Top</span></a></sup></h3>
+<ul>
+<li>
+<p>mock interface and concrete classes, <i>including</i> th<i>ose
+with parameterized constructors.</i></p>
+</li>
+<li>
+<p>set expectations on the called methods by using strongly typed
+mocks instead of strings.</p>
+</li>
+<li>
+<p>lends itself easily for refactoring &amp; leaning on the
+compiler.</p>
+</li>
+<li>
+<p>allows wide range of expectations to be set on a mock object, or
+several mock objects.</p>
+</li>
+</ul>
+<p>Let's get down to the code, okay? [I tried to create an example
+for this article, but the example was both contrived and didn't
+portrayed the possibilities correctly. So most of the code samples
+here were taken from <a href=
+"http://www.ayende.com/projects/nhibernate-query-analyzer.aspx">NHibernate
+Query Analyzer</a> tests and are "real code".]</p>
+<p>The purpose of mock objects is to allow you to test the
+<i>interactions</i> between components, this is very useful when
+you test code that doesn't lend itself easily to state base
+testing. Most of the examples here are tests to check that the save
+routine for a view is working as expected. The requirements for
+this method are:</p>
+<ul>
+<li>
+<p>If the project is a new project, then ask for a name for the
+project. [ Allow canceling save at this point ]</p>
+<ul>
+<li>
+<p>If the new project name already exists, ask if user want to
+overwrite it. [ If no, cancel the save operation ]</p>
+</li>
+<li>
+<p>If the user approve overwrite, delete old project.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Save project.</p>
+</li>
+</ul>
+<p>So we have five tests here:</p>
+<ol>
+<li>
+<p>Project is new project, and the user cancels on new name.</p>
+</li>
+<li>
+<p>Project is new project, the user gives a new name, and the
+project is saved.</p>
+</li>
+<li>
+<p>Project is new project, the user gives a name that already
+exists and don't approve overwrite.</p>
+</li>
+<li>
+<p>Project is new project, the user gives a name that already exist
+and approve overwrite.</p>
+</li>
+<li>
+<p>Project already exists, so just save it.</p>
+</li>
+</ol>
+<p>Trying to test that using <i>state based testing</i> is going to
+be both awkward and painful, using interaction based testing, it
+would be a breeze (other types of tests would be just as painful to
+test using interaction testing but easy using state testing.)</p>
+<h3><a name="FirstCode">That is enough talking, let's see some
+code:</a><sup><a href="#Top"><span class=
+"c1">Top</span></a></sup></h3>
+<div>
+<pre lang="cs">
+[Test]
+public void SaveProjectAs_CanBeCanceled()
+{
+  using(MockRepository mocks = new MocksRepository())
+  {
+    IProjectView projectView = (IProjectView)projectView.CreateMock(typeof(IProjectView));
+    Project prj = new Project("Example Project");
+    IProjectPresenter presenter = new ProjectPresenter(prj,projectView);
+    Expect.Call(projectView.Title).Return(prj.Name);
+    Expect.Call(projectView.Ask(question,answer)).Return(null);
+    mocks.ReplayAll();
+    Assert.IsFalse(presenter.SaveProjectAs());          
+  }
+}
+</pre></div>
+<p>We create a MockRepository and create a mock project view,
+project and a project presenter, then we set the expectations.
+After we finished with setting up the expectations, we move to the
+replay state, and call the SaveProjectAs() method, which should
+return false if the user canceled the save process.</p>
+<p>This example clarify several key concepts with Rhino Mocks.</p>
+<ul>
+<li>
+<p>We set expectation on object using the object's methods, and
+<i>not</i> strings, this reduce the chances of creating a mistake
+that will only (hopefully) be caught at runtime, when you run the
+tests.</p>
+</li>
+<li>
+<p>We are using explicit call to move from Record state to Replay
+state.</p>
+</li>
+<li>
+<p>MockRepository implement IDisposable; so when we reach the end
+for the using statement it's verifying that all the expectations
+has been met.</p>
+</li>
+</ul>
+<p>This is about as simple example as can be had, the real test
+moves creating the MockRepository, the project, the view and
+presenter to the setup method, since they are require for each
+test. You can see that we expected two methods to be called, with
+specific arguments, and that we set a result for each. This method
+uses parameter matching expectations, Rhino Mocks supports several
+more. More info: <a href="#MethodCalls">Method Calls</a>.</p>
+<h3><a name="Mock_Objects_and_Dynamic_Mocks:">Mock Objects and
+Dynamic Mocks:</a> <sup><a href="#Top"><span class=
+"c1">Top</span></a></sup></h3>
+<p>Rhino Mocks currently support the creation of two types of mock
+objects.</p>
+<ul>
+<li>
+<p>Mock Objects - Strict replay semantics. [ Created by calling
+CreateMock() ]</p>
+</li>
+<li>
+<p>Dynamic Mock - Loose replay semantics. [ Created by calling
+DynamicMock() ]</p>
+</li>
+</ul>
+<p>What is the meaning of strict vs. loose replay semantics?</p>
+<p><b>Strict replay semantics:</b> only the methods that were
+explicitly recorded are accepted as valid. This mean that any call
+that is not expected would cause an exception and fail the test.
+All the expected methods must be called if the object is to pass
+verification.</p>
+<p><b>Loose replay semantics:</b> any method call during the replay
+state is accepted and if there is no special handling setup for
+this method a null or zero is returned. All the expected methods
+must be called if the object is to pass verification.</p>
+<p>Let's see some code that would explain it better than words. The
+difference between the tests are marked with bold. First, the mock
+object code:</p>
+<div>
+<pre>
+[Test]
+<b>[ExpectedException(typeof (ExpectationViolationException), 
+    "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+</b>public void MockObjectThrowsForUnexpectedCall()
+{
+  using(MockRepository mocks = new MockRepository())
+  {
+    IDemo demo = (IDemo)mocks.<b>CreateMock</b>(typeof(IDemo));
+    mocks.ReplayAll();
+    demo.VoidNoArgs();
+  }
+}
+</pre></div>
+<p>As you can see, calling a method that wasn't explicitly setup
+will cause an exception to be thrown, now let's try it with a
+dynamic mock:</p>
+<div>
+<pre>
+[Test]
+public void DyamicMockAcceptUnexpectedCall()
+{
+  using(MockRepository mocks = new MockRepository())
+  {
+    IDemo demo = (IDemo)mocks.<b>DynamicMock</b>(typeof(IDemo));
+    mocks.ReplayAll();
+    demo.VoidNoArgs();
+  }
+}
+</pre></div>
+<p>As you can see, an unexpected call is ignored when you are using
+a dynamic mock.</p>
+<p>However, this is the only difference between the two types, in
+all other ways they are identical (ordering, recording a method
+expectation, callbacks, etc). An expectations that was created
+during the record phase <i>must</i> be satisfied if the dynamic
+mock is to pass verification.</p>
+<p>Dynamic mocks are useful when you want to check a small piece of
+functionality and you don't care about whatever else may happen to
+the object. Mock objects are useful when you want complete control
+over what happens to the mocked object.</p>
+<h3><a name="Ordering">Ordered / Unordered:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>Method calls in Rhino Mocks can be ordered or unordered. The
+default state for a recorder is unordered recording, this means
+that during replay, methods can come at any order. If the recorder
+is changed to ordered, then the methods must be called in the exact
+same order as they were recorded. Here is a code sample:</p>
+<pre lang="cs">
+[Test]
+public void SaveProjectAs_NewNameWithoutConflicts()
+{
+  using(mocks.Ordered())
+  {
+    Expect.Call(projectView.Title).
+      Return(prj.Name);
+    Expect.Call(projectView.Ask(question,answer)).
+      Return( newProjectName);
+    Expect.Call(repository.GetProjectByName(newProjectName)).
+      Return(null);
+    projectView.Title = newProjectName;
+    projectView.HasChanges = false;
+    repository.SaveProject(prj);
+  }
+  mocks.ReplayAll();
+  Assert.IsTrue(presenter.SaveProjectAs());
+  Assert.AreEqual(newProjectName,prj.Name);
+}
+</pre>
+<p>In the above code example we ask Rhino Mocks to verify that the
+calls come in the exact same order. Notice that we specify
+expectations on several mock objects, and Rhino Mocks will handle
+the ordering between them. This mean that if I set the project view
+title before I get a project from the repository, the test will
+fail. In Rhino Mocks, the default is to use unordered matching, but
+it support unlimited depth of nesting between ordered and
+unordered, this means that you can create really powerful
+expectations. Here is a <strike>somewhat</strike> contrived
+example:</p>
+<pre lang="cs">
+[Test]
+public void MovingFundsUsingTransactions()
+{
+  using(MockRepository mocks = new MockRepository())
+  {
+     IDatabaseManager databaseManager = (IDatabaseManager)mocks.CreateMock(typeof(IDatabaseManager));
+     IBankAccount accountOne = (IBackAccount)mocks.CreateMock(typeof(IBackAccount)),
+         accountTwo = (IBackAccount)mocks.CreateMock(typeof(IBankAccount)); 
+     using(mocks.Ordered())
+     {
+        Expect.Call(databaseManager.BeginTransaction()).
+           Return(databaseManager);
+         using(mocks.Unordered())
+         {
+            accountOne.Withdraw(1000);
+            accountTwo.Deposit(1000);
+         }
+         databaseManager.Dispose();
+     }
+     mocks.ReplayAll();
+ 
+     Bank bank = new Bank(databaseManager);
+     bank.TransferFunds(accountOne,accountTwo,1000);
+  }
+}
+</pre>
+<p>This code verify that the transfer of funds from one account to
+another is wrapped in a transaction, but the implementation is free
+to withdraw from the first account first, or to deposit into the
+second account first, both are legal, as long as both actions
+happens. The reverse is true as well, you may specified unordered
+sequence of ordered events (I want A then B then C to happen, and I
+want D then E then F to happen, but I don't care which sequence
+comes first).</p>
+<p><u>Ordering have two caveats:</u></p>
+<ul>
+<li>
+<p>To exit an ordering in replay state, you must call <i>all</i>
+the recorded methods. In the above example, we can move from the
+inner Unordered ordering (the one containing the withdraw and
+deposit) only after <i>both</i> methods were called. This fall in
+line with the way the recording code looks, so it shouldn't cause
+any surprises.</p>
+</li>
+<li>
+<p>You <i>must</i> exit all ordering before you can start
+replaying. This is enforced by the framework (you get an exception
+if you try).</p>
+</li>
+</ul>
+<h3><a name="IDisposable">The IDisposable pattern:</a><sup><a href=
+"#Top"><span class="c1">Top</span></a></sup></h3>
+<p>The using(...) syntax &amp; IDisposable are very convenient when
+it comes to make sure you're not forgetting to clean up resources,
+in Rhino Mocks, it's used in two places:</p>
+<ul>
+<li>
+<p>MockRepository implement IDisposable so you won't forget to call
+VerifyAll(), or call ReplayAll().</p>
+<ul>
+<li>
+<p>An unexpected exception will cause Rhino Mocks to attempt validation of the 
+mock objects. This can result in an exception (because of failed validation) 
+that masks the real cause for failure. Keep this in mind if you have a failing 
+test. You may want to unroll the using statement in this case, and only verify 
+if no exception has been thrown. </p>
+</li>
+<li>
+<p>The recommended approach is to create the repository in the
+Setup method, and verify it in the Teardown method, this way you'll
+get the correct exception. Just call VerifyAll() (or Dispose(),
+which does the same thing) in your teardown.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Ordered() and Unordered() methods on MockRepository, these two
+methods set the MockRepository to expect the following method in
+ordered or unordered way. Those calls should be wrapped in a using
+declaration (or a manual Dispose() call). You cannot start
+replaying with an open ordering call.</p>
+</li>
+</ul>
+<h3><a name="MethodCalls">Method Calls:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>When Rhino Mocks intercept a call from a mocked object it
+determines if the call is expected by checking the method
+signature, the object this method was called on, whatever the
+expectation on this method match the arguments passed for the
+method. The matching of the mocked object and the method signature
+is not very interesting, but the expectations on a method call is.
+Rhino Mocks support the following expectations:</p>
+<ul>
+<li>
+<p><b>Matching Parameters</b> - The same arguments that were passed
+during record state must be passed during the replay state in order
+to get a match. One caveat, though, for arrays, the comparison is
+done for the objects contained in the array. This is the default
+behavior of Rhino Mocks, and require no action on your part.</p>
+</li>
+<li>
+<p><b>Ignore Parameters</b> - Expect just the method call on this
+object, any arguments will be accepted. This is useful if you don't
+care about the arguments. To activate this behavior, you need to
+call IgnoreArguments() on the IMethodOptions interface (More info:
+<a href="#IMethodOptions">Method Options Interface</a>).</p>
+</li>
+<li>
+<p><b>Constraints Matching</b> - Each argument is validated against
+a constraint, to accept the call, all constraints must pass. (More
+info: <a href="#constraints">Constraints</a>.)</p>
+</li>
+<li>
+<p><b>Callbacks</b> - A user supplied delegate is called to check
+if a method call is valid, if the delegate return true, then the
+method is accepted. (More info: <a href=
+"#Callbacks">Callbacks</a>.)</p>
+</li>
+</ul>
+<h3><a name="Properties">Properties:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>If you want to mock properties, you need to keep in mind that
+properties are merely special syntax for normal methods, a get
+property will translate directly to propertyType get_PropertyName()
+and a set property will translate directory to void
+set_PropertyName(propertyType value). So how do you create
+expectations for a property? Exactly as you would for those
+methods.</p>
+<p>Here is how you set the return value for a get property:</p>
+<pre>
+IList list = (IList)mocks.CreateType(typeof(IList));
+Expect.Call(list.Count).Return(42);
+</pre>
+<p>And here is how you would set an expectation for a set
+property:</p>
+<pre>
+IList list = (IList)mocks.CreateType(typeof(IList));
+list.Capacity = 500;//Will create an <i>expectation</i> for this call
+LastCall.IgnoreArguments();//Ignore the amounts that is passed.
+</pre>
+<h3><a name="Callbacks">Callbacks:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>A callback is a user supplied delegate that is called whenever
+Rhino Mocks needs to evaluate whatever a method call is expected or
+not. This is useful in some scenarios when you want to do a complex
+validation on a method arguments, or have a complex interactions
+between objects that you need to mock in the tests. I added this
+feature because I want to test some threading code which had the
+semantics of: Start Job, and notify me when you're done. The only
+way to re-create that without bringing the real thread (and kill
+tests isolations) was to plug my own code during the replay state
+and call the tested object myself.</p>
+<p>Some things to consider before you decide to use callbacks:</p>
+<ul>
+<li>
+<p>It can be abused very easily. It can be very hard to understand
+tests that use callbacks, because you get calls from supposedly
+innocent code. Do it only if you need it.</p>
+</li>
+<li>
+<p>You callback may (and likely will be) called several times; keep
+that in mind when you write it. Either wrap it all in a if (
+firstTimeCalled ) { /*do work*/) or make sure that repeated call
+for the delegate won't have some nasty side effects.</p>
+</li>
+</ul>
+<p>If it so open to abuse, why add it?</p>
+<ul>
+<li>
+<p>Because when you need it, you <i>really</i> need it, and I would
+prefer that I'd some nice way to do it, and not some <a href=
+"http://svn.berlios.de/wsvn/nqa/Src/UnitTests/TestUtilities/DelegatingConstraintWithArgs.cs?op=file&amp;rev=69&amp;sc=">
+really</a> <a href=
+"http://svn.berlios.de/wsvn/nqa/Src/UnitTests/TestUtilities/DelegatingConstraint.cs?op=file&amp;rev=69&amp;sc=">
+ugly</a> <a href=
+"http://www.ayende.com/Blog/MutliThreadingTests.aspx">hacks</a>.</p>
+</li>
+<li>
+<p>Because I respect those who will use this framework not to take
+the power and abuse it.</p>
+</li>
+</ul>
+<p>The technical details - In order to be a valid callback, the
+callback must return a Boolean, and have the same arguments as the
+mocked methods. You register a delegate using the following
+code:</p>
+<pre>
+IProjectRepository repository = (IProjectRepository) mocks.CreateMock(typeof(IProjectRepository));
+IProjectView view = (IProjectView )mocks.CreateMock(typeof(IProjectView ));
+Expect.Call(view.Ask(null,null)).Callback(new AskDelegate(DemoAskDelegateMethod)).Return(null);
+</pre>
+<p>Notice that you cannot change the return value for the method,
+but must pass it explicitly.</p>
+<h3><a name="RecursiveExpectations">Recursive Expectations:</a>
+<sup><a href="#Top"><span class="c1">Top</span></a></sup></h3>
+<p>One final word of warning regarding callbacks. If your callback
+will initiate an action that cause <i>another</i> call on a mocked
+object, this will fail when mixed with Ordered(). The reason for
+that is that the framework cannot decide whatever to accept the
+call or not, and calling another mocked method while evaluating
+means that the currently expected call is the one still being
+evaluated. This will fail the test. Using Unordered(), it will
+work, since the second expectation is not dependant on the first
+one being accepted first. In short, Ordered() is not re-entrant
+:-)</p>
+<h3><a name="IMethodOptions">Method Options Interface:</a>
+<sup><a href="#Top"><span class="c1">Top</span></a></sup></h3>
+<p>The IMethodOptions allows you to set various options on a method
+call. Here is an example of telling Rhino Mocks to ignore the
+arguments of a method:</p>
+<pre>
+IProjectRepository repository = (IProjectRepository)mocks.CreateMock(typeof(IProjectRepository));
+IProjectView view = (IProjectView ) mocks.CreateMock(typeof(IProjectView ));
+Expect.Call(view.Ask(null,null)).IgnoreArguments().Return(null);
+repository.SaveProject(null);
+LastCall.IgnoreArguments();
+</pre>
+<p>As you can see, we use the Expect.Call() for methods that has
+return values, and LastCall for methods that return void to get the
+IMethodOptions interface. I find the Expect.Call() syntax a bit
+clearer, but there is no practical difference between the two. I
+would recommend using Expect wherever possible (anything that
+return a value). For properties setters, or methods returning void,
+the Expect syntax is not applicable, since there is no return
+value. Thus, the need for the LastCall. The idea of Last Call is
+pervasive in the record state, you can only set the method options
+for the last call - even Expect.Call() syntax is merely a wrapper
+around LastCall.</p>
+<p>Expect.Call() &amp; LastCall allows you to set the following
+options:</p>
+<ul>
+<li>
+<p>The return value of a method, if it has one.</p>
+</li>
+</ul>
+<blockquote>
+<pre>
+Expect.Call(view.Ask(null,null)).
+  Return(null);
+</pre></blockquote>
+<ul>
+<li>
+<p>The exception the method will throw:</p>
+</li>
+</ul>
+<blockquote>
+<pre>
+Expect.Call(view.Ask(null,null)).
+  Throw(new Exception("Demo"));
+</pre></blockquote>
+<ul>
+<li>
+<p>The number of times this method is expected to repeat (there are
+a number of convenience methods there):</p>
+</li>
+</ul>
+<blockquote>
+<pre>
+Expect.Call(view.Ask(null,null)).Return(null).
+  Repeat.Twice();
+</pre></blockquote>
+<ul>
+<li>
+<p>To ignore the method arguments:</p>
+</li>
+</ul>
+<blockquote>
+<pre>
+Expect.Call(view.Ask(null,null)).Return(null).
+  IgnoreArguments();
+</pre></blockquote>
+<ul>
+<li>
+<p>To set the constraints of the method:</p>
+</li>
+</ul>
+<blockquote>
+<pre>
+Expect.Call(view.Ask(null,null)).Return(null)
+  .Constraints(Text.StartsWith("Some"),Text.EndsWith("Text"));
+</pre></blockquote>
+<ul>
+<li>
+<p>To set the callback for this method:</p>
+</li>
+</ul>
+<blockquote>
+<pre>
+Expect.Call(view.Ask(null,null)).Return(null).
+  Callback(new AskDelegate(VerifyAskArguments));
+</pre></blockquote>
+<p><b>Note:</b> For methods that return a value, you <i>must</i>
+specify either a return value or an exception to throw. You will
+not be able to continue recording or move to replay state
+otherwise.</p>
+<p><b>Note II:</b> Method chaining really makes writing this cod
+easier.</p>
+<h3><a name="Constraints">Constraints:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>Constraints are a way to verify that a method arguments match a
+certain criteria. Rhino Mocks include a number of built in
+constraints, and allows you to define you own custom one, which
+will integrate cleanly into the framework. You specify constraints
+on method arguments using the following syntax:</p>
+<pre>
+Expect.Call(view.Ask(null,null)).Return(null).
+  Constraints(Text.StartsWith("Some"),Text.EndsWith("Text"));
+</pre>
+<p>You need to pass the exact same number of constraints as the
+number of arguments of the method. When a method is called during
+replay state, Rhino Mocks evaluate each constraint against the
+parameter in the same index, and accept the method if all the
+constraints were met. As a note, I got the idea of the current
+constraints syntax from NMock2, it is much leaner approach to
+create constraints.</p>
+<p>Rhino Mocks built in constraints:</p>
+<p>Rhino mocks ships with the following constraints:</p>
+<table width="100%" id="table2"><!-- MSTableType="nolayout" -->
+<tbody>
+<tr>
+<td bgcolor="#ECE9D8" colspan="2">
+<p>Constraint:</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Example:</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>Accepted Value(s):</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>Unaccepted Value(s):</p>
+</td>
+</tr>
+<tr>
+<td width="9%" bgcolor="#ECE9D8" rowspan="10">
+<p>Object</p>
+</td>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Anything</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Is.Anything()</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>Anything at all {0,"","whatever",null, etc}</p>
+</td>
+<td height="21" bgcolor="#FFCC99">
+<p>(Nothing at all!)</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Equal</p>
+</td>
+<td width="24%" bgcolor="#FFFFCC">
+<p>Is.Equal(3)</p>
+</td>
+<td width="23%" bgcolor="#CCFF99">
+<p>(int)3</p>
+</td>
+<td width="25%" height="21" bgcolor="#FFCC99">
+<p>3f, 4,"", new object()</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Not Equal</p>
+</td>
+<td width="24%" bgcolor="#FFFFCC">
+<p>Is.NotEqual(3) or !Is.Equal(3)</p>
+</td>
+<td width="23%" bgcolor="#CCFF99">
+<p>3f,43,null,DateTime.Now</p>
+</td>
+<td width="25%" height="21" bgcolor="#FFCC99">
+<p>(int)3</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Null</p>
+</td>
+<td width="24%" bgcolor="#FFFFCC">
+<p>Is.Null()</p>
+</td>
+<td width="23%" bgcolor="#CCFF99">
+<p>null</p>
+</td>
+<td width="25%" height="21" bgcolor="#FFCC99">
+<p>5,"",new object()</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Not Null</p>
+</td>
+<td width="24%" bgcolor="#FFFFCC">
+<p>Is.NotNull()</p>
+</td>
+<td width="23%" bgcolor="#CCFF99">
+<p>DateTime.Now, "asbcd", 0xHead</p>
+</td>
+<td width="25%" height="21" bgcolor="#FFCC99">
+<p>null</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Type Of</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Is.TypeOf(typeof(string))</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"","Hello",String.Empty</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>null, 3, DateTime.Now</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Greater Than</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Is.GreaterThan(10)</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>15,100,300</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>3,4,5, 10</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Greater Than Or Equal</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Is.GreaterThanOrEqual(10)</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>10,15,100</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>4,2,8,9</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Less Than</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Is.LessThan(10)</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>1,2,9</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>10,32,100</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Less Than Or Eqaul</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Is.LessThanOrEqual(10)</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>1,9,10</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>11,33,43</p>
+</td>
+</tr>
+<tr>
+<td width="9%" bgcolor="#ECE9D8" rowspan="3">
+<p>Property</p>
+</td>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Equal To Value</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Property.Value("Length",0)</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>new ArrayList(),String.Empty</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"Hello", 5</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Null</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Property.IsNull("InnerException")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>new Exception("exception without inner exception")</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>new Exception("Exception with inner Exception", new
+Exception("Inner")</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Not Null</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Property.IsNotNull("InnerException")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>new Exception("Exception with inner Exception", new
+Exception("Inner")</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>new Exception("exception without inner exception")</p>
+</td>
+</tr>
+<tr>
+<td width="9%" bgcolor="#ECE9D8" rowspan="3">
+<p>List</p>
+</td>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Is In List [the parameter is a collection that contains this
+value]</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>List.IsIn(4)</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>new int[]{1,2,3,4}, new int[]{4,5,6}</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>new object[]{"",3}</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>One Of [parameter equal to one of the objects in this list]</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>List.OneOf(new int[]{3,4,5})</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>3,4,5</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>9,1,""</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Equal</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>List.Equal(new int[]{4,5,6})</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>new int[]{4,5,6}, new object[]{4,5,6}</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>new int[]{4,5,6,7}</p>
+</td>
+</tr>
+<tr>
+<td width="9%" bgcolor="#ECE9D8" rowspan="4">
+<p>Text</p>
+</td>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Starts With</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Text.StartsWith("Hello")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"Hello, World", "Hello, Rhino Mocks"</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"", "Bye, Bye"</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Ends With</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Text.EndsWith("World")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"World","Champion Of The World"</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"world", "World Seria"</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Contains</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Text.Contains("or")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"The Horror Movie...", "Either that or this"</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"Movie Of The Year"</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Like [perform regular expression validation]</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Text.Like("Rhino|rhino|<span id=
+"BABID_Results">Rhinoceros|rhinoceros" )</span></p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"Rhino Mocks", "Red <span id=
+"BABID_Results">Rhinoceros"</span></p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"Hello world", "Foo bar", Another boring example string"</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8" rowspan="3">
+<p>Operator Overloading</p>
+</td>
+<td width="17%" bgcolor="#ECE9D8">
+<p>And - operator &amp;</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Text.StartsWith("Hello") &amp; Text.Contains("bar")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"Hello, Foobar"</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"Hello, World", "Foo bar"</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Or - operator |</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>Text.StartsWith("Hello") &amp; Text.Contains("bar")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"Hello, Foobar", "Hello, World", "Foo bar"</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"boring string"</p>
+</td>
+</tr>
+<tr>
+<td width="17%" bgcolor="#ECE9D8">
+<p>Not - operator !</p>
+</td>
+<td bgcolor="#FFFFCC">
+<p>!Text.StartsWith("Hello")</p>
+</td>
+<td bgcolor="#CCFF99">
+<p>"Foo bar", "index.html"</p>
+</td>
+<td bgcolor="#FFCC99">
+<p>"Hello, Rhino Mocks"</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><b>Operator Overloading warning:</b> Pay attention to operator
+precedence if you are using several operators in a single
+statement, otherwise you may get unexpected results.</p>
+<p><b>Creating custom constraints:</b> Creating you custom
+constraint is easy, just derive a class from AbstractConstraint and
+return true from the Eval() method.</p>
+<h3><a name="SetupResult">Setup Result:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>Sometimes you have a method on your mocked object where you
+don't care how / if it was called, you may want to set a return
+value (or an exception to be thrown), but for this specific test,
+you just don't care. For example, you may have some interaction
+that you already verified, or you are testing some other class and
+just need to get the right value from a method. The way to do it in
+Rhino Mocks is to use SetupResult.For(). Here is the code:</p>
+<pre>
+[Test]
+public void SetupResultUsingOrdered()
+{
+  SetupResult.For(demo.Prop).Return("Ayende");
+  using(mocks.Ordered())  
+  {
+    demo.VoidNoArgs();
+    LastCall.On(demo).Repeat.Twice();
+  }
+  mocks.ReplayAll();
+  demo.VoidNoArgs();
+  for (int i = 0; i &lt; 30; i++)
+  {
+    Assert.AreEqual("Ayende",demo.Prop);        
+  }
+  demo.VoidNoArgs();
+}
+</pre>
+<p>When we use SetupResult.For() we tell Rhino Mocks: "I don't care
+about this method, it need to do X, so just do it, but otherwise
+ignore it." Using SetupResult.For() completely bypass the
+expectations model in Rhino Mocks. In the above example, we define
+demo.Prop to return "Ayende", and we can all it no matter in what
+the currently expected method is.</p>
+<p><b>What about methods returning void?</b> You would use
+LastCall.Repeat.Any(), which has identical semantics (ignore
+ordering, etc).</p>
+<p>The reverse of setup result is to specify that this method
+should never be called (useful if you're using dynamic mocks),
+which is done like this:</p>
+<pre>
+Expect.Call(view.Ask(null,null)).IgnoreArguments().
+  .Repeat.Never();
+</pre>
+<p>This has the same semantics as ExpectNoCall() in NMock and this
+tells the framework that any call to this method is an error.
+Notice that I still call IgnoreArguments(), since otherwise the
+expectation that this method will not be called would've been for a
+method call with null as both parameters. Like setup result and
+Repeat.Any(), using Repeat.Never() transcend ordering.</p>
+<p><b>Note:</b> If you want to have a method that can repeat any
+number of time, but still obey ordering, you can use:
+LastCall.On().Repeat.Times(0,int.MaxValue), this does obey all the
+normal rules.</p>
+<h3><a name="MockingClasses">Mocking classes:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<p>Rhino Mocks supports mocking concrete classes as well as
+interfaces. In fact, it can even mock classes that doesn't have a
+default constructor! To mock a class, simply pass its type to
+MockRepository.CreateMock() along with any parameters for the
+constructor.</p>
+<pre>
+[Test]
+public void AbuseArrayList()
+{
+  using(MockRepository mocks = new MockRepository())
+  {
+    ArrayList list = (ArrayList)mocks.CreateMock(typeof(ArrayList));
+    Expect.Call(list.Capacity).Return(999);
+    mocks.ReplayAll();
+    Assert.AreEqual(999,list.Capacity);
+  }
+}
+</pre>
+<p>If you want to call the non default constructor, just add the
+parameters after the type. Like this:</p>
+<pre>
+ArrayList list = (ArrayList)mocks.CreateMock(typeof(ArrayList),500);
+</pre>
+<p>Some things to be aware of:</p>
+<ul>
+<li>
+<p>You cannot create a mock object from a sealed class.</p>
+</li>
+<li>
+<p>You cannot intercept calls to non-virtual methods.</p>
+</li>
+</ul>
+<h3><a name="Limitations">Limitations:</a> <sup><a href=
+"#Top"><span>Top</span></a></sup></h3>
+<ul>
+<li>
+<p>Currently Rhino Mocks can't mock interfaces and classes that use
+out or ref parameters.</p>
+</li>
+</ul>
+</body>
+</html>
