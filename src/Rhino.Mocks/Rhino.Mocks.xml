@@ -4,10 +4,245 @@
         <name>Rhino.Mocks</name>
     </assembly>
     <members>
-        <member name="T:Rhino.Mocks.Impl.ReplayDynamicMockState">
+        <member name="T:Rhino.Mocks.Interfaces.ICreateMethodExpectation">
             <summary>
-            Validate all expectations on a mock and ignores calls to
-            any method that was not setup properly.
+            Interface to allows to call a method and immediatly get it's options.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.ICreateMethodExpectation.Call(System.Object)">
+            <summary>
+            Get the method options for the call
+            </summary>
+            <param name="ignored">The method call should go here, the return value is ignored</param>
+        </member>
+        <member name="T:Rhino.Mocks.Impl.EventRaiser">
+            <summary>
+            Raise events for all subscribers for an event
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Interfaces.IEventRaiser">
+            <summary>
+            Raise events for all subscribers for an event
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IEventRaiser.Raise(System.Object[])">
+            <summary>
+            Raise the event
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.EventRaiser.#ctor(Rhino.Mocks.Interfaces.IMockedObject,System.String)">
+            <summary>
+            Creates a new instance of <c>EventRaiser</c>
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.EventRaiser.Raise(System.Object[])">
+            <summary>
+            Raise the event
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult">
+            <summary>
+            Allows to call a method and immediatly get it's options.
+            Set the expected number for the call to Any() 
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Impl.CreateMethodExpectation">
+            <summary>
+            Allows to call a method and immediatly get it's options.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectation.#ctor(Rhino.Mocks.Interfaces.IMockedObject,System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Impl.CreateMethodExpectation"/> instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectation.Call(System.Object)">
+            <summary>
+            Get the method options for the call
+            </summary>
+            <param name="ignored">The method call should go here, the return value is ignored</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult.#ctor(Rhino.Mocks.Interfaces.IMockedObject,System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult"/> instance.
+            </summary>
+            <param name="mockedObject">Proxy.</param>
+            <param name="mockedInstance">Mocked instance.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult.Call(System.Object)">
+            <summary>
+            Get the method options for the call
+            </summary>
+            <param name="ignored">The method call should go here, the return value is ignored</param>
+        </member>
+        <member name="T:Rhino.Mocks.Interfaces.IMethodOptions">
+            <summary>
+            Allows to define what would happen when a method 
+            is called.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Return(System.Object)">
+            <summary>
+            Set the return value for the method.
+            </summary>
+            <param name="objToReturn">The object the method will return</param>
+            <returns>IRepeat that defines how many times the method will return this value</returns>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Throw(System.Exception)">
+            <summary>
+            Throws the specified exception when the method is called.
+            </summary>
+            <param name="exception">Exception to throw</param>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.IgnoreArguments">
+            <summary>
+            Ignores the arguments for this method. Any argument will be matched
+            againt this method.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Constraints(Rhino.Mocks.Constraints.AbstractConstraint[])">
+            <summary>
+            Add constraints for the method's arguments.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Callback(System.Delegate)">
+            <summary>
+            Set a callback method for the last call
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Do(System.Delegate)">
+            <summary>
+            Set a delegate to be called when the expectation is matched.
+            The delegate return value will be returned from the expectation.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.CallOriginalMethod">
+            <summary>
+            Call the original method on the class, bypassing the mocking layers.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.PropertyBehavior">
+            <summary>
+            Use the property as a simple property, getting/setting the values without
+            causing mock expectations.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.GetEventRaiser">
+            <summary>
+            Get an event raiser for the last subscribed event.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.OutRef(System.Object[])">
+            <summary>
+            Set the parameter values for out and ref parameters.
+            This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IMethodOptions.Repeat">
+            <summary>
+            Better syntax to define repeats. 
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IMethodOptions.LastMethod">
+            <summary>
+            Get the last call method info.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Interfaces.IExpectation">
+            <summary>
+            Interface to validate that a method call is correct.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IExpectation.IsExpected(System.Object[])">
+            <summary>
+            Validate the arguments for the method.
+            This method can be called numerous times, so be careful about side effects
+            </summary>
+            <param name="args">The arguments with which the method was called</param>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IExpectation.AddActualCall">
+            <summary>
+            Add an actual method call to this expectation
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IExpectation.ReturnOrThrow(System.Object[])">
+            <summary>
+            Returns the return value or throw the exception and setup any output / ref parameters
+            that has been set.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.Expected">
+            <summary>
+            Range of expected calls
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ActualCalls">
+            <summary>
+            Number of call actually made for this method
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.CanAcceptCalls">
+            <summary>
+            If this expectation is still waiting for calls.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ReturnValue">
+            <summary>
+            The return value for a method matching this expectation
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ExceptionToThrow">
+            <summary>
+            Gets or sets the exception to throw on a method matching this expectation.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ActionsSatisfied">
+            <summary>
+            Gets a value indicating whether this instance's action is staisfied.
+            A staisfied instance means that there are no more requirements from
+            this method. A method with non void return value must register either
+            a return value or an exception to throw.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.Method">
+            <summary>
+            Gets the method this expectation is for.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.RepeatableOption">
+            <summary>
+            Gets or sets what special condtions there are for this method
+            repeating.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ExpectationSatisfied">
+            <summary>
+            Gets a value indicating whether this expectation was satisfied
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.HasReturnValue">
+            <summary>
+            Specify whatever this expectation has a return value set
+            You can't check ReturnValue for this because a valid return value include null.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ActionToExecute">
+            <summary>
+            An action to execute when the method is matched.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.OutRefParams">
+            <summary>
+            Set the out / ref parameters for the method call.
+            The indexing is zero based and ignores any non out/ref parameter.
+            It is possible not to pass all the parameters. This method can be called only once.
             </summary>
         </member>
         <member name="T:Rhino.Mocks.Impl.ReplayMockState">
@@ -114,13 +349,26 @@
             Gets the matching verify state for this state
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.#ctor(Rhino.Mocks.Impl.RecordDynamicMockState)">
+        <member name="T:Rhino.Mocks.Impl.RecordPartialMockState">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.ReplayDynamicMockState"/> instance.
+            Records all the expectations for a mock and
+            return a ReplayPartialMockState when Replay()
+            is called.
             </summary>
-            <param name="previousState">The previous state for this method</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="T:Rhino.Mocks.Impl.RecordMockState">
+            <summary>
+            Records all the expectations for a mock
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.#ctor(Rhino.Mocks.Interfaces.IMockedObject,Rhino.Mocks.MockRepository)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Impl.RecordMockState"/> instance.
+            </summary>
+            <param name="repository">Repository.</param>
+            <param name="mockedObject">The proxy that generates the method calls</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
@@ -128,233 +376,89 @@
             <param name="method">The method that was called</param>
             <param name="args">The arguments this method was called with</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.BackToRecord">
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.Replay">
+            <summary>
+            Verify that we can move to replay state and move 
+            to the reply state.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.DoReplay">
+            <summary>
+            Verify that we can move to replay state and move 
+            to the reply state.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.Verify">
+            <summary>
+            Verify that this mock expectations have passed.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.BackToRecord">
             <summary>
             Gets a mock state that match the original mock state of the object.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult">
+        <member name="P:Rhino.Mocks.Impl.RecordMockState.LastExpectation">
             <summary>
-            Allows to call a method and immediatly get it's options.
-            Set the expected number for the call to Any() 
+            Gets the last expectation.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.CreateMethodExpectation">
+        <member name="P:Rhino.Mocks.Impl.RecordMockState.MethodCallsCount">
             <summary>
-            Allows to call a method and immediatly get it's options.
+            Gets the total method calls count.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Interfaces.ICreateMethodExpectation">
+        <member name="P:Rhino.Mocks.Impl.RecordMockState.LastMethodOptions">
             <summary>
-            Interface to allows to call a method and immediatly get it's options.
+            Get the options for the last method call
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.ICreateMethodExpectation.Call(System.Object)">
+        <member name="P:Rhino.Mocks.Impl.RecordMockState.VerifyState">
             <summary>
-            Get the method options for the call
-            </summary>
-            <param name="ignored">The method call should go here, the return value is ignored</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectation.#ctor(Rhino.Mocks.Interfaces.IMockedObject,System.Object)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.CreateMethodExpectation"/> instance.
+            Gets the matching verify state for this state
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectation.Call(System.Object)">
+        <member name="M:Rhino.Mocks.Impl.RecordPartialMockState.#ctor(Rhino.Mocks.Interfaces.IMockedObject,Rhino.Mocks.MockRepository)">
             <summary>
-            Get the method options for the call
+            Creates a new <see cref="T:Rhino.Mocks.Impl.RecordDynamicMockState"/> instance.
             </summary>
-            <param name="ignored">The method call should go here, the return value is ignored</param>
+            <param name="repository">Repository.</param>
+            <param name="mockedObject">The proxy that generates the method calls</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult.#ctor(Rhino.Mocks.Interfaces.IMockedObject,System.Object)">
+        <member name="M:Rhino.Mocks.Impl.RecordPartialMockState.DoReplay">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult"/> instance.
-            </summary>
-            <param name="mockedObject">Proxy.</param>
-            <param name="mockedInstance">Mocked instance.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.CreateMethodExpectationForSetupResult.Call(System.Object)">
-            <summary>
-            Get the method options for the call
-            </summary>
-            <param name="ignored">The method call should go here, the return value is ignored</param>
-        </member>
-        <member name="T:Rhino.Mocks.List">
-            <summary>
-            Central location for constraints about lists and collections
+            Verify that we can move to replay state and move 
+            to the reply state.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.List.IsIn(System.Object)">
+        <member name="M:Rhino.Mocks.Impl.RecordPartialMockState.BackToRecord">
             <summary>
-            Determines whether the specified obj is in the paramter.
-            The parameter must be IEnumerable.
-            </summary>
-            <param name="obj">Obj.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.List.OneOf(System.Collections.ICollection)">
-            <summary>
-            Determains whatever the parameter is in the collection.
+            Gets a mock state that match the original mock state of the object.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.List.Equal(System.Collections.ICollection)">
+        <member name="T:Rhino.Mocks.Impl.RecordDynamicMockState">
             <summary>
-            Determains that the parameter collection is identical to the specified collection
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Is">
-            <summary>
-            Central location for constraints
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Is.GreaterThan(System.IComparable)">
-            <summary>
-            Evaluate a greater than constraint for <see cref="T:System.IComparable"/>.
-            </summary>
-            <param name="objToCompare">The object the parameter should be greater than</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.LessThan(System.IComparable)">
-            <summary>
-            Evaluate a less than constraint for <see cref="T:System.IComparable"/>.
-            </summary>
-            <param name="objToCompare">The object the parameter should be less than</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.LessThanOrEqual(System.IComparable)">
-            <summary>
-            Evaluate a less than or equal constraint for <see cref="T:System.IComparable"/>.
-            </summary>
-            <param name="objToCompare">The object the parameter should be less than or equal to</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.GreaterThanOrEqual(System.IComparable)">
-            <summary>
-            Evaluate a greater than or equal constraint for <see cref="T:System.IComparable"/>.
-            </summary>
-            <param name="objToCompare">The object the parameter should be greater than or equal to</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.Equal(System.Object)">
-            <summary>
-            Evaluate an equal constraint for <see cref="T:System.IComparable"/>.
-            </summary>
-            <param name="obj">The object the parameter should equal to</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.NotEqual(System.Object)">
-            <summary>
-            Evaluate a not equal constraint for <see cref="T:System.IComparable"/>.
-            </summary>
-            <param name="obj">The object the parameter should not equal to</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.Same(System.Object)">
-            <summary>
-            Evaluate a same as constraint.
-            </summary>
-            <param name="obj">The object the parameter should the same as.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.NotSame(System.Object)">
-            <summary>
-            Evaluate a not same as constraint.
-            </summary>
-            <param name="obj">The object the parameter should not be the same as.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Is.Anything">
-            <summary>
-            A constraints that accept anything
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Is.Null">
-            <summary>
-            A constraint that accept only nulls
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Is.NotNull">
-            <summary>
-            A constraint that accept only non null values
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Is.TypeOf(System.Type)">
-            <summary>
-            A constraint that accept only value of the specified type
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Is.TypeOf``1">
-            <summary>
-            A constraint that accept only value of the specified type
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Interfaces.IMethodOptions">
-            <summary>
-            Allows to define what would happen when a method 
+            Records all the expectations for a mock and
+            return a ReplayDynamicMockState when Replay()
             is called.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Return(System.Object)">
+        <member name="M:Rhino.Mocks.Impl.RecordDynamicMockState.#ctor(Rhino.Mocks.Interfaces.IMockedObject,Rhino.Mocks.MockRepository)">
             <summary>
-            Set the return value for the method.
+            Creates a new <see cref="T:Rhino.Mocks.Impl.RecordDynamicMockState"/> instance.
             </summary>
-            <param name="objToReturn">The object the method will return</param>
-            <returns>IRepeat that defines how many times the method will return this value</returns>
+            <param name="repository">Repository.</param>
+            <param name="mockedObject">The proxy that generates the method calls</param>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Throw(System.Exception)">
+        <member name="M:Rhino.Mocks.Impl.RecordDynamicMockState.DoReplay">
             <summary>
-            Throws the specified exception when the method is called.
-            </summary>
-            <param name="exception">Exception to throw</param>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.IgnoreArguments">
-            <summary>
-            Ignores the arguments for this method. Any argument will be matched
-            againt this method.
+            Verify that we can move to replay state and move 
+            to the reply state.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Constraints(Rhino.Mocks.Constraints.AbstractConstraint[])">
+        <member name="M:Rhino.Mocks.Impl.RecordDynamicMockState.BackToRecord">
             <summary>
-            Add constraints for the method's arguments.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Callback(System.Delegate)">
-            <summary>
-            Set a callback method for the last call
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Do(System.Delegate)">
-            <summary>
-            Set a delegate to be called when the expectation is matched.
-            The delegate return value will be returned from the expectation.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.CallOriginalMethod">
-            <summary>
-            Call the original method on the class, bypassing the mocking layers.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.PropertyBehavior">
-            <summary>
-            Use the property as a simple property, getting/setting the values without
-            causing mock expectations.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.GetEventRaiser">
-            <summary>
-            Get an event raiser for the last subscribed event.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.OutRef(System.Object[])">
-            <summary>
-            Set the parameter values for out and ref parameters.
-            This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IMethodOptions.Repeat">
-            <summary>
-            Better syntax to define repeats. 
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IMethodOptions.LastMethod">
-            <summary>
-            Get the last call method info.
+            Gets a mock state that match the original mock state of the object.
             </summary>
         </member>
         <member name="T:Rhino.Mocks.Exceptions.ExpectationViolationException">
@@ -373,40 +477,708 @@
             Serialization constructor
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.EventRaiser">
+        <member name="T:Rhino.Mocks.Interfaces.IMockedObject">
             <summary>
-            Raise events for all subscribers for an event
+            Interface to find the repository of a mocked object
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Interfaces.IEventRaiser">
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.ShouldCallOriginal(System.Reflection.MethodInfo)">
             <summary>
-            Raise events for all subscribers for an event
+            Return true if it should call the original method on the object
+            instead of pass it to the message chain.
+            </summary>
+            <param name="method">The method to call</param>
+        </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.RegisterMethodForCallingOriginal(System.Reflection.MethodInfo)">
+            <summary>
+            Register a method to be called on the object directly
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IEventRaiser.Raise(System.Object[])">
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.RegisterPropertyBehaviorFor(System.Reflection.PropertyInfo)">
             <summary>
-            Raise the event
+            Register a property on the object that will behave as a simple property
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.EventRaiser.#ctor(Rhino.Mocks.Interfaces.IMockedObject,System.String)">
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.IsPropertyMethod(System.Reflection.MethodInfo)">
             <summary>
-            Creates a new instance of <c>EventRaiser</c>
+            Check if the method was registered as a property method.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.EventRaiser.Raise(System.Object[])">
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.HandleProperty(System.Reflection.MethodInfo,System.Object[])">
             <summary>
-            Raise the event
+            Do get/set on the property, according to need.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Constraints.PropertyIs">
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.HandleEvent(System.Reflection.MethodInfo,System.Object[])">
             <summary>
-            Constrain that the property has a specified value
+            Do add/remove on the event
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Constraints.PropertyConstraint">
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.GetEventSubscribers(System.String)">
             <summary>
-            Constrain that the property matches another constraint.
+            Get the subscribers of a spesific event
             </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IMockedObject.ProxyHash">
+            <summary>
+            The unique hash code of this mock, which is not related
+            to the value of the GetHashCode() call on the object.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IMockedObject.Repository">
+            <summary>
+            Gets the repository.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Impl.Validate">
+            <summary>
+            Validate arguments for methods
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.Validate.IsNotNull(System.Object,System.String)">
+            <summary>
+            Validate that the passed argument is not null.
+            </summary>
+            <param name="obj">The object to validate</param>
+            <param name="name">The name of the argument</param>
+            <exception cref="T:System.ArgumentNullException">
+            If the obj is null, an ArgumentNullException with the passed name
+            is thrown.
+            </exception>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.Validate.ArgsEqual(System.Object[],System.Object[])">
+            <summary>
+            Validate that the arguments are equal.
+            </summary>
+            <param name="expectedArgs">Expected args.</param>
+            <param name="actualArgs">Actual Args.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.Validate.SafeEquals(System.Object,System.Object)">
+            <summary>
+            This method is safe for use even if any of the objects is a mocked object
+            that override equals.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Expectations.CallbackExpectation">
+            <summary>
+            Call a specified callback to verify the expectation
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Expectations.AbstractExpectation">
+            <summary>
+            Abstract class that holds common information for 
+            expectations.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.actualCalls">
+            <summary>
+            Number of actuall calls made that passed this expectation
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.expected">
+            <summary>
+            Range of expected calls that should pass this expectation.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.returnValue">
+            <summary>
+            The return value for a method matching this expectation
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.exceptionToThrow">
+            <summary>
+            The exception to throw on a method matching this expectation.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.method">
+            <summary>
+            The method this expectation is for.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.returnValueSet">
+            <summary>
+            The return value for this method was set
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.repeatableOption">
+            <summary>
+            Whether this method will repeat
+            unlimited number of times.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.actionToExecute">
+            <summary>
+            A delegate that will be run when the 
+            expectation is matched.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.matchingArgs">
+            <summary>
+            The arguments that matched this expectation.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.GetHashCode">
+            <summary>
+            Get the hash code
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.AddActualCall">
+            <summary>
+            Add an actual method call to this expectation
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.ReturnOrThrow(System.Object[])">
+            <summary>
+            Returns the return value or throw the exception and setup output / ref parameters
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.IsExpected(System.Object[])">
+            <summary>
+            Validate the arguments for the method on the child methods
+            </summary>
+            <param name="args">The arguments with which the method was called</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.#ctor(System.Reflection.MethodInfo)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.AbstractExpectation"/> instance.
+            </summary>
+            <param name="method">Method.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.AbstractExpectation"/> instance.
+            </summary>
+            <param name="expectation">Expectation.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.DoIsExpected(System.Object[])">
+            <summary>
+            Validate the arguments for the method on the child methods
+            </summary>
+            <param name="args">The arguments with which the method was called</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.Equals(System.Object)">
+            <summary>
+            Determines if this object equal to obj
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.CreateErrorMessage(System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            The error message for these arguments
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.AssertDelegateArgumentsMatchMethod(System.Delegate)">
+            <summary>
+            Asserts that the delegate has the same parameters as the expectation's method call
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.OutRefParams">
+            <summary>
+            Setter for the outpur / ref parameters for this expecataion.
+            Can only be set once.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.HasReturnValue">
+            <summary>
+            Specify whatever this expectation has a return value set
+            You can't check ReturnValue for this because a valid return value include null.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.Method">
+            <summary>
+            Gets the method this expectation is for.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.RepeatableOption">
+            <summary>
+            Gets or sets what special condtions there are for this method
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.Expected">
+            <summary>
+            Range of expected calls
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ActualCalls">
+            <summary>
+            Number of call actually made for this method
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.CanAcceptCalls">
+            <summary>
+            If this expectation is still waiting for calls.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ExpectationSatisfied">
+            <summary>
+            Gets a value indicating whether this expectation was satisfied
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ReturnValue">
+            <summary>
+            The return value for a method matching this expectation
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ActionToExecute">
+            <summary>
+            An action to execute when the method is matched.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ExceptionToThrow">
+            <summary>
+            Gets or sets the exception to throw on a method matching this expectation.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ActionsSatisfied">
+            <summary>
+            Gets a value indicating whether this instance's action is staisfied.
+            A staisfied instance means that there are no more requirements from
+            this method. A method with non void return value must register either
+            a return value or an exception to throw or an action to execute.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation,System.Delegate)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.CallbackExpectation"/> instance.
+            </summary>
+            <param name="expectation">Expectation.</param>
+            <param name="callback">Callback.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.#ctor(System.Reflection.MethodInfo,System.Delegate)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.CallbackExpectation"/> instance.
+            </summary>
+            <param name="method">Method.</param>
+            <param name="callback">Callback.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.DoIsExpected(System.Object[])">
+            <summary>
+            Validate the arguments for the method on the child methods
+            </summary>
+            <param name="args">The arguments with which the method was called</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.Equals(System.Object)">
+            <summary>
+            Determines if the object equal to expectation
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.GetHashCode">
+            <summary>
+            Get the hash code
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.CallbackExpectation.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.With">
+            <summary>
+            Allows easier access to MockRepository, works closely with Mocker.Current to
+            allow access to a context where the mock repository is automatially verified at
+            the end of the code block.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.With.Mocks(Rhino.Mocks.With.Proc)">
+            <summary>
+            Initialize a code block where Mocker.Current is initialized.
+            At the end of the code block, all the expectation will be verified.
+            This overload will create a new MockRepository.
+            </summary>
+            <param name="methodCallThatHasMocks">The code that will be executed under the mock context</param>
+        </member>
+        <member name="M:Rhino.Mocks.With.Mocks(Rhino.Mocks.MockRepository,Rhino.Mocks.With.Proc)">
+            <summary>
+            Initialize a code block where Mocker.Current is initialized.
+            At the end of the code block, all the expectation will be verified.
+            This overload will create a new MockRepository.
+            </summary>
+            <param name="mocks">The mock repository to use, at the end of the code block, VerifyAll() will be called on the repository.</param>
+            <param name="methodCallThatHasMocks">The code that will be executed under the mock context</param>
+        </member>
+        <member name="T:Rhino.Mocks.With.Proc">
+            <summary>
+            A method with no arguments and no return value that will be called under the mock context.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Utilities.MethodCallUtil">
+            <summary>
+            Utility class for working with method calls.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Utilities.MethodCallUtil.StringPresentation(Rhino.Mocks.Utilities.MethodCallUtil.FormatArgumnet,System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Return the string representation of a method call and its arguments.
+            </summary>
+            <param name="method">The method</param>
+            <param name="args">The method arguments</param>
+            <param name="format">Delegate to format the parameter</param>
+            <returns>The string representation of this method call</returns>
+        </member>
+        <member name="M:Rhino.Mocks.Utilities.MethodCallUtil.StringPresentation(System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Return the string representation of a method call and its arguments.
+            </summary>
+            <param name="method">The method</param>
+            <param name="args">The method arguments</param>
+            <returns>The string representation of this method call</returns>
+        </member>
+        <member name="T:Rhino.Mocks.Utilities.MethodCallUtil.FormatArgumnet">
+            <summary>
+            Delegate to format the argument for the string representation of
+            the method call.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.MockRepository">
+            <summary>
+            Creates proxied instances of types.
+            </summary>
+            <summary>
+            Creates proxied instances of types.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.MockRepository.lastRepository">
+            <summary>
+            This is used to record the last repository that has a method called on it.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.MockRepository.lastMockedObject">
+            <summary>
+            this is used to get to the last proxy on this repository.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.MockRepository.delegateProxies">
+            <summary>
+            For mock delegates, maps the proxy instance from intercepted invocations
+            back to the delegate that was originally returned to client code, if any.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.#ctor">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.MockRepository"/> instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.Ordered">
+            <summary>
+            Move the repository to ordered mode
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.Unordered">
+            <summary>
+            Move the repository to un-ordered mode
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.CreateMock(System.Type,System.Object[])">
+            <summary>
+            Creates a mock for the specified type.
+            </summary>
+            <param name="type">Type.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock(System.Type,System.Type[])">
+            <summary>
+            Creates a mock from several types, with strict semantics.
+            Only <paramref name="mainType"/> may be a class.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock(System.Type,System.Type[],System.Object[])">
+            <summary>
+            Creates a mock from several types, with strict semantics.
+            Only <paramref name="mainType"/> may be a class.
+            </summary>
+            <param name="mainType">The main type to mock.</param>
+            <param name="extraTypes">Extra interface types to mock.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock(System.Type,System.Type[])">
+            <summary>
+            Creates a mock from several types, with dynamic semantics.
+            Only <paramref name="mainType"/> may be a class.
+            </summary>
+            <param name="mainType">The main type to mock.</param>
+            <param name="extraTypes">Extra interface types to mock.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock(System.Type,System.Type[],System.Object[])">
+            <summary>
+            Creates a mock from several types, with dynamic semantics.
+            Only <paramref name="mainType"/> may be a class.
+            </summary>
+            <param name="mainType">The main type to mock.</param>
+            <param name="extraTypes">Extra interface types to mock.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.DynamicMock(System.Type,System.Object[])">
+            <summary>
+            Creates a dynamic mock for the specified type.
+            </summary>
+            <param name="type">Type.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PartialMock(System.Type,System.Object[])">
+            <summary>
+            Creates a mock object that defaults to calling the class methods.
+            </summary>
+            <param name="type">Type.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock(System.Type,System.Type[])">
+            <summary>
+            Creates a mock object that defaults to calling the class methods.
+            </summary>
+            <param name="type">Type.</param>
+            <param name="extraTypes">Extra interface types to mock.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock(System.Type,System.Type[],System.Object[])">
+            <summary>
+            Creates a mock object that defaults to calling the class methods.
+            </summary>
+            <param name="type">Type.</param>
+            <param name="extraTypes">Extra interface types to mock.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.Replay(System.Object)">
+            <summary>
+            Cause the mock state to change to replay, any further call is compared to the 
+            ones that were called in the record state.
+            </summary>
+            <param name="obj">the object to move to replay state</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.BackToRecord(System.Object)">
+            <summary>
+            Move the mocked object back to record state.
+            Will delete all current expectations!
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.Verify(System.Object)">
+            <summary>
+            Verify that all the expectations for this object were fulfilled.
+            </summary>
+            <param name="obj">the object to verify the expectations for</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.LastMethodCall(System.Object)">
+            <summary>
+            Get the method options for the last call on
+            mockedInstance.
+            </summary>
+            <param name="mockedInstance">The mock object</param>
+            <returns>Method options for the last call</returns>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.GetMockObjectFromInvocationProxy(System.Object)">
+            <summary>
+            Maps an invocation proxy back to the mock object instance that was originally
+            returned to client code which might have been a delegate to this proxy.
+            </summary>
+            <param name="invocationProxy">The mock object proxy from the intercepted invocation</param>
+            <returns>The mock object</returns>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PopRecorder">
+            <summary>
+            Pops the recorder.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PushRecorder(Rhino.Mocks.Interfaces.IMethodRecorder)">
+            <summary>
+            Pushes the recorder.
+            </summary>
+            <param name="newRecorder">New recorder.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.ReplayAll">
+            <summary>
+            Replay all the mocks from this repository
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.VerifyAll">
+            <summary>
+            Verify all the mocks from this repository
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.CreateMock``1(System.Object[])">
+            <summary>
+            Creates a mock for the spesified type.
+            </summary>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.DynamicMock``1(System.Object[])">
+            <summary>
+            Creates a dynamic mock for the specified type.
+            </summary>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock``1(System.Type[])">
+            <summary>
+            Creates a mock object from several types.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock``1(System.Type[])">
+            <summary>
+            Create a mock object from several types with dynamic semantics.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock``1(System.Type[])">
+            <summary>
+            Create a mock object from several types with partial semantics.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock``1(System.Type[],System.Object[])">
+            <summary>
+            Create a mock object from several types with strict semantics.
+            </summary>
+            <param name="extraTypes">Extra interface types to mock.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock``1(System.Type[],System.Object[])">
+            <summary>
+            Create a mock object from several types with dynamic semantics.
+            </summary>
+            <param name="extraTypes">Extra interface types to mock.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock``1(System.Type[],System.Object[])">
+            <summary>
+            Create a mock object from several types with partial semantics.
+            </summary>
+            <param name="extraTypes">Extra interface types to mock.</param>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="M:Rhino.Mocks.MockRepository.PartialMock``1(System.Object[])">
+            <summary>
+            Create a mock object with from a class that defaults to calling the class methods
+            </summary>
+            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        </member>
+        <member name="P:Rhino.Mocks.MockRepository.Recorder">
+            <summary>
+            Gets the recorder.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Rhino.Mocks.MockRepository.Replayer">
+            <summary>
+            Gets the replayer for this repository.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Rhino.Mocks.MockRepository.LastMockedObject">
+            <summary>
+            Gets the last proxy which had a method call.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.LastCall">
+            <summary>
+            Allows to set various options for the last method call on
+            a specified object.
+            If the method has a return value, it's recommended to use Expect
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.On(System.Object)">
+            <summary>
+            Allows to get an interface to work on the last call.
+            </summary>
+            <param name="mockedInstance">The mocked object</param>
+            <returns>Interface that allows to set options for the last method call on this object</returns>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.Return(System.Object)">
+            <summary>
+            Set the return value for the method.
+            </summary>
+            <param name="objToReturn">The object the method will return</param>
+            <returns>IRepeat that defines how many times the method will return this value</returns>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.Throw(System.Exception)">
+            <summary>
+            Throws the specified exception when the method is called.
+            </summary>
+            <param name="exception">Exception to throw</param>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.IgnoreArguments">
+            <summary>
+            Ignores the arguments for this method. Any argument will be matched
+            againt this method.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.Constraints(Rhino.Mocks.Constraints.AbstractConstraint[])">
+            <summary>
+            Add constraints for the method's arguments.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.Callback(System.Delegate)">
+            <summary>
+            Set a callback method for the last call
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.CallOriginalMethod">
+            <summary>
+            Call the original method on the class, bypassing the mocking layers, for the last call.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.Do(System.Delegate)">
+            <summary>
+            Set a delegate to be called when the expectation is matched.
+            The delegate return value will be returned from the expectation.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.GetEventRaiser">
+            <summary>
+            Gets an interface that will raise the last event when called.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.OutRef(System.Object[])">
+            <summary>
+            Set the parameter values for out and ref parameters.
+            This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.LastCall.Repeat">
+            <summary>
+            Better syntax to define repeats. 
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Expectations.ConstraintsExpectation">
+            <summary>
+            Expect the method's arguments to match the contraints
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.#ctor(System.Reflection.MethodInfo,Rhino.Mocks.Constraints.AbstractConstraint[])">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.ConstraintsExpectation"/> instance.
+            </summary>
+            <param name="method">Method.</param>
+            <param name="constraints">Constraints.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation,Rhino.Mocks.Constraints.AbstractConstraint[])">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.ConstraintsExpectation"/> instance.
+            </summary>
+            <param name="expectation">Expectation.</param>
+            <param name="constraints">Constraints.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.DoIsExpected(System.Object[])">
+            <summary>
+            Validate the arguments for the method.
+            </summary>
+            <param name="args">The arguments with which the method was called</param>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.Equals(System.Object)">
+            <summary>
+            Determines if the object equal to expectation
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.GetHashCode">
+            <summary>
+            Get the hash code
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.ConstraintsExpectation.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value></value>
         </member>
         <member name="T:Rhino.Mocks.Constraints.AbstractConstraint">
             <summary>
@@ -439,474 +1211,63 @@
             </summary>
             <value></value>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.PropertyConstraint.#ctor(System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
+        <member name="T:Rhino.Mocks.RhinoMocks">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyConstraint"/> instance.
+            Used for [assembly: InternalsVisibleTo(RhinoMocks.StrongName)]
             </summary>
-            <param name="propertyName">Name of the property.</param>
-            <param name="constraint">Constraint to place on the property value.</param>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.PropertyConstraint.#ctor(System.Type,System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
+        <member name="F:Rhino.Mocks.RhinoMocks.StrongName">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyConstraint"/> instance, specifying a disambiguating
-            <paramref name="declaringType"/> for the property.
+            Strong name for the Dynamic Proxy assemblies. Used for InternalsVisibleTo specification.
             </summary>
-            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="constraint">Constraint to place on the property value.</param>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.PropertyConstraint.Eval(System.Object)">
+        <member name="T:Rhino.Mocks.Impl.RepeatableOption">
             <summary>
-            Determines if the object passes the constraint.
+            Options for special repeat option
             </summary>
         </member>
-        <member name="P:Rhino.Mocks.Constraints.PropertyConstraint.Message">
+        <member name="F:Rhino.Mocks.Impl.RepeatableOption.Normal">
             <summary>
-            Gets the message for this constraint
+            This method can be called only as many times as the IMethodOptions.Expect allows.
             </summary>
-            <value></value>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.PropertyIs.#ctor(System.String,System.Object)">
+        <member name="F:Rhino.Mocks.Impl.RepeatableOption.Never">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyIs"/> instance.
+            This method should never be called
             </summary>
-            <param name="propertyName">Name of the property.</param>
-            <param name="expectedValue">Expected value.</param>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.PropertyIs.#ctor(System.Type,System.String,System.Object)">
+        <member name="F:Rhino.Mocks.Impl.RepeatableOption.Any">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyIs"/> instance, specifying a disambiguating
-            <paramref name="declaringType"/> for the property.
+            This method can be call any number of times
             </summary>
-            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="expectedValue">Expected value.</param>
         </member>
-        <member name="T:Rhino.Mocks.Constraints.TypeOf">
+        <member name="F:Rhino.Mocks.Impl.RepeatableOption.OriginalCall">
             <summary>
-            Constrain that the parameter must be of the specified type
+            This method will call the original method
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.TypeOf.#ctor(System.Type)">
+        <member name="F:Rhino.Mocks.Impl.RepeatableOption.PropertyBehavior">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.TypeOf"/> instance.
+            This method will simulate simple property behavior
             </summary>
-            <param name="type">Type.</param>
         </member>
-        <member name="M:Rhino.Mocks.Constraints.TypeOf.Eval(System.Object)">
+        <member name="T:Rhino.Mocks.Impl.DelegateTargetInterfaceCreator">
             <summary>
-            determains if the object pass the constraints
+            This class is reponsible for taking a delegate and creating a wrapper
+            interface around it, so it can be mocked.
             </summary>
         </member>
-        <member name="P:Rhino.Mocks.Constraints.TypeOf.Message">
+        <member name="F:Rhino.Mocks.Impl.DelegateTargetInterfaceCreator.moduleScope">
             <summary>
-            Gets the message for this constraint
+            The scope for all the delegate interfaces create by this mock repositroy.
             </summary>
-            <value></value>
         </member>
-        <member name="T:Rhino.Mocks.Constraints.Same">
+        <member name="M:Rhino.Mocks.Impl.DelegateTargetInterfaceCreator.GetDelegateTargetInterface(System.Type)">
             <summary>
-            Constraint that determines whether an object is the same object as another.
+            Gets a type with an "Invoke" method suitable for use as a target of the
+            specified delegate type.
             </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Same.#ctor(System.Object)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.Equal"/> instance.
-            </summary>
-            <param name="obj">Obj.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Same.Eval(System.Object)">
-            <summary>
-            Determines if the object passes the constraints.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Same.Message">
-            <summary>
-            Gets the message for this constraint.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.CollectionEqual">
-            <summary>
-            Constrain that the list contains the same items as the parameter list
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.CollectionEqual.#ctor(System.Collections.ICollection)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.CollectionEqual"/> instance.
-            </summary>
-            <param name="collection">In list.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.CollectionEqual.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.CollectionEqual.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.OneOf">
-            <summary>
-            Constrain that the parameter is one of the items in the list
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.OneOf.#ctor(System.Collections.ICollection)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.OneOf"/> instance.
-            </summary>
-            <param name="collection">In list.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.OneOf.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.OneOf.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.IsIn">
-            <summary>
-            Constrain that the object is inside the parameter list
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.IsIn.#ctor(System.Object)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.IsIn"/> instance.
-            </summary>
-            <param name="inList">In list.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.IsIn.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.IsIn.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.Or">
-            <summary>
-            Combines two constraints, constraint pass if either is fine.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Or.#ctor(Rhino.Mocks.Constraints.AbstractConstraint,Rhino.Mocks.Constraints.AbstractConstraint)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.And"/> instance.
-            </summary>
-            <param name="c1">C1.</param>
-            <param name="c2">C2.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Or.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Or.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.Not">
-            <summary>
-            Negate a constraint
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Not.#ctor(Rhino.Mocks.Constraints.AbstractConstraint)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.And"/> instance.
-            </summary>
-            <param name="c1">C1.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Not.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Not.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.And">
-            <summary>
-            Combines two constraints
-            </summary>
-            <remarks></remarks>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.And.#ctor(Rhino.Mocks.Constraints.AbstractConstraint,Rhino.Mocks.Constraints.AbstractConstraint)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.And"/> instance.
-            </summary>
-            <param name="c1">C1.</param>
-            <param name="c2">C2.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.And.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.And.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.Like">
-            <summary>
-            Constrain the argument to validate according to regex pattern
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Like.#ctor(System.String)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.Like"/> instance.
-            </summary>
-            <param name="pattern">Pattern.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Like.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Like.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.Contains">
-            <summary>
-            Constraint that evaluate whatever an argument contains the specified string.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Contains.#ctor(System.String)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.Contains"/> instance.
-            </summary>
-            <param name="innerString">Inner string.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Contains.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Contains.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.EndsWith">
-            <summary>
-            Constraint that evaluate whatever an argument ends with the specified string
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.EndsWith.#ctor(System.String)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.EndsWith"/> instance.
-            </summary>
-            <param name="end">End.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.EndsWith.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.EndsWith.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.StartsWith">
-            <summary>
-            Constraint that evaluate whatever an argument start with the specified string
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.StartsWith.#ctor(System.String)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.StartsWith"/> instance.
-            </summary>
-            <param name="start">Start.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.StartsWith.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.StartsWith.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.Equal">
-            <summary>
-            Constraint that evaluate whatever an object equals another
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Equal.#ctor(System.Object)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.Equal"/> instance.
-            </summary>
-            <param name="obj">Obj.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Equal.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Equal.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.Anything">
-            <summary>
-            Constraint that always returns true
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.Anything.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.Anything.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Constraints.ComparingConstraint">
-            <summary>
-            Constraint that evaluate whatever a comparable is greater than another
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.ComparingConstraint.#ctor(System.IComparable,System.Boolean,System.Boolean)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Constraints.ComparingConstraint"/> instance.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Constraints.ComparingConstraint.Eval(System.Object)">
-            <summary>
-            determains if the object pass the constraints
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Constraints.ComparingConstraint.Message">
-            <summary>
-            Gets the message for this constraint
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Impl.MockedObjectsEquality">
-            <summary>
-            This class will provide hash code for hashtables without needing
-            to call the GetHashCode() on the object, which may very well be mocked.
-            This class has no state so it is a singelton to avoid creating a lot of objects 
-            that does the exact same thing. See flyweight patterns.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.MockedObjectsEquality.GetHashCode(System.Object)">
-            <summary>
-            Get the hash code for a proxy object without calling GetHashCode()
-            on the object.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.MockedObjectsEquality.Compare(System.Object,System.Object)">
-            <summary>
-            Compares two instances of mocked objects
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.MockedObjectsEquality.Equals(System.Object,System.Object)">
-            <summary>
-            Compare two mocked objects
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.MockedObjectsEquality.NextHashCode">
-            <summary>
-            The next hash code value for a mock object.
-            This is safe for multi threading.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.MockedObjectsEquality.Instance">
-            <summary>
-            The sole instance of <see cref="T:Rhino.Mocks.Impl.MockedObjectsEquality"/>
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Property">
-            <summary>
-            Central location for constraints for object's properties
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Property.Value(System.String,System.Object)">
-            <summary>
-            Constrains the parameter to have property with the specified value
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <param name="expectedValue">Expected value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Property.Value(System.Type,System.String,System.Object)">
-            <summary>
-            Constrains the parameter to have property with the specified value.
-            </summary>
-            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="expectedValue">Expected value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Property.ValueConstraint(System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
-            <summary>
-            Constrains the parameter to have a property satisfying a specified constraint.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <param name="propertyConstraint">Constraint for the property.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Property.ValueConstraint(System.Type,System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
-            <summary>
-            Constrains the parameter to have a property satisfying a specified constraint.
-            </summary>
-            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="propertyConstraint">Constraint for the property.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Property.IsNull(System.String)">
-            <summary>
-            Determines whether the parameter has the specified property and that it is null.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Property.IsNull(System.Type,System.String)">
-            <summary>
-            Determines whether the parameter has the specified property and that it is null.
-            </summary>
-            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
-            <param name="propertyName">Name of the property.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Property.IsNotNull(System.String)">
-            <summary>
-            Determines whether the parameter has the specified property and that it is not null.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.Property.IsNotNull(System.Type,System.String)">
-            <summary>
-            Determines whether the parameter has the specified property and that it is not null.
-            </summary>
-            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
-            <param name="propertyName">Name of the property.</param>
+            <param name="delegateType"></param>
             <returns></returns>
         </member>
         <member name="T:Rhino.Mocks.MethodRecorders.UnorderedMethodRecorder">
@@ -1360,288 +1721,60 @@
             This has special affects in that this method would now ignore orderring.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.RepeatableOption">
+        <member name="T:Rhino.Mocks.Expect">
             <summary>
-            Options for special repeat option
+            Allows to set expectation on methods that has return values.
+            For methods with void return value, you need to use LastCall
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Impl.RepeatableOption.Normal">
+        <member name="M:Rhino.Mocks.Expect.Call(System.Object)">
             <summary>
-            This method can be called only as many times as the IMethodOptions.Expect allows.
+            The method options for the last call on /any/ proxy on /any/ repository on the current thread.
+            This method if not safe for multi threading scenarios, use <see cref="M:Rhino.Mocks.Expect.On(System.Object)"/>.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Impl.RepeatableOption.Never">
+        <member name="M:Rhino.Mocks.Expect.On(System.Object)">
             <summary>
-            This method should never be called
+            Get the method options for the last method call on the mockInstance.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Impl.RepeatableOption.Any">
+        <member name="T:Rhino.Mocks.Expectations.ArgsEqualExpectation">
             <summary>
-            This method can be call any number of times
+            Summary description for ArgsEqualExpectation.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Impl.RepeatableOption.OriginalCall">
+        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.#ctor(System.Reflection.MethodInfo,System.Object[])">
             <summary>
-            This method will call the original method
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.ArgsEqualExpectation"/> instance.
             </summary>
+            <param name="expectedArgs">Expected args.</param>
+            <param name="method">method this expectation is for</param>
         </member>
-        <member name="F:Rhino.Mocks.Impl.RepeatableOption.PropertyBehavior">
-            <summary>
-            This method will simulate simple property behavior
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.RhinoMocks">
-            <summary>
-            Used for [assembly: InternalsVisibleTo(RhinoMocks.StrongName)]
-            </summary>
-        </member>
-        <member name="F:Rhino.Mocks.RhinoMocks.StrongName">
-            <summary>
-            Strong name for the Dynamic Proxy assemblies. Used for InternalsVisibleTo specification.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Interfaces.IExpectation">
-            <summary>
-            Interface to validate that a method call is correct.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IExpectation.IsExpected(System.Object[])">
+        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.DoIsExpected(System.Object[])">
             <summary>
             Validate the arguments for the method.
-            This method can be called numerous times, so be careful about side effects
             </summary>
             <param name="args">The arguments with which the method was called</param>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IExpectation.AddActualCall">
+        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.Equals(System.Object)">
             <summary>
-            Add an actual method call to this expectation
+            Determines if the object equal to expectation
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IExpectation.ReturnOrThrow(System.Object[])">
+        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.GetHashCode">
             <summary>
-            Returns the return value or throw the exception and setup any output / ref parameters
-            that has been set.
+            Get the hash code
             </summary>
         </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ErrorMessage">
+        <member name="P:Rhino.Mocks.Expectations.ArgsEqualExpectation.ErrorMessage">
             <summary>
             Gets the error message.
             </summary>
             <value></value>
         </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.Expected">
+        <member name="P:Rhino.Mocks.Expectations.ArgsEqualExpectation.ExpectedArgs">
             <summary>
-            Range of expected calls
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ActualCalls">
-            <summary>
-            Number of call actually made for this method
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.CanAcceptCalls">
-            <summary>
-            If this expectation is still waiting for calls.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ReturnValue">
-            <summary>
-            The return value for a method matching this expectation
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ExceptionToThrow">
-            <summary>
-            Gets or sets the exception to throw on a method matching this expectation.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ActionsSatisfied">
-            <summary>
-            Gets a value indicating whether this instance's action is staisfied.
-            A staisfied instance means that there are no more requirements from
-            this method. A method with non void return value must register either
-            a return value or an exception to throw.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.Method">
-            <summary>
-            Gets the method this expectation is for.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.RepeatableOption">
-            <summary>
-            Gets or sets what special condtions there are for this method
-            repeating.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ExpectationSatisfied">
-            <summary>
-            Gets a value indicating whether this expectation was satisfied
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.HasReturnValue">
-            <summary>
-            Specify whatever this expectation has a return value set
-            You can't check ReturnValue for this because a valid return value include null.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.ActionToExecute">
-            <summary>
-            An action to execute when the method is matched.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IExpectation.OutRefParams">
-            <summary>
-            Set the out / ref parameters for the method call.
-            The indexing is zero based and ignores any non out/ref parameter.
-            It is possible not to pass all the parameters. This method can be called only once.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Impl.RecordPartialMockState">
-            <summary>
-            Records all the expectations for a mock and
-            return a ReplayPartialMockState when Replay()
-            is called.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Impl.RecordMockState">
-            <summary>
-            Records all the expectations for a mock
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.#ctor(Rhino.Mocks.Interfaces.IMockedObject,Rhino.Mocks.MockRepository)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.RecordMockState"/> instance.
-            </summary>
-            <param name="repository">Repository.</param>
-            <param name="mockedObject">The proxy that generates the method calls</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Add a method call for this state' mock.
-            </summary>
-            <param name="invocation">The invocation for this method</param>
-            <param name="method">The method that was called</param>
-            <param name="args">The arguments this method was called with</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.Replay">
-            <summary>
-            Verify that we can move to replay state and move 
-            to the reply state.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.DoReplay">
-            <summary>
-            Verify that we can move to replay state and move 
-            to the reply state.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.Verify">
-            <summary>
-            Verify that this mock expectations have passed.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.BackToRecord">
-            <summary>
-            Gets a mock state that match the original mock state of the object.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.RecordMockState.LastExpectation">
-            <summary>
-            Gets the last expectation.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.RecordMockState.MethodCallsCount">
-            <summary>
-            Gets the total method calls count.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.RecordMockState.LastMethodOptions">
-            <summary>
-            Get the options for the last method call
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.RecordMockState.VerifyState">
-            <summary>
-            Gets the matching verify state for this state
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordPartialMockState.#ctor(Rhino.Mocks.Interfaces.IMockedObject,Rhino.Mocks.MockRepository)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.RecordDynamicMockState"/> instance.
-            </summary>
-            <param name="repository">Repository.</param>
-            <param name="mockedObject">The proxy that generates the method calls</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordPartialMockState.DoReplay">
-            <summary>
-            Verify that we can move to replay state and move 
-            to the reply state.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordPartialMockState.BackToRecord">
-            <summary>
-            Gets a mock state that match the original mock state of the object.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Impl.RecordDynamicMockState">
-            <summary>
-            Records all the expectations for a mock and
-            return a ReplayDynamicMockState when Replay()
-            is called.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordDynamicMockState.#ctor(Rhino.Mocks.Interfaces.IMockedObject,Rhino.Mocks.MockRepository)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.RecordDynamicMockState"/> instance.
-            </summary>
-            <param name="repository">Repository.</param>
-            <param name="mockedObject">The proxy that generates the method calls</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordDynamicMockState.DoReplay">
-            <summary>
-            Verify that we can move to replay state and move 
-            to the reply state.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RecordDynamicMockState.BackToRecord">
-            <summary>
-            Gets a mock state that match the original mock state of the object.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException">
-            <summary>
-            Signals that an object was call on a mock repostiroy which doesn't
-            belong to this mock repository or not a mock
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException.#ctor(System.String)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException"/> instance.
-            </summary>
-            <param name="message">Message.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Serialization constructor
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.SetupResult">
-            <summary>
-            Setup method calls to repeat any number of times.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.SetupResult.For(System.Object)">
-            <summary>
-            Get the method options and set the last method call to repeat 
-            any number of times.
-            This also means that the method would transcend ordering
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.SetupResult.On(System.Object)">
-            <summary>
-            Get the method options for the last method call on the mockInstance and set it
-            to repeat any number of times.
-            This also means that the method would transcend ordering
+            Get the expected args.
             </summary>
         </member>
         <member name="T:Rhino.Mocks.Impl.MethodOptions">
@@ -1764,273 +1897,896 @@
             Get the last call method info.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Generated.ExpectationsList">
+        <member name="T:Rhino.Mocks.Impl.VerifiedMockState">
             <summary>
-            ExpectationsList
+            Throw an object already verified when accessed
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Expectations.ArgsEqualExpectation">
+        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.#ctor(Rhino.Mocks.Interfaces.IMockState)">
             <summary>
-            Summary description for ArgsEqualExpectation.
+            Create a new instance of VerifiedMockState 
+            </summary>
+            <param name="previous">The previous mock state, used to get the initial record state</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Add a method call for this state' mock.
+            </summary>
+            <param name="invocation">The invocation for this method</param>
+            <param name="method">The method that was called</param>
+            <param name="args">The arguments this method was called with</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.Verify">
+            <summary>
+            Verify that this mock expectations have passed.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Expectations.AbstractExpectation">
+        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.Replay">
             <summary>
-            Abstract class that holds common information for 
-            expectations.
+            Verify that we can move to replay state and move 
+            to the reply state.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.actualCalls">
+        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.BackToRecord">
             <summary>
-            Number of actuall calls made that passed this expectation
+            Gets a mock state that match the original mock state of the object.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.expected">
+        <member name="P:Rhino.Mocks.Impl.VerifiedMockState.VerifyState">
             <summary>
-            Range of expected calls that should pass this expectation.
+            Gets the matching verify state for this state
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.returnValue">
+        <member name="P:Rhino.Mocks.Impl.VerifiedMockState.LastMethodOptions">
             <summary>
-            The return value for a method matching this expectation
+            Get the options for the last method call
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.exceptionToThrow">
+        <member name="T:Rhino.Mocks.SetupResult">
             <summary>
-            The exception to throw on a method matching this expectation.
+            Setup method calls to repeat any number of times.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.method">
+        <member name="M:Rhino.Mocks.SetupResult.For(System.Object)">
             <summary>
-            The method this expectation is for.
+            Get the method options and set the last method call to repeat 
+            any number of times.
+            This also means that the method would transcend ordering
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.returnValueSet">
+        <member name="M:Rhino.Mocks.SetupResult.On(System.Object)">
             <summary>
-            The return value for this method was set
+            Get the method options for the last method call on the mockInstance and set it
+            to repeat any number of times.
+            This also means that the method would transcend ordering
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.repeatableOption">
+        <member name="T:Rhino.Mocks.Impl.RhinoInterceptor">
             <summary>
-            Whether this method will repeat
-            unlimited number of times.
+            Summary description for RhinoInterceptor.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.actionToExecute">
+        <member name="M:Rhino.Mocks.Impl.RhinoInterceptor.#ctor(Rhino.Mocks.MockRepository,Rhino.Mocks.Interfaces.IMockedObject)">
             <summary>
-            A delegate that will be run when the 
-            expectation is matched.
+            Creates a new <see cref="T:Rhino.Mocks.Impl.RhinoInterceptor"/> instance.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.matchingArgs">
+        <member name="M:Rhino.Mocks.Impl.RhinoInterceptor.Intercept(Castle.DynamicProxy.IInvocation,System.Object[])">
             <summary>
-            The arguments that matched this expectation.
+            Intercept a method call and direct it to the repository.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.GetHashCode">
+        <member name="T:Rhino.Mocks.Impl.ReplayPartialMockState">
             <summary>
-            Get the hash code
+            Validate all expectations on a mock and ignores calls to
+            any method that was not setup properly.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.AddActualCall">
+        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.#ctor(Rhino.Mocks.Impl.RecordPartialMockState)">
             <summary>
-            Add an actual method call to this expectation
+            Creates a new <see cref="T:Rhino.Mocks.Impl.ReplayDynamicMockState"/> instance.
+            </summary>
+            <param name="previousState">The previous state for this method</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Add a method call for this state' mock.
+            </summary>
+            <param name="invocation">The invocation for this method</param>
+            <param name="method">The method that was called</param>
+            <param name="args">The arguments this method was called with</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.BackToRecord">
+            <summary>
+            Gets a mock state that match the original mock state of the object.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.ReturnOrThrow(System.Object[])">
+        <member name="T:Rhino.Mocks.Is">
             <summary>
-            Returns the return value or throw the exception and setup output / ref parameters
+            Central location for constraints
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.IsExpected(System.Object[])">
+        <member name="M:Rhino.Mocks.Is.GreaterThan(System.IComparable)">
             <summary>
-            Validate the arguments for the method on the child methods
+            Evaluate a greater than constraint for <see cref="T:System.IComparable"/>.
             </summary>
-            <param name="args">The arguments with which the method was called</param>
+            <param name="objToCompare">The object the parameter should be greater than</param>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.#ctor(System.Reflection.MethodInfo)">
+        <member name="M:Rhino.Mocks.Is.LessThan(System.IComparable)">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.AbstractExpectation"/> instance.
+            Evaluate a less than constraint for <see cref="T:System.IComparable"/>.
+            </summary>
+            <param name="objToCompare">The object the parameter should be less than</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.LessThanOrEqual(System.IComparable)">
+            <summary>
+            Evaluate a less than or equal constraint for <see cref="T:System.IComparable"/>.
+            </summary>
+            <param name="objToCompare">The object the parameter should be less than or equal to</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.GreaterThanOrEqual(System.IComparable)">
+            <summary>
+            Evaluate a greater than or equal constraint for <see cref="T:System.IComparable"/>.
+            </summary>
+            <param name="objToCompare">The object the parameter should be greater than or equal to</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.Equal(System.Object)">
+            <summary>
+            Evaluate an equal constraint for <see cref="T:System.IComparable"/>.
+            </summary>
+            <param name="obj">The object the parameter should equal to</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.NotEqual(System.Object)">
+            <summary>
+            Evaluate a not equal constraint for <see cref="T:System.IComparable"/>.
+            </summary>
+            <param name="obj">The object the parameter should not equal to</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.Same(System.Object)">
+            <summary>
+            Evaluate a same as constraint.
+            </summary>
+            <param name="obj">The object the parameter should the same as.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.NotSame(System.Object)">
+            <summary>
+            Evaluate a not same as constraint.
+            </summary>
+            <param name="obj">The object the parameter should not be the same as.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Is.Anything">
+            <summary>
+            A constraints that accept anything
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Is.Null">
+            <summary>
+            A constraint that accept only nulls
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Is.NotNull">
+            <summary>
+            A constraint that accept only non null values
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Is.TypeOf(System.Type)">
+            <summary>
+            A constraint that accept only value of the specified type
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Is.TypeOf``1">
+            <summary>
+            A constraint that accept only value of the specified type
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Impl.ReplayDynamicMockState">
+            <summary>
+            Validate all expectations on a mock and ignores calls to
+            any method that was not setup properly.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.#ctor(Rhino.Mocks.Impl.RecordDynamicMockState)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Impl.ReplayDynamicMockState"/> instance.
+            </summary>
+            <param name="previousState">The previous state for this method</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Add a method call for this state' mock.
+            </summary>
+            <param name="invocation">The invocation for this method</param>
+            <param name="method">The method that was called</param>
+            <param name="args">The arguments this method was called with</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.BackToRecord">
+            <summary>
+            Gets a mock state that match the original mock state of the object.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Generated.ProxyStateDictionary">
+            <summary>
+            Dictionary class
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Generated.ProxyStateDictionary.#ctor">
+            <summary>
+            Create a new instance of <c>ProxyStateDictionary</c>
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Text">
+            <summary>
+            Central location for all text related constraints
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Text.StartsWith(System.String)">
+            <summary>
+            Constrain the argument to starts with the specified string
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Text.EndsWith(System.String)">
+            <summary>
+            Constrain the argument to end with the specified string
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Text.Contains(System.String)">
+            <summary>
+            Constrain the argument to contain the specified string
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Text.Like(System.String)">
+            <summary>
+            Constrain the argument to validate according to regex pattern
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Property">
+            <summary>
+            Central location for constraints for object's properties
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Property.Value(System.String,System.Object)">
+            <summary>
+            Constrains the parameter to have property with the specified value
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="expectedValue">Expected value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Property.Value(System.Type,System.String,System.Object)">
+            <summary>
+            Constrains the parameter to have property with the specified value.
+            </summary>
+            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="expectedValue">Expected value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Property.ValueConstraint(System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Constrains the parameter to have a property satisfying a specified constraint.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyConstraint">Constraint for the property.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Property.ValueConstraint(System.Type,System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Constrains the parameter to have a property satisfying a specified constraint.
+            </summary>
+            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyConstraint">Constraint for the property.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Property.IsNull(System.String)">
+            <summary>
+            Determines whether the parameter has the specified property and that it is null.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Property.IsNull(System.Type,System.String)">
+            <summary>
+            Determines whether the parameter has the specified property and that it is null.
+            </summary>
+            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
+            <param name="propertyName">Name of the property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Property.IsNotNull(System.String)">
+            <summary>
+            Determines whether the parameter has the specified property and that it is not null.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Property.IsNotNull(System.Type,System.String)">
+            <summary>
+            Determines whether the parameter has the specified property and that it is not null.
+            </summary>
+            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
+            <param name="propertyName">Name of the property.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rhino.Mocks.Generated.ProxyMethodExpectationsDictionary">
+            <summary>
+            Dictionary
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Expectations.AnyArgsExpectation">
+            <summary>
+            Expectation that matchs any arguments for the method.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.#ctor(System.Reflection.MethodInfo)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.AnyArgsExpectation"/> instance.
             </summary>
             <param name="method">Method.</param>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation)">
+        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation)">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.AbstractExpectation"/> instance.
+            Creates a new <see cref="T:Rhino.Mocks.Expectations.AnyArgsExpectation"/> instance.
             </summary>
             <param name="expectation">Expectation.</param>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.DoIsExpected(System.Object[])">
-            <summary>
-            Validate the arguments for the method on the child methods
-            </summary>
-            <param name="args">The arguments with which the method was called</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.Equals(System.Object)">
-            <summary>
-            Determines if this object equal to obj
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.CreateErrorMessage(System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            The error message for these arguments
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.AssertDelegateArgumentsMatchMethod(System.Delegate)">
-            <summary>
-            Asserts that the delegate has the same parameters as the expectation's method call
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.OutRefParams">
-            <summary>
-            Setter for the outpur / ref parameters for this expecataion.
-            Can only be set once.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.HasReturnValue">
-            <summary>
-            Specify whatever this expectation has a return value set
-            You can't check ReturnValue for this because a valid return value include null.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.Method">
-            <summary>
-            Gets the method this expectation is for.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.RepeatableOption">
-            <summary>
-            Gets or sets what special condtions there are for this method
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.Expected">
-            <summary>
-            Range of expected calls
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ActualCalls">
-            <summary>
-            Number of call actually made for this method
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.CanAcceptCalls">
-            <summary>
-            If this expectation is still waiting for calls.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ExpectationSatisfied">
-            <summary>
-            Gets a value indicating whether this expectation was satisfied
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ReturnValue">
-            <summary>
-            The return value for a method matching this expectation
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ActionToExecute">
-            <summary>
-            An action to execute when the method is matched.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ExceptionToThrow">
-            <summary>
-            Gets or sets the exception to throw on a method matching this expectation.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ActionsSatisfied">
-            <summary>
-            Gets a value indicating whether this instance's action is staisfied.
-            A staisfied instance means that there are no more requirements from
-            this method. A method with non void return value must register either
-            a return value or an exception to throw or an action to execute.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ErrorMessage">
-            <summary>
-            Gets the error message.
-            </summary>
-            <value></value>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.#ctor(System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.ArgsEqualExpectation"/> instance.
-            </summary>
-            <param name="expectedArgs">Expected args.</param>
-            <param name="method">method this expectation is for</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.DoIsExpected(System.Object[])">
+        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.DoIsExpected(System.Object[])">
             <summary>
             Validate the arguments for the method.
             </summary>
             <param name="args">The arguments with which the method was called</param>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.Equals(System.Object)">
+        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.Equals(System.Object)">
             <summary>
             Determines if the object equal to expectation
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expectations.ArgsEqualExpectation.GetHashCode">
+        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.GetHashCode">
             <summary>
             Get the hash code
             </summary>
         </member>
-        <member name="P:Rhino.Mocks.Expectations.ArgsEqualExpectation.ErrorMessage">
+        <member name="P:Rhino.Mocks.Expectations.AnyArgsExpectation.ErrorMessage">
             <summary>
             Gets the error message.
             </summary>
             <value></value>
         </member>
-        <member name="P:Rhino.Mocks.Expectations.ArgsEqualExpectation.ExpectedArgs">
+        <member name="T:Rhino.Mocks.List">
             <summary>
-            Get the expected args.
+            Central location for constraints about lists and collections
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Expect">
+        <member name="M:Rhino.Mocks.List.IsIn(System.Object)">
             <summary>
-            Allows to set expectation on methods that has return values.
-            For methods with void return value, you need to use LastCall
+            Determines whether the specified obj is in the paramter.
+            The parameter must be IEnumerable.
+            </summary>
+            <param name="obj">Obj.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.List.OneOf(System.Collections.ICollection)">
+            <summary>
+            Determains whatever the parameter is in the collection.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expect.Call(System.Object)">
+        <member name="M:Rhino.Mocks.List.Equal(System.Collections.ICollection)">
             <summary>
-            The method options for the last call on /any/ proxy on /any/ repository on the current thread.
-            This method if not safe for multi threading scenarios, use <see cref="M:Rhino.Mocks.Expect.On(System.Object)"/>.
+            Determains that the parameter collection is identical to the specified collection
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Expect.On(System.Object)">
+        <member name="T:Rhino.Mocks.Utilities.ReturnValueUtil">
             <summary>
-            Get the method options for the last method call on the mockInstance.
+            Utility to get the default value for a type
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.With">
+        <member name="M:Rhino.Mocks.Utilities.ReturnValueUtil.DefaultValue(System.Type)">
             <summary>
-            Allows easier access to MockRepository, works closely with Mocker.Current to
-            allow access to a context where the mock repository is automatially verified at
-            the end of the code block.
+            The default value for a type.
+            Null for reference types and void
+            0 for value types.
+            First element for enums
+            </summary>
+            <param name="type">Type.</param>
+            <returns>the default value</returns>
+        </member>
+        <member name="T:Rhino.Mocks.MethodRecorders.RecorderChanger">
+            <summary>
+            Change the recorder from ordered to unordered and vice versa
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.With.Mocks(Rhino.Mocks.With.Proc)">
+        <member name="M:Rhino.Mocks.MethodRecorders.RecorderChanger.#ctor(Rhino.Mocks.MockRepository,Rhino.Mocks.Interfaces.IMethodRecorder,Rhino.Mocks.Interfaces.IMethodRecorder)">
             <summary>
-            Initialize a code block where Mocker.Current is initialized.
-            At the end of the code block, all the expectation will be verified.
-            This overload will create a new MockRepository.
+            Creates a new <see cref="T:Rhino.Mocks.MethodRecorders.RecorderChanger"/> instance.
             </summary>
-            <param name="methodCallThatHasMocks">The code that will be executed under the mock context</param>
         </member>
-        <member name="M:Rhino.Mocks.With.Mocks(Rhino.Mocks.MockRepository,Rhino.Mocks.With.Proc)">
+        <member name="M:Rhino.Mocks.MethodRecorders.RecorderChanger.Dispose">
             <summary>
-            Initialize a code block where Mocker.Current is initialized.
-            At the end of the code block, all the expectation will be verified.
-            This overload will create a new MockRepository.
+            Disposes this instance.
             </summary>
-            <param name="mocks">The mock repository to use, at the end of the code block, VerifyAll() will be called on the repository.</param>
-            <param name="methodCallThatHasMocks">The code that will be executed under the mock context</param>
         </member>
-        <member name="T:Rhino.Mocks.With.Proc">
+        <member name="T:Rhino.Mocks.Impl.Range">
             <summary>
-            A method with no arguments and no return value that will be called under the mock context.
+            Range for expected method calls
             </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.Range.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Impl.Range"/> instance.
+            </summary>
+            <param name="min">Min.</param>
+            <param name="max">Max.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.Range.ToString">
+            <summary>
+            Return the string representation of this range.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Impl.Range.Min">
+            <summary>
+            Gets or sets the min.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Rhino.Mocks.Impl.Range.Max">
+            <summary>
+            Gets or sets the max.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException">
+            <summary>
+            Signals that an object was call on a mock repostiroy which doesn't
+            belong to this mock repository or not a mock
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException"/> instance.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Exceptions.ObjectNotMockFromThisRepositoryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization constructor
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.PropertyIs">
+            <summary>
+            Constrain that the property has a specified value
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.PropertyConstraint">
+            <summary>
+            Constrain that the property matches another constraint.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PropertyConstraint.#ctor(System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyConstraint"/> instance.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="constraint">Constraint to place on the property value.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PropertyConstraint.#ctor(System.Type,System.String,Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyConstraint"/> instance, specifying a disambiguating
+            <paramref name="declaringType"/> for the property.
+            </summary>
+            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="constraint">Constraint to place on the property value.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PropertyConstraint.Eval(System.Object)">
+            <summary>
+            Determines if the object passes the constraint.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.PropertyConstraint.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PropertyIs.#ctor(System.String,System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyIs"/> instance.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="expectedValue">Expected value.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PropertyIs.#ctor(System.Type,System.String,System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.PropertyIs"/> instance, specifying a disambiguating
+            <paramref name="declaringType"/> for the property.
+            </summary>
+            <param name="declaringType">The type that declares the property, used to disambiguate between properties.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="expectedValue">Expected value.</param>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.TypeOf">
+            <summary>
+            Constrain that the parameter must be of the specified type
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.TypeOf.#ctor(System.Type)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.TypeOf"/> instance.
+            </summary>
+            <param name="type">Type.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.TypeOf.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.TypeOf.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Same">
+            <summary>
+            Constraint that determines whether an object is the same object as another.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Same.#ctor(System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.Equal"/> instance.
+            </summary>
+            <param name="obj">Obj.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Same.Eval(System.Object)">
+            <summary>
+            Determines if the object passes the constraints.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Same.Message">
+            <summary>
+            Gets the message for this constraint.
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.CollectionEqual">
+            <summary>
+            Constrain that the list contains the same items as the parameter list
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.CollectionEqual.#ctor(System.Collections.ICollection)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.CollectionEqual"/> instance.
+            </summary>
+            <param name="collection">In list.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.CollectionEqual.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.CollectionEqual.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.OneOf">
+            <summary>
+            Constrain that the parameter is one of the items in the list
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.OneOf.#ctor(System.Collections.ICollection)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.OneOf"/> instance.
+            </summary>
+            <param name="collection">In list.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.OneOf.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.OneOf.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.IsIn">
+            <summary>
+            Constrain that the object is inside the parameter list
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.IsIn.#ctor(System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.IsIn"/> instance.
+            </summary>
+            <param name="inList">In list.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.IsIn.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.IsIn.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Or">
+            <summary>
+            Combines two constraints, constraint pass if either is fine.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Or.#ctor(Rhino.Mocks.Constraints.AbstractConstraint,Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.And"/> instance.
+            </summary>
+            <param name="c1">C1.</param>
+            <param name="c2">C2.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Or.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Or.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Not">
+            <summary>
+            Negate a constraint
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Not.#ctor(Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.And"/> instance.
+            </summary>
+            <param name="c1">C1.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Not.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Not.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.And">
+            <summary>
+            Combines two constraints
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.And.#ctor(Rhino.Mocks.Constraints.AbstractConstraint,Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.And"/> instance.
+            </summary>
+            <param name="c1">C1.</param>
+            <param name="c2">C2.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.And.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.And.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Like">
+            <summary>
+            Constrain the argument to validate according to regex pattern
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Like.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.Like"/> instance.
+            </summary>
+            <param name="pattern">Pattern.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Like.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Like.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Contains">
+            <summary>
+            Constraint that evaluate whatever an argument contains the specified string.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Contains.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.Contains"/> instance.
+            </summary>
+            <param name="innerString">Inner string.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Contains.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Contains.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.EndsWith">
+            <summary>
+            Constraint that evaluate whatever an argument ends with the specified string
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.EndsWith.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.EndsWith"/> instance.
+            </summary>
+            <param name="end">End.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.EndsWith.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.EndsWith.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.StartsWith">
+            <summary>
+            Constraint that evaluate whatever an argument start with the specified string
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.StartsWith.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.StartsWith"/> instance.
+            </summary>
+            <param name="start">Start.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.StartsWith.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.StartsWith.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Equal">
+            <summary>
+            Constraint that evaluate whatever an object equals another
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Equal.#ctor(System.Object)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.Equal"/> instance.
+            </summary>
+            <param name="obj">Obj.</param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Equal.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Equal.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.Anything">
+            <summary>
+            Constraint that always returns true
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.Anything.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.Anything.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.ComparingConstraint">
+            <summary>
+            Constraint that evaluate whatever a comparable is greater than another
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.ComparingConstraint.#ctor(System.IComparable,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.Constraints.ComparingConstraint"/> instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.ComparingConstraint.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.ComparingConstraint.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Mocks.Mocker">
+            <summary>
+            Accessor for the current mocker
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Mocker.Current">
+            <summary>
+            The current mocker
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.MethodRecorders.ProxyMethodPair">
+            <summary>
+            Holds a pair of mocked object and a method
+            and allows to compare them against each other.
+            This allows us to have a distinction between mockOne.MyMethod() and
+            mockTwo.MyMethod()...
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.#ctor(System.Object,System.Reflection.MethodInfo)">
+            <summary>
+            Creates a new <see cref="T:Rhino.Mocks.MethodRecorders.ProxyMethodPair"/> instance.
+            </summary>
+            <param name="proxy">Proxy.</param>
+            <param name="method">Method.</param>
+        </member>
+        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.Equals(System.Object)">
+            <summary>
+            Determains whatever obj equals to this instance.
+            ProxyMethodPairs are equals when they point to the same /instance/ of
+            an object, and to the same method.
+            </summary>
+            <param name="obj">Obj.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.GetHashCode">
+            <summary>
+            Gets the hash code.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.ToString">
+            <summary>
+            Gets a string representation of this <see cref="T:Rhino.Mocks.MethodRecorders.ProxyMethodPair"/>
+            to assist debugging.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.MethodRecorders.ProxyMethodPair.Proxy">
+            <summary>
+            Gets the proxy.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Rhino.Mocks.MethodRecorders.ProxyMethodPair.Method">
+            <summary>
+            Gets the method.
+            </summary>
+            <value></value>
         </member>
         <member name="T:Rhino.Mocks.MethodRecorders.ProxyMethodExpectationTriplet">
             <summary>
@@ -2083,523 +2839,6 @@
             </summary>
             <value></value>
         </member>
-        <member name="T:Rhino.Mocks.Impl.Validate">
-            <summary>
-            Validate arguments for methods
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.Validate.IsNotNull(System.Object,System.String)">
-            <summary>
-            Validate that the passed argument is not null.
-            </summary>
-            <param name="obj">The object to validate</param>
-            <param name="name">The name of the argument</param>
-            <exception cref="T:System.ArgumentNullException">
-            If the obj is null, an ArgumentNullException with the passed name
-            is thrown.
-            </exception>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.Validate.ArgsEqual(System.Object[],System.Object[])">
-            <summary>
-            Validate that the arguments are equal.
-            </summary>
-            <param name="expectedArgs">Expected args.</param>
-            <param name="actualArgs">Actual Args.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.Validate.SafeEquals(System.Object,System.Object)">
-            <summary>
-            This method is safe for use even if any of the objects is a mocked object
-            that override equals.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Expectations.CallbackExpectation">
-            <summary>
-            Call a specified callback to verify the expectation
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation,System.Delegate)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.CallbackExpectation"/> instance.
-            </summary>
-            <param name="expectation">Expectation.</param>
-            <param name="callback">Callback.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.#ctor(System.Reflection.MethodInfo,System.Delegate)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.CallbackExpectation"/> instance.
-            </summary>
-            <param name="method">Method.</param>
-            <param name="callback">Callback.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.DoIsExpected(System.Object[])">
-            <summary>
-            Validate the arguments for the method on the child methods
-            </summary>
-            <param name="args">The arguments with which the method was called</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.Equals(System.Object)">
-            <summary>
-            Determines if the object equal to expectation
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.CallbackExpectation.GetHashCode">
-            <summary>
-            Get the hash code
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.CallbackExpectation.ErrorMessage">
-            <summary>
-            Gets the error message.
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.MockRepository">
-            <summary>
-            Creates proxied instances of types.
-            </summary>
-            <summary>
-            Creates proxied instances of types.
-            </summary>
-        </member>
-        <member name="F:Rhino.Mocks.MockRepository.lastRepository">
-            <summary>
-            This is used to record the last repository that has a method called on it.
-            </summary>
-        </member>
-        <member name="F:Rhino.Mocks.MockRepository.lastMockedObject">
-            <summary>
-            this is used to get to the last proxy on this repository.
-            </summary>
-        </member>
-        <member name="F:Rhino.Mocks.MockRepository.delegateProxies">
-            <summary>
-            For mock delegates, maps the proxy instance from intercepted invocations
-            back to the delegate that was originally returned to client code, if any.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.#ctor">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.MockRepository"/> instance.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.Ordered">
-            <summary>
-            Move the repository to ordered mode
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.Unordered">
-            <summary>
-            Move the repository to un-ordered mode
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.CreateMock(System.Type,System.Object[])">
-            <summary>
-            Creates a mock for the specified type.
-            </summary>
-            <param name="type">Type.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock(System.Type,System.Type[])">
-            <summary>
-            Creates a mock from several types, with strict semantics.
-            Only <paramref name="mainType"/> may be a class.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock(System.Type,System.Type[],System.Object[])">
-            <summary>
-            Creates a mock from several types, with strict semantics.
-            Only <paramref name="mainType"/> may be a class.
-            </summary>
-            <param name="mainType">The main type to mock.</param>
-            <param name="extraTypes">Extra interface types to mock.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock(System.Type,System.Type[])">
-            <summary>
-            Creates a mock from several types, with dynamic semantics.
-            Only <paramref name="mainType"/> may be a class.
-            </summary>
-            <param name="mainType">The main type to mock.</param>
-            <param name="extraTypes">Extra interface types to mock.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock(System.Type,System.Type[],System.Object[])">
-            <summary>
-            Creates a mock from several types, with dynamic semantics.
-            Only <paramref name="mainType"/> may be a class.
-            </summary>
-            <param name="mainType">The main type to mock.</param>
-            <param name="extraTypes">Extra interface types to mock.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.DynamicMock(System.Type,System.Object[])">
-            <summary>
-            Creates a dynamic mock for the specified type.
-            </summary>
-            <param name="type">Type.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PartialMock(System.Type,System.Object[])">
-            <summary>
-            Creates a mock object that defaults to calling the class methods.
-            </summary>
-            <param name="type">Type.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock(System.Type,System.Type[])">
-            <summary>
-            Creates a mock object that defaults to calling the class methods.
-            </summary>
-            <param name="type">Type.</param>
-            <param name="extraTypes">Extra interface types to mock.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock(System.Type,System.Type[],System.Object[])">
-            <summary>
-            Creates a mock object that defaults to calling the class methods.
-            </summary>
-            <param name="type">Type.</param>
-            <param name="extraTypes">Extra interface types to mock.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.Replay(System.Object)">
-            <summary>
-            Cause the mock state to change to replay, any further call is compared to the 
-            ones that were called in the record state.
-            </summary>
-            <param name="obj">the object to move to replay state</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.BackToRecord(System.Object)">
-            <summary>
-            Move the mocked object back to record state.
-            Will delete all current expectations!
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.Verify(System.Object)">
-            <summary>
-            Verify that all the expectations for this object were fulfilled.
-            </summary>
-            <param name="obj">the object to verify the expectations for</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.LastMethodCall(System.Object)">
-            <summary>
-            Get the method options for the last call on
-            mockedInstance.
-            </summary>
-            <param name="mockedInstance">The mock object</param>
-            <returns>Method options for the last call</returns>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.GetMockObjectFromInvocationProxy(System.Object)">
-            <summary>
-            Maps an invocation proxy back to the mock object instance that was originally
-            returned to client code which might have been a delegate to this proxy.
-            </summary>
-            <param name="invocationProxy">The mock object proxy from the intercepted invocation</param>
-            <returns>The mock object</returns>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PopRecorder">
-            <summary>
-            Pops the recorder.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PushRecorder(Rhino.Mocks.Interfaces.IMethodRecorder)">
-            <summary>
-            Pushes the recorder.
-            </summary>
-            <param name="newRecorder">New recorder.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.ReplayAll">
-            <summary>
-            Replay all the mocks from this repository
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.VerifyAll">
-            <summary>
-            Verify all the mocks from this repository
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.CreateMock``1(System.Object[])">
-            <summary>
-            Creates a mock for the spesified type.
-            </summary>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.DynamicMock``1(System.Object[])">
-            <summary>
-            Creates a dynamic mock for the specified type.
-            </summary>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock``1(System.Type[])">
-            <summary>
-            Creates a mock object from several types.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock``1(System.Type[])">
-            <summary>
-            Create a mock object from several types with dynamic semantics.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock``1(System.Type[])">
-            <summary>
-            Create a mock object from several types with partial semantics.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.CreateMultiMock``1(System.Type[],System.Object[])">
-            <summary>
-            Create a mock object from several types with strict semantics.
-            </summary>
-            <param name="extraTypes">Extra interface types to mock.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.DynamicMultiMock``1(System.Type[],System.Object[])">
-            <summary>
-            Create a mock object from several types with dynamic semantics.
-            </summary>
-            <param name="extraTypes">Extra interface types to mock.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PartialMultiMock``1(System.Type[],System.Object[])">
-            <summary>
-            Create a mock object from several types with partial semantics.
-            </summary>
-            <param name="extraTypes">Extra interface types to mock.</param>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="M:Rhino.Mocks.MockRepository.PartialMock``1(System.Object[])">
-            <summary>
-            Create a mock object with from a class that defaults to calling the class methods
-            </summary>
-            <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
-        </member>
-        <member name="P:Rhino.Mocks.MockRepository.Recorder">
-            <summary>
-            Gets the recorder.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:Rhino.Mocks.MockRepository.Replayer">
-            <summary>
-            Gets the replayer for this repository.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:Rhino.Mocks.MockRepository.LastMockedObject">
-            <summary>
-            Gets the last proxy which had a method call.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Impl.RhinoInterceptor">
-            <summary>
-            Summary description for RhinoInterceptor.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RhinoInterceptor.#ctor(Rhino.Mocks.MockRepository,Rhino.Mocks.Interfaces.IMockedObject)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.RhinoInterceptor"/> instance.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.RhinoInterceptor.Intercept(Castle.DynamicProxy.IInvocation,System.Object[])">
-            <summary>
-            Intercept a method call and direct it to the repository.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Generated.ProxyStateDictionary">
-            <summary>
-            Dictionary class
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Generated.ProxyStateDictionary.#ctor">
-            <summary>
-            Create a new instance of <c>ProxyStateDictionary</c>
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Generated.ProxyMethodExpectationsDictionary">
-            <summary>
-            Dictionary
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.MethodRecorders.RecorderChanger">
-            <summary>
-            Change the recorder from ordered to unordered and vice versa
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MethodRecorders.RecorderChanger.#ctor(Rhino.Mocks.MockRepository,Rhino.Mocks.Interfaces.IMethodRecorder,Rhino.Mocks.Interfaces.IMethodRecorder)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.MethodRecorders.RecorderChanger"/> instance.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MethodRecorders.RecorderChanger.Dispose">
-            <summary>
-            Disposes this instance.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Interfaces.IMockedObject">
-            <summary>
-            Interface to find the repository of a mocked object
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.ShouldCallOriginal(System.Reflection.MethodInfo)">
-            <summary>
-            Return true if it should call the original method on the object
-            instead of pass it to the message chain.
-            </summary>
-            <param name="method">The method to call</param>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.RegisterMethodForCallingOriginal(System.Reflection.MethodInfo)">
-            <summary>
-            Register a method to be called on the object directly
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.RegisterPropertyBehaviorFor(System.Reflection.PropertyInfo)">
-            <summary>
-            Register a property on the object that will behave as a simple property
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.IsPropertyMethod(System.Reflection.MethodInfo)">
-            <summary>
-            Check if the method was registered as a property method.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.HandleProperty(System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Do get/set on the property, according to need.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.HandleEvent(System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Do add/remove on the event
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.GetEventSubscribers(System.String)">
-            <summary>
-            Get the subscribers of a spesific event
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IMockedObject.ProxyHash">
-            <summary>
-            The unique hash code of this mock, which is not related
-            to the value of the GetHashCode() call on the object.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Interfaces.IMockedObject.Repository">
-            <summary>
-            Gets the repository.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Expectations.AnyArgsExpectation">
-            <summary>
-            Expectation that matchs any arguments for the method.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.#ctor(System.Reflection.MethodInfo)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.AnyArgsExpectation"/> instance.
-            </summary>
-            <param name="method">Method.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.AnyArgsExpectation"/> instance.
-            </summary>
-            <param name="expectation">Expectation.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.DoIsExpected(System.Object[])">
-            <summary>
-            Validate the arguments for the method.
-            </summary>
-            <param name="args">The arguments with which the method was called</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.Equals(System.Object)">
-            <summary>
-            Determines if the object equal to expectation
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.AnyArgsExpectation.GetHashCode">
-            <summary>
-            Get the hash code
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.AnyArgsExpectation.ErrorMessage">
-            <summary>
-            Gets the error message.
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Utilities.MethodCallUtil">
-            <summary>
-            Utility class for working with method calls.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Utilities.MethodCallUtil.StringPresentation(Rhino.Mocks.Utilities.MethodCallUtil.FormatArgumnet,System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Return the string representation of a method call and its arguments.
-            </summary>
-            <param name="method">The method</param>
-            <param name="args">The method arguments</param>
-            <param name="format">Delegate to format the parameter</param>
-            <returns>The string representation of this method call</returns>
-        </member>
-        <member name="M:Rhino.Mocks.Utilities.MethodCallUtil.StringPresentation(System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Return the string representation of a method call and its arguments.
-            </summary>
-            <param name="method">The method</param>
-            <param name="args">The method arguments</param>
-            <returns>The string representation of this method call</returns>
-        </member>
-        <member name="T:Rhino.Mocks.Utilities.MethodCallUtil.FormatArgumnet">
-            <summary>
-            Delegate to format the argument for the string representation of
-            the method call.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.MethodRecorders.ProxyMethodPair">
-            <summary>
-            Holds a pair of mocked object and a method
-            and allows to compare them against each other.
-            This allows us to have a distinction between mockOne.MyMethod() and
-            mockTwo.MyMethod()...
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.#ctor(System.Object,System.Reflection.MethodInfo)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.MethodRecorders.ProxyMethodPair"/> instance.
-            </summary>
-            <param name="proxy">Proxy.</param>
-            <param name="method">Method.</param>
-        </member>
-        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.Equals(System.Object)">
-            <summary>
-            Determains whatever obj equals to this instance.
-            ProxyMethodPairs are equals when they point to the same /instance/ of
-            an object, and to the same method.
-            </summary>
-            <param name="obj">Obj.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.GetHashCode">
-            <summary>
-            Gets the hash code.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Rhino.Mocks.MethodRecorders.ProxyMethodPair.ToString">
-            <summary>
-            Gets a string representation of this <see cref="T:Rhino.Mocks.MethodRecorders.ProxyMethodPair"/>
-            to assist debugging.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.MethodRecorders.ProxyMethodPair.Proxy">
-            <summary>
-            Gets the proxy.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:Rhino.Mocks.MethodRecorders.ProxyMethodPair.Method">
-            <summary>
-            Gets the method.
-            </summary>
-            <value></value>
-        </member>
         <member name="T:Rhino.Mocks.MethodRecorders.OrderedMethodRecorder">
             <summary>
             Ordered collection of methods, methods must arrive in specified order
@@ -2630,202 +2869,6 @@
         <member name="M:Rhino.Mocks.MethodRecorders.OrderedMethodRecorder.GetExpectedCallsMessage">
             <summary>
             Gets the next expected calls string.
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.LastCall">
-            <summary>
-            Allows to set various options for the last method call on
-            a specified object.
-            If the method has a return value, it's recommended to use Expect
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.On(System.Object)">
-            <summary>
-            Allows to get an interface to work on the last call.
-            </summary>
-            <param name="mockedInstance">The mocked object</param>
-            <returns>Interface that allows to set options for the last method call on this object</returns>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.Return(System.Object)">
-            <summary>
-            Set the return value for the method.
-            </summary>
-            <param name="objToReturn">The object the method will return</param>
-            <returns>IRepeat that defines how many times the method will return this value</returns>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.Throw(System.Exception)">
-            <summary>
-            Throws the specified exception when the method is called.
-            </summary>
-            <param name="exception">Exception to throw</param>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.IgnoreArguments">
-            <summary>
-            Ignores the arguments for this method. Any argument will be matched
-            againt this method.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.Constraints(Rhino.Mocks.Constraints.AbstractConstraint[])">
-            <summary>
-            Add constraints for the method's arguments.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.Callback(System.Delegate)">
-            <summary>
-            Set a callback method for the last call
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.CallOriginalMethod">
-            <summary>
-            Call the original method on the class, bypassing the mocking layers, for the last call.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.Do(System.Delegate)">
-            <summary>
-            Set a delegate to be called when the expectation is matched.
-            The delegate return value will be returned from the expectation.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.GetEventRaiser">
-            <summary>
-            Gets an interface that will raise the last event when called.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.LastCall.OutRef(System.Object[])">
-            <summary>
-            Set the parameter values for out and ref parameters.
-            This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.LastCall.Repeat">
-            <summary>
-            Better syntax to define repeats. 
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Expectations.ConstraintsExpectation">
-            <summary>
-            Expect the method's arguments to match the contraints
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.#ctor(System.Reflection.MethodInfo,Rhino.Mocks.Constraints.AbstractConstraint[])">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.ConstraintsExpectation"/> instance.
-            </summary>
-            <param name="method">Method.</param>
-            <param name="constraints">Constraints.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.#ctor(Rhino.Mocks.Interfaces.IExpectation,Rhino.Mocks.Constraints.AbstractConstraint[])">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Expectations.ConstraintsExpectation"/> instance.
-            </summary>
-            <param name="expectation">Expectation.</param>
-            <param name="constraints">Constraints.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.DoIsExpected(System.Object[])">
-            <summary>
-            Validate the arguments for the method.
-            </summary>
-            <param name="args">The arguments with which the method was called</param>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.Equals(System.Object)">
-            <summary>
-            Determines if the object equal to expectation
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Expectations.ConstraintsExpectation.GetHashCode">
-            <summary>
-            Get the hash code
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Expectations.ConstraintsExpectation.ErrorMessage">
-            <summary>
-            Gets the error message.
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Rhino.Mocks.Text">
-            <summary>
-            Central location for all text related constraints
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Text.StartsWith(System.String)">
-            <summary>
-            Constrain the argument to starts with the specified string
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Text.EndsWith(System.String)">
-            <summary>
-            Constrain the argument to end with the specified string
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Text.Contains(System.String)">
-            <summary>
-            Constrain the argument to contain the specified string
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Text.Like(System.String)">
-            <summary>
-            Constrain the argument to validate according to regex pattern
-            </summary>
-        </member>
-        <member name="T:Rhino.Mocks.Utilities.ReturnValueUtil">
-            <summary>
-            Utility to get the default value for a type
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Utilities.ReturnValueUtil.DefaultValue(System.Type)">
-            <summary>
-            The default value for a type.
-            Null for reference types and void
-            0 for value types.
-            First element for enums
-            </summary>
-            <param name="type">Type.</param>
-            <returns>the default value</returns>
-        </member>
-        <member name="T:Rhino.Mocks.Impl.VerifiedMockState">
-            <summary>
-            Throw an object already verified when accessed
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.#ctor(Rhino.Mocks.Interfaces.IMockState)">
-            <summary>
-            Create a new instance of VerifiedMockState 
-            </summary>
-            <param name="previous">The previous mock state, used to get the initial record state</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Add a method call for this state' mock.
-            </summary>
-            <param name="invocation">The invocation for this method</param>
-            <param name="method">The method that was called</param>
-            <param name="args">The arguments this method was called with</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.Verify">
-            <summary>
-            Verify that this mock expectations have passed.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.Replay">
-            <summary>
-            Verify that we can move to replay state and move 
-            to the reply state.
-            </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.BackToRecord">
-            <summary>
-            Gets a mock state that match the original mock state of the object.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.VerifiedMockState.VerifyState">
-            <summary>
-            Gets the matching verify state for this state
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.VerifiedMockState.LastMethodOptions">
-            <summary>
-            Get the options for the last method call
             </summary>
         </member>
         <member name="T:Rhino.Mocks.Impl.ProxyInstance">
@@ -2887,88 +2930,45 @@
             Gets the repository.
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.DelegateTargetInterfaceCreator">
+        <member name="T:Rhino.Mocks.Impl.MockedObjectsEquality">
             <summary>
-            This class is reponsible for taking a delegate and creating a wrapper
-            interface around it, so it can be mocked.
+            This class will provide hash code for hashtables without needing
+            to call the GetHashCode() on the object, which may very well be mocked.
+            This class has no state so it is a singelton to avoid creating a lot of objects 
+            that does the exact same thing. See flyweight patterns.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.Impl.DelegateTargetInterfaceCreator.moduleScope">
+        <member name="M:Rhino.Mocks.Impl.MockedObjectsEquality.GetHashCode(System.Object)">
             <summary>
-            The scope for all the delegate interfaces create by this mock repositroy.
+            Get the hash code for a proxy object without calling GetHashCode()
+            on the object.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.DelegateTargetInterfaceCreator.GetDelegateTargetInterface(System.Type)">
+        <member name="M:Rhino.Mocks.Impl.MockedObjectsEquality.Compare(System.Object,System.Object)">
             <summary>
-            Gets a type with an "Invoke" method suitable for use as a target of the
-            specified delegate type.
-            </summary>
-            <param name="delegateType"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Rhino.Mocks.Mocker">
-            <summary>
-            Accessor for the current mocker
+            Compares two instances of mocked objects
             </summary>
         </member>
-        <member name="P:Rhino.Mocks.Mocker.Current">
+        <member name="M:Rhino.Mocks.Impl.MockedObjectsEquality.Equals(System.Object,System.Object)">
             <summary>
-            The current mocker
+            Compare two mocked objects
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.ReplayPartialMockState">
+        <member name="P:Rhino.Mocks.Impl.MockedObjectsEquality.NextHashCode">
             <summary>
-            Validate all expectations on a mock and ignores calls to
-            any method that was not setup properly.
+            The next hash code value for a mock object.
+            This is safe for multi threading.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.#ctor(Rhino.Mocks.Impl.RecordPartialMockState)">
+        <member name="P:Rhino.Mocks.Impl.MockedObjectsEquality.Instance">
             <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.ReplayDynamicMockState"/> instance.
-            </summary>
-            <param name="previousState">The previous state for this method</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            Add a method call for this state' mock.
-            </summary>
-            <param name="invocation">The invocation for this method</param>
-            <param name="method">The method that was called</param>
-            <param name="args">The arguments this method was called with</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.BackToRecord">
-            <summary>
-            Gets a mock state that match the original mock state of the object.
+            The sole instance of <see cref="T:Rhino.Mocks.Impl.MockedObjectsEquality"/>
             </summary>
         </member>
-        <member name="T:Rhino.Mocks.Impl.Range">
+        <member name="T:Rhino.Mocks.Generated.ExpectationsList">
             <summary>
-            Range for expected method calls
+            ExpectationsList
             </summary>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.Range.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Creates a new <see cref="T:Rhino.Mocks.Impl.Range"/> instance.
-            </summary>
-            <param name="min">Min.</param>
-            <param name="max">Max.</param>
-        </member>
-        <member name="M:Rhino.Mocks.Impl.Range.ToString">
-            <summary>
-            Return the string representation of this range.
-            </summary>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.Range.Min">
-            <summary>
-            Gets or sets the min.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:Rhino.Mocks.Impl.Range.Max">
-            <summary>
-            Gets or sets the max.
-            </summary>
-            <value></value>
         </member>
     </members>
 </doc>

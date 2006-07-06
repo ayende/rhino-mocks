@@ -90,7 +90,7 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <ProjectReference Include="..\..\..\Castle\Tools\DynamicProxy\Castle.DynamicProxy\Castle.DynamicProxy-2.0.csproj">
+    <ProjectReference Include="..\..\..\..\..\Castle\Tools\DynamicProxy\Castle.DynamicProxy\Castle.DynamicProxy-2.0.csproj">
       <Project>{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}</Project>
       <Name>Castle.DynamicProxy-2.0</Name>
     </ProjectReference>
@@ -139,6 +139,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Eric.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JohanIndexProp.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Matt.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Michael.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Phil.cs" />
     <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
     <Compile Include="MockingDelegatesTests.cs" />
