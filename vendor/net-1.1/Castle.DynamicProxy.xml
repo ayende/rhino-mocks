@@ -206,12 +206,14 @@
         </member>
         <member name="T:Castle.DynamicProxy.Builder.CodeBuilder.Utils.LdindOpCodesDictionary">
             <summary>
-            Provides appropriate Ldind.X opcode for the type of primitive value to be loaded indirectly.
+            Provides appropriate Ldind.X opcode for 
+            the type of primitive value to be loaded indirectly.
             </summary>
         </member>
         <member name="T:Castle.DynamicProxy.Builder.CodeBuilder.Utils.StindOpCodesDictionary">
             <summary>
-            Provides appropriate Stind.X opcode for the type of primitive value to be stored indirectly.
+            Provides appropriate Stind.X opcode 
+            for the type of primitive value to be stored indirectly.
             </summary>
         </member>
         <member name="T:Castle.DynamicProxy.Builder.CodeBuilder.Utils.OpCodeUtil">
@@ -510,6 +512,12 @@
         <member name="T:Castle.DynamicProxy.GeneratorContext">
             <summary>
             Summary description for GeneratorContext.
+            </summary>
+        </member>
+        <member name="M:Castle.DynamicProxy.GeneratorContext.ShouldCreateNewSlot(System.Reflection.MethodInfo)">
+            <summary>
+            Checks if the method has the same signature as a method that was marked as
+            one that should generate a new vtable slot.
             </summary>
         </member>
         <member name="P:Castle.DynamicProxy.GeneratorContext.ProxyObjectReference">

@@ -17,6 +17,30 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mMocks = new MockRepository();
         }
 
+		public interface IDuplicateType<T>
+		{
+			int Property { get; }
+		}
+
+		[Test]
+		public void DuplicateTypeTest()
+		{
+			// Let's just create two mocks of the same type, based on
+			// an array type parameter.
+
+			// This should not blow up.
+
+			IDuplicateType<object[]> mock1 =
+				mMocks.CreateMock<IDuplicateType<object[]>>();
+
+			IDuplicateType<object[]> mock2 =
+				mMocks.CreateMock<IDuplicateType<object[]>>();
+
+			mMocks.ReplayAll();
+			mMocks.VerifyAll();
+		}
+
+
         [Test]
         public void TestVirtualEntrypoint()
         {
