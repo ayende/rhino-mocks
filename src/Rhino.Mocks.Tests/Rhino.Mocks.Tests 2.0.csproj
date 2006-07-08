@@ -250,6 +250,10 @@
     <Compile Include="OrderTest.cs" />
     <Compile Include="PartialMockTests.cs" />
     <Compile Include="RefOutParameters.cs" />
+    <Compile Include="Remoting\ContextSwitcher.cs" />
+    <Compile Include="Remoting\ContextSwitchTests.cs" />
+    <Compile Include="Remoting\IDemo.cs" />
+    <Compile Include="Remoting\RemotableDemoClass.cs" />
     <Compile Include="RhinoMockTests.cs">
       <SubType>Code</SubType>
     </Compile>

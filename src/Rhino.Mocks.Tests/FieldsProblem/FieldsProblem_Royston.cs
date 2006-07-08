@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 using NUnit.Framework;
@@ -16,6 +15,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         {
             mMocks = new MockRepository();
         }
+
+#if dotNet2
 
 		public interface IDuplicateType<T>
 		{
@@ -39,7 +40,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mMocks.ReplayAll();
 			mMocks.VerifyAll();
 		}
-
+#endif
 
         [Test]
         public void TestVirtualEntrypoint()
