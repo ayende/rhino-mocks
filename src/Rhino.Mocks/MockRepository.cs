@@ -663,6 +663,21 @@ namespace Rhino.Mocks
 
         #region Convenience Methods
 
+    	/// <summary>
+    	/// All the mock objects in this repository will be moved
+    	/// to record state.
+    	/// </summary>
+    	public void BackToRecordAll()
+    	{
+			if (proxies.Count == 0)
+				return;
+			foreach (object key in new ArrayList(proxies.Keys))
+			{
+				if (proxies[key] is RecordMockState)
+					BackToRecord(key);
+			}
+    	}
+    	
         /*
 		 * Method: ReplayAll
 		 * Moves all the mock objects in the repository to replay state.
@@ -678,9 +693,7 @@ namespace Rhino.Mocks
         {
             if (proxies.Count == 0)
                 return;
-            object[] keyToPreventModifyingWhileIterating = new object[proxies.Keys.Count];
-            proxies.Keys.CopyTo(keyToPreventModifyingWhileIterating, 0);
-            foreach (object key in keyToPreventModifyingWhileIterating)
+            foreach (object key in new ArrayList(proxies.Keys))
             {
                 if (proxies[key] is RecordMockState)
                     Replay(key);
@@ -727,9 +740,7 @@ namespace Rhino.Mocks
                 lastRepository = null;
             if (proxies.Keys.Count == 0)
                 return;
-            object[] keyToPreventModifyingWhileIterating = new object[proxies.Keys.Count];
-            proxies.Keys.CopyTo(keyToPreventModifyingWhileIterating, 0);
-            foreach (object key in keyToPreventModifyingWhileIterating)
+            foreach (object key in new ArrayList(proxies.Keys))
             {
                 if (proxies[key] is VerifiedMockState)
                     continue;
