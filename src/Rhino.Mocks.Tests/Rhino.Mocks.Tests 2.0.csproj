@@ -138,6 +138,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Entropy.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Eric.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JohanIndexProp.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JohnOpincar.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Matt.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Michael.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Phil.cs" />
