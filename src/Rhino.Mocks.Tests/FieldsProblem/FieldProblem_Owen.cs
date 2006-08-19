@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Rhino.Mocks;
 using System.Data;
@@ -71,8 +70,8 @@ public class MyTestFixture
   {
     #region Mock Objects
     m_objMockRepository = new MockRepository();
-    m_objIApplication = m_objMockRepository.CreateMock<IApplicationSession>();
-    m_objIMetricBroker = m_objMockRepository.CreateMock<IMetricBroker>();
+    m_objIApplication = (IApplicationSession)m_objMockRepository.CreateMock(typeof(IApplicationSession));
+    m_objIMetricBroker = (IMetricBroker)m_objMockRepository.CreateMock(typeof(IMetricBroker));
     #endregion
 
     #region DataSets
