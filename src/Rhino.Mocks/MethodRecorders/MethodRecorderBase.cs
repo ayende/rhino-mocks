@@ -42,12 +42,16 @@ namespace Rhino.Mocks.MethodRecorders
 		/// for a spesific method call. A replayer gets into this list by calling 
 		/// ClearReplayerToCall() on its parent. This list is Clear()ed on each new invocation.
 		/// </summary>
-		private IList replayerToIgnoreForThisCall = new ArrayList();
+		private IList replayersToIgnoreForThisCall = new ArrayList();
 		
 		/// <summary>
 		/// All the repeatable methods calls.
 		/// </summary>
 		private ProxyMethodExpectationsDictionary repeatableMethods;
+		/// <summary>
+		/// Counts the recursion depth of the current expectation search stack
+		/// </summary>
+		private int recursionDepth = 0;
 
 		/// <summary>
 		/// Creates a new <see cref="MethodRecorderBase"/> instance.
@@ -264,6 +268,7 @@ namespace Rhino.Mocks.MethodRecorders
         /// </summary>
         public IExpectation GetRecordedExpectationOrNull(object proxy, MethodInfo method, object[] args)
         {
+			recursionDepth += 1;
 			try
 			{
 				if (replayerToCall != null)
@@ -273,7 +278,9 @@ namespace Rhino.Mocks.MethodRecorders
 			}
         	finally
 			{
-				replayerToIgnoreForThisCall.Clear();
+				recursionDepth -= 1;
+				if(recursionDepth==0)
+					replayersToIgnoreForThisCall.Clear();
 			}
         }
 
@@ -285,7 +292,7 @@ namespace Rhino.Mocks.MethodRecorders
 		{
 			replayerToCall = null;
 			//recordedActions.Remove(childReplayer);
-			replayerToIgnoreForThisCall.Add(childReplayer);
+			replayersToIgnoreForThisCall.Add(childReplayer);
 		}
 
 		/// <summary>
@@ -349,7 +356,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// </summary>
 		protected bool ShouldConsiderThisReplayer(IMethodRecorder replayer)
 		{
-			return replayerToIgnoreForThisCall.Contains(replayer) == false;
+			return replayersToIgnoreForThisCall.Contains(replayer) == false;
 		}
 		
 		/// <summary>

@@ -988,6 +988,12 @@
             </summary>
             <param name="newRecorder">New recorder.</param>
         </member>
+        <member name="M:Rhino.Mocks.MockRepository.BackToRecordAll">
+            <summary>
+            All the mock objects in this repository will be moved
+            to record state.
+            </summary>
+        </member>
         <member name="M:Rhino.Mocks.MockRepository.ReplayAll">
             <summary>
             Replay all the mocks from this repository
@@ -1412,7 +1418,7 @@
             The parent recorder of this one, may be null.
             </summary>
         </member>
-        <member name="F:Rhino.Mocks.MethodRecorders.MethodRecorderBase.replayerToIgnoreForThisCall">
+        <member name="F:Rhino.Mocks.MethodRecorders.MethodRecorderBase.replayersToIgnoreForThisCall">
             <summary>
             This contains a list of all the replayers that should be ignored
             for a spesific method call. A replayer gets into this list by calling 
@@ -1422,6 +1428,11 @@
         <member name="F:Rhino.Mocks.MethodRecorders.MethodRecorderBase.repeatableMethods">
             <summary>
             All the repeatable methods calls.
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.MethodRecorders.MethodRecorderBase.recursionDepth">
+            <summary>
+            Counts the recursion depth of the current expectation search stack
             </summary>
         </member>
         <member name="M:Rhino.Mocks.MethodRecorders.MethodRecorderBase.#ctor">

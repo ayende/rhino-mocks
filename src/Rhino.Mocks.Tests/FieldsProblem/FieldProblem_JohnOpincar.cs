@@ -23,7 +23,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			m_view = (IDaSchedulerView)
 			m_mocks.CreateMock(typeof(IDaSchedulerView));
 //			DaSchedulerPresenter presenter = new DaSchedulerPresenter(m_view, new TestScheduleLoader(0)); 
-			m_view.DateOf = DateTime.Today; 
+			m_view.DateOf = new DateTime(2006,8,8); 
 			//LastCall.IgnoreArguments(); 
 			m_mocks.ReplayAll(); 
 			//presenter.Initialize(); 

@@ -76,7 +76,8 @@ namespace Rhino.Mocks.MethodRecorders
                             return null;
                         }
                     }
-                } else // Action is another recorder
+                } 
+                else // Action is another recorder
 				{
 					IMethodRecorder innerRecorder = (IMethodRecorder) recordedActions[actionPos];
 					if(ShouldConsiderThisReplayer(innerRecorder)==false)
