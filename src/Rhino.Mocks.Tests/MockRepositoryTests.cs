@@ -136,7 +136,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "There is no matching last call on this object.")]
+		[ExpectedException(typeof(InvalidOperationException), "There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?")]
         public void CallingLastCallWithoutHavingLastCallThrows()
         {
             LastCall.On(demo);

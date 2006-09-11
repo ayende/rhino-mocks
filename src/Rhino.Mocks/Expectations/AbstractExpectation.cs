@@ -64,6 +64,11 @@ namespace Rhino.Mocks.Expectations
 
 	    private object[] outRefParams;
 
+		/// <summary>
+		/// Documentation message
+		/// </summary>
+		private string message;
+
 	    #endregion
 
 		#region Properties
@@ -219,6 +224,15 @@ namespace Rhino.Mocks.Expectations
 			}
 		}
 
+		/// <summary>
+		/// Documentation message
+		/// </summary>
+		public string Message
+		{
+			get { return message; }
+			set { message = value; }
+		}
+
 		#endregion
 
 		#region Public Methods
@@ -295,6 +309,7 @@ namespace Rhino.Mocks.Expectations
 			actualCalls = expectation.ActualCalls;
 			repeatableOption = expectation.RepeatableOption;
 			exceptionToThrow = expectation.ExceptionToThrow;
+			message = expectation.Message;
 		}
 
 		#endregion
@@ -328,7 +343,11 @@ namespace Rhino.Mocks.Expectations
 		protected string CreateErrorMessage(MethodInfo method, object[] args)
 		{
 			MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArg);
-			return MethodCallUtil.StringPresentation(format, method, args);
+			string methodCall = MethodCallUtil.StringPresentation(format, method, args);
+			if(Message==null)
+				return methodCall;
+			string msg = string.Format("Message: {0}\n{1}", Message, methodCall);
+			return msg;
 		}
 
 		#endregion

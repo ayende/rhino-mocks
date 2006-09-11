@@ -3,6 +3,8 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Rhino.Mocks.Impl;
+using Rhino.Mocks.Utilities;
 
 namespace Rhino.Mocks.Constraints
 {
@@ -186,12 +188,71 @@ namespace Rhino.Mocks.Constraints
     }
     #endregion
 
+	#region Predicate Constraint
+	
+#if dotNet2
+	
+	/// <summary>
+	/// Evaluate a parameter using constraints
+	/// </summary>
+	public class PredicateConstraint<T> : AbstractConstraint
+	{
+		Predicate<T> predicate;
 
-    #region List constraints
+		/// <summary>
+		/// Create new instance 
+		/// </summary>
+		/// <param name="predicate"></param>
+		public PredicateConstraint(Predicate<T> predicate)
+		{
+			Validate.IsNotNull(predicate, "predicate");
+			this.predicate = predicate;
+		}
 
-    #region Equal
+		/// <summary>
+		/// determains if the object pass the constraints
+		/// </summary>
+		public override bool Eval(object obj)
+		{
+			if(obj!=null && 
+				obj.GetType().IsAssignableFrom(typeof(T))==false)
+			{
+				throw new InvalidOperationException(
+					string.Format("Predicate accept {0} but parameter is {1} which is not compatible",
+					              typeof (T).FullName,
+					              obj.GetType().FullName));
+			}
+			return predicate((T) obj);
+		}
 
-    /// <summary>
+		/// <summary>
+		/// Gets the message for this constraint
+		/// </summary>
+		/// <value></value>
+		public override string Message
+		{
+			get
+			{
+				return string.Format("Predicate ({0})", MethodCallUtil.StringPresentation(FormatEmptyArgumnet,predicate.Method, new object[0]));
+			}
+		}
+		
+		private string FormatEmptyArgumnet(Array args, int i)
+		{
+			return "obj";
+		}
+	}
+	
+	
+#endif
+	
+	#endregion
+
+	#region List constraints
+
+	#region Equal
+
+	/// <summary>
     /// Constrain that the list contains the same items as the parameter list
     /// </summary>
     public class CollectionEqual : AbstractConstraint

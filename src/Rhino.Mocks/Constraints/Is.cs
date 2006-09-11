@@ -198,6 +198,16 @@ namespace Rhino.Mocks
 		{
 			return new TypeOf(typeof(T));
 		}
-		#endif
+
+		/// <summary>
+		/// Evaluate a parameter using a predicate
+		/// </summary>
+		/// <param name="predicate">The predicate to use</param>
+		public static AbstractConstraint Matching<T>(Predicate<T> predicate)
+		{
+			return new PredicateConstraint<T>(predicate);
+		}
+#endif
+
 	}
 }

@@ -40,5 +40,24 @@ namespace Rhino.Mocks.Constraints
 		{
 			return new Or(c1, c2);
 		}
+
+		/// <summary>
+		/// Allow overriding of || or &amp;&amp;
+		/// </summary>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		public static bool operator false(AbstractConstraint c)
+		{
+			return false;
+		}
+		/// <summary>
+		/// Allow overriding of || or &amp;&amp;
+		/// </summary>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		public static bool operator true(AbstractConstraint c)
+		{
+			return false;
+		}
 	}
 }

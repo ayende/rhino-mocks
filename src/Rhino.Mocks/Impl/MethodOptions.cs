@@ -292,6 +292,16 @@ namespace Rhino.Mocks.Impl
             repository.Replayer.AddToRepeatableMethods(proxy, expectation.Method, expectation);
             return this;
         }
+    	
+    	/// <summary>
+    	/// Documentation message for the expectation
+    	/// </summary>
+    	/// <param name="documentationMessage">Message</param>
+    	public IMethodOptions Message(string documentationMessage)
+    	{
+			expectation.Message = documentationMessage;
+    		return this;
+    	}
 
         /// <summary>
         /// Repeat the method any number of times.

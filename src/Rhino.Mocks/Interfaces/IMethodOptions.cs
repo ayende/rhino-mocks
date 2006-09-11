@@ -158,5 +158,11 @@ namespace Rhino.Mocks.Interfaces
         /// This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
         /// </summary>
         IMethodOptions OutRef(params object[] parameters);
+		
+		/// <summary>
+    	/// Documentation message for the expectation
+    	/// </summary>
+    	/// <param name="documentationMessage">Message</param>
+		IMethodOptions Message(string documentationMessage);
 	}
 }

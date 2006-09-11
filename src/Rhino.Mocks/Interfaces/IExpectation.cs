@@ -99,5 +99,10 @@ namespace Rhino.Mocks.Interfaces
 	    /// It is possible not to pass all the parameters. This method can be called only once.
 	    /// </summary>
 	    object[] OutRefParams { set; }
+
+		/// <summary>
+		/// Documentation Message
+		/// </summary>
+		string Message { get; set; }
 	}
 }

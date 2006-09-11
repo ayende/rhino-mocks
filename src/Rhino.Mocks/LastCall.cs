@@ -226,5 +226,14 @@ namespace Rhino.Mocks
 	    {
             return Options.OutRef(parameters);
 	    }
+		
+		/// <summary>
+    	/// Documentation message for the expectation
+    	/// </summary>
+    	/// <param name="documentationMessage">Message</param>
+		public static IMethodOptions Message(string documentationMessage)
+		{
+			return Options.Message(documentationMessage);
+		}
 	}
 }

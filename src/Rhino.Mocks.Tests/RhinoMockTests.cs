@@ -46,8 +46,8 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(); }' but was: 'IDemo.VoidStringArg(\"Hello\");'")]
-		public void OrderedCallsTrackingNotAsExpected()
+		[ExpectedException(typeof(ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(); }' but was: 'IDemo.VoidStringArg(\"Hello\");'")]
+		public void GetDocumentationMessageWhenExpectationNotMet()
 		{
 			RecordOrdered(mocks, demo);
 			mocks.Replay(demo);
@@ -55,6 +55,18 @@ namespace Rhino.Mocks.Tests
 			demo.ReturnStringNoArgs();
 			demo.VoidNoArgs();
 			demo.VoidStringArg("Hello");
+
+			mocks.Verify(demo);
+		}
+
+		[Test]
+		[ExpectedException(typeof (ExpectationViolationException), "Message: Called to prefar foo for bar\nIDemo.VoidNoArgs(); Expected #1, Actual #0.")]
+		public void OrderedCallsTrackingNotAsExpected()
+		{
+			demo.VoidNoArgs();
+			LastCall.Message("Called to prefar foo for bar");
+			
+			mocks.Replay(demo);
 
 			mocks.Verify(demo);
 		}

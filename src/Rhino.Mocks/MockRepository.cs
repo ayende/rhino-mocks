@@ -673,7 +673,7 @@ namespace Rhino.Mocks
 				return;
 			foreach (object key in new ArrayList(proxies.Keys))
 			{
-				if (proxies[key] is RecordMockState)
+				if (!(proxies[key] is RecordMockState))
 					BackToRecord(key);
 			}
     	}

@@ -1,7 +1,9 @@
 using System;
+using System.Data;
 using NUnit.Framework;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
+using Rhino.Mocks.Impl;
 using Rhino.Mocks.Tests.Callbacks;
 
 namespace Rhino.Mocks.Tests.Constraints
@@ -18,7 +20,65 @@ namespace Rhino.Mocks.Tests.Constraints
 			mocks = new MockRepository();
 			demo = (IDemo) this.mocks.CreateMock(typeof (IDemo));
 		}
+#if dotNet2
+		[Test]
+		public void UsingPredicate()
+		{
+			demo.VoidStringArg(null);
+			LastCall.Constraints(
+				Is.Matching<string>(delegate(string s) 
+				{
+					return s.Length == 2;  
+				}) 
+				&&
+				Is.Matching<string>(delegate(string s)
+				{
+					return s.EndsWith("b");	
+				}));
+			mocks.Replay(demo);
+			
+			demo.VoidStringArg("ab");
 
+			mocks.VerifyAll();
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException), "Predicate accept System.Data.DataSet but parameter is System.String which is not compatible")]
+		public void UsingPredicateConstraintWhenTypesNotMatching()
+		{
+			demo.VoidStringArg(null);
+			LastCall.Constraints(
+				Is.Matching<DataSet>(delegate(DataSet s)
+				{
+					return false;
+				}));
+			mocks.Replay(demo);
+
+			demo.VoidStringArg("ab");
+
+			mocks.VerifyAll();
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidStringArg(\"cc\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(Predicate (ConstraintTests.JustPredicate(obj);)); Expected #1, Actual #0.")]
+		public void UsingPredicateWhenExpectationViolated()
+		{
+			demo.VoidStringArg(null);
+			LastCall.Constraints(
+				Is.Matching<string>(JustPredicate)
+				);
+			mocks.Replay(demo);
+
+			demo.VoidStringArg("cc");
+
+			mocks.VerifyAll();
+		}
+		
+		public bool JustPredicate(string s)
+		{
+			return false;
+		}
+#endif
         [Test]
         public void AndSeveralConstraings()
         {

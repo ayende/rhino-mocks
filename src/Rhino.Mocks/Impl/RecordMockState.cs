@@ -48,7 +48,7 @@ namespace Rhino.Mocks.Impl
 			get
 			{
 				if (lastExpectation == null)
-					throw new InvalidOperationException("There is no matching last call on this object.");
+					throw new InvalidOperationException("There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?");
 				return new MethodOptions(repository, this, mockedObject, lastExpectation);
 			}
 		}

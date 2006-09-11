@@ -127,6 +127,7 @@
     <Compile Include="Constraints\StringConstraintsTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Owen.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Avi.cs" />
     <Compile Include="FieldsProblem\FieldProblem_BackToMockWithRepeatableMethods.cs" />

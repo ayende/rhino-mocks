@@ -139,6 +139,12 @@
             This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
             </summary>
         </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.Message(System.String)">
+            <summary>
+            Documentation message for the expectation
+            </summary>
+            <param name="documentationMessage">Message</param>
+        </member>
         <member name="P:Rhino.Mocks.Interfaces.IMethodOptions.Repeat">
             <summary>
             Better syntax to define repeats. 
@@ -243,6 +249,11 @@
             Set the out / ref parameters for the method call.
             The indexing is zero based and ignores any non out/ref parameter.
             It is possible not to pass all the parameters. This method can be called only once.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Interfaces.IExpectation.Message">
+            <summary>
+            Documentation Message
             </summary>
         </member>
         <member name="T:Rhino.Mocks.Impl.ReplayMockState">
@@ -617,6 +628,11 @@
             The arguments that matched this expectation.
             </summary>
         </member>
+        <member name="F:Rhino.Mocks.Expectations.AbstractExpectation.message">
+            <summary>
+            Documentation message
+            </summary>
+        </member>
         <member name="M:Rhino.Mocks.Expectations.AbstractExpectation.GetHashCode">
             <summary>
             Get the hash code
@@ -734,6 +750,11 @@
             A staisfied instance means that there are no more requirements from
             this method. A method with non void return value must register either
             a return value or an exception to throw or an action to execute.
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.Message">
+            <summary>
+            Documentation message
             </summary>
         </member>
         <member name="P:Rhino.Mocks.Expectations.AbstractExpectation.ErrorMessage">
@@ -1140,6 +1161,12 @@
             This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
             </summary>
         </member>
+        <member name="M:Rhino.Mocks.LastCall.Message(System.String)">
+            <summary>
+            Documentation message for the expectation
+            </summary>
+            <param name="documentationMessage">Message</param>
+        </member>
         <member name="P:Rhino.Mocks.LastCall.Repeat">
             <summary>
             Better syntax to define repeats. 
@@ -1210,6 +1237,20 @@
             <summary>
             Or operator for constraints
             </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.AbstractConstraint.op_False(Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Allow overriding of || or &amp;&amp;
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.AbstractConstraint.op_True(Rhino.Mocks.Constraints.AbstractConstraint)">
+            <summary>
+            Allow overriding of || or &amp;&amp;
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
         </member>
         <member name="P:Rhino.Mocks.Constraints.AbstractConstraint.Message">
             <summary>
@@ -1881,6 +1922,12 @@
             This method must not appear in the replay state.
             </summary>
         </member>
+        <member name="M:Rhino.Mocks.Impl.MethodOptions.Message(System.String)">
+            <summary>
+            Documentation message for the expectation
+            </summary>
+            <param name="documentationMessage">Message</param>
+        </member>
         <member name="M:Rhino.Mocks.Impl.MethodOptions.Any">
             <summary>
             Repeat the method any number of times.
@@ -2092,6 +2139,12 @@
             <summary>
             A constraint that accept only value of the specified type
             </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Is.Matching``1(System.Predicate{``0})">
+            <summary>
+            Evaluate a parameter using a predicate
+            </summary>
+            <param name="predicate">The predicate to use</param>
         </member>
         <member name="T:Rhino.Mocks.Impl.ReplayDynamicMockState">
             <summary>
@@ -2458,6 +2511,28 @@
             <summary>
             Gets the message for this constraint.
             </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Constraints.PredicateConstraint`1">
+            <summary>
+            Evaluate a parameter using constraints
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PredicateConstraint`1.#ctor(System.Predicate{`0})">
+            <summary>
+            Create new instance 
+            </summary>
+            <param name="predicate"></param>
+        </member>
+        <member name="M:Rhino.Mocks.Constraints.PredicateConstraint`1.Eval(System.Object)">
+            <summary>
+            determains if the object pass the constraints
+            </summary>
+        </member>
+        <member name="P:Rhino.Mocks.Constraints.PredicateConstraint`1.Message">
+            <summary>
+            Gets the message for this constraint
+            </summary>
+            <value></value>
         </member>
         <member name="T:Rhino.Mocks.Constraints.CollectionEqual">
             <summary>
