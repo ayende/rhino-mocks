@@ -1,0 +1,26 @@
+﻿Microsoft Visual Studio Solution File, Format Version 9.00
+# SharpDevelop 2.0.0.1462
+Project("{A33008B1-5DAC-44D5-9060-242E3B6E38F2}") = "Rhino.Mocks.BooMacros", "Rhino.Mocks.BooMacros\Rhino.Mocks.BooMacros.booproj", "{55E99CFE-28F5-4757-B88F-867FAF91FA9E}"
+EndProject
+Project("{A33008B1-5DAC-44D5-9060-242E3B6E38F2}") = "Rhino.Mocks.BooMacros.Demo", "Rhino.Mocks.BooMacros.Demo\Rhino.Mocks.BooMacros.Demo.booproj", "{F3CA5A0A-6033-456B-9715-FE30CAF732B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2A594B5-D4BB-4186-91BA-A9B6B7CDC0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A594B5-D4BB-4186-91BA-A9B6B7CDC0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A594B5-D4BB-4186-91BA-A9B6B7CDC0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A594B5-D4BB-4186-91BA-A9B6B7CDC0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E99CFE-28F5-4757-B88F-867FAF91FA9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E99CFE-28F5-4757-B88F-867FAF91FA9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E99CFE-28F5-4757-B88F-867FAF91FA9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E99CFE-28F5-4757-B88F-867FAF91FA9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3CA5A0A-6033-456B-9715-FE30CAF732B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3CA5A0A-6033-456B-9715-FE30CAF732B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3CA5A0A-6033-456B-9715-FE30CAF732B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3CA5A0A-6033-456B-9715-FE30CAF732B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

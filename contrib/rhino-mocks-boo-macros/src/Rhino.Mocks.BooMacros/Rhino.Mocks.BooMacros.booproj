@@ -1,0 +1,82 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Rhino.Mocks.BooMacros</RootNamespace>
+    <AssemblyName>Rhino.Mocks.BooMacros</AssemblyName>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{55E99CFE-28F5-4757-B88F-867FAF91FA9E}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>False</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Boo.Lang.Compiler">
+      <HintPath>..\Lib\Boo.Lang.Compiler.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Boo.Lang.Compiler">
+      <HintPath>..\..\lib\Boo.Lang.Compiler.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.boo" />
+    <Compile Include="IMockMemberInvokeBuilder.boo" />
+    <Compile Include="MockMethodInvokeBuilder.boo" />
+    <Compile Include="MockPropertyGetInvokeBuilder.boo" />
+    <Compile Include="MockPropertySetInvokeBuilder.boo" />
+    <Compile Include="IRhinoMockInvokeBuilder.boo" />
+    <Compile Include="AllowInvokeBuilder.boo" />
+    <Compile Include="AbstractRhinoMockMacro.boo" />
+    <Compile Include="RepeatFinderType.boo" />
+    <Compile Include="RepeatFinder.boo" />
+    <Compile Include="ReturnFinder.boo" />
+    <Compile Include="ConstraintFinder.boo" />
+    <Compile Include="RaiseFinder.boo" />
+    <Compile Include="ParameterConstraint.boo" />
+    <Compile Include="Util.boo" />
+    <Compile Include="DisallowMacro.boo" />
+    <Compile Include="DisallowInvokeBuilder.boo" />
+    <Compile Include="AllowMacro.boo" />
+    <Compile Include="ExpectMacro.boo" />
+    <Compile Include="ExpectInvokeBuilder.boo" />
+    <Compile Include="Allow_getMacro.boo" />
+    <Compile Include="Expect_getMacro.boo" />
+    <Compile Include="Disallow_getMacro.boo" />
+    <Compile Include="Allow_setMacro.boo" />
+    <Compile Include="AbstractPropertyMacro.boo" />
+    <Compile Include="Expect_setMacro.boo" />
+    <Compile Include="Disallow_setMacro.boo" />
+    <Compile Include="AbstractMethodMacro.boo" />
+    <Compile Include="RecordMacro.boo" />
+    <Compile Include="VerifyMacro.boo" />
+    <Compile Include="RepeatMacro.boo" />
+    <Compile Include="MockEventSubscribeBuilder.boo" />
+    <Compile Include="Expect_subscribeMacro.boo" />
+    <Compile Include="AbstractEventMacro.boo" />
+    <Compile Include="Allow_subscribeMacro.boo" />
+    <Compile Include="Disallow_subscribeMacro.boo" />
+    <Compile Include="Expect_unsubscribeMacro.boo" />
+    <Compile Include="MockEventUnsubscribeBuilder.boo" />
+    <Compile Include="Allow_unsubscribeMacro.boo" />
+    <Compile Include="Disallow_unsubscribeMacro.boo" />
+    <Compile Include="Mock_propertyMacro.boo" />
+  </ItemGroup>
+  <Import Project="$(BooBinPath)\Boo.Microsoft.Build.targets" />
+</Project>

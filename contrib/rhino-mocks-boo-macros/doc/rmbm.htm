@@ -1,0 +1,230 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Rhino Mocks Boo Macros</title>
+</head>
+<body>
+    <div>
+	<div style="float: right"><img src="images/rmbm.png" /></div>
+        <h1>
+            Rhino Mocks Boo Macros</h1>
+        <h2>
+            Downloads</h2>
+        <p><a href="http://www.equin.co.uk/boo/rmbm-src.zip">Source Code</a><br/>
+           <a href="http://www.equin.co.uk/boo/rmbm-dll.zip">Compiled DLL</a></p>
+        <h2>
+            Introduction</h2>
+        <p>
+            This is a .NET library of syntactic macros for the Boo programming language. The
+            macros work with the Rhino Mocks mock object library. They ease setting up expectations
+            on mock objects. Instead of long method chaining, you can use normal Boo syntax.</p>
+        <p>
+            Here is an example of setting up an expectation of a method call.</p>
+        <pre>def Example():
+    record mocks:
+        foo as IFoo = mocks.CreateMock(IFoo)
+        expect foo.Dog(int, x as string, y as int):
+            x [ Is.NotNull() ]
+            y [ Is.GreaterThan(0) &amp; Is.LessThan(10) ]
+            return 42.0
+    verify mocks:
+        foo.Dog(0, &quot;hello&quot;, 5)</pre>
+        <p>
+            The equivalent regular Rhino Mocks code would be similar to:</p>
+        <pre>def Example():
+    mocks = MockRepository()
+    foo as IFoo = mocks.CreateMock(IFoo)
+    Expect.Call(foo.Dog(0, null, 0))
+        .Constraints(Is.Anything(), Is.NotNull(), Is.GreaterThan(0) &amp; Is.LessThan(10) )
+        .Return(42.0)
+    mocks.ReplayAll()
+    foo.Dog(0, &quot;hello&quot;, 5)
+    mocks.VerifyAll()</pre>
+        <p>
+            Replacing long method chaining with a macro block makes the intention much clearer.
+            In addition, the record and verify macros reduce the visual noise by removing the
+            boilerplate Rhino Mocks replay and verify calls.</p>
+        <h2>
+            Macro Usage</h2>
+        <p>
+            There are nine expectation macros. These are from the three modes of expectation
+            (allow, expect and disallow) and three kinds of mock members supported (methods,
+            property getters and property setters).</p>
+        <table border="1">
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td colspan="3">
+                    Mock Member
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    Method
+                </td>
+                <td>
+                    Property Getter
+                </td>
+                <td>
+                    Property Setter
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="3">
+                    Expectation
+                </td>
+                <td>
+                    Allow
+                </td>
+                <td>
+                    <code>allow</code>
+                </td>
+                <td>
+                    <code>allow_get</code>
+                </td>
+                <td>
+                    <code>allow_set</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Expect
+                </td>
+                <td>
+                    <code>expect</code>
+                </td>
+                <td>
+                    <code>expect_get</code>
+                </td>
+                <td>
+                    <code>expect_set</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Disallow
+                </td>
+                <td>
+                    <code>disallow</code>
+                </td>
+                <td>
+                    <code>disallow_get</code>
+                </td>
+                <td>
+                    <code>disallow_set</code>
+                </td>
+            </tr>
+        </table>
+        <h3>
+            Allow</h3>
+        <p>
+            Use an allow macro when you want to specify that a method or property can be called
+            zero or more times.</p>
+        <h3>
+            Expect</h3>
+        <p>
+            Use an expect macro when you want to ensure that a method or property is called
+            a fixed number of times (by default, once).</p>
+        <h3>
+            Disallow</h3>
+        <p>
+            Use a disallow macro when you want to prevent a method or property being called.
+            This is useful when using dynamic mocks.</p>
+        <h3>
+            Parameters and Constraints</h3>
+        <p>
+            Syntax:</p>
+        <pre>allow mockObject.Method([parameters]):
+    [options]</pre>
+        <p>
+            The parameter list defines the signature of the method (avoiding ambiguity with
+            overloaded methods). If you do not want to constrain a parameter, you need only
+            give its type.</p>
+        <pre>allow mockObject.Method(int)</pre>
+        <p>
+            To constrain a parameter, you must have a name for it. The following snippet demonstrates
+            the use of parameter constraints.</p>
+        <pre>allow mockObject.Method(x as int):
+    x [ Is.Equal(42) ]</pre>
+        <p>
+            The syntax for a constraint is:</p>
+        <pre><i>parameter-name</i> [ <i>Rhino.Mocks.Constraints.AbstractConstraint</i> ]</pre>
+        <p>
+            You can use any subclass of <code>AbstractConstraint</code>, such as those built
+            into Rhino Mocks, or your own custom constraint objects. Rhino Mocks also supports
+            composition of constraints using the bitwise-and and bitwise-or operator overloads.</p>
+        <pre>allow mockObject.Method(x as int):
+    x [ Is.GreaterThan(0) &amp; Is.LessThan(10) ]</pre>
+        <p>
+            You do not have to specify constraints for all parameters. You need only name the
+            parameters you wish to constrain. For example:</p>
+        <pre>allow mockObject.Method(x as int, string):
+    x [ Is.Equal(42) ]</pre>
+        <p>
+            The nameless second parameter serves only to resolve the method signature and allow
+            the macro to create a correct default value. (Unconstrained parameters implicitly
+            generate an <code>Is.Anything()</code> constraint for Rhino Mocks.)</p>
+        <p>
+            When specifying a property setter you can constrain the implicit value parameter.</p>
+        <pre>allow_set mockObject.Name:
+    value [ Text.Contains(“foo”) ]</pre>
+        <h3>
+            Return Values</h3>
+        <p>
+            If a member has a return type (a method or property getter) then you can specify
+            the value to return. Omitting the return value will cause the macro to return a
+            default value based on the member’s type.</p>
+        <p>
+            Example of setting return value:</p>
+        <pre>allow mockObject.Method():
+    return 42</pre>
+        <p>
+            A return statement transforms into a call to Rhino Mocks <code>IMethodOptions.Return(value)</code>.</p>
+        <h3>
+            Raising Exception</h3>
+        <p>
+            To make a mock member raise an exception, use the following syntax.</p>
+        <pre>allow mockObject.Method()
+    raise Exception()</pre>
+        <p>
+            You can raise any type of exception – just like the normal Boo raise statement.</p>
+        <p>
+            <i>Note that having both a return and raise statement is invalid.</i></p>
+        <p>
+            A raise statement transforms into a call to Rhino Mocks <code>IMethodOptions.Throw(value)</code>.</p>
+        <h3>
+            Repeats</h3>
+        <p>
+            When specifying an expectation, you can set the number of repeated calls allowed.
+            (This does not apply to <code>allow</code> and <code>disallow</code> macros.)</p>
+        <p>
+            Use either,</p>
+        <pre>expect mockObject.Method():
+    repeat(<i>value</i>)</pre>
+        <p>
+            or,</p>
+        <pre>expect mockObject.Method():
+    repeat(<i>min</i>, <i>max</i>)</pre>
+        <p>
+            The first form specifies the exact number of repetitions expected. The second specifies
+            that the number of repetitions must fall within a given range.</p>
+        <p>
+            A repeat will transform into a call to Rhino Mocks <code>IMethodOptions.Repeat(value)</code>
+            or <code>IMethodOptions.Repeat(min, max)</code>.</p>
+
+        <p>
+            Copyright &copy; 2006 Andrew Davey</p>
+        <p>Blog <a href="http://blogs.warwick.ac.uk/andrewdavey">http://blogs.warwick.ac.uk/andrewdavey/</a><br />
+        Email <a href="mailto:andrew@equin.co.uk">andrew@equin.co.uk</a></p>
+    </div>
+</body>
+</html>
