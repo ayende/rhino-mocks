@@ -13,8 +13,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             {
                 return base.Equals(obj);
             }
-            
-         }
+
+        	public override int GetHashCode()
+        	{
+        		return base.GetHashCode();
+        	}
+        }
 
         [Test]
         public void MockClassWithEquals()

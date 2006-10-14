@@ -70,6 +70,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.DynamicProxy, Version=1.1.5.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SharedLibs\net-2.0\Castle.DynamicProxy.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -241,12 +245,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Diagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Castle\Tools\DynamicProxy\Castle.DynamicProxy\Castle.DynamicProxy-2.0.csproj">
-      <Project>{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}</Project>
-      <Name>Castle.DynamicProxy-2.0</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
