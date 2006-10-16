@@ -4,8 +4,8 @@
 	<property name="docs.dir" value="${nant.project.basedir}\..\Docs" />
 	<property name="build.debug" value="False" />
 	<property name="src.dir" value="${nant.project.basedir}" />
-	<property name="vendor.dir" value="${nant.project.basedir}\..\vendor" />
-	<property name="version" value="2.9.1"/>
+	<property name="vendor.dir" value="${nant.project.basedir}\..\..\SharedLibs" />
+	<property name="version" value="2.9.2"/>
 	<property name="keep.partial" value="false"/>
 
 
@@ -20,7 +20,7 @@
 		<copy todir="${build.dir}" flatten="true" overwrite="true" failonerror="false">
 			<fileset basedir="${vendor.dir}">
 				<include name="nunit.framework.dll" />
-				<include name="Scripting.dll" />
+				<include name="${vendor.dir}/Interop/Scripting.dll" />
 				<include name="${vendor.dir}/${framework::get-target-framework()}/Castle.DynamicProxy.dll" />
 			</fileset>
 		</copy>
@@ -38,7 +38,7 @@
 				<attribute type="ComVisibleAttribute" value="false" />
 				<attribute type="AssemblyDelaySignAttribute" value="false" />
 				<attribute type="AssemblyTitleAttribute" value="Rhino Mocks" />
-				<attribute type="AssemblyKeyFileAttribute" value="${src.dir}\ayende-open-source.snk" 
+				<attribute type="AssemblyKeyFileAttribute" value="${src.dir}\..\..\ayende-open-source.snk" 
 					if="${framework::get-target-framework()!='net-2.0'}"/>
 				<attribute type="AssemblyVersionAttribute" value="${version}.*" />
 				<attribute type="AssemblyDescriptionAttribute" value="Mocking framework for .Net" />
@@ -89,7 +89,7 @@
 		<exec program="ilmerge">
 			<arg value="/target:library"/>
 			<arg value="/targetplatform:${ilmerge-framework}"/>
-			<arg value="&quot;/keyfile:${src.dir}\ayende-open-source.snk&quot;"/>
+			<arg value="&quot;/keyfile:${src.dir}\..\..\ayende-open-source.snk&quot;"/>
 			<arg value="&quot;/out:${build.dir}\Rhino.Mocks.dll&quot;"/>
 			<arg value="&quot;${build.dir}\Rhino.Mocks.Partial.dll&quot;"/>
 			<arg value="&quot;${vendor.dir}/${framework::get-target-framework()}/Castle.DynamicProxy.dll&quot;"/>
