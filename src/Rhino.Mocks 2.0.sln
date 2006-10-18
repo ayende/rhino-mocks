@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks.Tests 2.0", "Rh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks 2.0", "Rhino.Mocks\Rhino.Mocks 2.0.csproj", "{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.DynamicProxy-2.0", "..\..\..\Castle\Tools\DynamicProxy\Castle.DynamicProxy\Castle.DynamicProxy-2.0.csproj", "{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,16 @@ Global
 		{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}.Release|Win32.ActiveCfg = Release|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
