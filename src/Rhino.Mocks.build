@@ -86,7 +86,7 @@
 			if="${framework::get-target-framework()=='net-1.1'}"/>
 		<property name="ilmerge-framework" value="v2" 
 			if="${framework::get-target-framework()=='net-2.0'}"/>
-		<exec program="ilmerge">
+		<exec program="${vendor.dir}\tools\ilmerge">
 			<arg value="/target:library"/>
 			<arg value="/targetplatform:${ilmerge-framework}"/>
 			<arg value="&quot;/keyfile:${src.dir}\..\..\ayende-open-source.snk&quot;"/>
