@@ -74,8 +74,6 @@ namespace Rhino.Mocks.Tests
             {
                 // Expected.
             }
-
-            mocks.VerifyAll();
         }
 
         [Test]
@@ -99,8 +97,6 @@ namespace Rhino.Mocks.Tests
             {
                 // Expected.
             }
-
-            mocks.VerifyAll();
         }
 
         [Test]
@@ -125,8 +121,6 @@ namespace Rhino.Mocks.Tests
             {
                 // Expected.
             }
-
-            mocks.VerifyAll();
         }
 
         [Test]
@@ -154,7 +148,6 @@ namespace Rhino.Mocks.Tests
                 // Expected.
             }
 
-            mocks.VerifyAll();
         }
 
         [Test]
@@ -183,8 +176,6 @@ namespace Rhino.Mocks.Tests
                 // Expected.
                 Assert.IsTrue(ex.InnerException is ExpectationViolationException);
             }
-
-            mocks.VerifyAll();
         }
 
         [Test]

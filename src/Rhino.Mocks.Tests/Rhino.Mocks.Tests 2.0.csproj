@@ -90,10 +90,6 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <ProjectReference Include="..\..\..\..\Castle\Tools\DynamicProxy\Castle.DynamicProxy\Castle.DynamicProxy-2.0.csproj">
-      <Project>{70EE6AF2-1F6D-4CC5-A1B2-C3182F035F67}</Project>
-      <Name>Castle.DynamicProxy-2.0</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Rhino.Mocks\Rhino.Mocks 2.0.csproj">
       <Name>Rhino.Mocks</Name>
       <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
@@ -127,7 +123,9 @@
     <Compile Include="Constraints\StringConstraintsTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExtendingRhinoMocks.cs" />
     <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Owen.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Avi.cs" />
     <Compile Include="FieldsProblem\FieldProblem_BackToMockWithRepeatableMethods.cs" />

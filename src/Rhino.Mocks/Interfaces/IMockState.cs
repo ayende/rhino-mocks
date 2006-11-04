@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Castle.DynamicProxy;
 
@@ -41,5 +42,12 @@ namespace Rhino.Mocks.Interfaces
 		/// Get the options for the last method call
 		/// </summary>
 		IMethodOptions LastMethodOptions { get; }
+
+		/// <summary>
+		/// Set the exception to throw when Verify is called.
+		/// This is used to report exception that may have happened but where caught in the code.
+		/// This way, they are reported anyway when Verify() is called.
+		/// </summary>
+		void SetExceptionToThrowOnVerify(Exception ex);
 	}
 }

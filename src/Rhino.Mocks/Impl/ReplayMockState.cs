@@ -23,6 +23,8 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		protected IMockedObject proxy;
 
+		private Exception exceptionToThrowOnVerify;
+
 		#endregion
 
 		#region Properties
@@ -93,10 +95,22 @@ namespace Rhino.Mocks.Impl
 		}
 
 		/// <summary>
+		/// Set the exception to throw when Verify is called.
+		/// This is used to report exception that may have happened but where caught in the code.
+		/// This way, they are reported anyway when Verify() is called.
+		/// </summary>
+		public void SetExceptionToThrowOnVerify(Exception ex)
+		{
+			this.exceptionToThrowOnVerify = ex;
+		}
+
+		/// <summary>
 		/// Verify that this mock expectations have passed.
 		/// </summary>
 		public void Verify()
 		{
+			if (exceptionToThrowOnVerify != null)
+				throw exceptionToThrowOnVerify;
 			StringBuilder sb = new StringBuilder();
 			bool verifiedFailed = false;
 			foreach (IExpectation expectation in repository.Recorder.GetAllExpectationsForProxy(proxy))

@@ -1,6 +1,7 @@
 #if dotNet2
 using System;
-	
+using Rhino.Mocks.Exceptions;
+
 namespace Rhino.Mocks
 {
     /*

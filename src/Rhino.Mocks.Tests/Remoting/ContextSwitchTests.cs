@@ -66,7 +66,7 @@ namespace Rhino.Mocks.Tests.Remoting
 		public void MockInterfaceWithSameName()
 		{
 			MockRepository mocks = new MockRepository();
-			Rhino.Mocks.Tests.IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+			IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
 			Expect.Call(demo.ReturnIntNoArgs()).Return(54);
 			demo.VoidStringArg("54");
 			Other.IDemo remotingDemo = (Other.IDemo)mocks.CreateMock(typeof(Other.IDemo));

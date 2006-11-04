@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 
 using NUnit.Framework;
+using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
 {
@@ -433,7 +434,7 @@ namespace Rhino.Mocks.Tests
             {
                 mockedWriter.WriteLine(stringToWriteLine);
             }
-            catch (Rhino.Mocks.Exceptions.ExpectationViolationException)
+            catch (ExpectationViolationException)
             {
                 // We're operating strictly.
                 Assert.AreEqual(MockType.Strict, mockType);
@@ -460,7 +461,8 @@ namespace Rhino.Mocks.Tests
             Assert.IsNull(errorInfo.Error, "Error should be null");
             Assert.AreEqual("error!!!", errorInfo.Error, "Should have gotten an error");
 
-            mocks.VerifyAll();
+        	if(MockType.Strict != mockType)
+				mocks.VerifyAll();
         }
         #endregion
     }

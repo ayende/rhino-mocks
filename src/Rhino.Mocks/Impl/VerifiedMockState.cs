@@ -75,6 +75,16 @@ namespace Rhino.Mocks.Impl
 			get { throw InvalidInVerifiedState(); }
 		}
 
+		/// <summary>
+		/// Set the exception to throw when Verify is called.
+		/// This is used to report exception that may have happened but where caught in the code.
+		/// This way, they are reported anyway when Verify() is called.
+		/// </summary>
+		public void SetExceptionToThrowOnVerify(Exception ex)
+		{
+			//not implementing this, we are already verified.
+		}
+
 		private Exception InvalidInVerifiedState()
 		{
 			return new InvalidOperationException("This action is invalid when the mock object is in verified state.");

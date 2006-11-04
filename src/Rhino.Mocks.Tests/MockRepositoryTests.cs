@@ -442,6 +442,23 @@ namespace Rhino.Mocks.Tests
             mocks.VerifyAll();
         }
 
+
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+		public void MockObjectThrowsForUnexpectedCall_WhenVerified_IfFirstExceptionWasCaught()
+		{
+			MockRepository mocks = new MockRepository();
+			IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+			mocks.ReplayAll();
+			try
+			{
+				demo.VoidNoArgs();
+			}
+			catch (Exception ){}
+			mocks.VerifyAll();
+		}
+    	
         [Test]
         public void DyamicMockAcceptUnexpectedCall()
         {
@@ -478,6 +495,7 @@ namespace Rhino.Mocks.Tests
             object o = mocks.CreateMock(typeof(object), "Foo");
         }
 
+    	
         #region Implementation
 
         private enum DemoEnum

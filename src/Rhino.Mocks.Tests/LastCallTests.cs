@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Tests.Callbacks;
 
 namespace Rhino.Mocks.Tests
@@ -28,11 +29,15 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void LastCallConstraints()
 		{
+			mocks.ReplayAll();//we aren't using this, because we force an exception, which will be re-thrown on verify()
+			
+			MockRepository seperateMocks = new MockRepository();
+			demo = (IDemo)seperateMocks.CreateMock(typeof (IDemo));
 			demo.StringArgString("");
 			LastCall.Constraints(Is.Null());
-			LastCall.Return("").Repeat.Twice();
-			mocks.ReplayAll();
-			Assert.AreEqual("",demo.StringArgString(null));
+			LastCall.Return("aaa").Repeat.Twice();
+			seperateMocks.ReplayAll();
+			Assert.AreEqual("aaa",demo.StringArgString(null));
 
 			try
 			{
@@ -42,7 +47,6 @@ namespace Rhino.Mocks.Tests
 			catch(Exception e)
 			{
 				Assert.AreEqual("IDemo.StringArgString(\"\"); Expected #0, Actual #1.\r\nIDemo.StringArgString(equal to null); Expected #2, Actual #1.",e.Message);
-				demo.StringArgString(null);//to make it pass verification
 			}
 		}
 

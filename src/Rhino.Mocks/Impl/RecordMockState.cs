@@ -54,6 +54,16 @@ namespace Rhino.Mocks.Impl
 		}
 
 		/// <summary>
+		/// Set the exception to throw when Verify is called.
+		/// This is used to report exception that may have happened but where caught in the code.
+		/// This way, they are reported anyway when Verify() is called.
+		/// </summary>
+		public void SetExceptionToThrowOnVerify(Exception ex)
+		{
+			//not implementing this, since there is never a call to Verify() anyway.
+		}
+
+		/// <summary>
 		/// Gets the matching verify state for this state
 		/// </summary>
 		public IMockState VerifyState
@@ -104,7 +114,7 @@ namespace Rhino.Mocks.Impl
 		/// Verify that we can move to replay state and move 
 		/// to the reply state.
 		/// </summary>
-		public IMockState Replay()
+		public virtual IMockState Replay()
 		{
 			PreviousMethodIsClose();
 			return DoReplay();
@@ -122,7 +132,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Verify that this mock expectations have passed.
 		/// </summary>
-		public void Verify()
+		public virtual void Verify()
 		{
 			throw InvalidOperationOnRecord();
 		}

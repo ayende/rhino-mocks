@@ -5,7 +5,7 @@
 	<property name="build.debug" value="False" />
 	<property name="src.dir" value="${project::get-base-directory()}" />
 	<property name="vendor.dir" value="${project::get-base-directory()}\..\..\SharedLibs" />
-	<property name="version" value="2.9.2"/>
+	<property name="version" value="2.9.5"/>
 	<property name="keep.partial" value="false"/>
 
 
@@ -73,7 +73,6 @@
 				<include name="${build.dir}/Rhino.Mocks.dll" />
 				<include name="${build.dir}\Scripting.dll"/>
 				<include name="${build.dir}/nunit.framework.dll" />
-				<include name="${vendor.dir}/${framework::get-target-framework()}/Castle.DynamicProxy.dll" />
 			</references>
 		</csc>
 		<delete file="${build.dir}/CommonAssemblyInfo.cs"/>

@@ -313,7 +313,9 @@ namespace Rhino.Mocks.MethodRecorders
 			sb.Append(calc.Expected);
 			sb.Append(", Actual #").Append(calc.Actual).Append('.');
 			AppendNextExpected(proxy, method, sb);
-			return new ExpectationViolationException(sb.ToString());
+			ExpectationViolationException expectationViolationException = new ExpectationViolationException(sb.ToString());
+			MockRepository.SetExceptionToBeThrownOnVerify(proxy, expectationViolationException);
+			return expectationViolationException;
 		}
 
 		private class CalcExpectedAndActual

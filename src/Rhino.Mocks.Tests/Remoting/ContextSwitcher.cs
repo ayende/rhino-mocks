@@ -5,7 +5,7 @@ namespace Rhino.Mocks.Tests.Remoting
 
 	public class ContextSwitcher : MarshalByRefObject
 	{
-		public void DoStuff(Rhino.Mocks.Tests.IDemo mock)
+		public void DoStuff(IDemo mock)
 		{
 			int n = mock.ReturnIntNoArgs();
 			mock.VoidStringArg(n.ToString());
