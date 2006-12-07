@@ -1,5 +1,8 @@
+using System;
 using System.Reflection;
+using System.Text;
 using Rhino.Mocks.Impl;
+using Rhino.Mocks.Utilities;
 
 namespace Rhino.Mocks.Expectations
 {
@@ -35,7 +38,12 @@ namespace Rhino.Mocks.Expectations
 		/// <value></value>
 		public override string ErrorMessage
 		{
-            get { return base.CreateErrorMessage(Method, expectedArgs); }
+            get
+            {
+				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArg);
+				string methodCall = MethodCallUtil.StringPresentation(format, Method, ExpectedArgs);
+				return base.CreateErrorMessage(methodCall);
+            }
 		}
 
 		/// <summary>
@@ -62,8 +70,41 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		public override int GetHashCode()
 		{
-			return base.GetHashCode();
+			return Method.GetHashCode();
 		}
 
+
+		private static string FormatArg(Array args, int i)
+		{
+			if (args.Length <= i)
+				return "missing parameter";
+			object arg = args.GetValue(i);
+			if (arg is Array)
+			{
+				Array arr = (Array)arg;
+				StringBuilder sb = new StringBuilder();
+				sb.Append('[');
+				for (int j = 0; j < arr.Length; j++)
+				{
+					sb.Append(FormatArg(arr, j));
+					if (j < arr.Length - 1)
+						sb.Append(", ");
+				}
+				sb.Append("]");
+				return sb.ToString();
+			}
+			else if (arg is string)
+			{
+				return '"' + arg.ToString() + '"';
+			}
+			else if (arg == null)
+			{
+				return "null";
+			}
+			else
+			{
+				return arg.ToString();
+			}
+		}
 	}
 }

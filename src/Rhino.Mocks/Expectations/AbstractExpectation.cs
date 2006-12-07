@@ -340,13 +340,11 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// The error message for these arguments
 		/// </summary>
-		protected string CreateErrorMessage(MethodInfo method, object[] args)
+		protected string CreateErrorMessage(string derivedMessage)
 		{
-			MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArg);
-			string methodCall = MethodCallUtil.StringPresentation(format, method, args);
 			if(Message==null)
-				return methodCall;
-			string msg = string.Format("Message: {0}\n{1}", Message, methodCall);
+				return derivedMessage;
+			string msg = string.Format("Message: {0}\n{1}", Message, derivedMessage);
 			return msg;
 		}
 
@@ -373,40 +371,6 @@ namespace Rhino.Mocks.Expectations
                 argIndex++;
             }
         }
-
-	    
-		private static string FormatArg(Array args, int i)
-		{
-			if (args.Length <= i)
-				return "missing parameter";
-			object arg = args.GetValue(i);
-			if (arg is Array)
-			{
-				Array arr = (Array) arg;
-				StringBuilder sb = new StringBuilder();
-				sb.Append('[');
-				for (int j = 0; j < arr.Length; j++)
-				{
-					sb.Append(FormatArg( arr, j));
-					if (j < arr.Length - 1)
-						sb.Append(", ");
-				}
-				sb.Append("]");
-				return sb.ToString();
-			}
-			else if (arg is string)
-			{
-				return '"' + arg.ToString() + '"';
-			}
-			else if (arg == null)
-			{
-				return "null";
-			}
-			else
-			{
-				return arg.ToString();
-			}
-		}
 
 		private void ActionOnMethodNotSpesified()
 		{

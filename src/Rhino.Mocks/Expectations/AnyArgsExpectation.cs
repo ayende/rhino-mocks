@@ -43,8 +43,9 @@ namespace Rhino.Mocks.Expectations
 		{
 			get
 			{
-				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArg);
-				return MethodCallUtil.StringPresentation(format, Method, new object[0]);
+				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(AnyFormatArg);
+				string stringPresentation = MethodCallUtil.StringPresentation(format, Method, new object[0]);
+				return CreateErrorMessage(stringPresentation);
 			}
 		}
 
@@ -64,10 +65,10 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		public override int GetHashCode()
 		{
-			return base.GetHashCode();
+			return Method.GetHashCode();
 		}
 
-		private string FormatArg(Array args, int i)
+		private  string AnyFormatArg(Array args, int i)
 		{
 			return "any";
 		}

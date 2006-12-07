@@ -62,7 +62,7 @@ namespace Rhino.Mocks.Expectations
                 sb.Append(Method.DeclaringType.Name).Append(".").Append(Method.Name);
 				sb.Append("(").Append("callback method: ").Append(callback.Method.DeclaringType.Name);
 				sb.Append(".").Append(callback.Method.Name).Append(");");
-				return sb.ToString();
+				return CreateErrorMessage(sb.ToString());
 			}
 		}
 

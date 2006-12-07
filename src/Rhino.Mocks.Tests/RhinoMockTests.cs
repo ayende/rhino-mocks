@@ -61,14 +61,31 @@ namespace Rhino.Mocks.Tests
 
 		[Test]
 		[ExpectedException(typeof (ExpectationViolationException), "Message: Called to prefar foo for bar\nIDemo.VoidNoArgs(); Expected #1, Actual #0.")]
-		public void OrderedCallsTrackingNotAsExpected()
+		public void WillDisplayDocumentationMessageIfNotCalled()
 		{
 			demo.VoidNoArgs();
-			LastCall.Message("Called to prefar foo for bar");
+			LastCall.On(demo)
+				.IgnoreArguments()
+				.Message("Called to prefar foo for bar");
 			
 			mocks.Replay(demo);
 
 			mocks.Verify(demo);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException), @"IDemo.VoidNoArgs(); Expected #1, Actual #2.
+Message: Should be called only once")]
+		public void WillDiplayDocumentationMessageIfCalledTooMuch()
+		{
+			demo.VoidNoArgs();
+			LastCall.Message("Should be called only once");
+			
+			mocks.ReplayAll();
+
+			demo.VoidNoArgs();
+			demo.VoidNoArgs();
+			
 		}
 
 		[Test]

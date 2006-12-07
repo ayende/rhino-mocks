@@ -138,8 +138,14 @@ namespace Rhino.Mocks.MethodRecorders
 			if (recordedActions.Count > 0)
 			{
 				ProxyMethodExpectationTriplet triplet = recordedActions[0] as ProxyMethodExpectationTriplet;
-				if (triplet != null)
+				if (triplet !=  null)
 				{
+					if (triplet.Expectation.Message!=null)
+					{
+						sb.Append("Message: ")
+							.Append(triplet.Expectation.Message)
+							.Append(System.Environment.NewLine);
+					}
 					sb.Append(triplet.Expectation.ErrorMessage);
 				}
 				else //Action is another recorder

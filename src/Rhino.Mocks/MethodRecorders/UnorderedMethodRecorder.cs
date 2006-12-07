@@ -304,14 +304,25 @@ namespace Rhino.Mocks.MethodRecorders
 			// We have move to the parent recorder, we need to pass the call to it.
 			if (parentRecorderRedirection != null)
 				return parentRecorderRedirection.UnexpectedMethodCall(proxy, method, args);
-		
-			CalcExpectedAndActual calc = new CalcExpectedAndActual(this, proxy, method, args);
 			StringBuilder sb = new StringBuilder();
+			CalcExpectedAndActual calc = new CalcExpectedAndActual(this, proxy, method, args);
 			string methodAsString = MethodCallUtil.StringPresentation(method, args);
 			sb.Append(methodAsString);
 			sb.Append(" Expected #");
 			sb.Append(calc.Expected);
 			sb.Append(", Actual #").Append(calc.Actual).Append('.');
+			ExpectationsList list = GetAllExpectationsForProxyAndMethod(proxy, method);
+			if (list.Count > 0)
+			{
+				string message = list[0].Message;
+				if (message != null)
+				{
+
+					sb.Append(System.Environment.NewLine)
+						.Append("Message: ")
+						.Append(message);
+				}
+			}
 			AppendNextExpected(proxy, method, sb);
 			ExpectationViolationException expectationViolationException = new ExpectationViolationException(sb.ToString());
 			MockRepository.SetExceptionToBeThrownOnVerify(proxy, expectationViolationException);
@@ -323,7 +334,7 @@ namespace Rhino.Mocks.MethodRecorders
 			private int actual = 1;
 			private int expected = 0;
 			private UnorderedMethodRecorder parent;
-
+			
 			public int Actual
 			{
 				get { return actual; }
