@@ -2,8 +2,8 @@ using System.Collections;
 using System.ComponentModel;
 using System.Reflection;
 using System.Reflection.Emit;
+using Castle.Core.Interceptor;
 using Castle.DynamicProxy;
-using Castle.DynamicProxy.Builder.CodeGenerators;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -530,7 +530,8 @@ namespace Rhino.Mocks
 			try
 			{
 				proxy = generator.CreateClassProxy(type, (Type[])types.ToArray(typeof(Type)),
-												   interceptor, false, argumentsForConstructor);
+				                                   ProxyGenerationOptions.Default, 
+												   argumentsForConstructor, interceptor);
 			}
 			catch (MissingMethodException mme)
 			{
@@ -550,11 +551,9 @@ namespace Rhino.Mocks
 			object proxy;
 			RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this));
 			ArrayList types = new ArrayList();
-			types.Add(type);
 			types.AddRange(extras);
 			types.Add(typeof(IMockedObject));
-			proxy = generator.CreateProxy((Type[])types.ToArray(typeof(Type)),
-										  interceptor, new object());
+			proxy = generator.CreateInterfaceProxyWithoutTarget(type, (Type[]) types.ToArray(typeof (Type)), interceptor);
 			IMockState value = mockStateFactory((IMockedObject)proxy);
 			proxies.Add(proxy, value);
 			return proxy;
@@ -570,8 +569,10 @@ namespace Rhino.Mocks
 			ProxyInstance proxyInstance = new ProxyInstance(this);
 			RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance);
 
-			Type[] types = new Type[] { delegateTargetInterfaceCreator.GetDelegateTargetInterface(type), typeof(IMockedObject) };
-			object target = generator.CreateProxy(types, interceptor, new object());
+			Type[] types = new Type[] { typeof(IMockedObject) };
+			object target = generator.CreateInterfaceProxyWithoutTarget(
+				delegateTargetInterfaceCreator.GetDelegateTargetInterface(type),
+				types, interceptor);
 
 			proxy = Delegate.CreateDelegate(type, target, "Invoke");
 			delegateProxies.Add(target, proxy);

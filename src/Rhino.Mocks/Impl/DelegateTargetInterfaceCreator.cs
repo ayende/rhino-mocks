@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
-using Castle.DynamicProxy.Builder.CodeGenerators;
 using System.Threading;
+using Castle.DynamicProxy;
 
 namespace Rhino.Mocks.Impl
 {

@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;

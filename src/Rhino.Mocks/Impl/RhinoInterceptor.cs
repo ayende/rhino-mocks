@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using Castle.DynamicProxy;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl
@@ -13,13 +13,13 @@ namespace Rhino.Mocks.Impl
 		private readonly MockRepository repository;
 		private readonly IMockedObject proxyInstance;
 
-		private static MethodInfo[] objectMethods = new MethodInfo[]
-						{
-							typeof (object).GetMethod("ToString"),
-							typeof (object).GetMethod("Equals", new Type[] {typeof (object)}),
-							typeof (object).GetMethod("GetHashCode"),
-							typeof (object).GetMethod("GetType")
-						};
+		private static MethodInfo[] objectMethods =
+			new MethodInfo[]
+				{
+					typeof (object).GetMethod("ToString"), typeof (object).GetMethod("Equals", new Type[] {typeof (object)}),
+					typeof (object).GetMethod("GetHashCode"), typeof (object).GetMethod("GetType")
+				};
+
 		/// <summary>
 		/// Creates a new <see cref="RhinoInterceptor"/> instance.
 		/// </summary>
@@ -32,43 +32,48 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Intercept a method call and direct it to the repository.
 		/// </summary>
-		public object Intercept(IInvocation invocation, params object[] args)
+		public void Intercept(IInvocation invocation)
 		{
 			if (Array.IndexOf(objectMethods, invocation.Method) != -1)
-				return invocation.Proceed(args);
-			if (invocation.Method.DeclaringType == typeof(IMockedObject))
 			{
-				invocation.InvocationTarget = proxyInstance;
-				return invocation.Proceed(args);
+				invocation.Proceed();
+				return;
 			}
-			if(proxyInstance.ShouldCallOriginal(invocation.Method))
+			if (invocation.Method.DeclaringType == typeof (IMockedObject))
 			{
-				return invocation.Proceed(args);
+				invocation.ReturnValue = invocation.Method.Invoke(proxyInstance, invocation.Arguments);
+				return;
 			}
-            if(proxyInstance.IsPropertyMethod(invocation.Method))
-            {
-                return proxyInstance.HandleProperty(invocation.Method, args);
-            }
-            //This call handle the subscribe / remove this method call is for an event,
-            //processing then continue normally (so we get an expectation for subscribing / removing from the event
-            HandleEvent(invocation, args);
+			if (proxyInstance.ShouldCallOriginal(invocation.Method))
+			{
+				invocation.Proceed();
+				return;
+			}
+			if (proxyInstance.IsPropertyMethod(invocation.Method))
+			{
+				invocation.ReturnValue = proxyInstance.HandleProperty(invocation.Method, invocation.Arguments);
+				return;
+			}
+			//This call handle the subscribe / remove this method call is for an event,
+			//processing then continue normally (so we get an expectation for subscribing / removing from the event
+			HandleEvent(invocation, invocation.Arguments);
 			object proxy = repository.GetMockObjectFromInvocationProxy(invocation.Proxy);
-			return repository.MethodCall(invocation, proxy, invocation.Method, args);
+			invocation.ReturnValue = repository.MethodCall(invocation, proxy, invocation.Method, invocation.Arguments);
 		}
-		
-        private void HandleEvent(IInvocation invocation, object[] args)
-        {
-            if (IsEvent(invocation))
-            {
-                proxyInstance.HandleEvent(invocation.Method, args);
-            }
-        }
 
-        private bool IsEvent(IInvocation invocation)
-        {
-            return invocation.Method.IsSpecialName
-                && (invocation.Method.Name.StartsWith("add_") || invocation.Method.Name.StartsWith("remove_"));
-        }
+		private void HandleEvent(IInvocation invocation, object[] args)
+		{
+			if (IsEvent(invocation))
+			{
+				proxyInstance.HandleEvent(invocation.Method, args);
+			}
+		}
 
+		private bool IsEvent(IInvocation invocation)
+		{
+			return
+				invocation.Method.IsSpecialName &&
+				(invocation.Method.Name.StartsWith("add_") || invocation.Method.Name.StartsWith("remove_"));
+		}
 	}
 }

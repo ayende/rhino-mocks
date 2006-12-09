@@ -1124,7 +1124,7 @@
             Different actions on this mock
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Interfaces.IMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Interfaces.IMockState.MethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
@@ -1181,7 +1181,7 @@
             </summary>
             <param name="previousState">The previous state for this method</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.ReplayMockState.MethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
@@ -1189,7 +1189,7 @@
             <param name="method">The method that was called</param>
             <param name="args">The arguments this method was called with</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.ReplayMockState.DoMethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             This allows derived method to cleanly get a the setupresult behavior while adding
@@ -1238,7 +1238,7 @@
             </summary>
             <param name="previousState">The previous state for this method</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.ReplayPartialMockState.DoMethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
@@ -1303,7 +1303,7 @@
             </summary>
             <param name="previousState">The previous state for this method</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.DoMethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.ReplayDynamicMockState.DoMethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
@@ -1603,7 +1603,7 @@
             Creates a new <see cref="T:Rhino.Mocks.Impl.RhinoInterceptor"/> instance.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.RhinoInterceptor.Intercept(Castle.DynamicProxy.IInvocation,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.RhinoInterceptor.Intercept(Castle.Core.Interceptor.IInvocation)">
             <summary>
             Intercept a method call and direct it to the repository.
             </summary>
@@ -2072,7 +2072,7 @@
             <param name="repository">Repository.</param>
             <param name="mockedObject">The proxy that generates the method calls</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.RecordMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.RecordMockState.MethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
@@ -2914,7 +2914,7 @@
             </summary>
             <param name="previous">The previous mock state, used to get the initial record state</param>
         </member>
-        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.MethodCall(Castle.DynamicProxy.IInvocation,System.Reflection.MethodInfo,System.Object[])">
+        <member name="M:Rhino.Mocks.Impl.VerifiedMockState.MethodCall(Castle.Core.Interceptor.IInvocation,System.Reflection.MethodInfo,System.Object[])">
             <summary>
             Add a method call for this state' mock.
             </summary>
