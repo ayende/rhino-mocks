@@ -1,6 +1,0 @@
-﻿Microsoft Visual Studio Solution File, Format Version 9.00
-# SharpDevelop 2.0.0.1462
-Project("{A33008B1-5DAC-44D5-9060-242E3B6E38F2}") = "Rhino.Mocks.BooMacros.Demo", "Rhino.Mocks.BooMacros.Demo.booproj", "{F3CA5A0A-6033-456B-9715-FE30CAF732B7}"
-EndProject
-Global
-EndGlobal
