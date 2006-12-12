@@ -1,0 +1,260 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Rhino.Mocks</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Rhino.Mocks</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\Build\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;DEBUG;dotNet2</DefineConstants>
+    <DocumentationFile>Rhino.Mocks.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\Build\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;dotNet2</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SharedLibs\Castle\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.0.1, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Constraints\AbstractConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\Constraints.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\Is.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\List.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\Property.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\Text.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ExpectationViolationException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ObjectNotMockFromThisRepositoryException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\AbstractExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\AnyArgsExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\ArgsEqualExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\CallbackExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\ConstraintsExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\ExpectationsListGenerated.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\ProxyMethodExpectationsDictionaryGenerated.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\ProxyStateDictionaryGenerated.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\CreateMethodExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\CreateMethodExpectationForSetupResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\DelegateTargetInterfaceCreator.cs" />
+    <Compile Include="Impl\EventRaiser.cs" />
+    <Compile Include="Impl\MethodOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\MockedObjectsEquality.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ProxyInstance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\Range.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RecordDynamicMockState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RecordMockState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RecordPartialMockState.cs" />
+    <Compile Include="Impl\RepeatableOption.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ReplayDynamicMockState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ReplayMockState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ReplayPartialMockState.cs" />
+    <Compile Include="Impl\RhinoInterceptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\Validate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\VerifiedMockState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\ICreateMethodExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IEventRaiser.cs" />
+    <Compile Include="Interfaces\IExpectation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IMethodOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IMethodRecorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IMockedObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IMockState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IRepeat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LastCall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\MethodRecorderBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\OrderedMethodRecorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\ProxyMethodExpectationTriplet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\ProxyMethodPair.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\RecorderChanger.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\UnorderedMethodRecorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mocker.cs" />
+    <Compile Include="MockRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MocksRepositoryGenerics.cs" />
+    <Compile Include="RhinoMocks.cs" />
+    <Compile Include="SetupResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utilities\MethodCallUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utilities\ReturnValueUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="With.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagram.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

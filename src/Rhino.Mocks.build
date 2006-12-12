@@ -1,0 +1,123 @@
+<?xml version="1.0" ?>
+<project name="Rhino Mocks" default="deploy">
+	<property name="build.dir" value="${project::get-base-directory()}\..\Build\${framework::get-target-framework()}" />
+	<property name="docs.dir" value="${project::get-base-directory()}\..\Docs" />
+	<property name="build.debug" value="False" />
+	<property name="src.dir" value="${project::get-base-directory()}" />
+	<property name="vendor.dir" value="${project::get-base-directory()}\..\..\SharedLibs" />
+	<property name="version" value="2.9.6"/>
+	<property name="keep.partial" value="false"/>
+
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<property name="Define" value="TRACE"/>
+		<property name="Define" value="${Define};DEBUG" if="${build.debug}"/>
+		<property name="Define" value="${Define};dotNet2" if="${framework::get-target-framework()=='net-2.0'}"/>
+	</target>
+
+	<target name="libraries">		
+		<copy todir="${build.dir}" flatten="true" overwrite="true" failonerror="false">
+			<fileset basedir="${vendor.dir}">
+				<include name="nunit.framework.dll" />
+				<include name="${vendor.dir}/Interop/Scripting.dll" />
+				<include name="${vendor.dir}/${framework::get-target-framework()}/Castle.DynamicProxy.dll" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="common-asm-info">
+		<asminfo output="${build.dir}/CommonAssemblyInfo.cs" language="CSharp">
+			<imports>
+				<import namespace="System" />
+				<import namespace="System.Reflection" />
+				<import namespace="System.EnterpriseServices" />
+				<import namespace="System.Runtime.InteropServices" />
+			</imports>
+			<attributes>
+				<attribute type="ComVisibleAttribute" value="false" />
+				<attribute type="AssemblyDelaySignAttribute" value="false" />
+				<attribute type="AssemblyTitleAttribute" value="Rhino Mocks" />
+				<attribute type="AssemblyKeyFileAttribute" value="${src.dir}\..\..\ayende-open-source.snk" 
+					if="${framework::get-target-framework()!='net-2.0'}"/>
+				<attribute type="AssemblyVersionAttribute" value="${version}.*" />
+				<attribute type="AssemblyDescriptionAttribute" value="Mocking framework for .Net" />
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright (c) 2005, Ayende Rahien." />
+			</attributes>
+		</asminfo>
+	</target>
+
+	<target name="build" depends="init, libraries, common-asm-info">
+		<property name="out.file.name" value="${build.dir}\Rhino.Mocks.Partial.dll"/>
+		<property name="out.file.name" value="${build.dir}\Rhino.Mocks.dll" if="${keep.partial}"/>
+		<csc target="library" output="${out.file.name}" debug="${build.debug}" 
+			define="${Define}" doc="${build.dir}\Rhino.Mocks.xml">
+			<sources>
+				<include name="Rhino.Mocks/**.cs" />
+				<include name="${build.dir}/CommonAssemblyInfo.cs" />
+			</sources>
+			<references>
+				<include name="${vendor.dir}/${framework::get-target-framework()}/Castle.DynamicProxy.dll" />
+			</references>
+		</csc>
+		<call target="merge" unless="${keep.partial}"/>
+		<csc target="library" output="${build.dir}\Rhino.Mocks.Tests.dll" 
+			define="${Define}" debug="${build.debug}">
+			<sources>
+				<include name="Rhino.Mocks.Tests/**.cs" />
+				
+				<include name="${build.dir}/CommonAssemblyInfo.cs" />
+				
+			</sources>
+			<references>
+				<include name="${build.dir}/Rhino.Mocks.dll" />
+				<include name="${build.dir}\Scripting.dll"/>
+				<include name="${build.dir}/nunit.framework.dll" />
+			</references>
+		</csc>
+		<delete file="${build.dir}/CommonAssemblyInfo.cs"/>
+	</target>
+	
+	<target name="merge">
+		<echo>Merging Assemblies</echo>
+		<property name="ilmerge-framework" value="v1"/>
+		<property name="ilmerge-framework" value="v1.1" 
+			if="${framework::get-target-framework()=='net-1.1'}"/>
+		<property name="ilmerge-framework" value="v2" 
+			if="${framework::get-target-framework()=='net-2.0'}"/>
+		<exec program="${vendor.dir}\tools\ilmerge">
+			<arg value="/target:library"/>
+			<arg value="/targetplatform:${ilmerge-framework}"/>
+			<arg value="&quot;/keyfile:${src.dir}\..\..\ayende-open-source.snk&quot;"/>
+			<arg value="&quot;/out:${build.dir}\Rhino.Mocks.dll&quot;"/>
+			<arg value="&quot;${build.dir}\Rhino.Mocks.Partial.dll&quot;"/>
+			<arg value="&quot;${vendor.dir}/${framework::get-target-framework()}/Castle.DynamicProxy.dll&quot;"/>
+		</exec>
+		<delete file="${build.dir}/Rhino.Mocks.Partial.dll" />
+	</target>
+	
+	<target name="test">
+		<exec program="${vendor.dir}\Tools\NUnit\nunit-console.exe">
+			<arg value="/noshadow" />		
+			<arg value="${build.dir}\Rhino.Mocks.Tests.dll" />		
+		</exec>
+	</target>
+	
+	<target name="deploy" depends="build, test">
+		<property name="partial" value=""/>
+		<property name="partial" value="-partial" if="${keep.partial}"/>
+		<zip zipfile="${build.dir}\..\rhino-mocks-${version}-${framework::get-target-framework()}${partial}.zip" ziplevel="9">
+			<fileset> 
+				<include name="${build.dir}\Rhino.Mocks.dll"/>
+				<include name="${build.dir}\Rhino.Mocks.xml"/>
+				<include name="${docs.dir}\Reademe.txt"/>
+				<include name="${docs.dir}\Rhino.jpg"/>
+			</fileset>
+		</zip>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+</project>
+
