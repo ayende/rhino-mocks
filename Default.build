@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project 
+		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
+
+	<PropertyGroup>
+		<ProjectName>Rhino.Mocks</ProjectName>
+		<ShortName>rhino-mocks</ShortName>
+		<SolutionFile>Rhino.Mocks.sln</SolutionFile>
+		<FlattenZipFile>True</FlattenZipFile>
+		<SectionId>-2</SectionId>
+		<Version>1.4</Version>
+		<AssemblyInfo>AssemblyInfo.cs</AssemblyInfo>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<TestAssembly Include="$(MSBuildProjectDirectory)\Rhino.Mcoks.Tests\bin\$(Configuration)\Rhino.Mocks.Tests.dll"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ZipFiles Include="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"/>
+	</ItemGroup>
+</Project>
