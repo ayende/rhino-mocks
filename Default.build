@@ -15,7 +15,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<TestAssembly Include="$(MSBuildProjectDirectory)\Rhino.Mcoks.Tests\bin\$(Configuration)\Rhino.Mocks.Tests.dll"/>
+		<TestAssembly Include="$(MSBuildProjectDirectory)\Rhino.Mocks.Tests\bin\$(Configuration)\Rhino.Mocks.Tests.dll"/>
 	</ItemGroup>
 
 	<ItemGroup>
