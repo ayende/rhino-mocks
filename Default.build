@@ -10,10 +10,17 @@
 		<FlattenZipFile>True</FlattenZipFile>
 		<SectionId>-2</SectionId>
 		<Version>1.4</Version>
-		<AssemblyInfo>AssemblyInfo.cs</AssemblyInfo>
-
 	</PropertyGroup>
-
+	
+	<ItemGroup>
+		<AssemblyInfo Include="Item">
+			<File>$(MSBuildProjectDirectory)\Rhino.Mocks\AssemblyInfo.cs</File>
+		</AssemblyInfo>
+		<AssemblyInfo Include="Item">
+			<File>$(MSBuildProjectDirectory)\Rhino.Mocks.Tests\AssemblyInfo.cs</File>
+		</AssemblyInfo>
+	</ItemGroup>
+	
 	<ItemGroup>
 		<TestAssembly Include="$(MSBuildProjectDirectory)\Rhino.Mocks.Tests\bin\$(Configuration)\Rhino.Mocks.Tests.dll"/>
 	</ItemGroup>
