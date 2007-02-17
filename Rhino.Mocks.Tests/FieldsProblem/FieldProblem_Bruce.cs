@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Impl;
 
 namespace Rhino.Mocks.Tests.FieldsProblem

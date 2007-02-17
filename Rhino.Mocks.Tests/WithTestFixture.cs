@@ -1,6 +1,6 @@
 #if dotNet2
 using System;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
@@ -31,8 +31,16 @@ namespace Rhino.Mocks.Tests
                 Assert.AreEqual(5, demo.ReturnIntNoArgs());
             });
         }
-        
-        [Test]
+
+    	[Test]
+		[ExpectedException(typeof(InvalidOperationException),"You cannot use Mocker.Current outside of a With.Mocks block")]
+    	public void CannotUseMockerOutsideOfWithMocks()
+    	{
+    		MockRepository dummy = Mocker.Current;
+			
+    	}
+
+    	[Test]
         [ExpectedException(typeof(ExpectationViolationException), "IDemo.ReturnIntNoArgs(); Expected #1, Actual #0.")]
         public void UsingTheWithMocksConstruct_ThrowsIfExpectationIsMissed()
         {

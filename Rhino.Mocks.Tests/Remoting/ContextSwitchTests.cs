@@ -3,7 +3,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Serialization;
 using System.Security.Policy;
 using System.Security.Permissions;
-using NUnit.Framework;
+using MbUnit.Framework;
 
 [assembly:EnvironmentPermissionAttribute(SecurityAction.RequestMinimum)]
 
@@ -21,8 +21,6 @@ namespace Rhino.Mocks.Tests.Remoting
 	{
 		private AppDomain otherDomain;
 		private ContextSwitcher contextSwitcher;
-
-
 
 		[TestFixtureSetUp]
 		public void FixtureSetUp()
@@ -46,8 +44,6 @@ namespace Rhino.Mocks.Tests.Remoting
 			AppDomain.Unload(otherDomain);
 		}
 
-
-
 		[Test]
 		public void MockInterface()
 		{
@@ -60,8 +56,7 @@ namespace Rhino.Mocks.Tests.Remoting
 			mocks.VerifyAll();
 		}
 
-
-
+	
 		[Test]
 		public void MockInterfaceWithSameName()
 		{

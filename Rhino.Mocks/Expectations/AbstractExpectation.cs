@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
@@ -69,6 +70,11 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		private string message;
 
+		/// <summary>
+		/// The method invocation
+		/// </summary>
+		private IInvocation invocation;
+
 	    #endregion
 
 		#region Properties
@@ -103,6 +109,16 @@ namespace Rhino.Mocks.Expectations
 		public MethodInfo Method
 		{
 			get { return method; }
+		}
+
+
+		/// <summary>
+		/// Gets the invocation for this expectation
+		/// </summary>
+		/// <value>The invocation.</value>
+		public IInvocation Invocation
+		{
+			get { return invocation; }
 		}
 
 		/// <summary>
@@ -180,7 +196,6 @@ namespace Rhino.Mocks.Expectations
         /// </summary>
         public Delegate ActionToExecute
         {
-            get { return actionToExecute; }
             set 
             {
                 ActionOnMethodNotSpesified();
@@ -289,11 +304,13 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// Creates a new <see cref="AbstractExpectation"/> instance.
 		/// </summary>
-		/// <param name="method">Method.</param>
-		protected AbstractExpectation(MethodInfo method)
+		/// <param name="invocation">The invocation for this method, required because it contains the generic type infromation</param>
+		protected AbstractExpectation(IInvocation invocation)
 		{
-			Validate.IsNotNull(method, "method");
-			this.method = method;
+			Validate.IsNotNull(invocation, "invocation");
+			Validate.IsNotNull(invocation.Method, "method");
+			this.invocation = invocation;
+			this.method = invocation.Method;
 			this.expected = new Range(1, 1);
 		}
 
@@ -301,7 +318,7 @@ namespace Rhino.Mocks.Expectations
 		/// Creates a new <see cref="AbstractExpectation"/> instance.
 		/// </summary>
 		/// <param name="expectation">Expectation.</param>
-		protected AbstractExpectation(IExpectation expectation) : this(expectation.Method)
+		protected AbstractExpectation(IExpectation expectation) : this(expectation.Invocation)
 		{
 			returnValue = expectation.ReturnValue;
 			returnValueSet = expectation.HasReturnValue;
@@ -420,7 +437,8 @@ namespace Rhino.Mocks.Expectations
 					return;
 				type = value.GetType().FullName;
 			}
-			throw new InvalidOperationException("Type '" + type + "' doesn't match the return type '" + method.ReturnType.FullName + "' for method '" + MethodCallUtil.StringPresentation(method, new object[0]) + "'");
+			throw new InvalidOperationException(string.Format("Type '{0}' doesn't match the return type '{1}' for method '{2}'", type, method.ReturnType.FullName, 
+				MethodCallUtil.StringPresentation(Invocation,method, new object[0])));
 		}
 
         /// <summary>
@@ -435,7 +453,16 @@ namespace Rhino.Mocks.Expectations
                 throw new InvalidOperationException(argsDontMatch);
             for (int i = 0; i < methodParams.Length; i++)
             {
-                if (methodParams[i].ParameterType != callbackParams[i].ParameterType)
+            	Type methodParameter = methodParams[i].ParameterType;
+				if(methodParameter.IsGenericType && invocation.GetType().IsGenericType)
+				{
+					//we are skipping this because there are too many edge cases, and the runtime will validate this
+					//at any rate. As an example, what happens when:
+					// new Action<IList<string>(..) is called on
+					// public class Foo<T> { public T Weird(IList<T> ...) }
+					continue;
+				}
+            	if (methodParameter != callbackParams[i].ParameterType)
                     throw new InvalidOperationException(argsDontMatch);
             }
         }

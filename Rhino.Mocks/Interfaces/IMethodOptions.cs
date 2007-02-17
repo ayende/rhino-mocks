@@ -141,13 +141,8 @@ namespace Rhino.Mocks.Interfaces
         /// Use the property as a simple property, getting/setting the values without
         /// causing mock expectations.
         /// </summary>
-        void PropertyBehavior();
+        IMethodOptions PropertyBehavior();
 
-        /// <summary>
-        /// Get the last call method info.
-        /// </summary>
-        MethodInfo LastMethod { get; }
-	    
         /// <summary>
         /// Get an event raiser for the last subscribed event.
         /// </summary>

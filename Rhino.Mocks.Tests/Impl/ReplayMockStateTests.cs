@@ -1,8 +1,9 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
+using Rhino.Mocks.Tests.Expectations;
 using Rhino.Mocks.Tests.Utilities;
 
 namespace Rhino.Mocks.Tests.Impl
@@ -23,7 +24,7 @@ namespace Rhino.Mocks.Tests.Impl
 			proxy = new ProxyInstance(mocks);
 			startsWith = CreateMethodInfo();
 			record = new RecordMockState(proxy, ReplayMockStateTests.mocks);
-            record.MethodCall(null, startsWith, "2");
+            record.MethodCall(new FakeInvocation(startsWith), startsWith, "2");
 			replay = new ReplayMockState(record);
 		}
 
@@ -78,9 +79,9 @@ namespace Rhino.Mocks.Tests.Impl
 		{
 			record.LastExpectation.ReturnValue = true;
 			MethodInfo method = CreateMethodInfo();
-			record.MethodCall(null, method, "r");
+			record.MethodCall(new FakeInvocation(method), method, "r");
 			record.LastExpectation.ReturnValue = true;
-			record.MethodCall(null, method, "y");
+			record.MethodCall(new FakeInvocation(method), method, "y");
 			record.LastExpectation.ReturnValue = true;
 			record.LastExpectation.Expected = new Range(2, 2);
 			ReplayMockState replay = new ReplayMockState(record);
@@ -104,9 +105,9 @@ namespace Rhino.Mocks.Tests.Impl
 			{
 				record.LastExpectation.ReturnValue = true;
 				MethodInfo method = CreateMethodInfo();
-                record.MethodCall(null, method, "r");
+                record.MethodCall(new FakeInvocation(method), method, "r");
 				record.LastExpectation.ReturnValue = true;
-                record.MethodCall(null, method, "y");
+                record.MethodCall(new FakeInvocation(method), method, "y");
 				record.LastExpectation.ReturnValue = true;
 				record.LastExpectation.Expected = new Range(2, 2);
 			}

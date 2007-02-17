@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
@@ -16,7 +16,7 @@ namespace Rhino.Mocks.Tests.Expectations
 
 		protected override IExpectation GetExpectation(MethodInfo m, Range r, int actual)
 		{
-			IExpectation expectation = new ConstraintsExpectation(m,new AbstractConstraint[0]); 
+			IExpectation expectation = new ConstraintsExpectation(new FakeInvocation(m),new AbstractConstraint[0]); 
 			SetupExpectation(expectation, r, actual);
 			return expectation;
 		}
@@ -25,7 +25,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		public void SetUp()
 		{
 			method = typeof (IDemo).GetMethod("VoidThreeArgs");
-			expectation = new ConstraintsExpectation(this.method, new AbstractConstraint[]
+			expectation = new ConstraintsExpectation(new FakeInvocation(this.method), new AbstractConstraint[]
 				{
 					Is.Anything(),
 					Text.Like(@"[\w\d]+"),
@@ -37,7 +37,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (InvalidOperationException), "The constraint at index 1 is null! Use Is.Null() to represent null parameters.")]
 		public void PassingNullConstraintsThrows()
 		{
-			expectation = new ConstraintsExpectation(this.method, new AbstractConstraint[]
+			expectation = new ConstraintsExpectation(new FakeInvocation(this.method), new AbstractConstraint[]
 				{
 					Is.Anything(),
 					null,
@@ -49,7 +49,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: constraints")]
 		public void NullConstraints()
 		{
-			new ConstraintsExpectation(this.method, null);
+			new ConstraintsExpectation(new FakeInvocation(this.method), null);
 		}
 
 		[Test]
@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (InvalidOperationException), "The number of constraints is not the same as the number of the method's parameters!")]
 		public void TooFewConstraints()
 		{
-			new ConstraintsExpectation(this.method, new AbstractConstraint[]
+			new ConstraintsExpectation(new FakeInvocation(this.method), new AbstractConstraint[]
 				{
 					Is.Anything(),
 					Is.Null()
@@ -82,7 +82,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (InvalidOperationException), "The number of constraints is not the same as the number of the method's parameters!")]
 		public void TooManyConstraints()
 		{
-			new ConstraintsExpectation(this.method, new AbstractConstraint[]
+			new ConstraintsExpectation(new FakeInvocation(this.method), new AbstractConstraint[]
 				{
 					Is.Anything(),
 					Is.Null(),
@@ -95,7 +95,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[Test]
 		public void CreateErrorMessageForConstraints()
 		{
-			ConstraintsExpectation expectation = new ConstraintsExpectation(this.method, new AbstractConstraint[]
+			ConstraintsExpectation expectation = new ConstraintsExpectation(new FakeInvocation(this.method), new AbstractConstraint[]
 				{
 					Is.Anything(),
 					Is.Null(),

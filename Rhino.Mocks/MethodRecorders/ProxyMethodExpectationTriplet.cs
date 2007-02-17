@@ -83,15 +83,5 @@ namespace Rhino.Mocks.MethodRecorders
 		{
 			return method.GetHashCode() + MockedObjectsEquality.Instance.GetHashCode(proxy) + expectation.GetHashCode();
 		}
-
-        /// <summary>
-        /// Gets a string representation of this <see cref="ProxyMethodExpectationTriplet"/> 
-        /// to assist debugging.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return String.Format(CultureInfo.CurrentCulture, "ProxyMethodExpectationTriplet({0},{1},{2})", Proxy, Method, Expectation);
-        }
 	}
 }

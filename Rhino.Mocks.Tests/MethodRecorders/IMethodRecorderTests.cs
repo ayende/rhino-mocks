@@ -1,9 +1,10 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Generated;
+using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.MethodRecorders
 {
@@ -23,8 +24,8 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			demo = this.mocks.CreateMock(typeof (IDemo)) as IDemo;
 			voidNoArgs = typeof (IDemo).GetMethod("VoidNoArgs");
 			voidThreeArgs = typeof (IDemo).GetMethod("VoidThreeStringArgs");
-			expectationOne = new AnyArgsExpectation(this.voidNoArgs);
-			expectationTwo = new AnyArgsExpectation(voidThreeArgs);
+			expectationOne = new AnyArgsExpectation(new FakeInvocation(this.voidNoArgs));
+			expectationTwo = new AnyArgsExpectation(new FakeInvocation(voidThreeArgs));
 			recorder = CreateRecorder();
 			ChildSetup();
 		}
@@ -46,7 +47,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void HasExpectationsAfterGettingRecordedExpectation()
 		{
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
-			recorder.GetRecordedExpectation(demo, voidNoArgs, new object[0]);
+			recorder.GetRecordedExpectation(new FakeInvocation(voidNoArgs),demo, voidNoArgs, new object[0]);
 			Assert.IsFalse(recorder.HasExpectations);
 		}
 
@@ -79,7 +80,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void ReplaceExpectation()
 		{
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
-			AnyArgsExpectation newExpectation = new AnyArgsExpectation(voidNoArgs);
+			AnyArgsExpectation newExpectation = new AnyArgsExpectation(new FakeInvocation(voidNoArgs));
 			recorder.ReplaceExpectation(demo, voidNoArgs, expectationOne, newExpectation);
 			ExpectationsList list = recorder.GetAllExpectationsForProxyAndMethod(demo, voidNoArgs);
 			Assert.AreSame(newExpectation, list[0]);
@@ -91,7 +92,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			recorder.AddRecorder(CreateRecorder());
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
 			
-			AnyArgsExpectation newExpectation = new AnyArgsExpectation(voidNoArgs);
+			AnyArgsExpectation newExpectation = new AnyArgsExpectation(new FakeInvocation(voidNoArgs));
 			recorder.ReplaceExpectation(demo, voidNoArgs, expectationOne, newExpectation);
 			ExpectationsList list = recorder.GetAllExpectationsForProxyAndMethod(demo, voidNoArgs);
 			Assert.AreSame(newExpectation, list[0]);
@@ -123,7 +124,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void WasRecordedProxyNullThrows()
 		{
 			recorder.Record(demo, voidNoArgs, expectationOne);
-			recorder.GetRecordedExpectation(null, voidNoArgs, new object[0]);
+			recorder.GetRecordedExpectation(new FakeInvocation(voidNoArgs), null, voidNoArgs, new object[0]);
 		}
 
 		[Test]
@@ -131,7 +132,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void WasRecordedMethodNullThrows()
 		{
 			recorder.Record(demo, voidNoArgs, expectationOne);
-			recorder.GetRecordedExpectation(demo, null, new object[0]);
+			recorder.GetRecordedExpectation(new FakeInvocation(null), demo, null, new object[0]);
 		}
 
 		[Test]
@@ -139,7 +140,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void WasRecordedArgsNullThrows()
 		{
 			recorder.Record(demo, voidNoArgs, expectationOne);
-			recorder.GetRecordedExpectation(demo, voidNoArgs, null);
+			recorder.GetRecordedExpectation(new FakeInvocation(voidNoArgs), demo, voidNoArgs, null);
 		}
 
 		[Test]

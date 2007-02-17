@@ -9,7 +9,8 @@
 		<SolutionFile>Rhino.Mocks.sln</SolutionFile>
 		<FlattenZipFile>True</FlattenZipFile>
 		<SectionId>-2</SectionId>
-		<Version>1.4</Version>
+		<Version>3.0</Version>
+		<ExtraInfo> - Beta</ExtraInfo>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -28,4 +29,22 @@
 	<ItemGroup>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"/>
 	</ItemGroup>
+	
+		<Target Name="BeforeTest">	
+			<Delete Files="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;"/>
+			<Move SourceFiles="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll;"
+				DestinationFiles="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;"/>
+			<ILMerge
+				ToolPath="$(SharedLibsDir)\Tools\"
+				InputAssemblies="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Castle.DynamicProxy2.dll"
+				 ExcludeFile="$(excludeFile)"
+				 OutputFile="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"
+				 LogFile="$(logFile)"
+				 DebugInfo="true"
+				 XmlDocumentation="true"
+				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"
+				  />
+			<Copy SourceFiles="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll;"
+				DestinationFiles="$(MSBuildProjectDirectory)\Rhino.Mocks.Tests\bin\$(Configuration)\Rhino.Mocks.dll;"/>
+		</Target>
 </Project>

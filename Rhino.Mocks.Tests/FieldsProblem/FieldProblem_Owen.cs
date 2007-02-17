@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using Rhino.Mocks;
 using System.Data;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 
 public class Metric : IMetric

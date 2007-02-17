@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests
 {

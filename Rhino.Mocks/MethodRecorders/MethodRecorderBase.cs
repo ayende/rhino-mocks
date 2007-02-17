@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Impl;
@@ -86,14 +87,14 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
-		public IExpectation GetRecordedExpectation(object proxy, MethodInfo method, object[] args)
+		public IExpectation GetRecordedExpectation(IInvocation invocation, object proxy, MethodInfo method, object[] args)
 		{
 			Validate.IsNotNull(proxy, "proxy");
 			Validate.IsNotNull(method, "method");
 			Validate.IsNotNull(args, "args");
 			if (replayerToCall != null)
-				return replayerToCall.GetRecordedExpectation(proxy, method, args);
-			IExpectation expectation = DoGetRecordedExpectation(proxy, method, args);
+				return replayerToCall.GetRecordedExpectation(invocation,proxy, method, args);
+			IExpectation expectation = DoGetRecordedExpectation(invocation,proxy, method, args);
 			if (HasExpectations == false)
 				MoveToParentReplayer();
 			return expectation;
@@ -298,7 +299,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
-		public abstract ExpectationViolationException UnexpectedMethodCall(object proxy, MethodInfo method, object[] args);
+		public abstract ExpectationViolationException UnexpectedMethodCall(IInvocation invocation, object proxy, MethodInfo method, object[] args);
 		
 		/// <summary>
 		/// Gets the next expected calls string.
@@ -321,7 +322,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Handle the real execution of this method for the derived class
 		/// </summary>
-		protected abstract IExpectation DoGetRecordedExpectation(object proxy, MethodInfo method, object[] args);
+		protected abstract IExpectation DoGetRecordedExpectation(IInvocation invocation, object proxy, MethodInfo method, object[] args);
 
 		/// <summary>
 		/// Handle the real execution of this method for the derived class

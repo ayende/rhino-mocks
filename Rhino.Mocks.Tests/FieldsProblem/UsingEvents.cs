@@ -1,5 +1,5 @@
 using System;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 
@@ -60,8 +60,19 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mocks.ReplayAll();
             events.RaiseEvent();
             mocks.VerifyAll();
-
         }
+
+    	[Test]
+    	public void CanSetExpectationToUnsubscribeFromEvent()
+    	{
+    		IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+            events.Blah += new EventHandler(events_Blah);
+			events.Blah -= new EventHandler(events_Blah);
+            mocks.ReplayAll();
+			events.Blah += new EventHandler(events_Blah);
+			events.Blah -= new EventHandler(events_Blah);
+            mocks.VerifyAll();
+    	}
 
         [Test]
         [ExpectedException(typeof(ExpectationViolationException), "IWithEvents.add_Blah(System.EventHandler); Expected #1, Actual #0.")]

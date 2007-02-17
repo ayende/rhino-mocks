@@ -235,5 +235,22 @@ namespace Rhino.Mocks
 		{
 			return Options.Message(documentationMessage);
 		}
+
+		/* Method: PropertyBehavior
+         * 
+         * Use the property as a normal property, so you can use it to save/load values
+         * without having to specify expectations for it.
+         * 
+         * Note:
+         * This can be called only when the last call is a getter or setter.
+         */ 
+        /// <summary>
+        /// Use the property as a simple property, getting/setting the values without
+        /// causing mock expectations.
+        /// </summary>
+        public static IMethodOptions PropertyBehavior()
+        {
+			return Options.PropertyBehavior();
+        }
 	}
 }

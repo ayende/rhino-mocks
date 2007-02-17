@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using NUnit.Framework;
+using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {

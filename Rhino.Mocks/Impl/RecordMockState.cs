@@ -104,7 +104,7 @@ namespace Rhino.Mocks.Impl
 			PreviousMethodIsClose();
 			repository.lastMockedObject = mockedObject;
 			MockRepository.lastRepository = repository;
-			IExpectation expectation = new ArgsEqualExpectation(method, args);
+			IExpectation expectation = new ArgsEqualExpectation(invocation, args);
 			repository.Recorder.Record(mockedObject, method, expectation);
 			lastExpectation = expectation;
 			methodCallsCount++;

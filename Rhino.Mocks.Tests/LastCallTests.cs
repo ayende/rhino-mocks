@@ -1,5 +1,5 @@
 using System;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Tests.Callbacks;
 

@@ -1,9 +1,10 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
+using Rhino.Mocks.Tests.Expectations;
 using Rhino.Mocks.Tests.MethodRecorders;
 
 namespace Rhino.Mocks.Tests
@@ -26,7 +27,7 @@ namespace Rhino.Mocks.Tests
 
 			proxy = new object();
 			method = typeof (object).GetMethod("ToString");
-			expectation = new AnyArgsExpectation(method);
+			expectation = new AnyArgsExpectation(new FakeInvocation(method));
 			args = new object[0];
 		}
 

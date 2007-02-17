@@ -40,7 +40,7 @@ namespace Rhino.Mocks.Impl
 			else
 			{
 				//because the expectation doesn't exist, an exception will be thrown
-				return repository.Replayer.GetRecordedExpectation(proxy, method, args);
+				return repository.Replayer.GetRecordedExpectation(invocation,proxy, method, args);
 			}
 		}
 

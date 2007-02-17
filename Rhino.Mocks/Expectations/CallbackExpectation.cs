@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Expectations
@@ -26,9 +27,9 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// Creates a new <see cref="CallbackExpectation"/> instance.
 		/// </summary>
-		/// <param name="method">Method.</param>
+		/// <param name="invocation">Invocation for this expectation</param>
 		/// <param name="callback">Callback.</param>
-		public CallbackExpectation(MethodInfo method, Delegate callback) : base(method)
+		public CallbackExpectation(IInvocation invocation, Delegate callback) : base(invocation)
 		{
 			this.callback = callback;
 			ValidateCallback();

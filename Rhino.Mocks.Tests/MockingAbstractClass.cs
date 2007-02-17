@@ -2,7 +2,7 @@ using System;
 
 namespace Rhino.Mocks.Tests
 {
-	using NUnit.Framework;
+	using MbUnit.Framework;
 
 	[TestFixture]
 	public class MockingAbstractClass

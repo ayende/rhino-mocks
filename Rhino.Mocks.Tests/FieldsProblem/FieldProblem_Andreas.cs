@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
@@ -20,6 +20,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mockObject.AnyMethod();
 			repository.VerifyAll();
 
+		}
+
+		[Test]
+		public void CanCallBackToRecordAllWhenRepositoryIsEmpty()
+		{
+			MockRepository mocks = new MockRepository();
+			mocks.BackToRecordAll();
 		}
 	}
 

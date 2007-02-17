@@ -1,6 +1,7 @@
 using System;
 using System.Text;
-using NUnit.Framework;
+using System.Windows.Forms;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
@@ -39,7 +40,6 @@ namespace Rhino.Mocks.Tests
 			Assert.AreEqual(3, abs.Add(2));
 			Assert.AreEqual(0, abs.Count);
             mocks.VerifyAll();
-
         }
 
         [Test]
@@ -50,7 +50,6 @@ namespace Rhino.Mocks.Tests
             Assert.AreEqual(5, abs.Decrement());
             Assert.AreEqual(0, abs.Count);
             mocks.VerifyAll();
-
         }
 
         [Test]
@@ -67,7 +66,16 @@ namespace Rhino.Mocks.Tests
             mocks.ReplayAll();
             abs.Decrement();
         }
-    
+
+    	[Test]
+    	public void CanMockWithCtorParams()
+    	{
+    		WithParameters withParameters = mocks.PartialMock<WithParameters>(1);
+    		Expect.Call(withParameters.Int).Return(4);
+    		mocks.ReplayAll();
+    		Assert.AreEqual(4, withParameters.Int);
+    		mocks.VerifyAll();
+    	}
     }
     
     public abstract class AbstractClass
@@ -86,4 +94,22 @@ namespace Rhino.Mocks.Tests
 
         public abstract int Decrement();
     }
+
+	public class WithParameters
+	{
+		private int i;
+
+
+		public WithParameters(int i)
+		{
+			this.i = i;
+		}
+
+
+		public virtual int Int
+		{
+			get { return i; }
+			set { i = value; }
+		}
+	}
 }

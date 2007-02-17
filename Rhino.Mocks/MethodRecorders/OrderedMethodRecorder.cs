@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
@@ -114,16 +115,16 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
-		public override ExpectationViolationException UnexpectedMethodCall(object proxy, MethodInfo method, object[] args)
+		public override ExpectationViolationException UnexpectedMethodCall(IInvocation invocation,object proxy, MethodInfo method, object[] args)
 		{
 			// We have move to the parent recorder, we need to pass the call to it.
 			if (parentRecorderRedirection != null)
-				return parentRecorderRedirection.UnexpectedMethodCall(proxy, method, args);
+				return parentRecorderRedirection.UnexpectedMethodCall(invocation, proxy, method, args);
 			StringBuilder sb = new StringBuilder();
 			sb.Append("Unordered method call! The expected call is: '");
 			sb.Append(GetExpectedCallsMessage());
 			sb.Append("' but was: '").
-				Append(MethodCallUtil.StringPresentation(method, args)).
+				Append(MethodCallUtil.StringPresentation(invocation, method, args)).
 				Append("'");
 			return new ExpectationViolationException(sb.ToString());
 		}
@@ -140,12 +141,6 @@ namespace Rhino.Mocks.MethodRecorders
 				ProxyMethodExpectationTriplet triplet = recordedActions[0] as ProxyMethodExpectationTriplet;
 				if (triplet !=  null)
 				{
-					if (triplet.Expectation.Message!=null)
-					{
-						sb.Append("Message: ")
-							.Append(triplet.Expectation.Message)
-							.Append(System.Environment.NewLine);
-					}
 					sb.Append(triplet.Expectation.ErrorMessage);
 				}
 				else //Action is another recorder

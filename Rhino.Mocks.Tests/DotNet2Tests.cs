@@ -1,6 +1,6 @@
 #if dotNet2
 using System;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
@@ -45,11 +45,36 @@ namespace Rhino.Mocks.Tests
             mocks.ReplayAll();
             Assert.AreEqual(5, demo.NullableInt(53));
         }
-    
-        internal interface IDotNet2Features
+
+		[Test]
+		public void CanCreateMockOnClassWithInternalMethod()
+		{
+			WithInternalMethod withInternalMethod = mocks.CreateMock<WithInternalMethod>();
+			withInternalMethod.Foo();
+			LastCall.Throw(new Exception("foo"));
+			mocks.ReplayAll();
+			try
+			{
+				withInternalMethod.Foo();
+				Assert.Fail("Should have thrown");
+			}
+			catch (Exception e)
+			{
+				Assert.AreEqual("foo", e.Message);
+			}
+		}
+
+		internal interface IDotNet2Features
         {
             int? NullableInt(int i);
         }
+
+		public class WithInternalMethod
+		{
+			internal virtual void Foo()
+			{
+			}
+		}
 	}
 }
 #endif

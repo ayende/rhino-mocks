@@ -1,16 +1,14 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using System.Text;
 using Castle.Core.Interceptor;
-using Castle.DynamicProxy;
+using MbUnit.Framework;
+using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
-using NUnit.Framework;
 
 namespace Rhino.Mocks.Tests
 {
-
 	[TestFixture]
 	public class ExtendingRhinoMocksFixture
 	{
@@ -35,7 +33,6 @@ namespace Rhino.Mocks.Tests
 
 	public class CarRepository : ArrayList
 	{
-
 	}
 
 	public class Presenter
@@ -53,12 +50,11 @@ namespace Rhino.Mocks.Tests
 		{
 			view.SetCar((Car)repository[0]);
 		}
-
 	}
 
 	public class Car
 	{
-		string name;
+		private string name;
 
 		public string Make
 		{
@@ -128,7 +124,6 @@ namespace Rhino.Mocks.Tests
 
 			public void SetExceptionToThrowOnVerify(Exception ex)
 			{
-
 			}
 		}
 

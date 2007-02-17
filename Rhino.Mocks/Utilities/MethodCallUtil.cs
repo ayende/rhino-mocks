@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
 
 namespace Rhino.Mocks.Utilities
@@ -8,13 +9,13 @@ namespace Rhino.Mocks.Utilities
 	/// <summary>
 	/// Utility class for working with method calls.
 	/// </summary>
-	public 
+	public
 #if dotNet2
-        static
+		static
 #else
-        sealed 
+        sealed
 #endif
-        class MethodCallUtil
+		class MethodCallUtil
 	{
 		/// <summary>
 		/// Delegate to format the argument for the string representation of
@@ -27,15 +28,33 @@ namespace Rhino.Mocks.Utilities
 		/// </summary>
 		/// <param name="method">The method</param>
 		/// <param name="args">The method arguments</param>
+		/// <param name="invocation">Invocation of the method, used to get the generics arguments</param>
 		/// <param name="format">Delegate to format the parameter</param>
 		/// <returns>The string representation of this method call</returns>
-		public static string StringPresentation(FormatArgumnet format, MethodInfo method, object[] args)
+		public static string StringPresentation(IInvocation invocation, FormatArgumnet format, MethodInfo method, object[] args)
 		{
 			Validate.IsNotNull(format, "format");
 			Validate.IsNotNull(method, "method");
 			Validate.IsNotNull(args, "args");
 			StringBuilder sb = new StringBuilder();
 			sb.Append(method.DeclaringType.Name).Append(".").Append(method.Name);
+#if dotNet2
+			if (invocation != null)
+			{
+				if (method.IsGenericMethod)
+				{
+					sb.Append("<");
+					foreach (Type genericArgument in invocation.GetType().GetGenericArguments())
+					{
+						sb.Append(genericArgument);
+						sb.Append(", ");
+					}
+					sb.Remove(sb.Length - 2, 2); //remove last ", " 
+					sb.Append(">");
+				}
+			}
+
+#endif
 			sb.Append("(");
 			int numberOfParameters = method.GetParameters().Length;
 			for (int i = 0; i < numberOfParameters; i++)
@@ -51,12 +70,13 @@ namespace Rhino.Mocks.Utilities
 		/// <summary>
 		/// Return the string representation of a method call and its arguments.
 		/// </summary>
+		/// <param name="invocation">The invocation of the method, used to get the generic parameters</param>
 		/// <param name="method">The method</param>
 		/// <param name="args">The method arguments</param>
 		/// <returns>The string representation of this method call</returns>
-		public static string StringPresentation(MethodInfo method, object[] args)
+		public static string StringPresentation(IInvocation invocation, MethodInfo method, object[] args)
 		{
-			return MethodCallUtil.StringPresentation(new FormatArgumnet(DefaultFormatArgument), method, args);
+			return StringPresentation(invocation, new FormatArgumnet(DefaultFormatArgument), method, args);
 		}
 
 		#region Private Methods
@@ -73,7 +93,7 @@ namespace Rhino.Mocks.Utilities
 				sb.Append('[');
 				for (int j = 0; j < arr.Length; j++)
 				{
-					sb.Append(DefaultFormatArgument( arr, j));
+					sb.Append(DefaultFormatArgument(arr, j));
 					if (j < arr.Length - 1)
 						sb.Append(", ");
 				}

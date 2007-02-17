@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-using NUnit.Framework;
+using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests
 {

@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
 
 namespace Rhino.Mocks.Interfaces
@@ -91,7 +92,7 @@ namespace Rhino.Mocks.Interfaces
         /// <summary>
         /// An action to execute when the method is matched.
         /// </summary>
-        Delegate ActionToExecute { get; set; }
+        Delegate ActionToExecute {set; }
 
 	    /// <summary>
 	    /// Set the out / ref parameters for the method call.
@@ -104,5 +105,10 @@ namespace Rhino.Mocks.Interfaces
 		/// Documentation Message
 		/// </summary>
 		string Message { get; set; }
+		/// <summary>
+		/// Gets the invocation for this expectation
+		/// </summary>
+		/// <value>The invocation.</value>
+		IInvocation Invocation { get;}
 	}
 }

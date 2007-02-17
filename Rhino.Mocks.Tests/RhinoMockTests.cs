@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using NUnit.Framework;
+using MbUnit.Core.Exceptions;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Tests.Callbacks;
 

@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
 
@@ -13,8 +14,8 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// Creates a new <see cref="AnyArgsExpectation"/> instance.
 		/// </summary>
-		/// <param name="method">Method.</param>
-		public AnyArgsExpectation(MethodInfo method) : base(method)
+		/// <param name="invocation">Invocation for this expectation</param>
+		public AnyArgsExpectation(IInvocation invocation) : base(invocation)
 		{
 		}
 
@@ -44,7 +45,7 @@ namespace Rhino.Mocks.Expectations
 			get
 			{
 				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(AnyFormatArg);
-				string stringPresentation = MethodCallUtil.StringPresentation(format, Method, new object[0]);
+				string stringPresentation = MethodCallUtil.StringPresentation(Invocation, format, Method, new object[0]);
 				return CreateErrorMessage(stringPresentation);
 			}
 		}

@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Utilities;
 
@@ -17,8 +18,8 @@ namespace Rhino.Mocks.Expectations
 		/// Creates a new <see cref="ArgsEqualExpectation"/> instance.
 		/// </summary>
 		/// <param name="expectedArgs">Expected args.</param>
-		/// <param name="method">method this expectation is for</param>
-		public ArgsEqualExpectation(MethodInfo method, object[] expectedArgs) : base(method)
+		/// <param name="invocation">The invocation for this expectation</param>
+		public ArgsEqualExpectation(IInvocation invocation, object[] expectedArgs) : base(invocation)
 		{
             this.expectedArgs = expectedArgs;
 		}
@@ -41,7 +42,7 @@ namespace Rhino.Mocks.Expectations
             get
             {
 				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArg);
-				string methodCall = MethodCallUtil.StringPresentation(format, Method, ExpectedArgs);
+				string methodCall = MethodCallUtil.StringPresentation(Invocation,format, Method, ExpectedArgs);
 				return base.CreateErrorMessage(methodCall);
             }
 		}

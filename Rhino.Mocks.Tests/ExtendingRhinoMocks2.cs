@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -17,7 +17,7 @@ namespace Rhino.Mocks.Tests
 		{
 			MockRepository mockRepository = new MockRepository();
 			MockedClass mock = mockRepository.CreateMock<MockedClass>();
-
+			
 			mock.Method("expectedParameter");
 
 			mockRepository.ReplayAll();

@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests

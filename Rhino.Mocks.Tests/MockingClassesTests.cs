@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests

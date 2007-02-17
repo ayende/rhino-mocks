@@ -58,7 +58,8 @@ namespace Rhino.Mocks.Impl
 			//processing then continue normally (so we get an expectation for subscribing / removing from the event
 			HandleEvent(invocation, invocation.Arguments);
 			object proxy = repository.GetMockObjectFromInvocationProxy(invocation.Proxy);
-			invocation.ReturnValue = repository.MethodCall(invocation, proxy, invocation.Method, invocation.Arguments);
+			MethodInfo method = invocation.Method;
+			invocation.ReturnValue = repository.MethodCall(invocation, proxy, method, invocation.Arguments);
 		}
 
 		private void HandleEvent(IInvocation invocation, object[] args)

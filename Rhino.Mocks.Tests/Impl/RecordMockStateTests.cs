@@ -1,8 +1,9 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
+using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.Impl
 {
@@ -17,10 +18,10 @@ namespace Rhino.Mocks.Tests.Impl
 			MockRepository mocks = new MockRepository();
 			ProxyInstance proxy = new ProxyInstance(mocks);
 			RecordMockState recordState = new RecordMockState(proxy, mocks);
-			recordState.MethodCall(null, method, "");
+			recordState.MethodCall(new FakeInvocation(method), method, "");
 			recordState.LastExpectation.ReturnValue = true;
 			Assert.IsNotNull(Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method), "Record state didn't record the method call.");
-			recordState.MethodCall(null, method, "");
+			recordState.MethodCall(new FakeInvocation(method), method, "");
 			recordState.LastExpectation.ReturnValue = true;
 			Assert.AreEqual(2, recordState.MethodCallsCount);
 		}
@@ -31,10 +32,10 @@ namespace Rhino.Mocks.Tests.Impl
 			MockRepository mocks = new MockRepository();
 			ProxyInstance proxy = new ProxyInstance(mocks);
 			RecordMockState recordState = new RecordMockState(proxy, mocks);
-            recordState.MethodCall(null, method, "1");
+            recordState.MethodCall(new FakeInvocation(method), method, "1");
 			recordState.LastExpectation.ReturnValue = false;
 			Assert.AreEqual(1, Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method).Count);
-            recordState.MethodCall(null, method, "2");
+            recordState.MethodCall(new FakeInvocation(method), method, "2");
 			recordState.LastExpectation.ReturnValue = false;
 			Assert.AreEqual(2, Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method).Count);
 		}
@@ -54,7 +55,7 @@ namespace Rhino.Mocks.Tests.Impl
 			MockRepository mocks = new MockRepository();
 			RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
 			Assert.IsNull(recordState.LastExpectation);
-            recordState.MethodCall(null, method, "");
+            recordState.MethodCall(new FakeInvocation(method), method, "");
 			Assert.IsNotNull(recordState.LastExpectation);
 			Assert.IsTrue(recordState.LastExpectation.IsExpected(new object[] {""}));
 		}
@@ -64,7 +65,7 @@ namespace Rhino.Mocks.Tests.Impl
 		{
 			MockRepository mocks = new MockRepository();
 			RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
-            recordState.MethodCall(null, method, "");
+            recordState.MethodCall(new FakeInvocation(method), method, "");
 			Assert.IsNotNull(recordState.LastMethodOptions);
 		}
 
@@ -89,7 +90,7 @@ namespace Rhino.Mocks.Tests.Impl
 			MockRepository mocks = new MockRepository();
 			ProxyInstance proxy = new ProxyInstance(mocks);
 			RecordMockState recordState = new RecordMockState(proxy, mocks);
-            recordState.MethodCall(null, method, "");
+            recordState.MethodCall(new FakeInvocation(method), method, "");
 			recordState.Replay();
 		}
 	}

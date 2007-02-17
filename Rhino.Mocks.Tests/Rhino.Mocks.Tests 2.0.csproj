@@ -79,10 +79,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <Name>nunit.framework</Name>
-      <HintPath>..\..\vendor\nunit.framework.dll</HintPath>
-    </Reference>
+    <Reference Include="MbUnit.Framework, Version=1.0.2531.41788, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -95,6 +92,7 @@
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
@@ -131,9 +129,13 @@
     <Compile Include="Constraints\StringConstraintsTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Coverage.cs" />
     <Compile Include="ExtendingRhinoMocks.cs" />
+    <Compile Include="ExtendingRhinoMocks2.cs" />
     <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Owen.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Avi.cs" />
     <Compile Include="FieldsProblem\FieldProblem_BackToMockWithRepeatableMethods.cs" />
@@ -150,7 +152,9 @@
     <Compile Include="FieldsProblem\FieldProblem_Matt.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Michael.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Phil.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Thierry.cs" />
     <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
+    <Compile Include="GenericMethods.cs" />
     <Compile Include="MockingDelegatesTests.cs" />
     <Compile Include="DoHanlderTests.cs" />
     <Compile Include="DotNet2Tests.cs" />

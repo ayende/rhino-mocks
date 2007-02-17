@@ -73,14 +73,5 @@ namespace Rhino.Mocks.MethodRecorders
 		{
 			return MockedObjectsEquality.Instance.GetHashCode(proxy) + method.GetHashCode();
 		}
-
-        /// <summary>
-        /// Gets a string representation of this <see cref="ProxyMethodPair"/>
-        /// to assist debugging.
-        /// </summary>
-        public override string ToString()
-        {
-            return String.Format(CultureInfo.CurrentCulture, "ProxyMethodPair({0},{1})", Proxy, Method);
-        }
 	}
 }

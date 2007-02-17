@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.Constraints

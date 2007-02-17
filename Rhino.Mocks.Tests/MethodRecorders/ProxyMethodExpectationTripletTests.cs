@@ -1,10 +1,11 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
+using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.MethodRecorders
 {
@@ -18,8 +19,8 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[SetUp]
 		public void SetUp()
 		{
-            endsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
-			expectation = new AnyArgsExpectation(endsWith);
+			endsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
+			expectation = new AnyArgsExpectation(new FakeInvocation(endsWith));
 			proxy = new ProxyInstance(null);
 		}
 
@@ -28,10 +29,10 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		{
 			ProxyInstance proxy1 = new ProxyInstance(null);
 			ProxyInstance proxy2 = new ProxyInstance(null);
-            MethodInfo method1 = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) }),
+			MethodInfo method1 = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) }),
 				method2 = endsWith;
-			IExpectation expectation1 = new AnyArgsExpectation(method1),
-				expectation2 = new AnyArgsExpectation(method2);
+			IExpectation expectation1 = new AnyArgsExpectation(new FakeInvocation(method1)),
+				expectation2 = new AnyArgsExpectation(new FakeInvocation(method2));
 			ProxyMethodExpectationTriplet same1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				same2 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1);
 			Assert.AreEqual(same1, same2);
@@ -75,21 +76,21 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		}
 
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: proxy")]
+		[ExpectedException(typeof(ArgumentNullException), "Value cannot be null.\r\nParameter name: proxy")]
 		public void ProxyNullThrows()
 		{
 			new ProxyMethodExpectationTriplet(null, endsWith, expectation);
 		}
 
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: method")]
+		[ExpectedException(typeof(ArgumentNullException), "Value cannot be null.\r\nParameter name: method")]
 		public void MethodNullThrows()
 		{
 			new ProxyMethodExpectationTriplet(proxy, null, expectation);
 		}
 
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: expectation")]
+		[ExpectedException(typeof(ArgumentNullException), "Value cannot be null.\r\nParameter name: expectation")]
 		public void ExpectationNullThrows()
 		{
 			new ProxyMethodExpectationTriplet(proxy, endsWith, null);
@@ -106,7 +107,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void GetHashCodeReturnSameValue()
 		{
 			ProxyMethodExpectationTriplet triplet = new ProxyMethodExpectationTriplet(proxy, this.endsWith, this.expectation);
-			Assert.AreEqual(triplet.GetHashCode(),triplet.GetHashCode());
+			Assert.AreEqual(triplet.GetHashCode(), triplet.GetHashCode());
 		}
 	}
 }

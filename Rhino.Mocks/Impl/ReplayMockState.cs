@@ -91,7 +91,7 @@ namespace Rhino.Mocks.Impl
 		/// <param name="args">The arguments this method was called with</param>
 		protected virtual object DoMethodCall(IInvocation invocation, MethodInfo method, object[] args)
 		{
-			IExpectation expectation = repository.Replayer.GetRecordedExpectation(proxy, method, args);
+			IExpectation expectation = repository.Replayer.GetRecordedExpectation(invocation, proxy, method, args);
 			return expectation.ReturnOrThrow(args);
 		}
 

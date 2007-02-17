@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -19,7 +19,7 @@ namespace Rhino.Mocks.Tests.Expectations
 
 		protected override IExpectation GetExpectation(MethodInfo m, Range r, int actual)
 		{
-			CallbackExpectation expectation = new CallbackExpectation(m, new DelegateDefinations.NoArgsDelegate(VoidNoArgs));
+			CallbackExpectation expectation = new CallbackExpectation(new FakeInvocation(m), new DelegateDefinations.NoArgsDelegate(VoidNoArgs));
 			SetupExpectation(expectation, r, actual);
 			return expectation;
 		}
@@ -37,13 +37,13 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof(InvalidOperationException),"Callback arguments didn't match the method arguments")]
 		public void ExceptionWhenArgsDontMatch()
 		{
-			callback = new CallbackExpectation(method, new DelegateDefinations.NoArgsDelegate(VoidNoArgs));
+			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.NoArgsDelegate(VoidNoArgs));
 		}
 
 		[Test]
 		public void CallMethodWhenTestIsExpected()
 		{
-			callback = new CallbackExpectation(method, new DelegateDefinations.ThreeArgsDelegate(ThreeArgsDelegateMethod));
+			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.ThreeArgsDelegate(ThreeArgsDelegateMethod));
 			callback.IsExpected(new object[] {1, "", 3.3f});
 			Assert.IsTrue(callbackCalled);
 		}
@@ -52,7 +52,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (InvalidOperationException), "Callbacks must return a boolean")]
 		public void CallbackDoesntReturnBool()
 		{
-			callback = new CallbackExpectation(method, new DelegateDefinations.VoidThreeArgsDelegate(VoidThreeArgsDelegateMethod));
+			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.VoidThreeArgsDelegate(VoidThreeArgsDelegateMethod));
 			callback.IsExpected(new object[] {1, "", 3.3f});
 			Assert.IsTrue(callbackCalled);
 		}
@@ -61,7 +61,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (InvalidOperationException), "Callback arguments didn't match the method arguments")]
 		public void CallbackWithDifferentSignature_NumArgsDifferent()
 		{
-			callback = new CallbackExpectation(method, new DelegateDefinations.StringDelegate("".StartsWith));
+			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.StringDelegate("".StartsWith));
 			callback.IsExpected(new object[] {1, "", 3.3f});
 			Assert.IsTrue(callbackCalled);
 		}
@@ -70,7 +70,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		[ExpectedException(typeof (InvalidOperationException), "Callback arguments didn't match the method arguments")]
 		public void CallBackWithDifferentSignature()
 		{
-			callback = new CallbackExpectation(method, new DelegateDefinations.IntArgDelegate(OneArg));
+			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.IntArgDelegate(OneArg));
 		}
 
 		#region Implementation

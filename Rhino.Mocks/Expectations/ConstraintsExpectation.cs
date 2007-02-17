@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -17,9 +18,9 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// Creates a new <see cref="ConstraintsExpectation"/> instance.
 		/// </summary>
-		/// <param name="method">Method.</param>
+		/// <param name="invocation">Invocation for this expectation</param>
 		/// <param name="constraints">Constraints.</param>
-		public ConstraintsExpectation(MethodInfo method, AbstractConstraint[] constraints) : base(method)
+		public ConstraintsExpectation(IInvocation invocation,AbstractConstraint[] constraints) : base(invocation)
 		{
 			Validate.IsNotNull(constraints, "constraints");
 			this.constraints = constraints;
@@ -64,7 +65,7 @@ namespace Rhino.Mocks.Expectations
 			get
 			{
 				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArgWithConstraint);
-				string stringPresentation = MethodCallUtil.StringPresentation(format, Method, constraints);
+				string stringPresentation = MethodCallUtil.StringPresentation(Invocation, format, Method, constraints);
 				return CreateErrorMessage(stringPresentation);
 			}
 		}

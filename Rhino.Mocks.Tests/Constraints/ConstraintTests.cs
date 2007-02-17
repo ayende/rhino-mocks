@@ -1,6 +1,6 @@
 using System;
 using System.Data;
-using NUnit.Framework;
+using MbUnit.Framework;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
@@ -83,6 +83,14 @@ namespace Rhino.Mocks.Tests.Constraints
         public void AndSeveralConstraings()
         {
             AbstractConstraint all = Is.NotEqual("bar") & Is.TypeOf(typeof(string)) & Is.NotNull();
+            Assert.IsTrue(all.Eval("foo"));
+            Assert.AreEqual("not equal to bar and type of {System.String} and not equal to null", all.Message);
+        }
+
+		 [Test]
+        public void AndSeveralConstraings_WithGenerics()
+        {
+            AbstractConstraint all = Is.NotEqual("bar") && Is.TypeOf<string>() && Is.NotNull();
             Assert.IsTrue(all.Eval("foo"));
             Assert.AreEqual("not equal to bar and type of {System.String} and not equal to null", all.Message);
         }

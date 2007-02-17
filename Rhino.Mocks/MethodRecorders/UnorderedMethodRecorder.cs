@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Text;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -55,15 +56,16 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
+		/// <param name="invocation">Invocation for this method</param>
 		/// <param name="proxy">Mocked object.</param>
 		/// <param name="method">Method.</param>
 		/// <param name="args">Args.</param>
 		/// <returns>True is the call was recorded, false otherwise</returns>
-		protected override IExpectation DoGetRecordedExpectation(object proxy, MethodInfo method, object[] args)
+		protected override IExpectation DoGetRecordedExpectation(IInvocation invocation, object proxy, MethodInfo method, object[] args)
 		{
 			IExpectation expectation = GetRecordedExpectationOrNull(proxy, method, args);
 			if (expectation == null)
-				throw UnexpectedMethodCall(proxy, method, args);
+				throw UnexpectedMethodCall(invocation, proxy, method, args);
 			return expectation;
 		}
 
@@ -86,7 +88,7 @@ namespace Rhino.Mocks.MethodRecorders
 				if (triplet != null)
 				{
 					if (MockedObjectsEquality.Instance.Equals( triplet.Proxy , proxy ) &&
-						triplet.Method == method)
+						MethodsEquals(method, triplet))
 					{
 						expectations.Add(triplet.Expectation);
 					}
@@ -98,6 +100,13 @@ namespace Rhino.Mocks.MethodRecorders
 				}
 			}
 			return expectations;
+		}
+
+		private static bool MethodsEquals(MethodInfo method, ProxyMethodExpectationTriplet triplet)
+		{
+			if(method.IsGenericMethod==false)
+				return triplet.Method == method;
+			return triplet.Method.GetGenericMethodDefinition() == method.GetGenericMethodDefinition();
 		}
 
 		/// <summary>
@@ -299,14 +308,14 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Create an exception for an unexpected method call.
 		/// </summary>
-		public override ExpectationViolationException UnexpectedMethodCall(object proxy, MethodInfo method, object[] args)
+		public override ExpectationViolationException UnexpectedMethodCall(IInvocation invocation, object proxy, MethodInfo method, object[] args)
 		{
 			// We have move to the parent recorder, we need to pass the call to it.
 			if (parentRecorderRedirection != null)
-				return parentRecorderRedirection.UnexpectedMethodCall(proxy, method, args);
+				return parentRecorderRedirection.UnexpectedMethodCall(invocation, proxy, method, args);
 			StringBuilder sb = new StringBuilder();
 			CalcExpectedAndActual calc = new CalcExpectedAndActual(this, proxy, method, args);
-			string methodAsString = MethodCallUtil.StringPresentation(method, args);
+			string methodAsString = MethodCallUtil.StringPresentation(invocation, method, args);
 			sb.Append(methodAsString);
 			sb.Append(" Expected #");
 			sb.Append(calc.Expected);

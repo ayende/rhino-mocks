@@ -233,7 +233,7 @@ namespace Rhino.Mocks.Constraints
 		{
 			get
 			{
-				return string.Format("Predicate ({0})", MethodCallUtil.StringPresentation(FormatEmptyArgumnet,predicate.Method, new object[0]));
+				return string.Format("Predicate ({0})", MethodCallUtil.StringPresentation(null, FormatEmptyArgumnet,predicate.Method, new object[0]));
 			}
 		}
 		

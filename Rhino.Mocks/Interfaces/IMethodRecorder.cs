@@ -1,4 +1,5 @@
 using System.Reflection;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 
@@ -17,7 +18,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
-		IExpectation GetRecordedExpectation(object proxy, MethodInfo method, object[] args);
+		IExpectation GetRecordedExpectation(IInvocation invocation, object proxy, MethodInfo method, object[] args);
 
 		/// <summary>
 		/// This check the methods that were setup using the SetupResult.For()
@@ -110,6 +111,6 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
-		ExpectationViolationException UnexpectedMethodCall(object proxy, MethodInfo method, object[] args);
+		ExpectationViolationException UnexpectedMethodCall(IInvocation invocation, object proxy, MethodInfo method, object[] args);
     }
 }

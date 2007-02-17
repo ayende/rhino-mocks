@@ -1,11 +1,13 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using Castle.Core.Interceptor;
+using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
 using Rhino.Mocks.Generated;
+using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.MethodRecorders
 {
@@ -28,7 +30,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 
 			proxy = new object();
 			method = typeof (object).GetMethod("ToString");
-			expectation = new AnyArgsExpectation(method);
+			expectation = new AnyArgsExpectation(new FakeInvocation(method));
 			args = new object[0];
 		}
 
@@ -46,7 +48,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			typeof (MethodRecorderBase).
 				GetField("replayerToCall", bindingFlags).
 				SetValue(recorder, testRecorder);
-			recorder.GetRecordedExpectation(proxy, method, args);
+			recorder.GetRecordedExpectation(new FakeInvocation(method), proxy, method, args);
 			Assert.IsTrue(testRecorder.DoGetRecordedExpectationCalled);
 		}
 
@@ -95,7 +97,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void DoRemoveExpectationCalled()
 		{
-			recorder.RemoveExpectation(new AnyArgsExpectation(method));
+			recorder.RemoveExpectation(new AnyArgsExpectation(new FakeInvocation(method)));
 			Assert.IsTrue(testRecorder.DoRemoveExpectationCalled);
 		}
 
@@ -118,7 +120,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 				DoRecordCalled = true;
 			}
 
-			protected override IExpectation DoGetRecordedExpectation(object proxy, MethodInfo method, object[] args)
+			protected override IExpectation DoGetRecordedExpectation(IInvocation invocation, object proxy, MethodInfo method, object[] args)
 			{
 				DoGetRecordedExpectationCalled = true;
 				return null;
@@ -175,7 +177,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			/// <summary>
 			/// Get the expectation for this method on this object with this arguments 
 			/// </summary>
-			public override ExpectationViolationException UnexpectedMethodCall(object proxy, MethodInfo method, object[] args)
+			public override ExpectationViolationException UnexpectedMethodCall(IInvocation invoication,object proxy, MethodInfo method, object[] args)
 			{
 				throw new NotImplementedException();
 			}

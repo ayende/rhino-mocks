@@ -137,24 +137,14 @@ namespace Rhino.Mocks.Impl
         /// Use the property as a simple property, getting/setting the values without
         /// causing mock expectations.
         /// </summary>
-        public void PropertyBehavior()
+        public IMethodOptions PropertyBehavior()
         {
             AssertExpectationOnPropertyWithGetterAndSetter();
             PropertyInfo prop = GetPropertyFromMethod(expectation.Method);
             proxy.RegisterPropertyBehaviorFor(prop);
             repository.Recorder.RemoveExpectation(expectation);
             expectation.RepeatableOption = RepeatableOption.PropertyBehavior;
-        }
-
-        /// <summary>
-        /// Get the last call method info.
-        /// </summary>
-        public MethodInfo LastMethod
-        {
-            get
-            {
-                return expectation.Method;
-            }
+        	return this;
         }
 
         /// <summary>
