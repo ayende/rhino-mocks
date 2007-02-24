@@ -32,7 +32,7 @@ namespace Rhino.Mocks.Impl
 			if (expectation != null)
 				return expectation.ReturnOrThrow(args);
 			else
-				return ReturnValueUtil.DefaultValue(method.ReturnType);
+				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
 		
 		}
 

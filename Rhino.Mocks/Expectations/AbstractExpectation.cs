@@ -420,28 +420,33 @@ namespace Rhino.Mocks.Expectations
 		private void AssertTypesMatches(object value)
 		{
 			string type = null;
+			Type returnType = method.ReturnType;
 			if (value == null)
 			{
 				type = "null";
-				if (method.ReturnType.IsValueType == false)
+				if (returnType.IsValueType == false)
 					return;
 #if dotNet2
-                if (method.ReturnType.IsGenericType &&
-                    method.ReturnType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                if (returnType.IsGenericType &&
+                    returnType.GetGenericTypeDefinition() == typeof(Nullable<>))
                     return;
 #endif
 			}
 			else
 			{
-				if (method.ReturnType.IsInstanceOfType(value))
+				//we reduce checking of generic types because of the complexity,
+				//we let the runtime catch those mistakes
+				returnType = GenericsUtil.GetRealType(returnType,invocation);
+				Type valueType = value.GetType();
+				if (returnType.IsInstanceOfType(value))
 					return;
-				type = value.GetType().FullName;
+				type = valueType.FullName;
 			}
-			throw new InvalidOperationException(string.Format("Type '{0}' doesn't match the return type '{1}' for method '{2}'", type, method.ReturnType.FullName, 
+			throw new InvalidOperationException(string.Format("Type '{0}' doesn't match the return type '{1}' for method '{2}'", type, returnType, 
 				MethodCallUtil.StringPresentation(Invocation,method, new object[0])));
 		}
 
-        /// <summary>
+		/// <summary>
         /// Asserts that the delegate has the same parameters as the expectation's method call
         /// </summary>
         protected void AssertDelegateArgumentsMatchMethod(Delegate callback)
