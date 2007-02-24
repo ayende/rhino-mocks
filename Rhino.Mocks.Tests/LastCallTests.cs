@@ -1,6 +1,7 @@
 using System;
 using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
+using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Tests.Callbacks;
 
 namespace Rhino.Mocks.Tests
@@ -67,6 +68,28 @@ namespace Rhino.Mocks.Tests
             Assert.AreEqual(true, comf2.OriginalMethodCalled);
         }
 
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),"CallOriginalMethodFodder.TheMethod(); Expected #2, Actual #1.")]
+		public void LastCallOriginalMethod_WithExpectation()
+		{
+			MockRepository mockRepository = new MockRepository();
+			CallOriginalMethodFodder comf1 = (CallOriginalMethodFodder)mockRepository.DynamicMock(typeof(CallOriginalMethodFodder));
+            CallOriginalMethodFodder comf2 = (CallOriginalMethodFodder)mockRepository.DynamicMock(typeof(CallOriginalMethodFodder));
+            comf2.TheMethod();
+			LastCall.CallOriginalMethod(OriginalCallOptions.CreateExpectation)
+				.Repeat.Twice();
+
+            mockRepository.ReplayAll();
+
+            comf1.TheMethod();
+            Assert.AreEqual(false, comf1.OriginalMethodCalled);
+
+            comf2.TheMethod();
+            Assert.AreEqual(true, comf2.OriginalMethodCalled);
+  
+			mockRepository.VerifyAll();
+		}
+
         public class CallOriginalMethodFodder
         {
             private bool mOriginalMethodCalled;
@@ -110,6 +133,7 @@ namespace Rhino.Mocks.Tests
 		[TearDown]
 		public void Teardown()
 		{
+			mocks.ReplayAll();
 			mocks.VerifyAll();
 		}
 

@@ -50,7 +50,7 @@ namespace Rhino.Mocks.Expectations
 		/// Whether this method will repeat
 		/// unlimited number of times.
 		/// </summary>
-		private RepeatableOption repeatableOption;
+		private RepeatableOption repeatableOption = RepeatableOption.Normal;
 
         /// <summary>
         /// A delegate that will be run when the 
@@ -169,7 +169,7 @@ namespace Rhino.Mocks.Expectations
 		{
 			get
 			{
-				if (repeatableOption != RepeatableOption.Normal)
+				if (repeatableOption != RepeatableOption.Normal && repeatableOption !=RepeatableOption.OriginalCall)
 					return true;
 				return expected.Min <= actualCalls && actualCalls <= expected.Max;
 			}
@@ -233,6 +233,7 @@ namespace Rhino.Mocks.Expectations
                     actionToExecute != null ||
 					returnValueSet ||
 					repeatableOption == RepeatableOption.OriginalCall ||
+					repeatableOption == RepeatableOption.OriginalCallBypassingMokcing ||
                     repeatableOption == RepeatableOption.PropertyBehavior)
 					return true;
 				return false;
@@ -278,6 +279,11 @@ namespace Rhino.Mocks.Expectations
                 return ExecuteAction();
 			if (exceptionToThrow != null)
 				throw exceptionToThrow;
+			if(RepeatableOption == RepeatableOption.OriginalCall)
+			{
+				invocation.Proceed();
+				return invocation.ReturnValue;
+			}
 			return returnValue;
 		}
 

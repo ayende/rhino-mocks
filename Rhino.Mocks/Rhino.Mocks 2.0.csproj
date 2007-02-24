@@ -110,6 +110,7 @@
     <Compile Include="Expectations\ConstraintsExpectation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Interfaces\OriginalCallOptions.cs" />
     <Compile Include="Utilities\GenericsUtil.cs" />
     <Compile Include="Generated\ExpectationsListGenerated.cs">
       <SubType>Code</SubType>

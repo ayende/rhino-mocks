@@ -23,6 +23,10 @@ namespace Rhino.Mocks.Impl
 		/// This method will call the original method
 		/// </summary>
 		OriginalCall,
+		/// <summary>
+		/// This method will call the original method, bypassing the mocking layer
+		/// </summary>
+		OriginalCallBypassingMokcing,
         /// <summary>
         /// This method will simulate simple property behavior
         /// </summary>

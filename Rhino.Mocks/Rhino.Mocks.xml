@@ -964,6 +964,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.CallOriginalMethod(Rhino.Mocks.Interfaces.OriginalCallOptions)">
+            <summary>
+            Call the original method on the class, optionally bypassing the mocking layers.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Rhino.Mocks.Interfaces.IMethodOptions.PropertyBehavior">
             <summary>
             Use the property as a simple property, getting/setting the values without
@@ -1633,6 +1639,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Rhino.Mocks.Impl.MethodOptions.CallOriginalMethod(Rhino.Mocks.Interfaces.OriginalCallOptions)">
+            <summary>
+            Call the original method on the class, optionally bypassing the mocking layers
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Rhino.Mocks.Impl.MethodOptions.PropertyBehavior">
             <summary>
             Use the property as a simple property, getting/setting the values without
@@ -1848,6 +1860,11 @@
             This method will call the original method
             </summary>
         </member>
+        <member name="F:Rhino.Mocks.Impl.RepeatableOption.OriginalCallBypassingMokcing">
+            <summary>
+            This method will call the original method, bypassing the mocking layer
+            </summary>
+        </member>
         <member name="F:Rhino.Mocks.Impl.RepeatableOption.PropertyBehavior">
             <summary>
             This method will simulate simple property behavior
@@ -2006,6 +2023,11 @@
         <member name="M:Rhino.Mocks.LastCall.CallOriginalMethod">
             <summary>
             Call the original method on the class, bypassing the mocking layers, for the last call.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.LastCall.CallOriginalMethod(Rhino.Mocks.Interfaces.OriginalCallOptions)">
+            <summary>
+            Call the original method on the class, optionally bypassing the mocking layers, for the last call.
             </summary>
         </member>
         <member name="M:Rhino.Mocks.LastCall.Do(System.Delegate)">
@@ -3170,6 +3192,21 @@
             </summary>
             <param name="delegateType"></param>
             <returns></returns>
+        </member>
+        <member name="T:Rhino.Mocks.Interfaces.OriginalCallOptions">
+            <summary>
+            Options for CallOriginalMethod
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Interfaces.OriginalCallOptions.NoExpectation">
+            <summary>
+            No expectation is created, the method will be called directly
+            </summary>
+        </member>
+        <member name="F:Rhino.Mocks.Interfaces.OriginalCallOptions.CreateExpectation">
+            <summary>
+            Normal expectation is created, but when the method is later called, it will also call the original method
+            </summary>
         </member>
     </members>
 </doc>

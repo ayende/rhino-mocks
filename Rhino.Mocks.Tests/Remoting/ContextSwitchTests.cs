@@ -1,11 +1,10 @@
 using System;
-using System.Runtime.Remoting;
-using System.Runtime.Serialization;
-using System.Security.Policy;
+using System.IO;
+using System.Reflection;
 using System.Security.Permissions;
 using MbUnit.Framework;
-
-[assembly:EnvironmentPermissionAttribute(SecurityAction.RequestMinimum)]
+using Rhino.Mocks.Exceptions;
+[assembly:EnvironmentPermission(SecurityAction.RequestMinimum)]
 
 
 namespace Rhino.Mocks.Tests.Remoting
@@ -25,14 +24,14 @@ namespace Rhino.Mocks.Tests.Remoting
 		[TestFixtureSetUp]
 		public void FixtureSetUp()
 		{
-			System.IO.FileInfo assemblyFile = new System.IO.FileInfo(
-				System.Reflection.Assembly.GetExecutingAssembly().Location);
+			FileInfo assemblyFile = new FileInfo(
+				Assembly.GetExecutingAssembly().Location);
 
 			otherDomain = AppDomain.CreateDomain("other domain", null,
 				assemblyFile.DirectoryName, null, false);
 
 			contextSwitcher = (ContextSwitcher)otherDomain.CreateInstanceAndUnwrap(
-				System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+				Assembly.GetExecutingAssembly().GetName().Name,
 				typeof(ContextSwitcher).FullName);
 		}
 
@@ -86,7 +85,7 @@ namespace Rhino.Mocks.Tests.Remoting
 
 
 
-		[Test, ExpectedException(typeof(Exceptions.ExpectationViolationException),
+		[Test, ExpectedException(typeof(ExpectationViolationException),
 						 "IDemo.VoidStringArg(\"34\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(\"bang\"); Expected #1, Actual #0.")]
 		public void MockInterfaceUnexpectedCall()
 		{
@@ -125,7 +124,7 @@ namespace Rhino.Mocks.Tests.Remoting
 
 
 
-		[Test, ExpectedException(typeof(Exceptions.ExpectationViolationException),
+		[Test, ExpectedException(typeof(ExpectationViolationException),
 						 "RemotableDemoClass.Two(); Expected #0, Actual #1.")]
 		public void MockClassUnexpectedCall()
 		{
