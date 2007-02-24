@@ -10,6 +10,7 @@ using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
 using Rhino.Mocks.Generated;
 using System;
+using System.Collections.Generic;
 
 
 namespace Rhino.Mocks
@@ -522,7 +523,10 @@ namespace Rhino.Mocks
 		{
 			if (type.IsSealed)
 				throw new NotSupportedException("Can't create mocks of sealed classes");
-			RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this));
+			List<Type> implementedTypesForGenericInvocationDiscoverability = new List<Type>(extras);
+			implementedTypesForGenericInvocationDiscoverability.Add(type);
+			RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this, 
+				implementedTypesForGenericInvocationDiscoverability.ToArray()));
 			ArrayList types = new ArrayList();
 			types.AddRange(extras);
 			types.Add(typeof(IMockedObject));
@@ -549,7 +553,11 @@ namespace Rhino.Mocks
 		private object MockInterface(CreateMockState mockStateFactory, Type type, Type[] extras)
 		{
 			object proxy;
-			RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this));
+			List<Type> implementedTypesForGenericInvocationDiscoverability = new List<Type>(extras);
+			implementedTypesForGenericInvocationDiscoverability.Add(type);
+			RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this, 
+				implementedTypesForGenericInvocationDiscoverability.ToArray()));
+		
 			ArrayList types = new ArrayList();
 			types.AddRange(extras);
 			types.Add(typeof(IMockedObject));
@@ -566,7 +574,7 @@ namespace Rhino.Mocks
 
 			object proxy;
 
-			ProxyInstance proxyInstance = new ProxyInstance(this);
+			ProxyInstance proxyInstance = new ProxyInstance(this, type);
 			RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance);
 
 			Type[] types = new Type[] { typeof(IMockedObject) };

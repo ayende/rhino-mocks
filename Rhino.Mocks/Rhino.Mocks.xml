@@ -46,6 +46,12 @@
             Get the subscribers of a spesific event
             </summary>
         </member>
+        <member name="M:Rhino.Mocks.Interfaces.IMockedObject.GetDeclaringType(System.Reflection.MethodInfo)">
+            <summary>
+            Gets the declaring type of the method, taking into acccount the possible generic 
+            parameters that it was created with.
+            </summary>
+        </member>
         <member name="P:Rhino.Mocks.Interfaces.IMockedObject.ProxyHash">
             <summary>
             The unique hash code of this mock, which is not related
@@ -1739,6 +1745,13 @@
             <param name="invocation">The invocation.</param>
             <returns></returns>
         </member>
+        <member name="M:Rhino.Mocks.Utilities.GenericsUtil.ReconstructGenericType(System.Type,System.Collections.Generic.Dictionary{System.String,System.Type})">
+            <summary>
+            Because we need to support complex types here (simple generics were handled above) we
+            need to be aware of the following scenarios:
+            List[T] and List[Foo[T]]
+            </summary>
+        </member>
         <member name="T:Rhino.Mocks.Expect">
             <summary>
             Allows to set expectation on methods that has return values.
@@ -2864,7 +2877,7 @@
             it needs to create IProxy's types.
             </summary>
         </member>
-        <member name="M:Rhino.Mocks.Impl.ProxyInstance.#ctor(Rhino.Mocks.MockRepository)">
+        <member name="M:Rhino.Mocks.Impl.ProxyInstance.#ctor(Rhino.Mocks.MockRepository,System.Type[])">
             <summary>
             Create a new instance of <see cref="T:Rhino.Mocks.Impl.ProxyInstance"/>
             </summary>
@@ -2904,6 +2917,12 @@
         <member name="M:Rhino.Mocks.Impl.ProxyInstance.GetEventSubscribers(System.String)">
             <summary>
             Get the subscribers of a spesific event
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Impl.ProxyInstance.GetDeclaringType(System.Reflection.MethodInfo)">
+            <summary>
+            Gets the declaring type of the method, taking into acccount the possible generic 
+            parameters that it was created with.
             </summary>
         </member>
         <member name="P:Rhino.Mocks.Impl.ProxyInstance.ProxyHash">

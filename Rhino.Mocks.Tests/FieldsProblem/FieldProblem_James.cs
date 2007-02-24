@@ -39,7 +39,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 		[Test]
-		[ExpectedException(typeof(InvalidOperationException),"Type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]' doesn't match the return type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[T]' for method 'ILookupMapper`1.FindOneFoo();'")]
+		[ExpectedException(typeof(InvalidOperationException),"Type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]' doesn't match the return type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[System.Int32]' for method 'ILookupMapper`1.FindOneFoo();'")]
 		public void ShouldGetValidErrorWhenGenericTypeMismatchOccurs()
 		{
 			ILookupMapper<int> mapper = m_mockery.CreateMock<ILookupMapper<int>>();

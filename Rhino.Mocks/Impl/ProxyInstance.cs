@@ -19,14 +19,16 @@ namespace Rhino.Mocks.Impl
         private IList propertiesToSimulate;
         private IDictionary propertiesValues;
         private IDictionary eventsSubscribers;
+    	private Type[] implemented;
 
         /// <summary>
         /// Create a new instance of <see cref="ProxyInstance"/>
         /// </summary>
-        public ProxyInstance(MockRepository repository)
+        public ProxyInstance(MockRepository repository, params Type[] implemented)
         {
             this.repository = repository;
-            hashCode = MockedObjectsEquality.NextHashCode;
+        	this.implemented = implemented;
+        	hashCode = MockedObjectsEquality.NextHashCode;
         }
 
         /// <summary>
@@ -143,6 +145,24 @@ namespace Rhino.Mocks.Impl
                 return null;
             return (Delegate)eventsSubscribers[eventName];
         }
+
+		/// <summary>
+		/// Gets the declaring type of the method, taking into acccount the possible generic 
+		/// parameters that it was created with.
+		/// </summary>
+		public Type GetDeclaringType(MethodInfo info)
+		{
+			Type typeDeclaringTheMethod = info.DeclaringType;
+			foreach (Type type in implemented)
+			{
+				if(type== typeDeclaringTheMethod)
+					return type;
+				if(typeDeclaringTheMethod.IsGenericType && 
+					typeDeclaringTheMethod == type.GetGenericTypeDefinition())
+					return type;
+			}
+			return null;
+		}
 
         private static string GenerateKey(MethodInfo method, object[] args)
         {

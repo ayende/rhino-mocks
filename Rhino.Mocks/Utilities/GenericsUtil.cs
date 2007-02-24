@@ -47,9 +47,31 @@ namespace Rhino.Mocks.Utilities
 			string typeName = type.AssemblyQualifiedName ?? type.Name; // if the AssemblyQualifiedName is null, we have an open type
 			if (nameToType.ContainsKey(typeName))
 				return nameToType[typeName];
-			Type genericTypeDef = type.GetGenericTypeDefinition();
 			Type[] types = new List<Type>(nameToType.Values).ToArray();
-			return genericTypeDef.MakeGenericType(types);
+			return ReconstructGenericType(type, nameToType);
+		}
+
+		/// <summary>
+		/// Because we need to support complex types here (simple generics were handled above) we
+		/// need to be aware of the following scenarios:
+		/// List[T] and List[Foo[T]]
+		/// </summary>
+		private static Type ReconstructGenericType(Type type, Dictionary<string, Type> nameToType)
+		{
+			Type genericTypeDef = type.GetGenericTypeDefinition();
+			List<Type> genericArgs = new List<Type>();
+			foreach (Type genericArgument in type.GetGenericArguments())
+			{
+				if(nameToType.ContainsKey(genericArgument.Name))
+				{
+					genericArgs.Add(nameToType[genericArgument.Name]);
+				}
+				else
+				{
+					genericArgs.Add( ReconstructGenericType(genericArgument, nameToType));
+				}
+			}
+			return genericTypeDef.MakeGenericType(genericArgs.ToArray());
 		}
 
 		private static Dictionary<string, Type> CreateTypesTableFromInvocation(IInvocation invocation)
@@ -73,25 +95,12 @@ namespace Rhino.Mocks.Utilities
 				return genericType;
 			//Generic class:
 
-			//Dynamic proxy is generating a proxy to the CLOSED generic object, need to 
-			//find the type that is matching to the method declaring type.
-
-			Type typeDeclaringTheMethod = invocation.Method.DeclaringType;
-			Type mockedType = genericType.DeclaringType;
-			if (IsMatch(mockedType, typeDeclaringTheMethod))
-				return mockedType;
-			foreach (Type mockedInterface in mockedType.GetInterfaces())
-			{
-				if (IsMatch(mockedInterface, typeDeclaringTheMethod))
-					return mockedInterface;
-			}
-			throw new InvalidOperationException("BUG: Could not find the type defining parameters for the method " + invocation.Method);
+			Type type = MockRepository.GetMockedObject(invocation.Proxy).GetDeclaringType(invocation.Method);
+			if (type == null)
+				throw new InvalidOperationException("BUG: Could not find a declaring type for method " + invocation.Method);
+			return type;
 		}
 
-		private static bool IsMatch(Type mockedType, Type typeDeclaringTheMethod)
-		{
-			bool matched = mockedType == typeDeclaringTheMethod || typeDeclaringTheMethod == mockedType.GetGenericTypeDefinition();
-			return matched;
-		}
+		
 	}
 }

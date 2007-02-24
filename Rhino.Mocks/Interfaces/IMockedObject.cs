@@ -56,5 +56,12 @@ namespace Rhino.Mocks.Interfaces
         /// Get the subscribers of a spesific event
         /// </summary>
         Delegate GetEventSubscribers(string eventName);
+
+
+		/// <summary>
+		/// Gets the declaring type of the method, taking into acccount the possible generic 
+		/// parameters that it was created with.
+		/// </summary>
+		Type GetDeclaringType(MethodInfo info);
     }
 }
