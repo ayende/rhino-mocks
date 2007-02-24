@@ -10,7 +10,7 @@
 		<FlattenZipFile>True</FlattenZipFile>
 		<SectionId>-2</SectionId>
 		<Version>3.0</Version>
-		<ExtraInfo> - Beta</ExtraInfo>
+		<ExtraInfo> - Beta 2</ExtraInfo>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -28,6 +28,7 @@
 
 	<ItemGroup>
 		<ZipFiles Include="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"/>
+		<ZipFiles Include="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.xml"/>
 	</ItemGroup>
 	
 	<Target Name="BeforeZip">	
