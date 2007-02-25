@@ -40,7 +40,7 @@
 				InputAssemblies="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;
 				$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Castle.DynamicProxy2.dll;
 				$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Castle.Core.dll"
-				 ExcludeFile="$(excludeFile)"
+				 ExcludeFile="$(MSBuildProjectDirectory)\ilmerge.exclude"
 				 OutputFile="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"
 				 LogFile="$(logFile)"
 				 DebugInfo="true"
