@@ -1,1 +1,2 @@
 Castle.Core.Interceptor.IProxyTargetAccessor
+Castle.DynamicProxy.AbstractInvocation
