@@ -1,7 +1,7 @@
 using System.Collections;
 using Rhino.Mocks.Constraints;
 
-namespace Rhino.Mocks
+namespace Rhino.Mocks.Constraints
 {
 	/*
 	 * class: List

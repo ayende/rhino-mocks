@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text;
 using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
+using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Utilities
 {
@@ -105,7 +106,17 @@ namespace Rhino.Mocks.Utilities
 			else if (arg == null)
 				return "null";
 			else
+				return MockingSafeToString(arg);
+		}
+
+		// we need to ensure that we won't re-eenterant into the repository
+		// if the parameter is a mock object
+		private static string MockingSafeToString(object arg)
+		{
+			IMockedObject mock = arg as IMockedObject;
+			if(mock==null)
 				return arg.ToString();
+			return mock.GetType().BaseType.FullName;
 		}
 
 		#endregion

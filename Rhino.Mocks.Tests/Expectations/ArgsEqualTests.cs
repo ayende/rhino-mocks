@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using MbUnit.Framework;
+using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;

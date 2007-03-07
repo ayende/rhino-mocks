@@ -1,5 +1,6 @@
 using System;
 using MbUnit.Framework;
+using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.Constraints
 {

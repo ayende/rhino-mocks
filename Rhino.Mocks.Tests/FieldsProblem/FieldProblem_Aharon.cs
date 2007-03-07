@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using MbUnit.Framework;
+using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
@@ -22,6 +23,27 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			MockRepository mocks = new MockRepository();
 			MyDataSet controller = mocks.CreateMock<MyDataSet>();
 			Assert.IsNotNull(controller);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),"Accepter.Accept(Rhino.Mocks.Tests.FieldsProblem.Accepter); Expected #0, Actual #1.")]
+		public void PassingMockToMock_WhenErrorOccurs()
+		{
+			MockRepository mocks = new MockRepository();
+			Accepter accepter = mocks.CreateMock<Accepter>();
+			mocks.ReplayAll();
+			accepter.Accept(accepter);
+
+		}
+	}
+
+	public abstract class Accepter
+	{
+		public abstract void Accept(Accepter demo);
+
+		public override string ToString()
+		{
+			return base.ToString();
 		}
 	}
 

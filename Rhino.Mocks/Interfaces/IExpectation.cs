@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Interfaces
 		/// Returns the return value or throw the exception and setup any output / ref parameters
 		/// that has been set.
 		/// </summary>
-		object ReturnOrThrow(object [] args);
+		object ReturnOrThrow(IInvocation invocation, object [] args);
 
 		/// <summary>
 		/// Gets a value indicating whether this instance's action is staisfied.
@@ -109,6 +109,6 @@ namespace Rhino.Mocks.Interfaces
 		/// Gets the invocation for this expectation
 		/// </summary>
 		/// <value>The invocation.</value>
-		IInvocation Invocation { get;}
+		IInvocation Originalinvocation { get;}
 	}
 }

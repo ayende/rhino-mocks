@@ -1,5 +1,6 @@
 using System;
 using MbUnit.Framework;
+using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Tests.Callbacks;

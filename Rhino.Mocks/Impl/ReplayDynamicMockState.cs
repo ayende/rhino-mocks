@@ -30,7 +30,7 @@ namespace Rhino.Mocks.Impl
 		{
 			IExpectation expectation = repository.Replayer.GetRecordedExpectationOrNull(proxy, method, args);
 			if (expectation != null)
-				return expectation.ReturnOrThrow(args);
+				return expectation.ReturnOrThrow(invocation,args);
 			else
 				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
 		

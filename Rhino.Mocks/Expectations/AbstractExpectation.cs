@@ -71,9 +71,9 @@ namespace Rhino.Mocks.Expectations
 		private string message;
 
 		/// <summary>
-		/// The method invocation
+		/// The method originalInvocation
 		/// </summary>
-		private IInvocation invocation;
+		private IInvocation originalInvocation;
 
 	    #endregion
 
@@ -113,12 +113,12 @@ namespace Rhino.Mocks.Expectations
 
 
 		/// <summary>
-		/// Gets the invocation for this expectation
+		/// Gets the originalInvocation for this expectation
 		/// </summary>
-		/// <value>The invocation.</value>
-		public IInvocation Invocation
+		/// <value>The originalInvocation.</value>
+		public IInvocation Originalinvocation
 		{
-			get { return invocation; }
+			get { return originalInvocation; }
 		}
 
 		/// <summary>
@@ -272,7 +272,7 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// Returns the return value or throw the exception and setup output / ref parameters
 		/// </summary>
-		public object ReturnOrThrow(object[] args)
+		public object ReturnOrThrow(IInvocation invocation, object[] args)
 		{
             SetupOutputAndRefParameters(args);
             if (actionToExecute != null)
@@ -310,12 +310,12 @@ namespace Rhino.Mocks.Expectations
 		/// <summary>
 		/// Creates a new <see cref="AbstractExpectation"/> instance.
 		/// </summary>
-		/// <param name="invocation">The invocation for this method, required because it contains the generic type infromation</param>
+		/// <param name="invocation">The originalInvocation for this method, required because it contains the generic type infromation</param>
 		protected AbstractExpectation(IInvocation invocation)
 		{
-			Validate.IsNotNull(invocation, "invocation");
+			Validate.IsNotNull(invocation, "originalInvocation");
 			Validate.IsNotNull(invocation.Method, "method");
-			this.invocation = invocation;
+			this.originalInvocation = invocation;
 			this.method = invocation.Method;
 			this.expected = new Range(1, 1);
 		}
@@ -324,7 +324,7 @@ namespace Rhino.Mocks.Expectations
 		/// Creates a new <see cref="AbstractExpectation"/> instance.
 		/// </summary>
 		/// <param name="expectation">Expectation.</param>
-		protected AbstractExpectation(IExpectation expectation) : this(expectation.Invocation)
+		protected AbstractExpectation(IExpectation expectation) : this(expectation.Originalinvocation)
 		{
 			returnValue = expectation.ReturnValue;
 			returnValueSet = expectation.HasReturnValue;
@@ -442,14 +442,14 @@ namespace Rhino.Mocks.Expectations
 			{
 				//we reduce checking of generic types because of the complexity,
 				//we let the runtime catch those mistakes
-				returnType = GenericsUtil.GetRealType(returnType,invocation);
+				returnType = GenericsUtil.GetRealType(returnType,originalInvocation);
 				Type valueType = value.GetType();
 				if (returnType.IsInstanceOfType(value))
 					return;
 				type = valueType.FullName;
 			}
 			throw new InvalidOperationException(string.Format("Type '{0}' doesn't match the return type '{1}' for method '{2}'", type, returnType, 
-				MethodCallUtil.StringPresentation(Invocation,method, new object[0])));
+				MethodCallUtil.StringPresentation(Originalinvocation,method, new object[0])));
 		}
 
 		/// <summary>
@@ -465,7 +465,7 @@ namespace Rhino.Mocks.Expectations
             for (int i = 0; i < methodParams.Length; i++)
             {
             	Type methodParameter = methodParams[i].ParameterType;
-				if(methodParameter.IsGenericType && invocation.GetType().IsGenericType)
+				if(methodParameter.IsGenericType && originalInvocation.GetType().IsGenericType)
 				{
 					//we are skipping this because there are too many edge cases, and the runtime will validate this
 					//at any rate. As an example, what happens when:

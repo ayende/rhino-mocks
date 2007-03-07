@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Expectations
 			get
 			{
 				MethodCallUtil.FormatArgumnet format = new MethodCallUtil.FormatArgumnet(FormatArgWithConstraint);
-				string stringPresentation = MethodCallUtil.StringPresentation(Invocation, format, Method, constraints);
+				string stringPresentation = MethodCallUtil.StringPresentation(Originalinvocation, format, Method, constraints);
 				return CreateErrorMessage(stringPresentation);
 			}
 		}

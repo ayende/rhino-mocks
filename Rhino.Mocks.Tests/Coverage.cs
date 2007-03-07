@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using MbUnit.Framework;
+using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
@@ -96,7 +97,7 @@ namespace Rhino.Mocks.Tests
 		{
 			AnyArgsExpectation expectation = new AnyArgsExpectation(new FakeInvocation(typeof(object).GetMethod("ToString")));
 			expectation.ActionToExecute = (ToStringDelegate)delegate { return "fpp"; };
-			expectation.ReturnOrThrow(null);
+			expectation.ReturnOrThrow(null,null);
 		}
 
 		[Test]
