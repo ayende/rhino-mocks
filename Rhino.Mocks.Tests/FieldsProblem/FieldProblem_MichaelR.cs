@@ -1,4 +1,5 @@
 using MbUnit.Framework;
+using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
@@ -6,27 +7,45 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	public class PropertyWithTypeParameterTest
 	{
 		[Test]
-		public void Execute()
+		public void CreatedClosedGenericType()
 		{
 			MockRepository mocks = new MockRepository();
 			mocks.CreateMock<ClosedGenericType>();
 		}
 
-		public class ClosedGenericType : OpenGenericType<TypeParameterType>
-		{
-			public override TypeParameterType GenericProperty
-			{
-				get { return null; }
-			}
-		}
 
-		public abstract class OpenGenericType<T>
+		[Test]
+		public void UsingdoOnMethodWithGenericReturnValue()
 		{
-			public abstract T GenericProperty { get; }
+			MockRepository mocks = new MockRepository();
+			IGenericType<object> mock =
+				mocks.CreateMock<IGenericType<object>>();
+			IMethodOptions methodOptions = Expect.Call(mock.MyMethod());
+			methodOptions.Do((MyDelegate)delegate{ return new object (); });
 		}
+	}
 
-		public class TypeParameterType
+	public interface IGenericType<T>
+	{
+		T MyMethod();
+	}
+
+	public delegate object MyDelegate();
+
+	public class ClosedGenericType : OpenGenericType<TypeParameterType>
+	{
+		public override TypeParameterType GenericProperty
 		{
+			get { return null; }
 		}
+	}
+
+	public abstract class OpenGenericType<T>
+	{
+		public abstract T GenericProperty { get; }
+	}
+
+	public class TypeParameterType
+	{
 	}
 }

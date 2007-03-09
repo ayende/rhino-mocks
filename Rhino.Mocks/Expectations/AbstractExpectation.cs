@@ -479,7 +479,8 @@ namespace Rhino.Mocks.Expectations
         }
         private void AssertReturnTypeMatch(Delegate value)
         {
-            if (method.ReturnType.IsAssignableFrom(value.Method.ReturnType) == false)
+            if (GenericsUtil.GetRealType(method.ReturnType, Originalinvocation)
+				.IsAssignableFrom(value.Method.ReturnType) == false)
                 throw new InvalidOperationException("The delegate return value should be assignable from " + method.ReturnType.FullName);
         }
 		#endregion
