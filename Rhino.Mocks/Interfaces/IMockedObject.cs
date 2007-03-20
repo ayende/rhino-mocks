@@ -63,5 +63,10 @@ namespace Rhino.Mocks.Interfaces
 		/// parameters that it was created with.
 		/// </summary>
 		Type GetDeclaringType(MethodInfo info);
-    }
+
+		/// <summary>
+		/// Clears the state of the object, remove original calls, property behavior, subscribed events, etc.
+		/// </summary>
+		void ClearState();
+	}
 }

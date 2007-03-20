@@ -2,6 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text;
 using Castle.Core.Interceptor;
 using Castle.DynamicProxy;
 using Rhino.Mocks.Exceptions;
@@ -412,6 +413,7 @@ namespace Rhino.Mocks
 			{
 				rootRecorder.RemoveExpectation(expectation);
 			}
+			GetMockedObject(obj).ClearState();
 			rootRecorder.RemoveAllRepeatableExpectationsForProxy(obj);
 			proxies[obj] = proxies[obj].BackToRecord();
 		}
@@ -762,12 +764,22 @@ namespace Rhino.Mocks
 				lastRepository = null;
 			if (proxies.Keys.Count == 0)
 				return;
+			StringBuilder sb = new StringBuilder();
 			foreach (object key in new ArrayList(proxies.Keys))
 			{
 				if (proxies[key] is VerifiedMockState)
 					continue;
-				Verify(key);
+				try
+				{
+					Verify(key);
+				}
+				catch(ExpectationViolationException e)
+				{
+					sb.AppendLine(e.Message);
+				}
 			}
+			if (sb.Length != 0)
+				throw new ExpectationViolationException(sb.ToString());	
 		}
 
 		/*
