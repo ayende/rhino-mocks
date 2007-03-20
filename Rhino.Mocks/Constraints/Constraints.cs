@@ -571,9 +571,9 @@ namespace Rhino.Mocks.Constraints
         /// </summary>
         public override bool Eval(object obj)
         {
-            if (obj is string)
+            if (obj !=null)
             {
-                return regex.IsMatch((string)obj);
+                return regex.IsMatch(obj.ToString());
             }
             return false;
         }
@@ -613,8 +613,8 @@ namespace Rhino.Mocks.Constraints
         /// </summary>
         public override bool Eval(object obj)
         {
-            if (obj is string)
-                return ((string)obj).IndexOf(innerString) > -1;
+            if (obj != null)
+                return obj.ToString().IndexOf(innerString) > -1;
             return false;
         }
 
@@ -653,8 +653,8 @@ namespace Rhino.Mocks.Constraints
         /// </summary>
         public override bool Eval(object obj)
         {
-            if (obj is string)
-                return ((string)obj).EndsWith(end);
+            if (obj != null)
+                return obj.ToString().EndsWith(end);
             return false;
         }
 
@@ -693,8 +693,8 @@ namespace Rhino.Mocks.Constraints
         /// </summary>
         public override bool Eval(object obj)
         {
-            if (obj is string)
-                return ((string)obj).StartsWith(start);
+            if (obj != null)
+                return obj.ToString().StartsWith(start);
             return false;
         }
 
