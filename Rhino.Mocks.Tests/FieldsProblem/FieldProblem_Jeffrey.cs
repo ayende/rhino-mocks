@@ -28,7 +28,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof(InvalidOperationException),"Callback arguments didn't match the method arguments")]
 		public void Invalid_DelegateToGenericMock()
 		{
 			MockRepository mocks = new MockRepository();
@@ -39,11 +39,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			{
 				Assert.IsNotNull(formatter);
 			});
-			mocks.ReplayAll();
-
-			senderMock.SetFormatter( formatterMock );
-
-			mocks.VerifyAll();
 		}
 	}
 	public interface IEMailFormatter<T>
