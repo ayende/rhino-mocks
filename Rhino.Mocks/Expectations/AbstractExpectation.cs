@@ -464,15 +464,7 @@ namespace Rhino.Mocks.Expectations
                 throw new InvalidOperationException(argsDontMatch);
             for (int i = 0; i < methodParams.Length; i++)
             {
-            	Type methodParameter = methodParams[i].ParameterType;
-				if(methodParameter.IsGenericType && originalInvocation.GetType().IsGenericType)
-				{
-					//we are skipping this because there are too many edge cases, and the runtime will validate this
-					//at any rate. As an example, what happens when:
-					// new Action<IList<string>(..) is called on
-					// public class Foo<T> { public T Weird(IList<T> ...) }
-					continue;
-				}
+            	Type methodParameter = GenericsUtil.GetRealType(methodParams[i].ParameterType, Originalinvocation);
             	if (methodParameter != callbackParams[i].ParameterType)
                     throw new InvalidOperationException(argsDontMatch);
             }

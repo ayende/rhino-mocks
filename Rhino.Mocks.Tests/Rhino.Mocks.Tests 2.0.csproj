@@ -65,6 +65,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLibs\Interop\Interop.SHDocVw.dll</HintPath>
+    </Reference>
     <Reference Include="MbUnit.Framework, Version=1.0.2531.41788, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Tools\MbUnit\MbUnit.Framework.dll</HintPath>
@@ -123,9 +127,11 @@
     <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_James.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Liang.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Luke.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelR.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Owen.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Avi.cs" />
@@ -282,6 +288,14 @@
       <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="Scripting">
       <Guid>{420B2830-E718-11CF-893D-00A0C9054228}</Guid>
       <VersionMajor>1</VersionMajor>
