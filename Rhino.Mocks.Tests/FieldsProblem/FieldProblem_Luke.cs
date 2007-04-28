@@ -21,8 +21,33 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 			IServiceProvider serviceProvider = (IServiceProvider)
-				mocks.CreateMultiMock(typeof(IServiceProvider), typeof (IHTMLDataTransfer));
+											   mocks.CreateMultiMock(typeof(IServiceProvider), typeof(IHTMLDataTransfer));
 			Assert.IsNotNull(serviceProvider);
+		}
+
+		[Test] 
+		public void TryToMockClassWithProtectedInternalAbstractClass()
+		{
+			MockRepository mockRepository = new MockRepository();
+			mockRepository.CreateMock<SomeClassWithProtectedInternalAbstractClass>();
+		}
+
+		[Test] 
+		public void TryToMockClassWithProtectedAbstractClass()
+		{
+			MockRepository mockRepository = new MockRepository();
+			mockRepository.CreateMock<SomeClassWithProtectedAbstractClass>();
+		}
+
+		public abstract class
+			SomeClassWithProtectedInternalAbstractClass
+		{
+			protected internal abstract void Quack();
+		}
+
+		public abstract class SomeClassWithProtectedAbstractClass
+		{
+			protected abstract void Quack();
 		}
 	}
 
@@ -30,7 +55,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	 InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface IServiceProvider
 	{
-		[return : MarshalAs(UnmanagedType.IUnknown)]
+		[return: MarshalAs(UnmanagedType.IUnknown)]
 		object QueryService([In] ref Guid guidService, [In] ref Guid riid);
 	}
+
 }
