@@ -1,5 +1,6 @@
 using System;
 using Rhino.Mocks.Interfaces;
+using System.Collections;
 
 namespace Rhino.Mocks.Impl
 {
@@ -36,34 +37,40 @@ namespace Rhino.Mocks.Impl
 		/// <param name="actualArgs">Actual Args.</param>
 		public static bool ArgsEqual(object[] expectedArgs, object[] actualArgs)
 		{
-			return RecursiveArrayEqual(expectedArgs, actualArgs);
+			return RecursiveCollectionEqual(expectedArgs, actualArgs);
 		}
 
 		#region Implementation
 
-        private static bool RecursiveArrayEqual(Array expectedArgs, Array actualArgs)
+        private static bool RecursiveCollectionEqual(ICollection expectedArgs, ICollection actualArgs)
         {
-            if (expectedArgs.Length != actualArgs.Length)
+            if (expectedArgs.Count != actualArgs.Count)
                 return false;
 
-            for (int i = 0; i < expectedArgs.Length; i++)
+            IEnumerator expectedArgsEnumerator = expectedArgs.GetEnumerator();
+            IEnumerator actualArgsEnumerator = actualArgs.GetEnumerator();
+            while (expectedArgsEnumerator.MoveNext()
+                && actualArgsEnumerator.MoveNext())
             {
-                if (expectedArgs.GetValue(i) == null)
+                object expected = expectedArgsEnumerator.Current;
+                object actual = actualArgsEnumerator.Current;
+
+                if (expected == null)
                 {
-                    if (actualArgs.GetValue(i) == null)
+                    if (actual == null)
                         continue;
                     else
                         return false;
                 }
-                object expected = expectedArgs.GetValue(i);
-                object actual = actualArgs.GetValue(i);
+
                 if (SafeEquals(expected, actual))
                     continue;
-                if (expectedArgs.GetValue(i) is Array)
+
+                if (expected is ICollection)
                 {
-                    if (RecursiveArrayEqual((Array)expectedArgs.GetValue(i),
-                            (Array)actualArgs.GetValue(i)) == false)
+                    if (!RecursiveCollectionEqual(expected as ICollection, actual as ICollection))
                         return false;
+
                     continue;
                 }
                 return false;

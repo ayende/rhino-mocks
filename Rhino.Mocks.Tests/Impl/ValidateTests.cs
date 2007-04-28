@@ -1,6 +1,7 @@
 using System;
 using MbUnit.Framework;
 using Rhino.Mocks.Impl;
+using System.Collections;
 
 namespace Rhino.Mocks.Tests.Impl
 {
@@ -91,6 +92,57 @@ namespace Rhino.Mocks.Tests.Impl
 			string[] str1 = new string[] {"", "1", "1234"},
 				str2 = new string[] {"1", "1234", "54321"};
 			Assert.IsFalse(Validate.ArgsEqual(str1, str2));
+		}
+
+		[Test]
+		public void ArgsEqualWithCollectionReferenceEqual()
+		{
+			Queue queue = new Queue(3);
+			queue.Enqueue("1");
+			queue.Enqueue(2);
+			queue.Enqueue(4.5f);
+			Assert.IsTrue(Validate.ArgsEqual(new object[] { 1, queue }, new object[] { 1, queue }));
+		}
+
+		[Test]
+		public void ArgsEqualWithCollectionContentEqual()
+		{
+			Queue queue1 = new Queue(3);
+			queue1.Enqueue("1");
+			queue1.Enqueue(2);
+			queue1.Enqueue(4.5f);
+			Queue queue2 = new Queue(3);
+			queue2.Enqueue("1");
+			queue2.Enqueue(2);
+			queue2.Enqueue(4.5f);
+			Assert.IsTrue(Validate.ArgsEqual(new object[] { 1, queue1 }, new object[] { 1, queue2 }));
+		}
+
+		[Test]
+		public void ArgsEqualWithCollectionContentDifferent()
+		{
+			Queue queue1 = new Queue(3);
+			queue1.Enqueue("1");
+			queue1.Enqueue(2);
+			queue1.Enqueue(4.5f);
+			Queue queue2 = new Queue(3);
+			queue2.Enqueue("1");
+			queue2.Enqueue(5);
+			queue2.Enqueue(4.5f);
+			Assert.IsFalse(Validate.ArgsEqual(new object[] { 1, queue1 }, new object[] { 1, queue2 }));
+		}
+
+		[Test]
+		public void ArgsEqualWithCollectionContentLengthDifferent()
+		{
+			Queue queue1 = new Queue(3);
+			queue1.Enqueue("1");
+			queue1.Enqueue(2);
+			queue1.Enqueue(4.5f);
+			Queue queue2 = new Queue(2);
+			queue2.Enqueue("1");
+			queue2.Enqueue(5);
+			Assert.IsFalse(Validate.ArgsEqual(new object[] { 1, queue1 }, new object[] { 1, queue2 }));
 		}
 	}
 }
