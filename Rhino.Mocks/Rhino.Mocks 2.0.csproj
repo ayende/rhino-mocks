@@ -14,6 +14,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Rhino.Mocks</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\debug\</OutputPath>
@@ -226,6 +228,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="With.cs" />
+    <None Include="..\..\ayende-open-source.snk">
+      <Link>ayende-open-source.snk</Link>
+    </None>
     <None Include="Diagram.cd" />
   </ItemGroup>
   <ItemGroup>
