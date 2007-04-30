@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Interfaces\IPartialMockMarker.cs" />
     <Compile Include="Interfaces\OriginalCallOptions.cs" />
+    <Compile Include="MockRepositoryRecordPlayback.cs" />
     <Compile Include="Utilities\GenericsUtil.cs" />
     <Compile Include="Generated\ExpectationsListGenerated.cs">
       <SubType>Code</SubType>

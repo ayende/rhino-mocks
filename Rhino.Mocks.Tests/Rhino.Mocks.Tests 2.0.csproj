@@ -67,10 +67,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Interop\Interop.SHDocVw.dll</HintPath>
-    </Reference>
     <Reference Include="MbUnit.Framework, Version=1.0.2531.41788, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Tools\MbUnit\MbUnit.Framework.dll</HintPath>
@@ -265,6 +261,7 @@
     <Compile Include="MultiMocks.cs" />
     <Compile Include="OrderTest.cs" />
     <Compile Include="PartialMockTests.cs" />
+    <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
     <Compile Include="RefOutParameters.cs" />
     <Compile Include="Remoting\ContextSwitcher.cs" />
     <Compile Include="Remoting\ContextSwitchTests.cs" />
