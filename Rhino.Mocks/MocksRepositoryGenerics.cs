@@ -139,8 +139,7 @@ namespace Rhino.Mocks
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
         public T PartialMock<T>( params object[] argumentsForConstructor) where T : class
         {
-            CreateMockState factory = new CreateMockState(CreatePartialRecordState);
-            return (T)CreateMockObject(typeof(T), factory, new Type[0], argumentsForConstructor);
+        	return (T) PartialMock(typeof (T), argumentsForConstructor);
         }
     }
 }

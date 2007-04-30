@@ -397,7 +397,9 @@ namespace Rhino.Mocks
 			if (type.IsInterface)
 				throw new InvalidOperationException("Can't create a partial mock from an interface");
 			CreateMockState factory = new CreateMockState(CreatePartialRecordState);
-			return CreateMockObject(type, factory, extraTypes, argumentsForConstructor);
+			List<Type> extraTypesWithMarker = new List<Type>(extraTypes);
+			extraTypesWithMarker.Add(typeof(IPartialMockMarker));
+			return CreateMockObject(type, factory, extraTypesWithMarker.ToArray() , argumentsForConstructor);
 		}
 
 		/*
@@ -505,7 +507,15 @@ namespace Rhino.Mocks
 			//as expectations, since there is not way to relate them to the 
 			//proper state.
 			if (proxies.ContainsKey(proxy) == false)
+			{
+				//We allow calls to virtual methods from the ctor only for partial mocks.
+				if(proxy is IPartialMockMarker)
+				{
+					invocation.Proceed();
+					return invocation.ReturnValue;
+				}
 				return null;
+			}
 			IMockState state = proxies[proxy];
 			return state.MethodCall(invocation, method, args);
 		}
