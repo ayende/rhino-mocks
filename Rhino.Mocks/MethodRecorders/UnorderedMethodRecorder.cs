@@ -347,7 +347,10 @@ namespace Rhino.Mocks.MethodRecorders
 			string methodAsString = MethodCallUtil.StringPresentation(invocation, method, args);
 			sb.Append(methodAsString);
 			sb.Append(" Expected #");
-			sb.Append(calc.Expected);
+			if (calc.ExpectedMax == calc.ExpectedMin)
+				sb.Append(calc.ExpectedMin);
+			else
+				sb.Append(calc.ExpectedMin).Append(" - ").Append(calc.ExpectedMax);
 			sb.Append(", Actual #").Append(calc.Actual).Append('.');
 			ExpectationsList list = GetAllExpectationsForProxyAndMethod(proxy, method);
 			if (list.Count > 0)
@@ -370,7 +373,7 @@ namespace Rhino.Mocks.MethodRecorders
 		private class CalcExpectedAndActual
 		{
 			private int actual = 1;
-			private int expected = 0;
+			private int expectedMin = 0, expectedMax;
 			private UnorderedMethodRecorder parent;
 			
 			public int Actual
@@ -378,9 +381,15 @@ namespace Rhino.Mocks.MethodRecorders
 				get { return actual; }
 			}
 
-			public int Expected
+
+			public int ExpectedMin
 			{
-				get { return expected; }
+				get { return expectedMin; }
+			}
+
+			public int ExpectedMax
+			{
+				get { return expectedMax; }
 			}
 
 			public CalcExpectedAndActual(UnorderedMethodRecorder parent, object proxy, MethodInfo method, object[] args)
@@ -396,7 +405,8 @@ namespace Rhino.Mocks.MethodRecorders
 				{
 					if (expectation.IsExpected(args))
 					{
-						expected++;
+						expectedMin+= expectation.Expected.Min;
+						expectedMax += expectation.Expected.Max;
 						actual += expectation.ActualCalls;
 					}
 				}
