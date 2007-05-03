@@ -92,5 +92,24 @@ namespace Rhino.Mocks.Constraints
 		{
 			return new CollectionEqual(collection);
 		}
+
+        /// <summary>
+        /// Determines that the parameter collection has the specified number of elements.
+        /// </summary>
+        /// <param name="constraint">The constraint that should be applied to the collection count.</param>
+        public static AbstractConstraint Count(AbstractConstraint constraint)
+        {
+            return new CollectionCount(constraint);
+        }
+
+        /// <summary>
+        /// Determines that an element of the parameter collections conforms to another AbstractConstraint.
+        /// </summary>
+        /// <param name="index">The zero-based index of the list element.</param>
+        /// <param name="constraint">The constraint which should be applied to the list element.</param>
+        public static AbstractConstraint Element(int index, AbstractConstraint constraint)
+        {
+            return new ListElement(index, constraint);
+        }
 	}
 }

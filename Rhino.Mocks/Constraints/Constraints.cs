@@ -448,6 +448,102 @@ namespace Rhino.Mocks.Constraints
 
     #endregion
 
+    #region Count
+
+    /// <summary>
+    /// Applies another AbstractConstraint to the collection count.
+    /// </summary>
+    public class CollectionCount : AbstractConstraint
+    {
+        private AbstractConstraint _constraint;
+
+        /// <summary>
+        /// Creates a new <see cref="CollectionCount"/> instance.
+        /// </summary>
+        /// <param name="constraint">The constraint that should be applied to the collection count.</param>
+        public CollectionCount(AbstractConstraint constraint)
+        {
+            _constraint = constraint;
+        }
+
+        /// <summary>
+        /// Determines if the parameter conforms to this constraint.
+        /// </summary>
+        public override bool Eval(object obj)
+        {
+            ICollection arg = obj as ICollection;
+
+            if (arg != null)
+            {
+                return _constraint.Eval(arg.Count);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the message for this constraint.
+        /// </summary>
+        public override string Message
+        {
+            get { return "collection count " + _constraint.Message; }
+        }
+    }
+
+    #endregion
+
+    #region Element
+
+    /// <summary>
+    /// Applies another AbstractConstraint to a specific list element.
+    /// </summary>
+    public class ListElement : AbstractConstraint
+    {
+        private int _index;
+        private AbstractConstraint _constraint;
+
+        /// <summary>
+        /// Creates a new <see cref="ListElement"/> instance.
+        /// </summary>
+        /// <param name="index">The zero-based index of the list element.</param>
+        /// <param name="constraint">The constraint that should be applied to the list element.</param>
+        public ListElement(int index, AbstractConstraint constraint)
+        {
+            _index = index;
+            _constraint = constraint;
+        }
+
+        /// <summary>
+        /// Determines if the parameter conforms to this constraint.
+        /// </summary>
+        public override bool Eval(object obj)
+        {
+            IList arg = obj as IList;
+
+            if (arg != null)
+            {
+                if (_index >= 0 && _index < arg.Count)
+                    return _constraint.Eval(arg[_index]);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the message for this constraint
+        /// </summary>
+        /// <value></value>
+        public override string Message
+        {
+            get
+            {
+                return "element at index " + _index + " " + _constraint.Message;
+            }
+        }
+    }
+
+    #endregion
+
     #endregion
 
     #region Logic Operator

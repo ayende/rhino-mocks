@@ -64,5 +64,26 @@ namespace Rhino.Mocks.Tests.Constraints
 			Assert.AreEqual("equal to collection [Ayende, Rahien, Hello, World]", list.Message);
 
 		}
+
+        [Test]
+        public void Count()
+        {
+            AbstractConstraint list = List.Count(Is.Equal(4));
+            Assert.IsTrue(list.Eval(new string[] { "Ayende", "Rahien", "Hello", "World" }));
+            Assert.IsFalse(list.Eval(new string[] { "Ayende", "Rahien", "World" }));
+            Assert.IsFalse(list.Eval(5));
+            Assert.AreEqual("collection count equal to 4", list.Message);
+        }
+
+        [Test]
+        public void Element()
+        {
+            AbstractConstraint list = List.Element(2, Is.Equal("Hello"));
+            Assert.IsTrue(list.Eval(new string[] { "Ayende", "Rahien", "Hello", "World" }));
+            Assert.IsFalse(list.Eval(new string[] { "Ayende", "Rahien", "World", "Hello" }));
+            Assert.IsFalse(list.Eval(new string[] { "Ayende", "Rahien" }));
+            Assert.IsFalse(list.Eval(5));
+            Assert.AreEqual("element at index 2 equal to Hello", list.Message);
+        }
 	}
 }
