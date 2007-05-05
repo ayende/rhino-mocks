@@ -130,7 +130,7 @@ namespace Rhino.Mocks.Impl
 		/// <param name="args">The arguments this method was called with</param>
 		public object MethodCall(IInvocation invocation, MethodInfo method, params object[] args)
 		{
-			PreviousMethodIsClose();
+			AssertPreviousMethodIsClose();
 			repository.lastMockedObject = mockedObject;
 			MockRepository.lastRepository = repository;
 			IExpectation expectation = new ArgsEqualExpectation(invocation, args);
@@ -146,7 +146,7 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		public virtual IMockState Replay()
 		{
-			PreviousMethodIsClose();
+			AssertPreviousMethodIsClose();
 			return DoReplay();
 		}
 
@@ -179,7 +179,10 @@ namespace Rhino.Mocks.Impl
 
 		#region Private Methods
 
-		private void PreviousMethodIsClose()
+		/// <summary>
+		/// Asserts the previous method is closed (had an expectation set on it so we can replay it correctly)
+		/// </summary>
+		protected virtual void AssertPreviousMethodIsClose()
 		{
 			if (lastExpectation != null && !lastExpectation.ActionsSatisfied)
 				throw new InvalidOperationException("Previous method '" + lastExpectation.ErrorMessage + "' require a return value or an exception to throw.");

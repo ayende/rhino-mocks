@@ -112,6 +112,8 @@
     <Compile Include="Expectations\ConstraintsExpectation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Impl\StubRecordMockState.cs" />
+    <Compile Include="Impl\StubReplayMockState.cs" />
     <Compile Include="Interfaces\IPartialMockMarker.cs" />
     <Compile Include="Interfaces\OriginalCallOptions.cs" />
     <Compile Include="MockRepositoryRecordPlayback.cs" />
@@ -218,7 +220,6 @@
     <Compile Include="MockRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MocksRepositoryGenerics.cs" />
     <Compile Include="RhinoMocks.cs" />
     <Compile Include="SetupResult.cs">
       <SubType>Code</SubType>

@@ -195,6 +195,15 @@ namespace Rhino.Mocks.Impl
 
 
 		/// <summary>
+		/// Gets the implemented types by this mocked object
+		/// </summary>
+		/// <value>The implemented.</value>
+		public Type[] ImplementedTypes
+		{
+			get { return implemented; }
+		}
+
+		/// <summary>
 		/// Clears the state of the object, remove original calls, property behavior, subscribed events, etc.
 		/// </summary>
 		public void ClearState()

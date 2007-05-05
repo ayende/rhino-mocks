@@ -275,6 +275,7 @@
     <Compile Include="SetupResultTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StubTest.cs" />
     <Compile Include="TestInfo.cs" />
     <Compile Include="WithTestFixture.cs" />
     <Compile Include="UsingComObject.cs" />
