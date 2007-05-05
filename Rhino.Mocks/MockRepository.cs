@@ -993,5 +993,25 @@ namespace Rhino.Mocks
 			};
 			return CreateMockObject(type, createStub, new Type[0], argumentsForConstructor);
 		}
+
+		/// <summary>
+		/// Generates a stub without mock repository
+		/// </summary>
+		/// <param name="argumentsForConstructor">The arguments for constructor.</param>
+		/// <returns></returns>
+		public static T GenerateStub<T>(params object[] argumentsForConstructor)
+		{
+			return (T)GenerateStub(typeof(T),argumentsForConstructor);
+		}
+
+		/// <summary>
+		/// Generates the stub without mock repository
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="argumentsForConstructor">The arguments for constructor.</param>
+		public static object GenerateStub(Type type, params object[] argumentsForConstructor)
+		{
+			return new MockRepository().Stub(type, argumentsForConstructor);
+		}
 	}
 }
