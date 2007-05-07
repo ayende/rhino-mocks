@@ -57,11 +57,12 @@ namespace Rhino.Mocks.Tests.Remoting
 				Assembly.GetExecutingAssembly().Location);
 
 			otherDomain = AppDomain.CreateDomain("other domain", null,
-				assemblyFile.DirectoryName, null, false);
+				AppDomain.CurrentDomain.BaseDirectory, null, false);
 
 			contextSwitcher = (ContextSwitcher)otherDomain.CreateInstanceAndUnwrap(
 				Assembly.GetExecutingAssembly().GetName().Name,
 				typeof(ContextSwitcher).FullName);
+
 		}
 
 
