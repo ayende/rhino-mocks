@@ -13,7 +13,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IView.RedrawDisplay(\"blah\"); Expected #4, Actual #5" )]
+		[ExpectedException(typeof(ExpectationViolationException), "IView.RedrawDisplay(\"blah\"); Expected #4, Actual #5." )]
 		public void CorrectResultForExpectedWhenUsingTimes()
 		{
 			MockRepository mocks = new MockRepository();
@@ -33,7 +33,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IView.RedrawDisplay(\"blah\"); Expected #3 - 4, Actual #5" )]
+		[ExpectedException(typeof(ExpectationViolationException), "IView.RedrawDisplay(\"blah\"); Expected #3 - 4, Actual #5." )]
 		public void CorrectResultForExpectedWhenUsingTimesWithRange()
 		{
 			MockRepository mocks = new MockRepository();

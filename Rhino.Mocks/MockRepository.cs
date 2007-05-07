@@ -28,6 +28,7 @@
 
 
 using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -803,7 +804,7 @@ namespace Rhino.Mocks
 				lastRepository = null;
 			if (proxies.Keys.Count == 0)
 				return;
-			StringBuilder sb = new StringBuilder();
+			StringCollection validationErrors = new StringCollection();
 			foreach (object key in new ArrayList(proxies.Keys))
 			{
 				if (proxies[key] is VerifiedMockState)
@@ -814,11 +815,20 @@ namespace Rhino.Mocks
 				}
 				catch(ExpectationViolationException e)
 				{
-					sb.AppendLine(e.Message);
+					validationErrors.Add(e.Message);
 				}
 			}
-			if (sb.Length != 0)
-				throw new ExpectationViolationException(sb.ToString());	
+			if (validationErrors.Count == 0)
+				return;
+			if(validationErrors.Count==1)
+				throw new ExpectationViolationException(validationErrors[0]);
+			StringBuilder sb = new StringBuilder();
+			foreach (string validationError in validationErrors)
+			{
+				sb.AppendLine(validationError);
+			}
+				throw new ExpectationViolationException(sb.ToString());
+			
 		}
 
 		/*

@@ -94,7 +94,10 @@ namespace Rhino.Mocks.MethodRecorders
 		{
 			IExpectation expectation = GetRecordedExpectationOrNull(proxy, method, args);
 			if (expectation == null)
+			{
+				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Unexpected method call error");
 				throw UnexpectedMethodCall(invocation, proxy, method, args);
+			}
 			return expectation;
 		}
 

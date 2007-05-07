@@ -106,7 +106,10 @@ namespace Rhino.Mocks.Impl
 		{
 			IExpectation expectation = repository.Replayer.GetRepeatableExpectation(proxy, method, args);
 			if (expectation != null)
+			{
+				RhinoMocks.Logger.LogReplayedExpectation(invocation, expectation);
 				return expectation.ReturnOrThrow(invocation,args);
+			}
             return DoMethodCall(invocation, method, args);
 		}
 
@@ -121,6 +124,7 @@ namespace Rhino.Mocks.Impl
 		protected virtual object DoMethodCall(IInvocation invocation, MethodInfo method, object[] args)
 		{
 			IExpectation expectation = repository.Replayer.GetRecordedExpectation(invocation, proxy, method, args);
+			RhinoMocks.Logger.LogReplayedExpectation(invocation, expectation);
 			return expectation.ReturnOrThrow(invocation,args);
 		}
 

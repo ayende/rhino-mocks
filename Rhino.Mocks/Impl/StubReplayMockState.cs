@@ -58,9 +58,15 @@ namespace Rhino.Mocks.Impl
 		{
 			IExpectation expectation = repository.Replayer.GetRecordedExpectationOrNull(proxy, method, args);
 			if (expectation != null)
-				return expectation.ReturnOrThrow(invocation,args);
+			{
+				RhinoMocks.Logger.LogReplayedExpectation(invocation, expectation);
+				return expectation.ReturnOrThrow(invocation, args);
+			}
 			else
+			{
+				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Stub Mock: Unexpected method call ignored");
 				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
+			}
 		
 		}
 

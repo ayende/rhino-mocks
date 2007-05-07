@@ -46,7 +46,8 @@ namespace Rhino.Mocks.Impl
 		/// Creates a new <see cref="ReplayDynamicMockState"/> instance.
 		/// </summary>
 		/// <param name="previousState">The previous state for this method</param>
-		public ReplayPartialMockState(RecordPartialMockState previousState) : base(previousState)
+		public ReplayPartialMockState(RecordPartialMockState previousState)
+			: base(previousState)
 		{
 		}
 
@@ -60,14 +61,19 @@ namespace Rhino.Mocks.Impl
 		{
 			IExpectation expectation = repository.Replayer.GetRecordedExpectationOrNull(proxy, method, args);
 			if (expectation != null)
+			{
+				RhinoMocks.Logger.LogReplayedExpectation(invocation, expectation);
 				return expectation.ReturnOrThrow(invocation,args);
+			}
 			else if (method.IsAbstract == false)
 			{
+				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Partial mock: calling original method");
 				invocation.Proceed();
 				return invocation.ReturnValue;
 			}
 			else
 			{
+				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Partial mock: abstract method called but was not expected");
 				//because the expectation doesn't exist, an exception will be thrown
 				return repository.Replayer.GetRecordedExpectation(invocation,proxy, method, args);
 			}

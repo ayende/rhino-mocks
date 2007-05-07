@@ -59,9 +59,15 @@ namespace Rhino.Mocks.Impl
 		{
 			IExpectation expectation = repository.Replayer.GetRecordedExpectationOrNull(proxy, method, args);
 			if (expectation != null)
+			{
+				RhinoMocks.Logger.LogReplayedExpectation(invocation, expectation);
 				return expectation.ReturnOrThrow(invocation,args);
+			}
 			else
+			{
+				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Dynamic Mock: Unepxeted method call ignored");
 				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
+			}
 		
 		}
 

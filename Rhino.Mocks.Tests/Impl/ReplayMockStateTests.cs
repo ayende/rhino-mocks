@@ -34,6 +34,7 @@ using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Tests.Expectations;
 using Rhino.Mocks.Tests.Utilities;
+using Castle.Core.Interceptor;
 
 namespace Rhino.Mocks.Tests.Impl
 {
@@ -77,13 +78,14 @@ namespace Rhino.Mocks.Tests.Impl
 		public void UnexpectedMethodCallOnReplayThrows()
 		{
 			MethodInfo endsWith = MethodCallTests.GetMethodInfo("EndsWith", "2");
-            replay.MethodCall(null, endsWith, "2");
+            replay.MethodCall(new FakeInvocation(endsWith), endsWith, "2");
 		}
 
 		[Test]
 		public void VerifyWhenAllExpectedCallsWereCalled()
 		{
-            this.replay.MethodCall(null, CreateMethodInfo(), "2");
+			MethodInfo methodInfo = CreateMethodInfo();
+			this.replay.MethodCall(new FakeInvocation(methodInfo), methodInfo, "2");
 			this.replay.Verify();
 		}
 
@@ -100,7 +102,7 @@ namespace Rhino.Mocks.Tests.Impl
 		public void VerifyWhenMismatchArgsContainsNull()
 		{
 			MethodInfo endsWith = MethodCallTests.GetMethodInfo("EndsWith", "2");
-            replay.MethodCall(null, endsWith, new object[1] { null });
+            replay.MethodCall(new FakeInvocation(endsWith), endsWith, new object[1] { null });
 		}
 
 		[Test]

@@ -137,6 +137,7 @@ namespace Rhino.Mocks.Impl
 			repository.Recorder.Record(mockedObject, method, expectation);
 			lastExpectation = expectation;
 			methodCallsCount++;
+			RhinoMocks.Logger.LogRecordedExpectation(invocation, expectation);
 			return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
 		}
 

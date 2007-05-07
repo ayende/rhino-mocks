@@ -102,12 +102,12 @@ namespace Rhino.Mocks.Tests.Remoting
 
 
 
-		[Test, ExpectedException(typeof(Exception), "That was expected.")]
+		[Test, ExpectedException(typeof(InvalidOperationException), "That was expected.")]
 		public void MockInterfaceExpectException()
 		{
 			MockRepository mocks = new MockRepository();
 			IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
-			Expect.Call(demo.ReturnIntNoArgs()).Throw(new Exception("That was expected."));
+			Expect.Call(demo.ReturnIntNoArgs()).Throw(new InvalidOperationException("That was expected."));
 			mocks.ReplayAll();
 			contextSwitcher.DoStuff(demo);
 		}
@@ -141,12 +141,12 @@ namespace Rhino.Mocks.Tests.Remoting
 
 
 
-		[Test, ExpectedException(typeof(Exception), "That was expected for class.")]
+		[Test, ExpectedException(typeof(InvalidOperationException), "That was expected for class.")]
 		public void MockClassExpectException()
 		{
 			MockRepository mocks = new MockRepository();
 			RemotableDemoClass demo = (RemotableDemoClass)mocks.CreateMock(typeof(RemotableDemoClass));
-			Expect.Call(demo.Two()).Throw(new Exception("That was expected for class."));
+			Expect.Call(demo.Two()).Throw(new InvalidOperationException("That was expected for class."));
 			mocks.ReplayAll();
 			contextSwitcher.DoStuff(demo);
 		}
