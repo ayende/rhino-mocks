@@ -43,7 +43,6 @@ namespace Rhino.Mocks.Tests.Remoting
 	/// Test scenarios where mock objects are called from different
 	/// application domain.
 	/// </summary>
-	///
 	[TestFixture]
 	public class ContextSwitchTests
 	{

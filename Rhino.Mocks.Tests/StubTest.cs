@@ -36,6 +36,14 @@ namespace Rhino.Mocks.Tests
 	public class StubTest
 	{
 		[Test]
+		public void StaticAccessorForStub()
+		{
+			IAnimal animal = MockRepository.GenerateStub<IAnimal>();
+			animal.Eyes = 2;
+			Assert.AreEqual(2, animal.Eyes );
+		}
+
+		[Test]
 		public void StubHasPropertyBehaviorForAllProperties()
 		{
 			MockRepository mocks = new MockRepository();
