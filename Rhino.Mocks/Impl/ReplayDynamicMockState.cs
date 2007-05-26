@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Impl
 			}
 			else
 			{
-				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Dynamic Mock: Unepxeted method call ignored");
+				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Dynamic Mock: Unexpected method call ignored");
 				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
 			}
 		
