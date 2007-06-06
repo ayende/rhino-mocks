@@ -77,5 +77,18 @@ namespace Rhino.Mocks.Impl
         {
             return new StubRecordMockState(proxy, repository);
         }
+
+        public override void Verify()
+        {
+            //stub doesn't do verifications
+        }
+
+        public override IMockState VerifyState
+        {
+            get
+            {
+                return this;// there is no meaning to verified in stubs.
+            }
+        }
 	}
 }

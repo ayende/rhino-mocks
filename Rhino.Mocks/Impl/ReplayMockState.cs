@@ -73,7 +73,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Gets the matching verify state for this state
 		/// </summary>
-		public IMockState VerifyState
+		public virtual IMockState VerifyState
 		{
 			get { return new VerifiedMockState(this); }
 		}
@@ -141,7 +141,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Verify that this mock expectations have passed.
 		/// </summary>
-		public void Verify()
+		public virtual void Verify()
 		{
 			if (exceptionToThrowOnVerify != null)
 				throw exceptionToThrowOnVerify;
