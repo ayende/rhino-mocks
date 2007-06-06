@@ -91,6 +91,10 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		public IMethodOptions Constraints(params AbstractConstraint[] constraints)
 		{
+            if( expectation is ConstraintsExpectation )
+            {
+                throw new InvalidOperationException(string.Format("You have already specified constraints for this method. ({0})", this.expectation.ErrorMessage));
+            }
 			ConstraintsExpectation constraintsExpectation = new ConstraintsExpectation(expectation, constraints);
 			ReplaceExpectation(constraintsExpectation);
 			return this;
