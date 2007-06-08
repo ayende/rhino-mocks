@@ -1046,7 +1046,7 @@ namespace Rhino.Mocks
         /// <param name="type">The type.</param>
         /// <param name="argumentsForConstructor">The arguments for constructor.</param>
         /// <returns></returns>
-        public object Stub(Type type, object[] argumentsForConstructor)
+        public object Stub(Type type, params object[] argumentsForConstructor)
         {
             CreateMockState createStub =
                 delegate(IMockedObject mockedObject) { return new StubRecordMockState(mockedObject, this); };

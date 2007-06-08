@@ -33,35 +33,56 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl
 {
-    /// <summary>
-    /// Raise events for all subscribers for an event
-    /// </summary>
-    public class EventRaiser : IEventRaiser
-    {
-        string eventName;
-        IMockedObject proxy;
+	/// <summary>
+	/// Raise events for all subscribers for an event
+	/// </summary>
+	public class EventRaiser : IEventRaiser
+	{
+		string eventName;
+		IMockedObject proxy;
 
-        /// <summary>
-        /// Creates a new instance of <c>EventRaiser</c>
-        /// </summary>
-        public EventRaiser(IMockedObject proxy, string eventName)
-        {
-            this.eventName = eventName;
-            this.proxy = proxy;
-        }
+		///<summary>
+		/// Create an event raise for the specified event on this instance.
+		///</summary>
+		public static IEventRaiser Create(object instance, string eventName)
+		{
+			IMockedObject proxy = instance as IMockedObject;
+			if (proxy == null)
+				throw new ArgumentException("Parameter must be a mocked object", "instance");
+			return new EventRaiser(proxy, eventName);
+		}
 
-        #region IEventRaiser Members
+		/// <summary>
+		/// Creates a new instance of <c>EventRaiser</c>
+		/// </summary>
+		public EventRaiser(IMockedObject proxy, string eventName)
+		{
+			this.eventName = eventName;
+			this.proxy = proxy;
+		}
 
-        /// <summary>
-        /// Raise the event
-        /// </summary>
-        public void Raise(params object[] args)
-        {
-            Delegate subscribed = proxy.GetEventSubscribers(eventName);
-            if(subscribed!=null)
-                subscribed.DynamicInvoke(args);
-        }
+		#region IEventRaiser Members
 
-        #endregion
-    }
+		/// <summary>
+		/// Raise the event
+		/// </summary>
+		public void Raise(params object[] args)
+		{
+			Delegate subscribed = proxy.GetEventSubscribers(eventName);
+			if (subscribed != null)
+				subscribed.DynamicInvoke(args);
+		}
+
+		/// <summary>
+		/// The most common signature for events
+		/// Here to allow intellisense to make better guesses about how 
+		/// it should suggest parameters.
+		/// </summary>
+		public void Raise(object sender, EventArgs e)
+		{
+			Raise(new object[] { sender, e });
+		}
+
+		#endregion
+	}
 }
