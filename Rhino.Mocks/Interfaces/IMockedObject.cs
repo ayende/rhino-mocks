@@ -96,7 +96,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Clears the state of the object, remove original calls, property behavior, subscribed events, etc.
 		/// </summary>
-		void ClearState();
+		void ClearState(BackToRecordOptions options);
 
 		/// <summary>
 		/// Gets the implemented types by this mocked object

@@ -30,6 +30,9 @@
 using System;
 using System.Text;
 using MbUnit.Framework;
+using Rhino.Mocks.Exceptions;
+using Rhino.Mocks.Interfaces;
+using Rhino.Mocks.Tests.FieldsProblem;
 
 namespace Rhino.Mocks.Tests
 {
@@ -70,6 +73,48 @@ namespace Rhino.Mocks.Tests
             mocks.VerifyAll();
         }
     
-    
+        [Test]
+        public void CanSpecifyClearOnlyEvents()
+        {
+            MockRepository mocks = new MockRepository();
+            IWithEvent withEvent = mocks.CreateMock<IWithEvent>();
+            bool called = false;
+            withEvent.Load += delegate { called = true; };
+            IEventRaiser raiser = LastCall.GetEventRaiser();
+            mocks.BackToRecord(withEvent, BackToRecordOptions.EventSubscribers);
+
+            raiser.Raise(this, EventArgs.Empty);
+
+            Assert.IsFalse(called);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException), "AbstractClass.Add(5); Expected #0, Actual #1.")]
+        public void CanClearOnlyOriginalMethodCalls()
+        {
+            MockRepository mocks = new MockRepository();
+            AbstractClass abstractClass = mocks.CreateMock<AbstractClass>();
+            Expect.Call(abstractClass.Add(0)).CallOriginalMethod(OriginalCallOptions.NoExpectation);
+            mocks.BackToRecord(abstractClass, BackToRecordOptions.OriginalMethodsToCall);
+            mocks.ReplayAll();
+
+            abstractClass.Add(5);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException),
+           "IDemo.get_Prop(); Expected #0, Actual #1.")]
+        public void CanClearOnlyPropertyBehavior()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo mock = mocks.CreateMock<IDemo>();
+            Expect.Call(mock.Prop).PropertyBehavior();
+
+            mocks.BackToRecord(mock,BackToRecordOptions.PropertyBehavior);
+
+            mocks.ReplayAll();
+
+            string prop = mock.Prop;
+        }
     }
 }

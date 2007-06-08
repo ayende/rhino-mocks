@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackToRecord.cs" />
-    <Compile Include="BackToRecordOptions.cs" />
     <Compile Include="Callbacks\CallbackTests.cs">
       <SubType>Code</SubType>
     </Compile>

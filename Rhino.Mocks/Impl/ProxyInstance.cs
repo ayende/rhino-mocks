@@ -206,15 +206,19 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Clears the state of the object, remove original calls, property behavior, subscribed events, etc.
 		/// </summary>
-		public void ClearState()
+		public void ClearState(BackToRecordOptions options)
 		{
-			if (eventsSubscribers != null)
+			if (eventsSubscribers != null && 
+                (options & BackToRecordOptions.EventSubscribers)!=0)
 				eventsSubscribers.Clear();
-			if (originalMethodsToCall != null)
+            if (originalMethodsToCall != null &&
+                (options & BackToRecordOptions.OriginalMethodsToCall) != 0)
 				originalMethodsToCall.Clear();
-			if (propertiesValues != null)
+            if (propertiesValues != null &&
+                (options & BackToRecordOptions.PropertyBehavior) != 0)
 				propertiesValues.Clear();
-			if (propertiesToSimulate != null)
+            if (propertiesToSimulate != null &&
+                (options & BackToRecordOptions.PropertyBehavior) != 0)
 				propertiesToSimulate.Clear();
 		}
 
