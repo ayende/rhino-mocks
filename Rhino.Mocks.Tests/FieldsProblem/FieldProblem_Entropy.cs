@@ -34,7 +34,7 @@ using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+    [TestFixture]
 	public class FieldProblem_Entropy
 	{
 		public interface IMyObject

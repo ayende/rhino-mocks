@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackToRecord.cs" />
+    <Compile Include="BackToRecordOptions.cs" />
     <Compile Include="Callbacks\CallbackTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -123,6 +124,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />

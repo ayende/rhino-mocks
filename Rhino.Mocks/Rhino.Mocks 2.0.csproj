@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BackToRecordOptions.cs" />
     <Compile Include="Constraints\AbstractConstraint.cs">
       <SubType>Code</SubType>
     </Compile>
