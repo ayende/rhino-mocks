@@ -92,7 +92,7 @@ namespace Rhino.Mocks
 			get
 			{
 				if (MockRepository.LastMockedObject==null)
-					throw new InvalidOperationException("Invalid call, the last call has been used or no call has been made.");
+					throw new InvalidOperationException("Invalid call, the last call has been used or no call has been made (did you make a call to a non virtual method?).");
 				return MockRepository.lastRepository.LastMethodCall(MockRepository.LastMockedObject);
 			}
 		}
