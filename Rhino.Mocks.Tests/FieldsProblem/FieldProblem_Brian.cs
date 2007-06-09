@@ -35,35 +35,73 @@ using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
-    public class FieldProblem_Brian
-    {
-        [Test]
-        public void SetExpectationOnNullableValue()
-        {
-            MockRepository mocks = new MockRepository();
-            IFoo foo = mocks.CreateMock<IFoo>();
+	[TestFixture]
+	public class FieldProblem_Brian
+	{
+		[Test]
+		public void SetExpectationOnNullableValue()
+		{
+			MockRepository mocks = new MockRepository();
+			IFoo foo = mocks.CreateMock<IFoo>();
 
-            int? id = 2;
+			int? id = 2;
 
-            Expect.Call(foo.Id).Return(id).Repeat.Twice();
-            Expect.Call(foo.Id).Return(null);
-            Expect.Call(foo.Id).Return(1);
+			Expect.Call(foo.Id).Return(id).Repeat.Twice();
+			Expect.Call(foo.Id).Return(null);
+			Expect.Call(foo.Id).Return(1);
 
-            mocks.ReplayAll();
+			mocks.ReplayAll();
 
-            Assert.IsTrue(foo.Id.HasValue);
-            Assert.AreEqual(2, foo.Id.Value);
-            Assert.IsFalse(foo.Id.HasValue);
-            Assert.AreEqual(1, foo.Id.Value);
+			Assert.IsTrue(foo.Id.HasValue);
+			Assert.AreEqual(2, foo.Id.Value);
+			Assert.IsFalse(foo.Id.HasValue);
+			Assert.AreEqual(1, foo.Id.Value);
 
-            mocks.VerifyAll();
-        }
+			mocks.VerifyAll();
+		}
 
-        public interface IFoo
-        {
-            int? Id { get;}
-        }
-    }
+		[Test]
+		public void MockingInternalMetohdsAndPropertiesOfInternalClass()
+		{
+			
+			TestClass testClass = new TestClass();
+
+			string testMethod = testClass.TestMethod();
+			string testProperty = testClass.TestProperty;
+
+			MockRepository mockRepository = new MockRepository();
+
+			TestClass mockTestClass = mockRepository.CreateMock<TestClass>();
+
+			Expect.Call(mockTestClass.TestMethod()).Return("MockTestMethod");
+			Expect.Call(mockTestClass.TestProperty).Return("MockTestProperty");
+
+			mockRepository.ReplayAll();
+
+			Assert.AreEqual("MockTestMethod", mockTestClass.TestMethod());
+			Assert.AreEqual("MockTestProperty", mockTestClass.TestProperty);
+
+			mockRepository.VerifyAll();
+
+		}
+
+		public interface IFoo
+		{
+			int? Id { get;}
+		}
+
+		internal class TestClass
+		{
+			internal virtual string TestMethod()
+			{
+				return "TestMethod";
+			}
+
+			internal virtual string TestProperty
+			{
+				get { return "TestProperty"; }
+			}
+		}
+	}
 }
 #endif
