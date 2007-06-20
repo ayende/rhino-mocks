@@ -30,6 +30,7 @@
 using System;
 using System.Reflection;
 using MbUnit.Framework;
+using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Tests.Expectations;
@@ -122,6 +123,27 @@ namespace Rhino.Mocks.Tests.Impl
             recordState.MethodCall(new FakeInvocation(method), method, "");
 			recordState.Replay();
 		}
+
+        [Test]
+        public void ArgsEqualExpectationUsedForMethodsWithNoOutParameters()
+        {
+            MockRepository mocks = new MockRepository();
+            RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
+            Assert.IsNull(recordState.LastExpectation);
+            recordState.MethodCall(new FakeInvocation(method), method, "");
+            Assert.IsInstanceOfType(typeof(ArgsEqualExpectation), recordState.LastExpectation);
+        }
+
+        [Test]
+        public void ConstraintsExpectationUsedForMethodsWithNoOutParameters()
+        {
+            MethodInfo methodWithOutParams = typeof(Double).GetMethod("TryParse", new Type[] { typeof(string), typeof(Double).MakeByRefType() });
+            MockRepository mocks = new MockRepository();
+            RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
+            Assert.IsNull(recordState.LastExpectation);
+            recordState.MethodCall(new FakeInvocation(methodWithOutParams), methodWithOutParams, "", 0);
+            Assert.IsInstanceOfType(typeof(ConstraintsExpectation), recordState.LastExpectation);
+        }
 	}
 
 	

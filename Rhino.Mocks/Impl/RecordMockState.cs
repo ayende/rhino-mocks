@@ -30,6 +30,7 @@
 using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
+using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
@@ -133,15 +134,15 @@ namespace Rhino.Mocks.Impl
 			AssertPreviousMethodIsClose();
 			repository.lastMockedObject = mockedObject;
 			MockRepository.lastRepository = repository;
-			IExpectation expectation = new ArgsEqualExpectation(invocation, args);
-			repository.Recorder.Record(mockedObject, method, expectation);
+		    IExpectation expectation = BuildDefaultExpectation(invocation, method, args);
+		    repository.Recorder.Record(mockedObject, method, expectation);
 			lastExpectation = expectation;
 			methodCallsCount++;
 			RhinoMocks.Logger.LogRecordedExpectation(invocation, expectation);
 			return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Verify that we can move to replay state and move 
 		/// to the reply state.
 		/// </summary>
@@ -193,6 +194,24 @@ namespace Rhino.Mocks.Impl
 		{
 			return new InvalidOperationException("This action is invalid when the mock object is in record state.");
         }
+
+        private static IExpectation BuildDefaultExpectation(IInvocation invocation, MethodInfo method, object[] args)
+        {
+            ParameterInfo[] parameters = method.GetParameters();
+            if (!Array.Exists(parameters, delegate(ParameterInfo p) { return p.IsOut; }))
+            {
+                return new ArgsEqualExpectation(invocation, args);
+            }
+
+            //The value of an incoming out parameter variable is ignored
+            AbstractConstraint[] constraints = new AbstractConstraint[parameters.Length];
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                constraints[i] = parameters[i].IsOut ? Is.Anything() : Is.Equal(args[i]);
+            }
+            return new ConstraintsExpectation(invocation, constraints);
+        }
+
         #endregion
 
         #region Internal

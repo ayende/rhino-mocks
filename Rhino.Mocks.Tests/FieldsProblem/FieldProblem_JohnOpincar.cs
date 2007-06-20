@@ -28,6 +28,8 @@
 
 
 using System;
+using System.Globalization;
+using System.Threading;
 using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 
@@ -46,6 +48,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[ExpectedException(typeof(ExpectationViolationException), "IDaSchedulerView.set_DateOf(08/08/2006 00:00:00); Expected #1, Actual #0.")]
 		public void CanGetExpectationExceptionFromPropertySetter()
 		{
+		    Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 			MockRepository m_mocks;
 			IDaSchedulerView m_view;
 			m_mocks = new MockRepository();
