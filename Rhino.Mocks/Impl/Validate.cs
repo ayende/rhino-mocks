@@ -73,6 +73,11 @@ namespace Rhino.Mocks.Impl
 
         private static bool RecursiveCollectionEqual(ICollection expectedArgs, ICollection actualArgs)
         {
+            if(expectedArgs == null && actualArgs == null)
+                return true;
+            if(expectedArgs==null || actualArgs==null)
+                return false;
+
             if (expectedArgs.Count != actualArgs.Count)
                 return false;
 
