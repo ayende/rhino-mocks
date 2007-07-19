@@ -26,6 +26,7 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using System;
 using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
@@ -49,6 +50,24 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 				fooz.Barz();
 			}
 		}
+
+    [Test]
+    [ExpectedArgumentException]
+    // We should see the ArgumentException, NOT the ExpectationViolation
+    public void PlaybackThrowsOtherExceptionDoesntReport()
+    {
+			MockRepository mockRepository;
+			mockRepository = new MockRepository();
+			IFoo mockedFoo = mockRepository.CreateMock<IFoo>();
+			using (mockRepository.Record())
+			{
+				Expect.Call(mockedFoo.Bar()).Return(42);
+			}
+			using (mockRepository.Playback())
+			{
+        throw new ArgumentException();
+			}
+    }
 	}
 
 	internal interface IFoo

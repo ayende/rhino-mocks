@@ -27,6 +27,7 @@
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Rhino.Mocks
 {
@@ -71,7 +72,11 @@ namespace Rhino.Mocks
 
 		public void Dispose()
 		{
-			m_repository.VerifyAll();
+      if (Marshal.GetExceptionCode() != 0)
+      {
+        return;
+      }
+		  m_repository.VerifyAll();
 		}
 	}
 
