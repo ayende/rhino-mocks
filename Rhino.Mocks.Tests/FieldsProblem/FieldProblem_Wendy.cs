@@ -32,6 +32,25 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             Verify(_searchPatternBuilder);
         }
 
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),
+		   "ISearchPatternBuilder.CreateFromExtensions([]); Expected #0, Actual #1.")]
+		public void VerifyShouldFailIfDynamicMockWasCalledWithRepeatNever()
+		{
+			_searchPatternBuilder.CreateFromExtensions();
+			LastCall.Repeat.Never();
+			_mocks.ReplayAll();
+			try
+			{
+				_searchPatternBuilder.CreateFromExtensions();
+			}
+			catch 
+			{
+				
+			}
+			Verify(_searchPatternBuilder);
+		}
+
         private void Verify(ISearchPatternBuilder builder)
         {
             _mocks.Verify(builder);
