@@ -38,10 +38,12 @@ namespace Rhino.Mocks.Tests
 	{
 		MockRepository mocks;
 		IDemo demo;
+		private bool doNotVerifyOnTearDown ;
 
 		[SetUp]
 		public void Setup()
 		{
+			doNotVerifyOnTearDown = false;
 			mocks = new MockRepository();
 			demo = (IDemo)mocks.DynamicMock(typeof(IDemo));
 		}
@@ -49,6 +51,7 @@ namespace Rhino.Mocks.Tests
 		[TearDown]
 		public void Teardown()
 		{
+			if(doNotVerifyOnTearDown)
 			mocks.VerifyAll();
 		}
 
@@ -75,6 +78,7 @@ namespace Rhino.Mocks.Tests
 			Expect.Call(demo.ReturnIntNoArgs()).Return(30);
 			mocks.ReplayAll();
 			Assert.IsNull(demo.ReturnStringNoArgs());
+			doNotVerifyOnTearDown = true;
 			mocks.Verify(demo);	
 		}
 

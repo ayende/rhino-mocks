@@ -127,6 +127,34 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 		}
 
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException),
+		   "You have called the event raiser with the wrong number of parameters. Expected 2 but was 0")]
+		public void BetterErrorMessageOnIncorrectParametersCount()
+		{
+			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			events.Blah += null;
+			raiser = LastCall.IgnoreArguments().GetEventRaiser();
+			mocks.ReplayAll();
+			events.Blah += delegate { };
+			raiser.Raise(null);
+			mocks.VerifyAll();
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException),
+		  "Parameter #2 is System.Int32 but should be System.EventArgs")]
+		public void BetterErrorMessageOnIncorrectParameters()
+		{
+			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			events.Blah += null;
+			raiser = LastCall.IgnoreArguments().GetEventRaiser();
+			mocks.ReplayAll();
+			events.Blah += delegate { };
+			raiser.Raise("",1);
+			mocks.VerifyAll();
+		}
+
 		private void events_Blah_Other(object sender, EventArgs e)
 		{
 		}

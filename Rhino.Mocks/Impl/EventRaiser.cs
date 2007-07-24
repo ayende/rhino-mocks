@@ -28,8 +28,11 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using Rhino.Mocks.Interfaces;
+using Rhino.Mocks.Utilities;
 
 namespace Rhino.Mocks.Impl
 {
@@ -70,7 +73,39 @@ namespace Rhino.Mocks.Impl
 		{
 			Delegate subscribed = proxy.GetEventSubscribers(eventName);
 			if (subscribed != null)
+			{
+				AssertMatchingParameters(subscribed.Method, args);
 				subscribed.DynamicInvoke(args);
+			}
+		}
+
+		private static void AssertMatchingParameters(MethodInfo method, object[] args)
+		{
+			ParameterInfo[] parameterInfos = method.GetParameters();
+			int paramsCount = parameterInfos.Length;
+			if(args== null || args.Length != paramsCount)
+			{
+				int actualCount;
+				if(args==null)
+					actualCount = 0;
+				else 
+					actualCount = args.Length;
+				string msg = string.Format("You have called the event raiser with the wrong number of parameters. Expected {0} but was {1}", paramsCount, actualCount);
+				throw new InvalidOperationException(msg);
+			}
+			List<string> errors = new List<string>();
+			for (int i = 0; i < parameterInfos.Length; i++)
+			{
+				if(parameterInfos[i].ParameterType.IsInstanceOfType(args[i])==false)
+				{
+					errors.Add("Parameter #" + (i+1) + " is " + args[i].GetType() + " but should be " +
+														parameterInfos[i].ParameterType);
+				}
+			}
+			if(errors.Count>0)
+			{
+				throw new InvalidOperationException(string.Join(Environment.NewLine, errors.ToArray()));
+			}
 		}
 
 		/// <summary>
