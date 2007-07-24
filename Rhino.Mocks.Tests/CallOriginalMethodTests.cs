@@ -28,6 +28,7 @@
 
 
 using System;
+using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
@@ -63,7 +64,7 @@ namespace Rhino.Mocks.Tests
         {
             MockRepository mocks = new MockRepository();
             IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
-            SetupResult.For(demo.ReturnIntNoArgs()).CallOriginalMethod();
+            SetupResult.For(demo.ReturnIntNoArgs()).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace Rhino.Mocks.Tests
         {
             MockRepository mocks = new MockRepository();
             MockingClassesTests.AbstractDemo demo = (MockingClassesTests.AbstractDemo)mocks.CreateMock(typeof(MockingClassesTests.AbstractDemo));
-            SetupResult.For(demo.Six()).CallOriginalMethod();
+            SetupResult.For(demo.Six()).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
         }
 
     }

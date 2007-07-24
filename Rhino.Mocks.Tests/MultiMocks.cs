@@ -36,6 +36,7 @@ using System.Xml;
 
 using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
+using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
@@ -432,12 +433,12 @@ namespace Rhino.Mocks.Tests
             Assert.IsNotNull(errorInfo);
 
             // Configure expectations for mocked writer
-            SetupResult.For(mockedWriter.FormatProvider).CallOriginalMethod();
+            SetupResult.For(mockedWriter.FormatProvider).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
             mockedWriter.Write((string)null);
-            LastCall.IgnoreArguments().CallOriginalMethod();
+						LastCall.IgnoreArguments().CallOriginalMethod(OriginalCallOptions.CreateExpectation);
 
             mockedWriter.Flush();
-            LastCall.Repeat.Any().CallOriginalMethod();
+						LastCall.Repeat.Any().CallOriginalMethod(OriginalCallOptions.CreateExpectation);
 
             mockedWriter.Close();
 

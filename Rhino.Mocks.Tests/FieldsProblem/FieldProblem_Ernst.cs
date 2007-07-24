@@ -80,7 +80,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 				mock.Method();
 				Assert.Fail();
 			}
-			catch (ApplicationException ex)
+			catch
 			{
 			}
 			repository.VerifyAll();

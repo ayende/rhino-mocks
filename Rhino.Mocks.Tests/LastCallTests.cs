@@ -87,7 +87,7 @@ namespace Rhino.Mocks.Tests
             CallOriginalMethodFodder comf1 = (CallOriginalMethodFodder)mocks.DynamicMock(typeof(CallOriginalMethodFodder));
             CallOriginalMethodFodder comf2 = (CallOriginalMethodFodder)mocks.DynamicMock(typeof(CallOriginalMethodFodder));
             comf2.TheMethod();
-            LastCall.CallOriginalMethod();
+            LastCall.CallOriginalMethod(OriginalCallOptions.CreateExpectation);
 
             mocks.ReplayAll();
 

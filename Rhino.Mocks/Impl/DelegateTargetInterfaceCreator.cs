@@ -77,7 +77,7 @@ namespace Rhino.Mocks.Impl
         {
             Type type;
             long count = Interlocked.Increment(ref counter);
-            TypeBuilder typeBuilder = moduleScope.ObtainDynamicModule().DefineType(
+            TypeBuilder typeBuilder = moduleScope.ObtainDynamicModule(true).DefineType(
                 string.Format("ProxyDelegate_{0}_{1}", delegateType.Name, count),
                 TypeAttributes.Interface | TypeAttributes.Abstract | TypeAttributes.Public);
 
