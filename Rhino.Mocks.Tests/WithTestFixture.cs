@@ -52,7 +52,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void UsingTheWithMocksConstruct()
         {
-            With.Mocks(delegate
+            With.Mocks(new MockRepository(),delegate
             {
                 IDemo demo = Mocker.Current.CreateMock<IDemo>();
                 Expect.Call(demo.ReturnIntNoArgs()).Return(5);

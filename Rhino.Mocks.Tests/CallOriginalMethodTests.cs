@@ -45,8 +45,8 @@ namespace Rhino.Mocks.Tests
             MockingClassesTests.DemoClass demo = (MockingClassesTests.DemoClass)
                 mocks.CreateMock(typeof(MockingClassesTests.DemoClass));
 
-            SetupResult.For(demo.Prop).CallOriginalMethod();
-            SetupResult.For(demo.Prop = 0).CallOriginalMethod();
+            SetupResult.For(demo.Prop).CallOriginalMethod(OriginalCallOptions.NoExpectation);
+            SetupResult.For(demo.Prop = 0).CallOriginalMethod(OriginalCallOptions.NoExpectation);
 
             mocks.ReplayAll();
 

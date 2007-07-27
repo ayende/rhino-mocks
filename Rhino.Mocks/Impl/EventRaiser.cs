@@ -96,9 +96,13 @@ namespace Rhino.Mocks.Impl
 			List<string> errors = new List<string>();
 			for (int i = 0; i < parameterInfos.Length; i++)
 			{
-				if(parameterInfos[i].ParameterType.IsInstanceOfType(args[i])==false)
+				if ((args[i] == null && parameterInfos[i].ParameterType.IsValueType) ||
+					(args[i] != null && parameterInfos[i].ParameterType.IsInstanceOfType(args[i])==false))
 				{
-					errors.Add("Parameter #" + (i+1) + " is " + args[i].GetType() + " but should be " +
+					string type = "null";
+					if(args[i]!=null)
+						type = args[i].GetType().FullName;
+					errors.Add("Parameter #" + (i+1) + " is " + type + " but should be " +
 														parameterInfos[i].ParameterType);
 				}
 			}

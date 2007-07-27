@@ -131,6 +131,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Joshua.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JudahG.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_leftend.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />
