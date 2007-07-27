@@ -73,21 +73,21 @@ namespace Rhino.Mocks.Impl
 				invocation.ReturnValue = invocation.Method.Invoke(proxyInstance, invocation.Arguments);
 				return;
 			}
-			if (proxyInstance.ShouldCallOriginal(invocation.Method))
+			if (proxyInstance.ShouldCallOriginal(invocation.GetConcreteMethod()))
 			{
 				invocation.Proceed();
 				return;
 			}
-			if (proxyInstance.IsPropertyMethod(invocation.Method))
+			if (proxyInstance.IsPropertyMethod(invocation.GetConcreteMethod()))
 			{
-				invocation.ReturnValue = proxyInstance.HandleProperty(invocation.Method, invocation.Arguments);
+				invocation.ReturnValue = proxyInstance.HandleProperty(invocation.GetConcreteMethod(), invocation.Arguments);
 				return;
 			}
 			//This call handle the subscribe / remove this method call is for an event,
 			//processing then continue normally (so we get an expectation for subscribing / removing from the event
 			HandleEvent(invocation, invocation.Arguments);
 			object proxy = repository.GetMockObjectFromInvocationProxy(invocation.Proxy);
-			MethodInfo method = invocation.Method;
+			MethodInfo method = invocation.GetConcreteMethod();
 			invocation.ReturnValue = repository.MethodCall(invocation, proxy, method, invocation.Arguments);
 		}
 

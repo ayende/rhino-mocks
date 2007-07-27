@@ -1,4 +1,5 @@
 ﻿#region license
+
 // Copyright (c) 2005 - 2007 Ayende Rahien (ayende@ayende.com)
 // All rights reserved.
 // 
@@ -24,18 +25,17 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 #endregion
 
-
 using System;
+using System.Collections;
+using System.Reflection;
+using System.Text;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl
 {
-	using System.Collections;
-	using System.Reflection;
-	using System.Text;
-
 	/// <summary>
 	/// This is a dummy type that is used merely to give DynamicProxy the proxy instance that
 	/// it needs to create IProxy's types.
@@ -87,7 +87,6 @@ namespace Rhino.Mocks.Impl
 			if (originalMethodsToCall == null)
 				return false;
 			return originalMethodsToCall.Contains(method);
-
 		}
 
 		/// <summary>
@@ -118,7 +117,37 @@ namespace Rhino.Mocks.Impl
 		{
 			if (propertiesToSimulate == null)
 				return false;
-			return propertiesToSimulate.Contains(method);
+			//we have to do it this way, to handle generic types
+			foreach (MethodInfo info in propertiesToSimulate)
+			{
+				if( AreMethodEquals(info, method))
+					return true;
+			}
+			return false;
+		}
+
+		private static bool AreMethodEquals(MethodInfo left, MethodInfo right)
+		{
+			if (left.Equals(right))
+				return true;
+			// GetHashCode calls to RuntimeMethodHandle.StripMethodInstantiation()
+			// which is needed to fix issues with method equality from generic types.
+			if (left.GetHashCode() != right.GetHashCode())
+				return false;
+			if (left.DeclaringType != right.DeclaringType)
+				return false;
+			ParameterInfo[] leftParams = left.GetParameters();
+			ParameterInfo[] rightParams = right.GetParameters();
+			if (leftParams.Length != rightParams.Length)
+				return false;
+			for (int i = 0; i < leftParams.Length; i++)
+			{
+				if (leftParams[i].ParameterType != rightParams[i].ParameterType)
+					return false;
+			}
+			if (left.ReturnType != right.ReturnType)
+				return false;
+			return true;
 		}
 
 		/// <summary>
@@ -135,7 +164,9 @@ namespace Rhino.Mocks.Impl
 				if (propertiesValues.Contains(key) == false && method.ReturnType.IsValueType)
 				{
 					throw new InvalidOperationException(
-						string.Format("Can't return a value for property {0} because no value was set and the Property return a value type.", method.Name.Substring(4)));
+						string.Format(
+							"Can't return a value for property {0} because no value was set and the Property return a value type.",
+							method.Name.Substring(4)));
 				}
 				return propertiesValues[key];
 			}
@@ -154,7 +185,7 @@ namespace Rhino.Mocks.Impl
 			if (eventsSubscribers == null)
 				eventsSubscribers = new Hashtable();
 
-			Delegate subscriber = (Delegate)args[0];
+			Delegate subscriber = (Delegate) args[0];
 			if (method.Name.StartsWith("add_"))
 			{
 				AddEvent(method, subscriber);
@@ -172,7 +203,7 @@ namespace Rhino.Mocks.Impl
 		{
 			if (eventsSubscribers == null)
 				return null;
-			return (Delegate)eventsSubscribers[eventName];
+			return (Delegate) eventsSubscribers[eventName];
 		}
 
 		/// <summary>
@@ -187,7 +218,7 @@ namespace Rhino.Mocks.Impl
 				if (type == typeDeclaringTheMethod)
 					return type;
 				if (typeDeclaringTheMethod.IsGenericType &&
-					typeDeclaringTheMethod == type.GetGenericTypeDefinition())
+				    typeDeclaringTheMethod == type.GetGenericTypeDefinition())
 					return type;
 			}
 			return null;
@@ -208,24 +239,24 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		public void ClearState(BackToRecordOptions options)
 		{
-			if (eventsSubscribers != null && 
-                (options & BackToRecordOptions.EventSubscribers)!=0)
+			if (eventsSubscribers != null &&
+			    (options & BackToRecordOptions.EventSubscribers) != 0)
 				eventsSubscribers.Clear();
-            if (originalMethodsToCall != null &&
-                (options & BackToRecordOptions.OriginalMethodsToCall) != 0)
+			if (originalMethodsToCall != null &&
+			    (options & BackToRecordOptions.OriginalMethodsToCall) != 0)
 				originalMethodsToCall.Clear();
-            if (propertiesValues != null &&
-                (options & BackToRecordOptions.PropertyBehavior) != 0)
+			if (propertiesValues != null &&
+			    (options & BackToRecordOptions.PropertyBehavior) != 0)
 				propertiesValues.Clear();
-            if (propertiesToSimulate != null &&
-                (options & BackToRecordOptions.PropertyBehavior) != 0)
+			if (propertiesToSimulate != null &&
+			    (options & BackToRecordOptions.PropertyBehavior) != 0)
 				propertiesToSimulate.Clear();
 		}
 
 		private static string GenerateKey(MethodInfo method, object[] args)
 		{
 			if ((method.Name.StartsWith("get_") && args.Length == 0) ||
-				(method.Name.StartsWith("set_") && args.Length == 1))
+			    (method.Name.StartsWith("set_") && args.Length == 1))
 				return method.Name.Substring(4);
 			StringBuilder sb = new StringBuilder();
 			sb.Append(method.Name.Substring(4));
@@ -242,7 +273,7 @@ namespace Rhino.Mocks.Impl
 		private void RemoveEvent(MethodInfo method, Delegate subscriber)
 		{
 			string eventName = method.Name.Substring(7);
-			Delegate existing = (MulticastDelegate)eventsSubscribers[eventName];
+			Delegate existing = (MulticastDelegate) eventsSubscribers[eventName];
 			existing = MulticastDelegate.Remove(existing, subscriber);
 			eventsSubscribers[eventName] = existing;
 		}
@@ -250,7 +281,7 @@ namespace Rhino.Mocks.Impl
 		private void AddEvent(MethodInfo method, Delegate subscriber)
 		{
 			string eventName = method.Name.Substring(4);
-			Delegate existing = (MulticastDelegate)eventsSubscribers[eventName];
+			Delegate existing = (MulticastDelegate) eventsSubscribers[eventName];
 			existing = MulticastDelegate.Combine(existing, subscriber);
 			eventsSubscribers[eventName] = existing;
 		}
