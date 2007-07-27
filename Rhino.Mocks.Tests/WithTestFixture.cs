@@ -118,6 +118,58 @@ namespace Rhino.Mocks.Tests
                 throw new IndexOutOfRangeException("foo");
             });
         }
+
+        [Test]
+        public void UsingTheWithMocksExceptingVerifyConstruct()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo demo = mocks.CreateMock<IDemo>();
+
+            With.Mocks(mocks)
+            .Expecting(delegate
+            {
+                Expect.Call(demo.ReturnIntNoArgs()).Return(5);
+            })
+            .Verify(delegate
+            {
+                Assert.AreEqual(5, demo.ReturnIntNoArgs());
+            });
+        }
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException), "IDemo.ReturnIntNoArgs(); Expected #1, Actual #0.")]
+        public void UsingTheWithMocksExceptingVerifyConstruct_ThrowsIfExpectationIsMissed()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo demo = mocks.CreateMock<IDemo>();
+
+            With.Mocks(mocks)
+            .Expecting(delegate
+            {
+                Expect.Call(demo.ReturnIntNoArgs()).Return(5);
+            })
+            .Verify(delegate
+            {
+            });
+        }
+
+        [Test]
+        [ExpectedException(typeof(IndexOutOfRangeException), "foo")]
+        public void UsingTheWithMocksExceptingVerifyConstruct_GiveCorrectExceptionWhenMocking()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo demo = mocks.CreateMock<IDemo>();
+
+            With.Mocks(mocks)
+            .Expecting(delegate
+            {
+                Expect.Call(demo.ReturnIntNoArgs()).Return(5);
+            })
+            .Verify(delegate
+            {
+                throw new IndexOutOfRangeException("foo");
+            });
+        }
     }
 }
 

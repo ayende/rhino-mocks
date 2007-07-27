@@ -78,6 +78,66 @@ namespace Rhino.Mocks
                 Mocker.Current = null;
             }
         }
+
+        /// <summary>
+        /// Create a MockExpecter as the root for some kind of fluent interface attempt
+        /// for saying "With the Mocks [mocks], Expecting [things] verify [that]."
+        /// </summary>
+        /// <param name="mocks">The mock repository to use.</param>
+        public static MockExpecter Mocks(MockRepository mocks)
+        {
+            return new MockExpecter(mocks);
+        }
+
+        /// <summary>
+        /// MockExpecter defines and replays expectations passed in as anonymous delegate
+        /// in the context of a MockRepository.
+        /// </summary>
+        public class MockExpecter
+        {
+            private MockRepository _mocks;
+
+            internal MockExpecter(MockRepository mocks)
+            {
+                _mocks = mocks;
+            }
+
+            /// <summary>
+            /// Defines the expectations
+            /// </summary>
+            /// <param name="methodCallsDescribingExpectations">A delegate describing the expectations</param>
+            /// <returns>a MockVerifier</returns>
+            public MockVerifier Expecting(Proc methodCallsDescribingExpectations)
+            {
+                methodCallsDescribingExpectations();
+                _mocks.ReplayAll();
+                return new MockVerifier(_mocks);
+            }
+        }
+
+        /// <summary>
+        /// MockVerifier verifies if a piece of code meets the expectations
+        /// defined in the MockRepository context
+        /// </summary>
+        public class MockVerifier
+        {
+            private MockRepository _mocks;
+
+            internal MockVerifier(MockRepository mocks)
+            {
+                _mocks = mocks;
+            }
+
+            /// <summary>
+            /// Verifies if the code passed in as a delegate meets the expectations
+            /// defined for the MockRepository
+            /// </summary>
+            public void Verify(Proc methodCallsToBeVerified)
+            {
+                methodCallsToBeVerified();
+                _mocks.VerifyAll();
+            }
+        }
     }
 }
 #endif
