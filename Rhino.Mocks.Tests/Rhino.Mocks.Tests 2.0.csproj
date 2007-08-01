@@ -123,6 +123,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Chompers.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Joshua.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JudahG.cs" />
     <Compile Include="FieldsProblem\FieldProblem_leftend.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mark.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />

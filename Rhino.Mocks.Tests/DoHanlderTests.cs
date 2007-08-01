@@ -132,7 +132,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to throw on the same method call.")]
+        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
         public void CanOnlySpecifyOnce()
         {
             Expect.Call(demo.EnumNoArgs()).Do(new GetDay(ThrowDay)).Return(DayOfWeek.Saturday);

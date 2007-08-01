@@ -81,18 +81,18 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		private RepeatableOption repeatableOption = RepeatableOption.Normal;
 
-        /// <summary>
-        /// A delegate that will be run when the 
-        /// expectation is matched.
-        /// </summary>
-        private Delegate actionToExecute;
+		/// <summary>
+		/// A delegate that will be run when the 
+		/// expectation is matched.
+		/// </summary>
+		private Delegate actionToExecute;
 
-        /// <summary>
-        /// The arguments that matched this expectation.
-        /// </summary>
-        private object[] matchingArgs;
+		/// <summary>
+		/// The arguments that matched this expectation.
+		/// </summary>
+		private object[] matchingArgs;
 
-	    private object[] outRefParams;
+		private object[] outRefParams;
 
 		/// <summary>
 		/// Documentation message
@@ -104,26 +104,26 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		private IInvocation originalInvocation;
 
-	    #endregion
+		#endregion
 
 		#region Properties
 
-	    /// <summary>
-	    /// Setter for the outpur / ref parameters for this expecataion.
-	    /// Can only be set once.
-	    /// </summary>
-	    public object[] OutRefParams
-	    {
-	        set
-	        {
-                if (outRefParams != null)
-                    throw new InvalidOperationException(
-                        "Output and ref parameters has already been set for this expectation");
-	            outRefParams = value;
-	        }
-	    }
+		/// <summary>
+		/// Setter for the outpur / ref parameters for this expecataion.
+		/// Can only be set once.
+		/// </summary>
+		public object[] OutRefParams
+		{
+			set
+			{
+				if (outRefParams != null)
+					throw new InvalidOperationException(
+						"Output and ref parameters has already been set for this expectation");
+				outRefParams = value;
+			}
+		}
 
-	    /// <summary>
+		/// <summary>
 		/// Specify whatever this expectation has a return value set
 		/// You can't check ReturnValue for this because a valid return value include null.
 		/// </summary>
@@ -198,7 +198,7 @@ namespace Rhino.Mocks.Expectations
 		{
 			get
 			{
-				if (repeatableOption != RepeatableOption.Normal && repeatableOption !=RepeatableOption.OriginalCall)
+				if (repeatableOption != RepeatableOption.Normal && repeatableOption != RepeatableOption.OriginalCall)
 					return true;
 				return expected.Min <= actualCalls && actualCalls <= expected.Max;
 			}
@@ -220,19 +220,19 @@ namespace Rhino.Mocks.Expectations
 			}
 		}
 
-        /// <summary>
-        /// An action to execute when the method is matched.
-        /// </summary>
-        public Delegate ActionToExecute
-        {
-            set 
-            {
-                ActionOnMethodNotSpesified();
-                AssertReturnTypeMatch(value);
-                AssertDelegateArgumentsMatchMethod(value);
-                actionToExecute = value; 
-            }
-        }
+		/// <summary>
+		/// An action to execute when the method is matched.
+		/// </summary>
+		public Delegate ActionToExecute
+		{
+			set
+			{
+				ActionOnMethodNotSpesified();
+				AssertReturnTypeMatch(value);
+				AssertDelegateArgumentsMatchMethod(value);
+				actionToExecute = value;
+			}
+		}
 
 		/// <summary>
 		/// Gets or sets the exception to throw on a method matching this expectation.
@@ -257,13 +257,13 @@ namespace Rhino.Mocks.Expectations
 		{
 			get
 			{
-				if (method.ReturnType == typeof (void) ||
+				if (method.ReturnType == typeof(void) ||
 					exceptionToThrow != null ||
-                    actionToExecute != null ||
+					actionToExecute != null ||
 					returnValueSet ||
 					repeatableOption == RepeatableOption.OriginalCall ||
 					repeatableOption == RepeatableOption.OriginalCallBypassingMokcing ||
-                    repeatableOption == RepeatableOption.PropertyBehavior)
+					repeatableOption == RepeatableOption.PropertyBehavior)
 					return true;
 				return false;
 			}
@@ -303,12 +303,12 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		public object ReturnOrThrow(IInvocation invocation, object[] args)
 		{
-            SetupOutputAndRefParameters(args);
-            if (actionToExecute != null)
-                return ExecuteAction();
+			SetupOutputAndRefParameters(args);
+			if (actionToExecute != null)
+				return ExecuteAction();
 			if (exceptionToThrow != null)
 				throw exceptionToThrow;
-			if(RepeatableOption == RepeatableOption.OriginalCall)
+			if (RepeatableOption == RepeatableOption.OriginalCall)
 			{
 				invocation.Proceed();
 				return invocation.ReturnValue;
@@ -316,20 +316,20 @@ namespace Rhino.Mocks.Expectations
 			return returnValue;
 		}
 
-	    /// <summary>
-        /// Validate the arguments for the method on the child methods
-        /// </summary>
-        /// <param name="args">The arguments with which the method was called</param>
-        public bool IsExpected(object[] args)
-        {
-            if (DoIsExpected(args))
-            {
-                matchingArgs = args;
-                return true;
-            }
-            matchingArgs = null;
-            return false;
-        }
+		/// <summary>
+		/// Validate the arguments for the method on the child methods
+		/// </summary>
+		/// <param name="args">The arguments with which the method was called</param>
+		public bool IsExpected(object[] args)
+		{
+			if (DoIsExpected(args))
+			{
+				matchingArgs = args;
+				return true;
+			}
+			matchingArgs = null;
+			return false;
+		}
 
 
 		#endregion
@@ -353,7 +353,8 @@ namespace Rhino.Mocks.Expectations
 		/// Creates a new <see cref="AbstractExpectation"/> instance.
 		/// </summary>
 		/// <param name="expectation">Expectation.</param>
-		protected AbstractExpectation(IExpectation expectation) : this(expectation.Originalinvocation)
+		protected AbstractExpectation(IExpectation expectation)
+			: this(expectation.Originalinvocation)
 		{
 			returnValue = expectation.ReturnValue;
 			returnValueSet = expectation.HasReturnValue;
@@ -394,7 +395,7 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		protected string CreateErrorMessage(string derivedMessage)
 		{
-			if(Message==null)
+			if (Message == null)
 				return derivedMessage;
 			string msg = string.Format("Message: {0}\n{1}", Message, derivedMessage);
 			return msg;
@@ -404,53 +405,58 @@ namespace Rhino.Mocks.Expectations
 
 		#region Implementation
 
-        private void SetupOutputAndRefParameters(object[] args)
-        {
-            if(outRefParams==null)
-                return;
-            int argIndex=0, outputArgIndex =0;
-            ParameterInfo[] parameters = method.GetParameters();
-            foreach (ParameterInfo info in parameters)
-            {
-                if(outputArgIndex>=outRefParams.Length)
-                    return;
+		private void SetupOutputAndRefParameters(object[] args)
+		{
+			if (outRefParams == null)
+				return;
+			int argIndex = 0, outputArgIndex = 0;
+			ParameterInfo[] parameters = method.GetParameters();
+			foreach (ParameterInfo info in parameters)
+			{
+				if (outputArgIndex >= outRefParams.Length)
+					return;
 
-                if (info.IsOut || info.ParameterType.IsByRef)
-                {
-                    args[argIndex] = outRefParams[outputArgIndex];
-                    outputArgIndex += 1;
-                }
-                argIndex++;
-            }
-        }
+				if (info.IsOut || info.ParameterType.IsByRef)
+				{
+					args[argIndex] = outRefParams[outputArgIndex];
+					outputArgIndex += 1;
+				}
+				argIndex++;
+			}
+		}
 
 		private void ActionOnMethodNotSpesified()
 		{
 			if (returnValueSet == false && exceptionToThrow == null && actionToExecute == null)
 				return;
-			throw new InvalidOperationException("Can set only a single return value or exception to throw or delegate to throw on the same method call.");
+			if(this.Expected!= null && this.Expected.Max == 0)// we have choosen Repeat.Never
+			{
+				throw new InvalidOperationException(
+					"After specifying Repeat.Never(), you cannot specify a return value, exception to throw or an action to execute");
+			}
+			throw new InvalidOperationException("Can set only a single return value or exception to throw or delegate to execute on the same method call.");
 		}
 
-        private object ExecuteAction()
-        {
-            try
-            {
-                if (matchingArgs == null)
-                    throw new InvalidOperationException("Trying to run a Do() delegate when no arguments were matched to the expectation.");
-                try
-                {
-                    return actionToExecute.DynamicInvoke(matchingArgs);
-                }
-                catch (TargetInvocationException e)
-                {
-                    throw e.InnerException;
-                }
-            }
-            finally
-            {
-                matchingArgs = null;
-            }
-        }
+		private object ExecuteAction()
+		{
+			try
+			{
+				if (matchingArgs == null)
+					throw new InvalidOperationException("Trying to run a Do() delegate when no arguments were matched to the expectation.");
+				try
+				{
+					return actionToExecute.DynamicInvoke(matchingArgs);
+				}
+				catch (TargetInvocationException e)
+				{
+					throw e.InnerException;
+				}
+			}
+			finally
+			{
+				matchingArgs = null;
+			}
+		}
 
 		private void AssertTypesMatches(object value)
 		{
@@ -462,48 +468,48 @@ namespace Rhino.Mocks.Expectations
 				if (returnType.IsValueType == false)
 					return;
 #if dotNet2
-                if (returnType.IsGenericType &&
-                    returnType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                    return;
+				if (returnType.IsGenericType &&
+					returnType.GetGenericTypeDefinition() == typeof(Nullable<>))
+					return;
 #endif
 			}
 			else
 			{
 				//we reduce checking of generic types because of the complexity,
 				//we let the runtime catch those mistakes
-				returnType = GenericsUtil.GetRealType(returnType,originalInvocation);
+				returnType = GenericsUtil.GetRealType(returnType, originalInvocation);
 				Type valueType = value.GetType();
 				if (returnType.IsInstanceOfType(value))
 					return;
 				type = valueType.FullName;
 			}
-			throw new InvalidOperationException(string.Format("Type '{0}' doesn't match the return type '{1}' for method '{2}'", type, returnType, 
-				MethodCallUtil.StringPresentation(Originalinvocation,method, new object[0])));
+			throw new InvalidOperationException(string.Format("Type '{0}' doesn't match the return type '{1}' for method '{2}'", type, returnType,
+				MethodCallUtil.StringPresentation(Originalinvocation, method, new object[0])));
 		}
 
 		/// <summary>
-        /// Asserts that the delegate has the same parameters as the expectation's method call
-        /// </summary>
-        protected void AssertDelegateArgumentsMatchMethod(Delegate callback)
-        {
-            ParameterInfo[] callbackParams = callback.Method.GetParameters(),
-                         methodParams = method.GetParameters();
-            string argsDontMatch = "Callback arguments didn't match the method arguments";
-            if (callbackParams.Length != methodParams.Length)
-                throw new InvalidOperationException(argsDontMatch);
-            for (int i = 0; i < methodParams.Length; i++)
-            {
-            	Type methodParameter = GenericsUtil.GetRealType(methodParams[i].ParameterType, Originalinvocation);
-            	if (methodParameter != callbackParams[i].ParameterType)
-                    throw new InvalidOperationException(argsDontMatch);
-            }
-        }
-        private void AssertReturnTypeMatch(Delegate value)
-        {
-            if (GenericsUtil.GetRealType(method.ReturnType, Originalinvocation)
+		/// Asserts that the delegate has the same parameters as the expectation's method call
+		/// </summary>
+		protected void AssertDelegateArgumentsMatchMethod(Delegate callback)
+		{
+			ParameterInfo[] callbackParams = callback.Method.GetParameters(),
+						 methodParams = method.GetParameters();
+			string argsDontMatch = "Callback arguments didn't match the method arguments";
+			if (callbackParams.Length != methodParams.Length)
+				throw new InvalidOperationException(argsDontMatch);
+			for (int i = 0; i < methodParams.Length; i++)
+			{
+				Type methodParameter = GenericsUtil.GetRealType(methodParams[i].ParameterType, Originalinvocation);
+				if (methodParameter != callbackParams[i].ParameterType)
+					throw new InvalidOperationException(argsDontMatch);
+			}
+		}
+		private void AssertReturnTypeMatch(Delegate value)
+		{
+			if (GenericsUtil.GetRealType(method.ReturnType, Originalinvocation)
 				.IsAssignableFrom(value.Method.ReturnType) == false)
-                throw new InvalidOperationException("The delegate return value should be assignable from " + method.ReturnType.FullName);
-        }
+				throw new InvalidOperationException("The delegate return value should be assignable from " + method.ReturnType.FullName);
+		}
 		#endregion
 	}
 }

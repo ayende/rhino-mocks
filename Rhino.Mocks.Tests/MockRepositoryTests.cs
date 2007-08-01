@@ -295,7 +295,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to throw on the same method call.")]
+        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
         public void SetReturnValueAndExceptionThrows()
         {
             demo.EnumNoArgs();
@@ -304,7 +304,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to throw on the same method call.")]
+		[ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
         public void SetExceptionAndThenThrows()
         {
             demo.EnumNoArgs();
@@ -313,7 +313,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to throw on the same method call.")]
+		[ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
         public void SetTwoReturnValues()
         {
             demo.EnumNoArgs();
@@ -322,7 +322,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to throw on the same method call.")]
+        [ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
         public void SetTwoExceptions()
         {
             demo.EnumNoArgs();
