@@ -132,6 +132,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Joshua.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JudahG.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mads.cs" />
     <Compile Include="FieldsProblem\FieldProblem_leftend.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Mark.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="SetupResultTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StubAllTest.cs" />
     <Compile Include="StubTest.cs" />
     <Compile Include="TestInfo.cs" />
     <Compile Include="WithTestFixture.cs" />

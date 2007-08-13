@@ -170,6 +170,36 @@ namespace Rhino.Mocks.Tests
                 throw new IndexOutOfRangeException("foo");
             });
         }
+
+        [Test]
+        public void UsingTheWithMocksExceptingInSameOrderVerifyConstruct_ShouldTakeCareOfOrder()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo demo = mocks.CreateMock<IDemo>();
+            bool verificationFailed; 
+
+            try
+            {
+                With.Mocks(mocks).ExpectingInSameOrder(delegate
+                {
+                    Expect.Call(demo.ReturnIntNoArgs()).Return(1);
+                    Expect.Call(demo.ReturnStringNoArgs()).Return("2");
+                })
+                .Verify(delegate
+                {
+                    demo.ReturnStringNoArgs();
+                    demo.ReturnIntNoArgs();
+                });
+                verificationFailed = false;
+            }
+            catch (ExpectationViolationException)
+            {
+                verificationFailed = true;
+            }
+
+            Assert.IsTrue(verificationFailed,
+                "Verification was supposed to fail, because the mocks are called in the wrong order");
+        }
     }
 }
 

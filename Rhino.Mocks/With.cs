@@ -80,63 +80,72 @@ namespace Rhino.Mocks
         }
 
         /// <summary>
-        /// Create a MockExpecter as the root for some kind of fluent interface attempt
-        /// for saying "With the Mocks [mocks], Expecting [things] verify [that]."
+        /// Create a FluentMocker
         /// </summary>
         /// <param name="mocks">The mock repository to use.</param>
-        public static MockExpecter Mocks(MockRepository mocks)
+        public static FluentMocker Mocks(MockRepository mocks)
         {
-            return new MockExpecter(mocks);
+            return new FluentMocker(mocks);
         }
 
         /// <summary>
-        /// MockExpecter defines and replays expectations passed in as anonymous delegate
-        /// in the context of a MockRepository.
+        /// FluentMocker implements some kind of fluent interface attempt
+        /// for saying "With the Mocks [mocks], Expecting (in same order) [things] verify [that]."
         /// </summary>
-        public class MockExpecter
+        public class FluentMocker: IMockVerifier
         {
             private MockRepository _mocks;
 
-            internal MockExpecter(MockRepository mocks)
+            internal FluentMocker(MockRepository mocks)
             {
                 _mocks = mocks;
             }
 
             /// <summary>
-            /// Defines the expectations
+            /// Defines unordered expectations
             /// </summary>
             /// <param name="methodCallsDescribingExpectations">A delegate describing the expectations</param>
-            /// <returns>a MockVerifier</returns>
-            public MockVerifier Expecting(Proc methodCallsDescribingExpectations)
+            /// <returns>an IMockVerifier</returns>
+            public IMockVerifier Expecting(Proc methodCallsDescribingExpectations)
             {
                 methodCallsDescribingExpectations();
                 _mocks.ReplayAll();
-                return new MockVerifier(_mocks);
+                return this;
             }
-        }
-
-        /// <summary>
-        /// MockVerifier verifies if a piece of code meets the expectations
-        /// defined in the MockRepository context
-        /// </summary>
-        public class MockVerifier
-        {
-            private MockRepository _mocks;
-
-            internal MockVerifier(MockRepository mocks)
+            /// <summary>
+            /// Defines ordered expectations
+            /// </summary>
+            /// <param name="methodCallsDescribingExpectations">A delegate describing the expectations</param>
+            /// <returns>an IMockVerifier</returns>
+            public IMockVerifier ExpectingInSameOrder(Proc methodCallsDescribingExpectations)
             {
-                _mocks = mocks;
+                using (_mocks.Ordered())
+                {
+                    methodCallsDescribingExpectations();
+                }
+                _mocks.ReplayAll();
+                return this;
             }
 
             /// <summary>
-            /// Verifies if the code passed in as a delegate meets the expectations
-            /// defined for the MockRepository
+            /// Verifies previously defined expectations
             /// </summary>
             public void Verify(Proc methodCallsToBeVerified)
             {
                 methodCallsToBeVerified();
                 _mocks.VerifyAll();
             }
+        }
+
+        /// <summary>
+        /// Interface to verify previously defined expectations
+        /// </summary>
+        public interface IMockVerifier
+        {
+            /// <summary>
+            /// Verifies if a piece of code
+            /// </summary>
+            void Verify(Proc methodCallsToBeVerified);
         }
     }
 }
