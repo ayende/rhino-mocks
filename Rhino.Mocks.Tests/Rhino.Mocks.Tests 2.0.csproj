@@ -127,6 +127,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_DavidG.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_dyowee.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_James.cs" />
@@ -309,6 +310,14 @@
       <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
+    <COMReference Include="ADODB">
+      <Guid>{2A75196C-D9EB-4129-B803-931327F72D5C}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="MSHTML">
       <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
       <VersionMajor>4</VersionMajor>
