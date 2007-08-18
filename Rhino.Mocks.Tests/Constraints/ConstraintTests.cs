@@ -88,6 +88,22 @@ namespace Rhino.Mocks.Tests.Constraints
 			mocks.VerifyAll();
 		}
 
+        [Test]
+        public void UsingPredicateConstraintWithSubtype()
+        {
+            demo.VoidStringArg(null);
+            LastCall.Constraints(
+                Is.Matching<object>(delegate(object o)
+            {
+                return o.Equals("ab");
+            }));
+            mocks.Replay(demo);
+
+            demo.VoidStringArg("ab");
+
+            mocks.VerifyAll();
+        }
+
 		[Test]
 		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidStringArg(\"cc\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(Predicate (ConstraintTests.JustPredicate(obj);)); Expected #1, Actual #0.")]
 		public void UsingPredicateWhenExpectationViolated()

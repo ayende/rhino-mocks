@@ -244,7 +244,7 @@ namespace Rhino.Mocks.Constraints
 		public override bool Eval(object obj)
 		{
 			if(obj!=null && 
-				obj.GetType().IsAssignableFrom(typeof(T))==false)
+				typeof(T).IsAssignableFrom(obj.GetType()) == false)
 			{
 				throw new InvalidOperationException(
 					string.Format("Predicate accept {0} but parameter is {1} which is not compatible",
