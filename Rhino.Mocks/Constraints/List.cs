@@ -75,7 +75,7 @@ namespace Rhino.Mocks.Constraints
 		/// <summary>
 		/// Determains whatever the parameter is in the collection.
 		/// </summary>
-		public static AbstractConstraint OneOf(ICollection collection)
+		public static AbstractConstraint OneOf(IEnumerable collection)
 		{
 			return new OneOf(collection);
 		}
@@ -88,7 +88,7 @@ namespace Rhino.Mocks.Constraints
 		/// <summary>
 		/// Determains that the parameter collection is identical to the specified collection
 		/// </summary>
-		public static AbstractConstraint Equal(ICollection collection)
+		public static AbstractConstraint Equal(IEnumerable collection)
 		{
 			return new CollectionEqual(collection);
 		}

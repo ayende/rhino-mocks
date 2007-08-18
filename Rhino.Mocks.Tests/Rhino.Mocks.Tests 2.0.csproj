@@ -125,16 +125,19 @@
     <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Chompers.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_DavidG.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_James.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Joe.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Joshua.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JudahG.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Mads.cs" />
     <Compile Include="FieldsProblem\FieldProblem_leftend.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Mark.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Maurice.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />
@@ -159,6 +162,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Matt.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Michael.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Phil.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Roger.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Ross.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Roy.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Sam.cs" />

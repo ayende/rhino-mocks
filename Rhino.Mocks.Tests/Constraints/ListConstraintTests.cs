@@ -26,9 +26,11 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-
+using System;
 using MbUnit.Framework;
 using Rhino.Mocks.Constraints;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Rhino.Mocks.Tests.Constraints
 {
@@ -49,10 +51,10 @@ namespace Rhino.Mocks.Tests.Constraints
 		{
 			AbstractConstraint list = List.OneOf(new string[] {"Ayende", "Rahien", "Hello", "World"});
 			Assert.IsTrue(list.Eval("Ayende"));
-			Assert.IsFalse(list.Eval("sheep"));
+            Assert.IsFalse(list.Eval("sheep"));
 			Assert.AreEqual("one of [Ayende, Rahien, Hello, World]", list.Message);
 		}
-
+        
 		[Test]
 		public void Equal()
 		{
@@ -84,6 +86,49 @@ namespace Rhino.Mocks.Tests.Constraints
             Assert.IsFalse(list.Eval(new string[] { "Ayende", "Rahien" }));
             Assert.IsFalse(list.Eval(5));
             Assert.AreEqual("element at index 2 equal to Hello", list.Message);
+        }
+
+        private class FailsOnEqual
+        {
+            public override bool Equals(object obj)
+            {
+                Assert.Fail("Iteration over the collection was not expected.");
+                return false;
+            }
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+        }
+
+        [Test]
+        public void Equal_BothListsAreICollectionWithDifferentSizes_DoesNotIterateOverCollections()
+        {
+            AbstractConstraint list = List.Equal(new FailsOnEqual[] {new FailsOnEqual(),
+             new FailsOnEqual()});
+            Assert.IsFalse(list.Eval(new FailsOnEqual[]{new FailsOnEqual()}));
+        }
+
+        private IEnumerable NameList()
+        {
+            yield return "doron";
+            yield return "hi";
+            yield return "there";
+
+        }
+
+        [Test]
+        public void Equal_ConstraintIsNotICollection_StillWorks()
+        {
+            AbstractConstraint list = List.Equal(NameList());
+            Assert.IsTrue(list.Eval(new string[] { "doron", "hi", "there" }));
+            Assert.IsTrue(list.Eval(NameList()));
+            
+            Assert.IsFalse(list.Eval(new string[]{"doron","there", "hi"}));
+            Assert.IsFalse(list.Eval(new string[] { "doron", "hi" }));
+            Assert.IsFalse(list.Eval(6));
+
+            Assert.AreEqual("equal to collection [doron, hi, there]", list.Message);
         }
 	}
 }

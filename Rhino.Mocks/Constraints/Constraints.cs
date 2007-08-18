@@ -286,13 +286,13 @@ namespace Rhino.Mocks.Constraints
     /// </summary>
     public class CollectionEqual : AbstractConstraint
     {
-        private ICollection collection;
+        private IEnumerable collection;
 
         /// <summary>
         /// Creates a new <see cref="CollectionEqual"/> instance.
         /// </summary>
         /// <param name="collection">In list.</param>
-        public CollectionEqual(ICollection collection)
+        public CollectionEqual(IEnumerable collection)
         {
             this.collection = collection;
         }
@@ -302,18 +302,26 @@ namespace Rhino.Mocks.Constraints
         /// </summary>
         public override bool Eval(object obj)
         {
-            ICollection arg = obj as ICollection;
+            IEnumerable arg = obj as IEnumerable;
             if (arg != null)
             {
-                if (arg.Count != collection.Count)
-                    return false;
+                if (arg is ICollection && collection is ICollection)
+                    if (((ICollection)arg).Count != ((ICollection)collection).Count)
+                        return false;
                 IEnumerator argEnumerator = arg.GetEnumerator(),
                     collectionEnumerator = collection.GetEnumerator();
-                while (argEnumerator.MoveNext() && collectionEnumerator.MoveNext())
+
+                bool argListHasMore = argEnumerator.MoveNext();
+                bool constraintListHasMore = collectionEnumerator.MoveNext();
+                while (argListHasMore && constraintListHasMore)
                 {
                     if (argEnumerator.Current.Equals(collectionEnumerator.Current) == false)
                         return false;
+                    argListHasMore = argEnumerator.MoveNext();
+                    constraintListHasMore = collectionEnumerator.MoveNext();
                 }
+                if (argListHasMore || constraintListHasMore)
+                    return false;
                 return true;
             }
             return false;
@@ -332,9 +340,9 @@ namespace Rhino.Mocks.Constraints
                 int i = 0;
                 foreach (object o in collection)
                 {
-                    sb.Append(o);
-                    if (i < collection.Count - 1)
+                    if (i != 0)
                         sb.Append(", ");
+                    sb.Append(o);
                     i++;
                 }
                 sb.Append("]");
@@ -352,13 +360,13 @@ namespace Rhino.Mocks.Constraints
     /// </summary>
     public class OneOf : AbstractConstraint
     {
-        private ICollection collection;
+        private IEnumerable collection;
 
         /// <summary>
         /// Creates a new <see cref="OneOf"/> instance.
         /// </summary>
         /// <param name="collection">In list.</param>
-        public OneOf(ICollection collection)
+        public OneOf(IEnumerable collection)
         {
             this.collection = collection;
         }
@@ -389,9 +397,9 @@ namespace Rhino.Mocks.Constraints
                 int i = 0;
                 foreach (object o in collection)
                 {
-                    sb.Append(o);
-                    if (i < collection.Count - 1)
+                    if (i != 0)
                         sb.Append(", ");
+                    sb.Append(o);
                     i++;
                 }
                 sb.Append("]");
