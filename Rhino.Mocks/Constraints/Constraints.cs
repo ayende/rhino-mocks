@@ -37,6 +37,105 @@ using Rhino.Mocks.Utilities;
 
 namespace Rhino.Mocks.Constraints
 {
+    #region PublicFieldIs
+
+    /// <summary>
+    /// Constrain that the public field has a specified value
+    /// </summary>
+    public class PublicFieldIs : PublicFieldConstraint
+    {
+        /// <summary>
+        /// Creates a new <see cref="PublicFieldIs"/> instance.
+        /// </summary>
+        /// <param name="publicFieldName">Name of the public field.</param>
+        /// <param name="expectedValue">Expected value.</param>
+        public PublicFieldIs(string publicFieldName, object expectedValue)
+            : base(publicFieldName, Is.Equal(expectedValue))
+        {
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="PublicFieldIs"/> instance, specifying a disambiguating
+        /// <paramref name="declaringType"/> for the public field.
+        /// </summary>
+        /// <param name="declaringType">The type that declares the public field, used to disambiguate between public fields.</param>
+        /// <param name="publicFieldName">Name of the public field.</param>
+        /// <param name="expectedValue">Expected value.</param>
+        public PublicFieldIs(Type declaringType, string publicFieldName, object expectedValue)
+            : base(declaringType, publicFieldName, Is.Equal(expectedValue))
+        {
+        }
+    }
+
+    #endregion
+
+    #region PublicFieldConstraint
+
+    /// <summary>
+    /// Constrain that the public field matches another constraint.
+    /// </summary>
+    public class PublicFieldConstraint : AbstractConstraint
+    {
+        private readonly Type declaringType;
+        private readonly string publicFieldName;
+        private readonly AbstractConstraint constraint;
+
+        /// <summary>
+        /// Creates a new <see cref="PublicFieldConstraint"/> instance.
+        /// </summary>
+        /// <param name="publicFieldName">Name of the public field.</param>
+        /// <param name="constraint">Constraint to place on the public field value.</param>
+        public PublicFieldConstraint(string publicFieldName, AbstractConstraint constraint)
+            : this(null, publicFieldName, constraint) {}
+
+        /// <summary>
+        /// Creates a new <see cref="PublicFieldConstraint"/> instance, specifying a disambiguating
+        /// <paramref name="declaringType"/> for the public field.
+        /// </summary>
+        /// <param name="declaringType">The type that declares the public field, used to disambiguate between public fields.</param>
+        /// <param name="publicFieldName">Name of the public field.</param>
+        /// <param name="constraint">Constraint to place on the public field value.</param>
+        public PublicFieldConstraint(Type declaringType, string publicFieldName, AbstractConstraint constraint)
+        {
+            this.declaringType = declaringType;
+            this.publicFieldName = publicFieldName;
+            this.constraint = constraint;
+        }
+
+        /// <summary>
+        /// Determines if the object passes the constraint.
+        /// </summary>
+        public override bool Eval(object obj)
+        {
+            if (obj == null)
+                return false;
+            FieldInfo field;
+
+            if (declaringType == null)
+            {
+                field = obj.GetType().GetField(publicFieldName);
+            }
+            else
+            {
+                field = declaringType.GetField(publicFieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            }
+            if (field == null)
+                return false;
+            object fieldValue = field.GetValue(obj);
+            return constraint.Eval(fieldValue);
+        }
+
+        /// <summary>
+        /// Gets the message for this constraint
+        /// </summary>
+        /// <value></value>
+        public override string Message
+        {
+            get { return "public field '" + publicFieldName + "' " + constraint.Message; }
+        }
+    }
+
+    #endregion
 
     #region PropertyIs
 
