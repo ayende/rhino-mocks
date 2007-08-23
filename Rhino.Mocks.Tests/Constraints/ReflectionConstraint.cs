@@ -243,5 +243,119 @@ namespace Rhino.Mocks.Tests.Constraints
             private int PrivateProperty { get { return 6; } }
         }
         #endregion
+
+        #region PublicFieldConstraints
+
+        [Test(Description="Tests that PublicField.Value() properly evaluates a public field.")]
+        public void PublicFieldValue()
+        {
+            string barTestValue = "my bar";
+
+            AbstractConstraint constraint = PublicField.Value("BarField", barTestValue);
+            Assert.IsTrue(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned false when field was correct");
+            Assert.IsFalse(constraint.Eval(new FooMessage(string.Empty, "your bar")), "Returned true when field was incorrect");
+        }
+
+        [Test(Description = "Tests that PublicField.Value() does not verify a property.")]
+        public void PublicFieldValueDoesNotVerifyProperties()
+        {
+            string fooTestValue = "my foo";
+
+            AbstractConstraint constraint = PublicField.Value("FooProperty", fooTestValue);
+            Assert.IsFalse(constraint.Eval(new FooMessage(fooTestValue, string.Empty)), "Returned false when trying to validate a property rather than a field.");
+        }
+
+        [Test(Description = "Tests that PublicField.Value() properly evaluates a public field that is from an implemented interface type.")]
+        public void PublicFieldValueOnImplementedInterfaceType()
+        {
+            string barTestValue = "my bar";
+            BarMessage message = new BarMessage(string.Empty, barTestValue);
+
+            AbstractConstraint baseConstraint = PublicField.Value(typeof(FooMessage), "BarField", barTestValue);
+            Assert.IsTrue(baseConstraint.Eval(message), "Returned false when field was correct and field was declared in supplied type..");
+
+            AbstractConstraint constraint = PublicField.Value(typeof(BarMessage), "BarField", barTestValue);
+            Assert.IsFalse(constraint.Eval(message), "Returned true when field was correct but type was not declared on the suppleid type.");
+        }
+
+        [Test(Description="Tests that PublicField.ValueConstraint() properly evaluates a public field using a supplied AbstractConstraint.")]
+        public void PublicFieldValueConstraint()
+        {
+            FooMessage message = new FooMessage("my foo", "my bar");
+            
+            Assert.IsTrue(PublicField.ValueConstraint("BarField", Text.Contains("bar")).Eval(message), "Returned false when supplied constraint was valid.");
+            Assert.IsFalse(PublicField.ValueConstraint("BarField", Text.Contains("foo")).Eval(message), "Returned true when supplied constraint was invalid.");
+        }
+
+        [Test(Description = "Tests that PublicField.IsNull() properly evaluates if a public field is null.")]
+        public void PublicFieldNull()
+        {
+            string barTestValue = "my bar";
+
+            AbstractConstraint constraint = PublicField.IsNull("BarField");
+            Assert.IsTrue(constraint.Eval(new FooMessage(null, null)), "Returned false when field was null.");
+            Assert.IsFalse(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned true when field was not null");
+        }
+
+        [Test(Description = "Tests that PublicField.IsNotNull() properly evaluates if a public field is not null.")]
+        public void PublicFieldNotNull()
+        {
+            string barTestValue = "my bar";
+
+            AbstractConstraint constraint = PublicField.IsNotNull("BarField");
+            Assert.IsTrue(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned false when field was not null.");
+            Assert.IsFalse(constraint.Eval(new FooMessage(null, null)), "Returned true when field was null");
+        }
+
+        #region Types for testing PublicFieldConstraints
+
+        public interface IMessage
+        {
+            string CommonName { get; }
+        }
+
+        public class FooMessage : IMessage
+        {
+            private string _commonName;
+            private string _fooProperty;
+
+            public string FooProperty
+            {
+                get { return this._fooProperty; }
+                set { this._fooProperty = value; }
+            }
+
+            public string BarField;
+
+            public FooMessage(string commonName)
+            {
+                this._commonName = commonName;
+            }
+
+            public FooMessage(string fooProperty, string barField)
+            {
+                this.FooProperty = fooProperty;
+                this.BarField = barField;
+            }
+
+            #region IMessage Members
+
+            string IMessage.CommonName
+            {
+                get { return this._commonName; }
+            }
+
+            #endregion
+        }
+
+        public class BarMessage : FooMessage
+        {
+            public BarMessage(string commonName) : base(commonName) { }
+            public BarMessage(string fooProperty, string barField) : base(fooProperty, barField) { }
+        }
+
+        #endregion
+
+        #endregion
     }
 }
