@@ -72,11 +72,18 @@ namespace Rhino.Mocks
 
 		public void Dispose()
 		{
-      if (Marshal.GetExceptionCode() != 0)
-      {
-        return;
-      }
-		  m_repository.VerifyAll();
+			//If we're running under Mono, then we don't want to call Marshall.GetExceptionCode as it
+            // currently is not implemented
+            Type t = Type.GetType("Mono.Runtime");
+            if (t == null)
+            {
+				// Probably running the .NET Framework
+				if (Marshal.GetExceptionCode() != 0)
+				{
+					return;
+				}
+			}
+			m_repository.VerifyAll();
 		}
 	}
 
