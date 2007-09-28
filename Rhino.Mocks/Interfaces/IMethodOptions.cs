@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Interfaces
 	/// Allows to define what would happen when a method 
 	/// is called.
 	/// </summary>
-	public interface IMethodOptions
+	public interface IMethodOptions<T>
 	{
 		/*
 		 * Method: Return
@@ -55,7 +55,7 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		/// <param name="objToReturn">The object the method will return</param>
 		/// <returns>IRepeat that defines how many times the method will return this value</returns>
-		IMethodOptions Return(object objToReturn);
+		IMethodOptions<T> Return(T objToReturn);
 
 		/*
 		 * Method: Throw
@@ -66,7 +66,7 @@ namespace Rhino.Mocks.Interfaces
 		/// Throws the specified exception when the method is called.
 		/// </summary>
 		/// <param name="exception">Exception to throw</param>
-		IMethodOptions Throw(Exception exception);
+		IMethodOptions<T> Throw(Exception exception);
 
 		/*
 		 * Method: IgnoreArguments
@@ -78,7 +78,7 @@ namespace Rhino.Mocks.Interfaces
 		/// Ignores the arguments for this method. Any argument will be matched
 		/// againt this method.
 		/// </summary>
-		IMethodOptions IgnoreArguments();
+		IMethodOptions<T> IgnoreArguments();
 
 		/*
 		 * Property: Repeat
@@ -89,7 +89,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Better syntax to define repeats. 
 		/// </summary>
-		IRepeat Repeat { get; }
+		IRepeat<T> Repeat { get; }
 
 		/*
 		 * Method: Constraints
@@ -100,7 +100,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Add constraints for the method's arguments.
 		/// </summary>
-		IMethodOptions Constraints(params AbstractConstraint[] constraints);
+		IMethodOptions<T> Constraints(params AbstractConstraint[] constraints);
 
 		/*
 		 * Method: Callback
@@ -119,7 +119,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Set a callback method for the last call
 		/// </summary>
-		IMethodOptions Callback(Delegate callback);
+		IMethodOptions<T> Callback(Delegate callback);
 
         /*
          * Method: Do
@@ -139,7 +139,7 @@ namespace Rhino.Mocks.Interfaces
         /// Set a delegate to be called when the expectation is matched.
         /// The delegate return value will be returned from the expectation.
         /// </summary>
-        IMethodOptions Do(Delegate action);
+        IMethodOptions<T> Do(Delegate action);
 
 		/*
 			 * Method: CallOriginalMethod
@@ -174,7 +174,7 @@ namespace Rhino.Mocks.Interfaces
 		/// Call the original method on the class, optionally bypassing the mocking layers.
 		/// </summary>
 		/// <returns></returns>
-		IMethodOptions CallOriginalMethod(OriginalCallOptions options);
+		IMethodOptions<T> CallOriginalMethod(OriginalCallOptions options);
 
         /* Method: PropertyBehavior
          * 
@@ -188,7 +188,7 @@ namespace Rhino.Mocks.Interfaces
         /// Use the property as a simple property, getting/setting the values without
         /// causing mock expectations.
         /// </summary>
-        IMethodOptions PropertyBehavior();
+        IMethodOptions<T> PropertyBehavior();
 
         /// <summary>
         /// Get an event raiser for the last subscribed event.
@@ -199,12 +199,12 @@ namespace Rhino.Mocks.Interfaces
         /// Set the parameter values for out and ref parameters.
         /// This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
         /// </summary>
-        IMethodOptions OutRef(params object[] parameters);
+        IMethodOptions<T> OutRef(params object[] parameters);
 		
 		/// <summary>
     	/// Documentation message for the expectation
     	/// </summary>
     	/// <param name="documentationMessage">Message</param>
-		IMethodOptions Message(string documentationMessage);
+		IMethodOptions<T> Message(string documentationMessage);
 	}
 }

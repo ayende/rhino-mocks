@@ -146,7 +146,12 @@ namespace Rhino.Mocks.Tests
 				return this;
 			}
 
-			public IMethodOptions LastMethodOptions
+			public IMethodOptions<T> GetLastMethodOptions<T>()
+			{
+				throw new NotImplementedException();
+			}
+
+			public IMethodOptions<object> LastMethodOptions
 			{
 				get { throw new NotImplementedException(); }
 			}

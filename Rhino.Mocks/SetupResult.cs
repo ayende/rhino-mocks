@@ -67,9 +67,9 @@ namespace Rhino.Mocks
 		/// any number of times.
 		/// This also means that the method would transcend ordering
 		/// </summary>
-		public static IMethodOptions For(object ignored)
+		public static IMethodOptions<T> For<T>(T ignored)
 		{
-			return LastCall.Options.Repeat.Any();
+			return LastCall.GetOptions<T>().Repeat.Any();
 		}
 
 		/*

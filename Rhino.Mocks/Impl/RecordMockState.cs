@@ -74,14 +74,19 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Get the options for the last method call
 		/// </summary>
-		public IMethodOptions LastMethodOptions
+		public IMethodOptions<T> GetLastMethodOptions<T>()
 		{
-			get
-			{
-				if (lastExpectation == null)
-					throw new InvalidOperationException("There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?");
-				return new MethodOptions(repository, this, mockedObject, lastExpectation);
-			}
+			if (lastExpectation == null)
+				throw new InvalidOperationException("There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?");
+			return new MethodOptions<T>(repository, this, mockedObject, lastExpectation);
+		}
+
+		/// <summary>
+		/// Get the options for the last method call
+		/// </summary>
+		public IMethodOptions<object> LastMethodOptions
+		{
+			get { return GetLastMethodOptions<object>(); }
 		}
 
 		/// <summary>

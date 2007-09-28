@@ -508,11 +508,11 @@ namespace Rhino.Mocks
         /// </summary>
         /// <param name="mockedInstance">The mock object</param>
         /// <returns>Method options for the last call</returns>
-        internal IMethodOptions LastMethodCall(object mockedInstance)
+        internal IMethodOptions<T> LastMethodCall<T>(object mockedInstance)
         {
             object mock = GetMockObjectFromInvocationProxy(mockedInstance);
             IsMockObjectFromThisRepository(mock);
-            return proxies[mock].LastMethodOptions;
+            return proxies[mock].GetLastMethodOptions<T>();
         }
 
         #endregion

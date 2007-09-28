@@ -38,6 +38,6 @@ namespace Rhino.Mocks.Interfaces
 		/// Get the method options for the call
 		/// </summary>
 		/// <param name="ignored">The method call should go here, the return value is ignored</param>
-		IMethodOptions Call(object ignored);
+		IMethodOptions<T> Call<T>(T ignored);
 	}
 }

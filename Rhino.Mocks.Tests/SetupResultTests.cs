@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Tests
 		[ExpectedException(typeof (InvalidOperationException), "Invalid call, the last call has been used or no call has been made (did you make a call to a non virtual method?).")]
 		public void SetupResultForNoCall()
 		{
-			SetupResult.For(null);
+			SetupResult.For<object>(null);
 		}
 
 		[Test]

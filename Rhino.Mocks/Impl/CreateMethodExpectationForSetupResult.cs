@@ -50,7 +50,7 @@ namespace Rhino.Mocks.Impl
 		/// Get the method options for the call
 		/// </summary>
 		/// <param name="ignored">The method call should go here, the return value is ignored</param>
-		public override IMethodOptions Call(object ignored)
+		public override IMethodOptions<T> Call<T>(T ignored)
 		{
 			return base.Call(ignored).Repeat.Any();
 		}

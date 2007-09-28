@@ -40,7 +40,7 @@ namespace Rhino.Mocks.Impl
 	/// Allows to define what would happen when a method 
 	/// is called.
 	/// </summary>
-	public class MethodOptions : IMethodOptions, IRepeat
+	public class MethodOptions<T> : IMethodOptions<T>, IRepeat<T>
 	{
 		#region Variables
 
@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Better syntax to define repeats. 
 		/// </summary>
-		public IRepeat Repeat
+		public IRepeat<T> Repeat
 		{
 			get { return this; }
 		}
@@ -67,7 +67,7 @@ namespace Rhino.Mocks.Impl
 		#region C'tor
 
 		/// <summary>
-		/// Creates a new <see cref="MethodOptions"/> instance.
+		/// Creates a new <see cref="T:MethodOptions`1"/> instance.
 		/// </summary>
 		/// <param name="repository">the repository for this expectation</param>
 		/// <param name="record">the recorder for this proxy</param>
@@ -89,7 +89,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Add constraints for the method's arguments.
 		/// </summary>
-		public IMethodOptions Constraints(params AbstractConstraint[] constraints)
+		public IMethodOptions<T> Constraints(params AbstractConstraint[] constraints)
 		{
             if( expectation is ConstraintsExpectation )
             {
@@ -103,7 +103,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Set a callback method for the last call
 		/// </summary>
-		public IMethodOptions Callback(Delegate callback)
+		public IMethodOptions<T> Callback(Delegate callback)
 		{
 			CallbackExpectation callbackExpectation = new CallbackExpectation(expectation, callback);
 			ReplaceExpectation(callbackExpectation);
@@ -115,7 +115,7 @@ namespace Rhino.Mocks.Impl
 		/// Set a delegate to be called when the expectation is matched.
 		/// The delegate return value will be returned from the expectation.
 		/// </summary>
-		public IMethodOptions Do(Delegate action)
+		public IMethodOptions<T> Do(Delegate action)
 		{
 			expectation.ActionToExecute = action;
 			return this;
@@ -127,7 +127,7 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		/// <param name="objToReturn">The object the method will return</param>
 		/// <returns>IRepeat that defines how many times the method will return this value</returns>
-		public IMethodOptions Return(object objToReturn)
+		public IMethodOptions<T> Return(T objToReturn)
 		{
 			expectation.ReturnValue = objToReturn;
 			return this;
@@ -137,7 +137,7 @@ namespace Rhino.Mocks.Impl
 		/// Throws the specified exception when the method is called.
 		/// </summary>
 		/// <param name="exception">Exception to throw</param>
-		public IMethodOptions Throw(Exception exception)
+		public IMethodOptions<T> Throw(Exception exception)
 		{
 			expectation.ExceptionToThrow = exception;
 			return this;
@@ -147,7 +147,7 @@ namespace Rhino.Mocks.Impl
 		/// Ignores the arguments for this method. Any argument will be matched
 		/// againt this method.
 		/// </summary>
-		public IMethodOptions IgnoreArguments()
+		public IMethodOptions<T> IgnoreArguments()
 		{
 			AnyArgsExpectation anyArgsExpectation = new AnyArgsExpectation(expectation);
 			ReplaceExpectation(anyArgsExpectation);
@@ -169,7 +169,7 @@ namespace Rhino.Mocks.Impl
 		/// Call the original method on the class, optionally bypassing the mocking layers
 		/// </summary>
 		/// <returns></returns>
-		public IMethodOptions CallOriginalMethod(OriginalCallOptions options)
+		public IMethodOptions<T> CallOriginalMethod(OriginalCallOptions options)
 		{
 			AssertMethodImplementationExists();
 			if (options == OriginalCallOptions.NoExpectation)
@@ -190,7 +190,7 @@ namespace Rhino.Mocks.Impl
 		/// Use the property as a simple property, getting/setting the values without
 		/// causing mock expectations.
 		/// </summary>
-		public IMethodOptions PropertyBehavior()
+		public IMethodOptions<T> PropertyBehavior()
 		{
 			AssertExpectationOnPropertyWithGetterAndSetter();
 			PropertyInfo prop = GetPropertyFromMethod(expectation.Method);
@@ -215,7 +215,7 @@ namespace Rhino.Mocks.Impl
 		/// Set the parameter values for out and ref parameters.
 		/// This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
 		/// </summary>
-		public IMethodOptions OutRef(params object[] parameters)
+		public IMethodOptions<T> OutRef(params object[] parameters)
 		{
 			Validate.IsNotNull(parameters, "parameters");
 			expectation.OutRefParams = parameters;
@@ -294,7 +294,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Repeat the method twice.
 		/// </summary>
-		public IMethodOptions Twice()
+		public IMethodOptions<T> Twice()
 		{
 			expectation.Expected = new Range(2, 2);
 			return this;
@@ -303,7 +303,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Repeat the method once.
 		/// </summary>
-		public IMethodOptions Once()
+		public IMethodOptions<T> Once()
 		{
 			expectation.Expected = new Range(1, 1);
 			return this;
@@ -312,7 +312,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Repeat the method at least once, then repeat as many time as it would like.
 		/// </summary>
-		public IMethodOptions AtLeastOnce()
+		public IMethodOptions<T> AtLeastOnce()
 		{
 			expectation.Expected = new Range(1, int.MaxValue);
 			return this;
@@ -321,7 +321,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// This method must not appear in the replay state.
 		/// </summary>
-		public IMethodOptions Never()
+		public IMethodOptions<T> Never()
 		{
 			expectation.Expected = new Range(0, 0);
 			//This expectation will not be thrown, but it will
@@ -337,7 +337,7 @@ namespace Rhino.Mocks.Impl
 		/// Documentation message for the expectation
 		/// </summary>
 		/// <param name="documentationMessage">Message</param>
-		public IMethodOptions Message(string documentationMessage)
+		public IMethodOptions<T> Message(string documentationMessage)
 		{
 			expectation.Message = documentationMessage;
 			return this;
@@ -346,7 +346,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Repeat the method any number of times.
 		/// </summary>
-		public IMethodOptions Any()
+		public IMethodOptions<T> Any()
 		{
 			expectation.Expected = new Range(int.MaxValue, int.MaxValue);
 			expectation.RepeatableOption = RepeatableOption.Any;
@@ -359,7 +359,7 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		/// <param name="min">Min.</param>
 		/// <param name="max">Max.</param>
-		public IMethodOptions Times(int min, int max)
+		public IMethodOptions<T> Times(int min, int max)
 		{
 			expectation.Expected = new Range(min, max);
 			return this;
@@ -368,7 +368,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Set the amount of times to repeat an action.
 		/// </summary>
-		public IMethodOptions Times(int count)
+		public IMethodOptions<T> Times(int count)
 		{
 			expectation.Expected = new Range(count, count);
 			return this;

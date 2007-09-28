@@ -62,12 +62,17 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Get the options for the last method call
 		/// </summary>
-		IMethodOptions IMockState.LastMethodOptions
+		public IMethodOptions<T> GetLastMethodOptions<T>()
 		{
-			get
-			{
-				throw InvalidInReplayState();
-			}
+			throw InvalidInReplayState();
+		}
+
+		/// <summary>
+		/// Get the options for the last method call
+		/// </summary>
+		public IMethodOptions<object> LastMethodOptions
+		{
+			get { throw InvalidInReplayState(); }
 		}
 
 		/// <summary>

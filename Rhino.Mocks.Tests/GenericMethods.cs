@@ -67,15 +67,15 @@ IFactory.Create<System.String>(); Expected #1, Actual #0." )]
 			factory.Create<int>();
 		}
 
-
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException),"Type 'System.Int32' doesn't match the return type 'System.String' for method 'IFactory.Create<System.String>();'")]
-		public void WillGiveErrorIfThereIsTypeMismatchInGenericParameters()
-		{
-			MockRepository mocks = new MockRepository();
-			IFactory factory = mocks.CreateMock<IFactory>();
-			Expect.Call(factory.Create<string>()).Return(1);
-		}
+//		Won't compile anymore
+//		[Test]
+//		[ExpectedException(typeof(InvalidOperationException),"Type 'System.Int32' doesn't match the return type 'System.String' for method 'IFactory.Create<System.String>();'")]
+//		public void WillGiveErrorIfThereIsTypeMismatchInGenericParameters()
+//		{
+//			MockRepository mocks = new MockRepository();
+//			IFactory factory = mocks.CreateMock<IFactory>();
+//			Expect.Call(factory.Create<string>()).Return(1);
+//		}
 
 		[Test]
 		[ExpectedException(typeof(ExpectationViolationException), "IFactory.Create<System.String>(); Expected #1, Actual #0.")]

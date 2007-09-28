@@ -73,9 +73,9 @@ namespace Rhino.Mocks
 		/// The method options for the last call on /any/ proxy on /any/ repository on the current thread.
 		/// This method if not safe for multi threading scenarios, use <see cref="On"/>.
 		/// </summary>
-		public static IMethodOptions Call(object ignored)
+		public static IMethodOptions<T> Call<T>(T ignored)
 		{
-			return LastCall.Options;
+			return LastCall.GetOptions<T>();
 		}
 
 		/*

@@ -88,7 +88,7 @@ namespace Rhino.Mocks.Tests
 		{
 			try
 			{
-				Expect.Call(null);
+				Expect.Call<object>(null);
 			}
 			finally
 			{
@@ -103,7 +103,7 @@ namespace Rhino.Mocks.Tests
 			Expect.Call(demo.Prop).Return("ayende");
 			mocks.ReplayAll();
 			Assert.AreEqual("ayende", demo.Prop);
-			Expect.Call(null);
+			Expect.Call<object>(null);
 		}
 	}
 }

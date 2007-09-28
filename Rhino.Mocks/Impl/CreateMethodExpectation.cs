@@ -52,9 +52,9 @@ namespace Rhino.Mocks.Impl
 		/// Get the method options for the call
 		/// </summary>
 		/// <param name="ignored">The method call should go here, the return value is ignored</param>
-		public virtual IMethodOptions Call(object ignored)
+		public virtual IMethodOptions<T> Call<T>(T ignored)
 		{
-			return mockedObject.Repository.LastMethodCall(mockedInstance);
+			return mockedObject.Repository.LastMethodCall<T>(mockedInstance);
 		}
 	}
 }

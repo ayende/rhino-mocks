@@ -71,14 +71,14 @@ namespace Rhino.Mocks
 		/// </summary>
 		/// <param name="mockedInstance">The mocked object</param>
 		/// <returns>Interface that allows to set options for the last method call on this object</returns>
-		public static IMethodOptions On(object mockedInstance)
+		public static IMethodOptions<object> On(object mockedInstance)
 		{
 			IMockedObject mockedObj = MockRepository.GetMockedObject(mockedInstance);
-			return mockedObj.Repository.LastMethodCall(mockedInstance);
+			return mockedObj.Repository.LastMethodCall<object>(mockedInstance);
 		}
 
 		/*
-		 * Property: Options
+		 * Method: GetOptions
 		 * *Internal!*
 		 * 
 		 * Get the method options for the last method call from *all* the mock objects.
@@ -87,14 +87,11 @@ namespace Rhino.Mocks
 		 * Thread safety:
 		 * *Not* safe for mutli threading, use <On>
 		 */ 
-		internal static IMethodOptions Options
+		internal static IMethodOptions<T> GetOptions<T>()
 		{
-			get
-			{
 				if (MockRepository.LastMockedObject==null)
 					throw new InvalidOperationException("Invalid call, the last call has been used or no call has been made (did you make a call to a non virtual method?).");
-				return MockRepository.lastRepository.LastMethodCall(MockRepository.LastMockedObject);
-			}
+				return MockRepository.lastRepository.LastMethodCall<T>(MockRepository.LastMockedObject);
 		}
 
 		/*
@@ -110,9 +107,19 @@ namespace Rhino.Mocks
 		/// </summary>
 		/// <param name="objToReturn">The object the method will return</param>
 		/// <returns>IRepeat that defines how many times the method will return this value</returns>
-		public static IMethodOptions Return(object objToReturn)
+		public static IMethodOptions<T> Return<T>(T objToReturn)
 		{
-			return Options.Return(objToReturn);
+			return GetOptions<T>().Return(objToReturn);
+		}
+
+		/// <summary>
+		/// Set the return value for the method. This overload is needed for LastCall.Return(null)
+		/// </summary>
+		/// <param name="objToReturn">The object the method will return</param>
+		/// <returns>IRepeat that defines how many times the method will return this value</returns>
+		public static IMethodOptions<object> Return(object objToReturn)
+		{
+			return GetOptions<object>().Return(objToReturn);
 		}
 
 		/*
@@ -127,9 +134,9 @@ namespace Rhino.Mocks
 		/// Throws the specified exception when the method is called.
 		/// </summary>
 		/// <param name="exception">Exception to throw</param>
-		public static IMethodOptions Throw(Exception exception)
+		public static IMethodOptions<object> Throw(Exception exception)
 		{
-			return Options.Throw(exception);
+			return GetOptions<object>().Throw(exception);
 		}
 
 		/*
@@ -145,9 +152,9 @@ namespace Rhino.Mocks
 		/// Ignores the arguments for this method. Any argument will be matched
 		/// againt this method.
 		/// </summary>
-		public static IMethodOptions IgnoreArguments()
+		public static IMethodOptions<object> IgnoreArguments()
 		{
-			return Options.IgnoreArguments();
+			return GetOptions<object>().IgnoreArguments();
 		}
 
 		/*
@@ -162,9 +169,9 @@ namespace Rhino.Mocks
 		/// <summary>
 		/// Better syntax to define repeats. 
 		/// </summary>
-		public static IRepeat Repeat
+		public static IRepeat<object> Repeat
 		{
-			get { return Options.Repeat; }
+			get { return GetOptions<object>().Repeat; }
 		}
 
 		/*
@@ -179,9 +186,9 @@ namespace Rhino.Mocks
 		/// <summary>
 		/// Add constraints for the method's arguments.
 		/// </summary>
-		public static IMethodOptions Constraints(params AbstractConstraint[] constraints)
+		public static IMethodOptions<object> Constraints(params AbstractConstraint[] constraints)
 		{
-			return Options.Constraints(constraints);
+			return GetOptions<object>().Constraints(constraints);
 		}
 
 		/*
@@ -203,9 +210,9 @@ namespace Rhino.Mocks
 		/// <summary>
 		/// Set a callback method for the last call
 		/// </summary>
-		public static IMethodOptions Callback(Delegate callback)
+		public static IMethodOptions<object> Callback(Delegate callback)
 		{
-			return Options.Callback(callback);
+			return GetOptions<object>().Callback(callback);
 		}
 
         /// <summary>
@@ -214,16 +221,16 @@ namespace Rhino.Mocks
         [Obsolete("Use CallOriginalMethod(OriginalCallOptions options) overload to explicitly specify the call options")]
 		public static void CallOriginalMethod()
         {
-            Options.CallOriginalMethod();
+            GetOptions<object>().CallOriginalMethod();
         }
 
 		
         /// <summary>
         /// Call the original method on the class, optionally bypassing the mocking layers, for the last call.
         /// </summary>
-		public static IMethodOptions CallOriginalMethod(OriginalCallOptions options)
+		public static IMethodOptions<object> CallOriginalMethod(OriginalCallOptions options)
         {
-            return Options.CallOriginalMethod(options);
+            return GetOptions<object>().CallOriginalMethod(options);
         }
 
         /*
@@ -244,9 +251,9 @@ namespace Rhino.Mocks
         /// Set a delegate to be called when the expectation is matched.
         /// The delegate return value will be returned from the expectation.
         /// </summary>
-        public static IMethodOptions Do(Delegate action)
+        public static IMethodOptions<object> Do(Delegate action)
         {
-            return Options.Do(action);
+            return GetOptions<object>().Do(action);
         }
 
 	    /// <summary>
@@ -254,25 +261,25 @@ namespace Rhino.Mocks
 	    /// </summary>
 	    public static IEventRaiser GetEventRaiser()
 	    {
-            return Options.GetEventRaiser();
+            return GetOptions<object>().GetEventRaiser();
 	    }
 	    
 	    /// <summary>
 	    /// Set the parameter values for out and ref parameters.
 	    /// This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
 	    /// </summary>
-	    public static IMethodOptions OutRef(params object[] parameters)
+	    public static IMethodOptions<object> OutRef(params object[] parameters)
 	    {
-            return Options.OutRef(parameters);
+            return GetOptions<object>().OutRef(parameters);
 	    }
 		
 		/// <summary>
     	/// Documentation message for the expectation
     	/// </summary>
     	/// <param name="documentationMessage">Message</param>
-		public static IMethodOptions Message(string documentationMessage)
+		public static IMethodOptions<object> Message(string documentationMessage)
 		{
-			return Options.Message(documentationMessage);
+			return GetOptions<object>().Message(documentationMessage);
 		}
 
 		/* Method: PropertyBehavior
@@ -287,9 +294,9 @@ namespace Rhino.Mocks
         /// Use the property as a simple property, getting/setting the values without
         /// causing mock expectations.
         /// </summary>
-        public static IMethodOptions PropertyBehavior()
+        public static IMethodOptions<object> PropertyBehavior()
         {
-			return Options.PropertyBehavior();
+			return GetOptions<object>().PropertyBehavior();
         }
 	}
 }

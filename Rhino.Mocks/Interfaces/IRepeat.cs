@@ -37,7 +37,7 @@ namespace Rhino.Mocks.Interfaces
 	/// <summary>
 	/// Allows to specify the number of time for method calls
 	/// </summary>
-	public interface IRepeat
+	public interface IRepeat<T>
 	{
 		/*
 		 * Method: Twice
@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Repeat the method twice.
 		/// </summary>
-		IMethodOptions Twice();
+		IMethodOptions<T> Twice();
 
 		/*
 		 * Method: Once
@@ -60,13 +60,13 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Repeat the method once.
 		/// </summary>
-		IMethodOptions Once();
+		IMethodOptions<T> Once();
 
 	    
 	    /// <summary>
         /// Repeat the method at least once, then repeat as many time as it would like.
         /// </summary>
-        IMethodOptions AtLeastOnce();
+        IMethodOptions<T> AtLeastOnce();
 	    
 		/*
 		 * Method: Any
@@ -80,7 +80,7 @@ namespace Rhino.Mocks.Interfaces
 		/// Repeat the method any number of times.
 		/// This has special affects in that this method would now ignore orderring.
 		/// </summary>
-		IMethodOptions Any();
+		IMethodOptions<T> Any();
 
 		/*
 		 * Method: Times
@@ -97,7 +97,7 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		/// <param name="min">Min.</param>
 		/// <param name="max">Max.</param>
-		IMethodOptions Times(int min, int max);
+		IMethodOptions<T> Times(int min, int max);
 
 		/*
 		 * Method: Times
@@ -107,7 +107,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Set the amount of times to repeat an action.
 		/// </summary>
-		IMethodOptions Times(int count);
+		IMethodOptions<T> Times(int count);
 
 		/*
 		 * Method: Never
@@ -121,6 +121,6 @@ namespace Rhino.Mocks.Interfaces
 		/// This method must not appear in the replay state.
 		/// This has special affects in that this method would now ignore orderring.
 		/// </summary>
-		IMethodOptions Never();
+		IMethodOptions<T> Never();
 	}
 }

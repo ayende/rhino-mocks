@@ -85,7 +85,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 			ICache<string, int> mockCache = mocks.CreateMock<ICache<string, int>>();
-			IMethodOptions opts = Expect.Call(mockCache.GetValue("a"));
+			IMethodOptions<int> opts = Expect.Call(mockCache.GetValue("a"));
 			opts.Do(new StringInt(GetValue));
 			mocks.ReplayAll();
 

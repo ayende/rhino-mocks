@@ -71,7 +71,12 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Get the options for the last method call
 		/// </summary>
-		IMethodOptions LastMethodOptions { get; }
+		IMethodOptions<T> GetLastMethodOptions<T>();
+
+		/// <summary>
+		/// Get the options for the last method call
+		/// </summary>
+		IMethodOptions<object> LastMethodOptions { get; }
 
 		/// <summary>
 		/// Set the exception to throw when Verify is called.

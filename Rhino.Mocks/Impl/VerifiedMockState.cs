@@ -100,7 +100,15 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Get the options for the last method call
 		/// </summary>
-		public IMethodOptions LastMethodOptions
+		public IMethodOptions<T> GetLastMethodOptions<T>()
+		{
+			throw InvalidInVerifiedState(); 
+		}
+
+		/// <summary>
+		/// Get the options for the last method call
+		/// </summary>
+		public IMethodOptions<object> LastMethodOptions
 		{
 			get { throw InvalidInVerifiedState(); }
 		}

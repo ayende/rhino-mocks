@@ -49,7 +49,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			MockRepository mocks = new MockRepository();
 			IGenericType<object> mock =
 				mocks.CreateMock<IGenericType<object>>();
-			IMethodOptions methodOptions = Expect.Call(mock.MyMethod());
+			IMethodOptions<object> methodOptions = Expect.Call(mock.MyMethod());
 			methodOptions.Do((MyDelegate)delegate { return new object(); });
 		}
 
