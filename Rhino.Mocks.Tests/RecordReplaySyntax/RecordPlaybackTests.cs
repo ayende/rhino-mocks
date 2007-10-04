@@ -51,11 +51,10 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 			}
 		}
 
-    [Test]
-    [ExpectedArgumentException]
-    // We should see the ArgumentException, NOT the ExpectationViolation
-    public void PlaybackThrowsOtherExceptionDoesntReport()
-    {
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void PlaybackThrowsOtherExceptionDoesntReport()
+		{
 			MockRepository mockRepository;
 			mockRepository = new MockRepository();
 			IFoo mockedFoo = mockRepository.CreateMock<IFoo>();
@@ -65,9 +64,23 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 			}
 			using (mockRepository.Playback())
 			{
-        throw new ArgumentException();
+				throw new ArgumentException();
 			}
-    }
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void RecordThrowsOtherExceptionDoesntReport()
+		{
+			MockRepository mockRepository;
+			mockRepository = new MockRepository();
+			IFoo mockedFoo = mockRepository.CreateMock<IFoo>();
+			using (mockRepository.Record())
+			{
+				mockedFoo.Bar();//create expectation but doesn't setup return value
+				throw new ArgumentException();
+			}
+		}
 	}
 
 	internal interface IFoo

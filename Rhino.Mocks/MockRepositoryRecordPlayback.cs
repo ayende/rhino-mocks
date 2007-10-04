@@ -72,18 +72,28 @@ namespace Rhino.Mocks
 
 		public void Dispose()
 		{
+			if (DisposableActionsHelper.ExceptionWasThrownAndDisposableActionShouldNotBeCalled())
+				return;
+			m_repository.VerifyAll();
+		}
+	}
+
+	internal static class DisposableActionsHelper
+	{
+		internal static bool ExceptionWasThrownAndDisposableActionShouldNotBeCalled()
+		{
 			//If we're running under Mono, then we don't want to call Marshall.GetExceptionCode as it
-            // currently is not implemented
-            Type t = Type.GetType("Mono.Runtime");
-            if (t == null)
-            {
+			// currently is not implemented
+			Type t = Type.GetType("Mono.Runtime");
+			if (t == null)
+			{
 				// Probably running the .NET Framework
 				if (Marshal.GetExceptionCode() != 0)
 				{
-					return;
+					return true;
 				}
 			}
-			m_repository.VerifyAll();
+			return false;
 		}
 	}
 
@@ -98,6 +108,8 @@ namespace Rhino.Mocks
 
 		public void Dispose()
 		{
+			if (DisposableActionsHelper.ExceptionWasThrownAndDisposableActionShouldNotBeCalled())
+				return;
 			m_repository.ReplayAll();
 		}
 	}
