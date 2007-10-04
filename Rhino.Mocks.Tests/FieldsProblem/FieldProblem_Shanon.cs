@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MbUnit.Framework;
+using RhinoMocksCPPInterfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	using MbUnit.Framework;
-	using RhinoMocksCPPInterfaces;
-
 	[TestFixture]
 	public class FieldProblem_Shanon
 	{
 		[Test]
+		[Ignore("ModOpts in Reflection Emits - delayed for now")]
 		public void CanMockInterfaceWithMethodsHavingModOpt()
 		{
 			MockRepository mocks = new MockRepository();
