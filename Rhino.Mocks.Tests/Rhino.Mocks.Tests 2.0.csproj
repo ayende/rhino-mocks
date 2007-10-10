@@ -122,6 +122,7 @@
     <Compile Include="Coverage.cs" />
     <Compile Include="ExtendingRhinoMocks.cs" />
     <Compile Include="ExtendingRhinoMocks2.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
     <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Aharon.cs">
       <SubType>Component</SubType>
@@ -178,6 +179,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Wade.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Wendy.cs" />
     <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
+    <Compile Include="FieldsProblem\SetupResultAndIgnoreArguments.cs" />
     <Compile Include="GenericMethods.cs" />
     <Compile Include="MockingDelegatesTests.cs" />
     <Compile Include="DoHanlderTests.cs" />

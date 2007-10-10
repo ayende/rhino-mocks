@@ -37,6 +37,8 @@ using Rhino.Mocks.Impl;
 
 namespace Rhino.Mocks.MethodRecorders
 {
+	using Generated;
+
 	/// <summary>
 	/// Ordered collection of methods, methods must arrive in specified order
 	/// in order to pass.
@@ -47,14 +49,16 @@ namespace Rhino.Mocks.MethodRecorders
 		/// Creates a new <see cref="OrderedMethodRecorder"/> instance.
 		/// </summary>
 		/// <param name="parentRecorder">Parent recorder.</param>
-		public OrderedMethodRecorder(IMethodRecorder parentRecorder) : base(parentRecorder)
+		/// <param name="repeatableMethods">Repetable methods</param>
+		public OrderedMethodRecorder(IMethodRecorder parentRecorder, ProxyMethodExpectationsDictionary repeatableMethods)
+			: base(parentRecorder, repeatableMethods)
 		{
 		}
 
 		/// <summary>
 		/// Creates a new <see cref="OrderedMethodRecorder"/> instance.
 		/// </summary>
-		public OrderedMethodRecorder()
+		public OrderedMethodRecorder(ProxyMethodExpectationsDictionary repeatableMethods): base(repeatableMethods)
 		{
 		}
 

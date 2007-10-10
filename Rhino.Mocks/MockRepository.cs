@@ -156,9 +156,17 @@ namespace Rhino.Mocks
         /// </summary>
         protected ProxyStateDictionary proxies;
 
-        private static ProxyGenerator generator = new ProxyGenerator();
-        private Stack recorders;
-        private IMethodRecorder rootRecorder;
+        private static readonly ProxyGenerator generator = new ProxyGenerator();
+        private readonly Stack recorders;
+        private readonly IMethodRecorder rootRecorder;
+		/// <summary>
+		/// This is here because we can't put it in any of the recorders, since repeatable methods
+		/// have no orderring, and if we try to handle them using the usual manner, we would get into
+		/// wierd situations where repeatable method that was defined in an orderring block doesn't
+		/// exists until we enter this block.
+		/// </summary>
+		private ProxyMethodExpectationsDictionary repeatableMethods = new ProxyMethodExpectationsDictionary();
+
 
         #endregion
 
@@ -192,7 +200,7 @@ namespace Rhino.Mocks
         public MockRepository()
         {
             recorders = new Stack();
-            rootRecorder = new UnorderedMethodRecorder();
+            rootRecorder = new UnorderedMethodRecorder(repeatableMethods);
             recorders.Push(rootRecorder);
             proxies = new ProxyStateDictionary();
 #if dotNet2
@@ -240,7 +248,7 @@ namespace Rhino.Mocks
         /// </summary>
         public IDisposable Ordered()
         {
-            return new RecorderChanger(this, Recorder, new OrderedMethodRecorder(Recorder));
+            return new RecorderChanger(this, Recorder, new OrderedMethodRecorder(Recorder,repeatableMethods));
         }
 
         /*
@@ -286,7 +294,7 @@ namespace Rhino.Mocks
         /// </summary>
         public IDisposable Unordered()
         {
-            return new RecorderChanger(this, Recorder, new UnorderedMethodRecorder(Recorder));
+            return new RecorderChanger(this, Recorder, new UnorderedMethodRecorder(Recorder,repeatableMethods));
         }
 
         /*

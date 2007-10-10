@@ -37,6 +37,8 @@ using Rhino.Mocks.Tests.Impl;
 
 namespace Rhino.Mocks.Tests.MethodRecorders
 {
+	using Generated;
+
 	[TestFixture]
 	public class RecorderChangerTests
 	{
@@ -59,7 +61,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void ChangeRecorderOnCtor()
 		{
-			IMethodRecorder recorder = new UnorderedMethodRecorder();
+			IMethodRecorder recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			MethodRecorderBaseTests.TestMethodRecorder testRecorder = new MethodRecorderBaseTests.TestMethodRecorder();
 			new RecorderChanger(mocks, recorder, testRecorder);
 			recorder.GetAllExpectationsForProxy(new object());
@@ -70,7 +72,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void ChangeBackOnDispose()
 		{
-			IMethodRecorder recorder = new UnorderedMethodRecorder();
+			IMethodRecorder recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			MethodRecorderBaseTests.TestMethodRecorder testRecorder = new MethodRecorderBaseTests.TestMethodRecorder();
 			using (new RecorderChanger(mocks, recorder, testRecorder))
 			{
@@ -86,7 +88,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void ChangeRecorderTwice()
 		{
-			IMethodRecorder recorder = new UnorderedMethodRecorder();
+			IMethodRecorder recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			MethodRecorderBaseTests.TestMethodRecorder testRecorder = new MethodRecorderBaseTests.TestMethodRecorder();
 			using (new RecorderChanger(mocks, recorder, testRecorder))
 			{

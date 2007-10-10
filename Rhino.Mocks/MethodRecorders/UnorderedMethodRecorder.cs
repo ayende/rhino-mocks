@@ -56,14 +56,17 @@ namespace Rhino.Mocks.MethodRecorders
 		/// Creates a new <see cref="UnorderedMethodRecorder"/> instance.
 		/// </summary>
 		/// <param name="parentRecorder">Parent recorder.</param>
-		public UnorderedMethodRecorder(IMethodRecorder parentRecorder) : base(parentRecorder)
+		/// <param name="repeatableMethods">Repeatable methods</param>
+		public UnorderedMethodRecorder(IMethodRecorder parentRecorder, ProxyMethodExpectationsDictionary repeatableMethods)
+			: base(parentRecorder,repeatableMethods)
 		{
 		}
 
 		/// <summary>
 		/// Creates a new <see cref="UnorderedMethodRecorder"/> instance.
 		/// </summary>
-		public UnorderedMethodRecorder()
+		public UnorderedMethodRecorder(ProxyMethodExpectationsDictionary repeatableMethods)
+			: base(repeatableMethods)
 		{
 		}
 

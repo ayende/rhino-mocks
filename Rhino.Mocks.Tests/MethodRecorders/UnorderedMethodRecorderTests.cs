@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void CanRecordMethodsAndVerifyThem()
 		{
-			UnorderedMethodRecorder recorder = new UnorderedMethodRecorder();
+			UnorderedMethodRecorder recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			recorder.Record(demo, voidNoArgs, new AnyArgsExpectation(new FakeInvocation(voidNoArgs)));
 			recorder.Record(demo, voidThreeArgs, new AnyArgsExpectation(new FakeInvocation(voidNoArgs)));
 
@@ -56,7 +56,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[ExpectedException(typeof (ExpectationViolationException), "IDemo.VoidNoArgs(); Expected #1, Actual #2.")]
 		public void ReplayUnrecordedMethods()
 		{
-			UnorderedMethodRecorder recorder = new UnorderedMethodRecorder();
+			UnorderedMethodRecorder recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			recorder.Record(demo, voidNoArgs, new AnyArgsExpectation(new FakeInvocation(voidNoArgs)));
 			recorder.Record(demo, voidThreeArgs, new AnyArgsExpectation(new FakeInvocation(voidNoArgs)));
 
@@ -68,7 +68,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 
 		protected override IMethodRecorder CreateRecorder()
 		{
-			return new UnorderedMethodRecorder();
+			return new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 		}
 	}
 }

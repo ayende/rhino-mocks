@@ -72,12 +72,13 @@ namespace Rhino.Mocks.MethodRecorders
 		/// for a spesific method call. A replayer gets into this list by calling 
 		/// ClearReplayerToCall() on its parent. This list is Clear()ed on each new invocation.
 		/// </summary>
-		private IList replayersToIgnoreForThisCall = new ArrayList();
-		
+		private readonly IList replayersToIgnoreForThisCall = new ArrayList();
+
 		/// <summary>
 		/// All the repeatable methods calls.
 		/// </summary>
 		private ProxyMethodExpectationsDictionary repeatableMethods;
+		
 		/// <summary>
 		/// Counts the recursion depth of the current expectation search stack
 		/// </summary>
@@ -86,9 +87,9 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Creates a new <see cref="MethodRecorderBase"/> instance.
 		/// </summary>
-		public MethodRecorderBase()
+		public MethodRecorderBase(ProxyMethodExpectationsDictionary repeatableMethods)
 		{
-			repeatableMethods = new ProxyMethodExpectationsDictionary();
+			this.repeatableMethods = repeatableMethods;
 			recorderToCall = null;
 			replayerToCall = null;
 		}
@@ -97,7 +98,9 @@ namespace Rhino.Mocks.MethodRecorders
 		/// Creates a new <see cref="MethodRecorderBase"/> instance.
 		/// </summary>
 		/// <param name="parentRecorder">Parent recorder.</param>
-		public MethodRecorderBase(IMethodRecorder parentRecorder) : this()
+		/// <param name="repeatableMethods">Repeatable methods</param>
+		public MethodRecorderBase(IMethodRecorder parentRecorder, ProxyMethodExpectationsDictionary repeatableMethods)
+			: this(repeatableMethods)
 		{
 			this.parentRecorder = parentRecorder;
 		}

@@ -38,6 +38,8 @@ using Rhino.Mocks.Tests.MethodRecorders;
 
 namespace Rhino.Mocks.Tests
 {
+	using Generated;
+
 	[TestFixture]	
 	public class ComplexOredering
 	{
@@ -50,8 +52,8 @@ namespace Rhino.Mocks.Tests
 		[SetUp]
 		public void SetUp()
 		{
-			recorder = new UnorderedMethodRecorder();
-			nestedRecorder = new UnorderedMethodRecorder();
+			recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
+			nestedRecorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			recorder.AddRecorder(nestedRecorder);
 
 			proxy = new object();

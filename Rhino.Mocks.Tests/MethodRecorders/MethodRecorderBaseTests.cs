@@ -53,7 +53,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[SetUp]
 		public void SetUp()
 		{
-			recorder = new UnorderedMethodRecorder();
+			recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			testRecorder = new TestMethodRecorder();
 			recorder.AddRecorder(testRecorder);
 
@@ -143,6 +143,10 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 				DoExpectedCallsCalled,
 				DoRemoveExpectationCalled;
 
+			public TestMethodRecorder()
+				: base(new ProxyMethodExpectationsDictionary())
+			{
+			}
 
 			protected override void DoRecord(object proxy, MethodInfo method, IExpectation expectation)
 			{
