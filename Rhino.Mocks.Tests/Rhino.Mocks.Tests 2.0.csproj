@@ -128,6 +128,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andy.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Chompers.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_DavidG.cs" />
