@@ -78,6 +78,30 @@ namespace Rhino.Mocks
 			return LastCall.GetOptions<T>();
 		}
 
+		///<summary>
+		/// A delegate that execute an action
+		///</summary>
+		public delegate void Action();
+
+		/// <summary>
+		/// Accepts a delegate that will execute inside the method, and then return the resulting
+		/// <see cref="IMethodOptions{T}"/> instance.
+		/// It is expected to be used with anonymous delegates / lambda expressions and only one
+		/// method should be called.
+		/// </summary>
+		/// <example>
+		/// IService mockSrv = mocks.CreateMock(typeof(IService)) as IService;
+		/// Expect.Call(delegate{ mockSrv.Start(); }).Throw(new NetworkException());
+		/// ...
+		/// </example>
+		public static IMethodOptions<Action> Call(Action actionToExecute)
+		{
+			if (actionToExecute == null)
+				throw new ArgumentNullException("actionToExecute", "The action to execute cannot be null");
+			actionToExecute();
+			return LastCall.GetOptions<Action>();
+		}
+
 		/*
 		 * Method: On
 		 * Get the method options for the last method call on the mockInstance.

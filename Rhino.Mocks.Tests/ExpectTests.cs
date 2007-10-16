@@ -75,6 +75,15 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CanUseAnonymousDelegatesToCallVoidMethojds()
+		{
+			Expect.Call(delegate { demo.VoidNoArgs(); }).Throw(new ArgumentNullException());
+			mocks.ReplayAll();
+			demo.VoidNoArgs();
+		}
+
+		[Test]
 		public void ExpectCallNormal()
 		{
 			Expect.Call(demo.Prop).Return("ayende");
