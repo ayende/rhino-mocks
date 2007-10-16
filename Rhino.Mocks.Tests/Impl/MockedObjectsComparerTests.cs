@@ -55,15 +55,6 @@ namespace Rhino.Mocks.Tests.Impl
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException),"Both arguments to Compare() were not Mocked objects!")]
-		public void ThrowForBothNonMocks()
-		{
-            bool condition = MockedObjectsEquality.Instance.Compare(new object(), new object()) == 0;
-			Assert.IsFalse(condition);
-		}
-
-
-		[Test]
 		public void TrueForSameObject()
 		{
             bool condition = MockedObjectsEquality.Instance.Compare(one, one) == 0;

@@ -31,6 +31,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using Rhino.Mocks.Interfaces;
+using System.Collections.Generic;
 
 namespace Rhino.Mocks.Impl
 {
@@ -40,15 +41,9 @@ namespace Rhino.Mocks.Impl
 	/// This class has no state so it is a singelton to avoid creating a lot of objects 
 	/// that does the exact same thing. See flyweight patterns.
 	/// </summary>
-    public class MockedObjectsEquality : IComparer,
-#if dotNet2
-    IEqualityComparer, System.Collections.Generic.IEqualityComparer<object>
-#else
-        IHashCodeProvider
-#endif   
-    
+    public class MockedObjectsEquality : IComparer, IEqualityComparer, IEqualityComparer<object>
 	{
-		private static MockedObjectsEquality instance = new MockedObjectsEquality();
+		private static readonly MockedObjectsEquality instance = new MockedObjectsEquality();
 
 		private static int baseHashcode = 0;
 
@@ -99,7 +94,7 @@ namespace Rhino.Mocks.Impl
 			IMockedObject one = MockRepository.GetMockedObjectOrNull(x);
 			IMockedObject two = MockRepository.GetMockedObjectOrNull(y);
             if (one == null && two == null)
-                throw new ArgumentException("Both arguments to Compare() were not Mocked objects!");
+            	return -2;//both of them are probably transperant proxies
             if (one == null)
                 return 1;
             if (two == null)

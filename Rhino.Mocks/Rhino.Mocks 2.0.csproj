@@ -115,6 +115,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Impl\NullLogger.cs" />
+    <Compile Include="Impl\RemotingMockGenerator.cs" />
     <Compile Include="Impl\TextWriterExpectationLogger.cs" />
     <Compile Include="Impl\StubRecordMockState.cs" />
     <Compile Include="Impl\StubReplayMockState.cs" />

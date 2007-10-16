@@ -74,7 +74,7 @@ namespace Rhino.Mocks.Utilities
 				if (method.IsGenericMethod)
 				{
 					sb.Append("<");
-					foreach (Type genericArgument in invocation.GetType().GetGenericArguments())
+					foreach (Type genericArgument in invocation.GenericArguments)
 					{
 						sb.Append(genericArgument);
 						sb.Append(", ");
