@@ -39,7 +39,7 @@ namespace Rhino.Mocks
 	 * note:
 	 * If the method has a return value, it's recommended to use <Expect>
 	 * 
-	 */ 
+	 */
 	/// <summary>
 	/// Allows to set various options for the last method call on
 	/// a specified object.
@@ -51,7 +51,7 @@ namespace Rhino.Mocks
 #else
     sealed
 #endif
-        class LastCall
+ class LastCall
 	{
 		/*
 		 * Method: On
@@ -65,7 +65,7 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety:
 		 * This method is safe to use in multi threading scenarios.
-		 */ 
+		 */
 		/// <summary>
 		/// Allows to get an interface to work on the last call.
 		/// </summary>
@@ -86,12 +86,12 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety:
 		 * *Not* safe for mutli threading, use <On>
-		 */ 
+		 */
 		internal static IMethodOptions<T> GetOptions<T>()
 		{
-				if (MockRepository.LastMockedObject==null)
-					throw new InvalidOperationException("Invalid call, the last call has been used or no call has been made (did you make a call to a non virtual method?).");
-				return MockRepository.lastRepository.LastMethodCall<T>(MockRepository.LastMockedObject);
+			if (MockRepository.LastMockedObject == null)
+				throw new InvalidOperationException("Invalid call, the last call has been used or no call has been made (make sure that you are calling a virtual (C#) / Overridable (VB) method).");
+			return MockRepository.lastRepository.LastMethodCall<T>(MockRepository.LastMockedObject);
 		}
 
 		/*
@@ -101,7 +101,7 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety: 
 		 * *Not* safe for mutli threading, use <On>* 
-		 */ 
+		 */
 		/// <summary>
 		/// Set the return value for the method.
 		/// </summary>
@@ -129,7 +129,7 @@ namespace Rhino.Mocks
  		 * 
 		 * Thread safety:
  		 * *Not* safe for mutli threading, use <On>		 
-		 */ 
+		 */
 		/// <summary>
 		/// Throws the specified exception when the method is called.
 		/// </summary>
@@ -147,7 +147,7 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety:
  		 * *Not* safe for mutli threading, use <On>
-		 */ 
+		 */
 		/// <summary>
 		/// Ignores the arguments for this method. Any argument will be matched
 		/// againt this method.
@@ -165,7 +165,7 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety:
  		 * *Not* safe for mutli threading, use <On>
-		 */ 
+		 */
 		/// <summary>
 		/// Better syntax to define repeats. 
 		/// </summary>
@@ -182,7 +182,7 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety:
  		 * *Not* safe for mutli threading, use <On>
-		 */ 
+		 */
 		/// <summary>
 		/// Add constraints for the method's arguments.
 		/// </summary>
@@ -206,7 +206,7 @@ namespace Rhino.Mocks
 		 * 
 		 * Thread safety:
  		 * *Not* safe for mutli threading, use <On>
-		 */ 
+		 */
 		/// <summary>
 		/// Set a callback method for the last call
 		/// </summary>
@@ -215,68 +215,68 @@ namespace Rhino.Mocks
 			return GetOptions<object>().Callback(callback);
 		}
 
-        /// <summary>
-        /// Call the original method on the class, bypassing the mocking layers, for the last call.
-        /// </summary>
-        [Obsolete("Use CallOriginalMethod(OriginalCallOptions options) overload to explicitly specify the call options")]
-		public static void CallOriginalMethod()
-        {
-            GetOptions<object>().CallOriginalMethod();
-        }
-
-		
-        /// <summary>
-        /// Call the original method on the class, optionally bypassing the mocking layers, for the last call.
-        /// </summary>
-		public static IMethodOptions<object> CallOriginalMethod(OriginalCallOptions options)
-        {
-            return GetOptions<object>().CallOriginalMethod(options);
-        }
-
-        /*
-         * Method: Do
-         * 
-         * Set an action to run when the expectation is matched.
-         * 
-         * Important:
-         * The action's delegate *must* have the same signature as the last methdo call, and its return
-         * value must be assignable to the last method call return value.
-         * 
-         * Note:
-         * This method is only called once, after the method call was match to the expectation.
-         * 
-         * 
-         */
-        /// <summary>
-        /// Set a delegate to be called when the expectation is matched.
-        /// The delegate return value will be returned from the expectation.
-        /// </summary>
-        public static IMethodOptions<object> Do(Delegate action)
-        {
-            return GetOptions<object>().Do(action);
-        }
-
-	    /// <summary>
-	    /// Gets an interface that will raise the last event when called.
-	    /// </summary>
-	    public static IEventRaiser GetEventRaiser()
-	    {
-            return GetOptions<object>().GetEventRaiser();
-	    }
-	    
-	    /// <summary>
-	    /// Set the parameter values for out and ref parameters.
-	    /// This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
-	    /// </summary>
-	    public static IMethodOptions<object> OutRef(params object[] parameters)
-	    {
-            return GetOptions<object>().OutRef(parameters);
-	    }
-		
 		/// <summary>
-    	/// Documentation message for the expectation
-    	/// </summary>
-    	/// <param name="documentationMessage">Message</param>
+		/// Call the original method on the class, bypassing the mocking layers, for the last call.
+		/// </summary>
+		[Obsolete("Use CallOriginalMethod(OriginalCallOptions options) overload to explicitly specify the call options")]
+		public static void CallOriginalMethod()
+		{
+			GetOptions<object>().CallOriginalMethod();
+		}
+
+
+		/// <summary>
+		/// Call the original method on the class, optionally bypassing the mocking layers, for the last call.
+		/// </summary>
+		public static IMethodOptions<object> CallOriginalMethod(OriginalCallOptions options)
+		{
+			return GetOptions<object>().CallOriginalMethod(options);
+		}
+
+		/*
+		 * Method: Do
+		 * 
+		 * Set an action to run when the expectation is matched.
+		 * 
+		 * Important:
+		 * The action's delegate *must* have the same signature as the last methdo call, and its return
+		 * value must be assignable to the last method call return value.
+		 * 
+		 * Note:
+		 * This method is only called once, after the method call was match to the expectation.
+		 * 
+		 * 
+		 */
+		/// <summary>
+		/// Set a delegate to be called when the expectation is matched.
+		/// The delegate return value will be returned from the expectation.
+		/// </summary>
+		public static IMethodOptions<object> Do(Delegate action)
+		{
+			return GetOptions<object>().Do(action);
+		}
+
+		/// <summary>
+		/// Gets an interface that will raise the last event when called.
+		/// </summary>
+		public static IEventRaiser GetEventRaiser()
+		{
+			return GetOptions<object>().GetEventRaiser();
+		}
+
+		/// <summary>
+		/// Set the parameter values for out and ref parameters.
+		/// This is done using zero based indexing, and _ignoring_ any non out/ref parameter.
+		/// </summary>
+		public static IMethodOptions<object> OutRef(params object[] parameters)
+		{
+			return GetOptions<object>().OutRef(parameters);
+		}
+
+		/// <summary>
+		/// Documentation message for the expectation
+		/// </summary>
+		/// <param name="documentationMessage">Message</param>
 		public static IMethodOptions<object> Message(string documentationMessage)
 		{
 			return GetOptions<object>().Message(documentationMessage);
@@ -289,14 +289,14 @@ namespace Rhino.Mocks
          * 
          * Note:
          * This can be called only when the last call is a getter or setter.
-         */ 
-        /// <summary>
-        /// Use the property as a simple property, getting/setting the values without
-        /// causing mock expectations.
-        /// </summary>
-        public static IMethodOptions<object> PropertyBehavior()
-        {
+         */
+		/// <summary>
+		/// Use the property as a simple property, getting/setting the values without
+		/// causing mock expectations.
+		/// </summary>
+		public static IMethodOptions<object> PropertyBehavior()
+		{
 			return GetOptions<object>().PropertyBehavior();
-        }
+		}
 	}
 }

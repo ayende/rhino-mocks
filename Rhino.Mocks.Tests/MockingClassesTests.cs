@@ -115,7 +115,7 @@ namespace Rhino.Mocks.Tests
 		}
 
         [Test]
-        [ExpectedException(typeof (InvalidOperationException),"Invalid call, the last call has been used or no call has been made (did you make a call to a non virtual method?).")]
+        [ExpectedException(typeof (InvalidOperationException),"Invalid call, the last call has been used or no call has been made (make sure that you are calling a virtual (C#) / Overridable (VB) method).")]
         public void CallNonVirtualMethodThatImplementsAnInterface()
         {
             ((IDisposable)demoClass).Dispose();
