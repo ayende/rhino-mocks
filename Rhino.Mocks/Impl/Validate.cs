@@ -36,13 +36,7 @@ namespace Rhino.Mocks.Impl
 	/// <summary>
 	/// Validate arguments for methods
 	/// </summary>
-	public
-#if dotNet2
-        static
-#else
-        sealed 
-#endif 
-        class Validate
+	public static class Validate
 	{
 		/// <summary>
 		/// Validate that the passed argument is not null.
@@ -67,6 +61,15 @@ namespace Rhino.Mocks.Impl
 		public static bool ArgsEqual(object[] expectedArgs, object[] actualArgs)
 		{
 			return RecursiveCollectionEqual(expectedArgs, actualArgs);
+		}
+
+		/// <summary>
+		/// Validate that the two argument are equals, including validation for
+		/// when the arguments are collections, in which case it will validate their values.
+		/// </summary>
+		public static bool AreEqual(object expectedArg, object actualArg)
+		{
+			return RecursiveCollectionEqual(new object[] { expectedArg }, new object[] { actualArg });
 		}
 
 		#region Implementation

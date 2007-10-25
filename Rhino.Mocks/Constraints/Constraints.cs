@@ -971,7 +971,7 @@ namespace Rhino.Mocks.Constraints
         {
             if (obj == null)
                 return equal == null;
-            return obj.Equals(equal);
+        	return Validate.AreEqual(equal, obj);
         }
 
         /// <summary>
