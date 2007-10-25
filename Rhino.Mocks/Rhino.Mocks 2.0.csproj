@@ -115,7 +115,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Impl\NullLogger.cs" />
-    <Compile Include="Impl\RemotingMockGenerator.cs" />
+    <Compile Include="Impl\RemotingMock\IRemotingProxyOperation.cs" />
+    <Compile Include="Impl\RemotingMock\RemotingMockGenerator.cs" />
+    <Compile Include="Impl\RemotingMock\RemotingProxyDetector.cs" />
+    <Compile Include="Impl\RemotingMock\RemotingInvocation.cs" />
+    <Compile Include="Impl\RemotingMock\RemotingProxy.cs" />
+    <Compile Include="Impl\RemotingMock\RemotingProxyMockedObjectGetter.cs" />
     <Compile Include="Impl\TextWriterExpectationLogger.cs" />
     <Compile Include="Impl\StubRecordMockState.cs" />
     <Compile Include="Impl\StubReplayMockState.cs" />

@@ -39,6 +39,7 @@ using Castle.DynamicProxy;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Impl;
+using Rhino.Mocks.Impl.RemotingMock;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
 
@@ -430,6 +431,7 @@ namespace Rhino.Mocks
             return transparentProxy;
         }
 
+
         /*
 		 * Method: Replay
 		 * Moves a single mock object to the replay state.
@@ -573,18 +575,8 @@ namespace Rhino.Mocks
         {
             object proxy = delegateProxies[invocationProxy];
             if (proxy != null) return proxy;
-
-            return GetRemotingProxy(invocationProxy) ?? invocationProxy;
+            return invocationProxy;
         }
-
-    	private static IMockedObject GetRemotingProxy(object invocationProxy)
-    	{
-			if (invocationProxy.GetType() != typeof(RemotingMockGenerator.InterceptionProxy))
-				return null;
-    		RemotingMockGenerator.EvilHackForPassingMockedObjectFromRemotingProxy evil = new RemotingMockGenerator.EvilHackForPassingMockedObjectFromRemotingProxy();
-    		invocationProxy.Equals(evil);
-    		return evil.MockedObject;
-    	}
 
     	private IMockState CreateRecordState(IMockedObject mockedObject)
         {
@@ -763,11 +755,23 @@ namespace Rhino.Mocks
             Delegate mockedDelegate = mockedInstance as Delegate;
 
             if (mockedDelegate != null)
+            {
                 mockedInstance = mockedDelegate.Target;
+            }
 
-            IMockedObject mockedObj = mockedInstance as IMockedObject;
+            // must be careful not to call any methods on mocked objects,
+            // or it may cause infinite recursion
+            if (mockedInstance is IMockedObject)
+            {
+                return (IMockedObject)mockedInstance;
+            }
 
-        	return mockedObj ?? GetRemotingProxy(mockedInstance);
+            if (RemotingMockGenerator.IsRemotingProxy(mockedInstance))
+            {
+                return RemotingMockGenerator.GetMockedObjectFromProxy(mockedInstance);
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -291,7 +291,7 @@
     <Compile Include="MultiMocks.cs" />
     <Compile Include="OrderTest.cs" />
     <Compile Include="PartialMockTests.cs" />
-    <Compile Include="ProxyMockTests.cs" />
+    <Compile Include="RemotingMockTests.cs" />
     <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
     <Compile Include="RefOutParameters.cs" />
     <Compile Include="Remoting\ContextSwitcher.cs" />
