@@ -9,7 +9,7 @@
 		<SolutionFile>Rhino.Mocks.sln</SolutionFile>
 		<FlattenZipFile>True</FlattenZipFile>
 		<SectionId>-2</SectionId>
-		<Version>3.2.0</Version>
+		<Version>3.3.0</Version>
 		<ExtraInfo></ExtraInfo>
 	</PropertyGroup>
 	
