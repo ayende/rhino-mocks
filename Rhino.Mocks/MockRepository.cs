@@ -303,6 +303,8 @@ namespace Rhino.Mocks
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
         public object CreateMock(Type type, params object[] argumentsForConstructor)
         {
+			if (ShouldUseRemotingProxy(type, argumentsForConstructor))
+				return RemotingMock(type, CreateRecordState);
             return CreateMultiMock(type, new Type[0], argumentsForConstructor);
         }
 
@@ -364,6 +366,8 @@ namespace Rhino.Mocks
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
         public object DynamicMock(Type type, params object[] argumentsForConstructor)
         {
+			if (ShouldUseRemotingProxy(type, argumentsForConstructor))
+				return RemotingMock(type, CreateDynamicRecordState);
             return DynamicMultiMock(type, new Type[0], argumentsForConstructor);
         }
 
@@ -415,12 +419,13 @@ namespace Rhino.Mocks
         /// <param name="type">Type to mock - must be MarshalByRefObject</param>
         /// <returns>Mock object</returns>
         /// <remarks>Proxy mock can mock non-virtual methods, but not static methods</remarks>
-        public object RemotingMock(Type type)
+		/// <param name="factory">Creates the mock state for this proxy</param>
+		private object RemotingMock(Type type, CreateMockState factory)
         {
             ProxyInstance rhinoProxy = new ProxyInstance(this, type);
             RhinoInterceptor interceptor = new RhinoInterceptor(this, rhinoProxy);
 			object transparentProxy = new RemotingMockGenerator().CreateRemotingMock(type, interceptor, rhinoProxy);
-        	IMockState value = CreateRecordState(rhinoProxy);
+        	IMockState value = factory(rhinoProxy);
             proxies.Add(transparentProxy, value);
             return transparentProxy;
         }
@@ -960,10 +965,18 @@ namespace Rhino.Mocks
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
         public T CreateMock<T>(params object[] argumentsForConstructor)
         {
+			if (ShouldUseRemotingProxy(typeof(T), argumentsForConstructor))
+				return (T)RemotingMock(typeof(T), CreateRecordState);
         	return (T)CreateMockObject(typeof(T), CreateRecordState, new Type[0], argumentsForConstructor);
         }
 
-        /*
+    	private static bool ShouldUseRemotingProxy(Type type, object[] argumentsForConstructor)
+    	{
+    		return typeof(MarshalByRefObject).IsAssignableFrom(type) && 
+				(argumentsForConstructor == null || argumentsForConstructor.Length == 0);
+    	}
+
+    	/*
          * Method: DynamicMock<T>
          * Create a mock object of type T with dynamic semantics.
          * Dynamic semantics means that any call that wasn't explicitly recorded is accepted and a
@@ -976,6 +989,8 @@ namespace Rhino.Mocks
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
         public T DynamicMock<T>(params object[] argumentsForConstructor)
         {
+			if (ShouldUseRemotingProxy(typeof(T), argumentsForConstructor))
+				return (T)RemotingMock(typeof(T), CreateDynamicRecordState);
         	return (T)CreateMockObject(typeof(T), CreateDynamicRecordState, new Type[0], argumentsForConstructor);
         }
 
@@ -1058,16 +1073,6 @@ namespace Rhino.Mocks
         public T Stub<T>(params object[] argumentsForConstructor)
         {
             return (T)Stub(typeof(T), argumentsForConstructor);
-        }
-
-        /// <summary>
-        /// Creates a mock object using remoting proxies
-        /// </summary>
-        /// <typeparam name="T">Type of object to mock</typeparam>
-        /// <returns>Mock object</returns>
-        public T RemotingMock<T>() where T : MarshalByRefObject
-        {
-            return (T)RemotingMock(typeof(T));        
         }
 
         /// <summary>
