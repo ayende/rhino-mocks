@@ -63,7 +63,7 @@
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
-				KeyFile="&quot;$(SolutionDir)..\ayende-open-source.snk&quot;"
+				KeyFile="&quot;$(SolutionDir)..\..\ayende-open-source.snk&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"
