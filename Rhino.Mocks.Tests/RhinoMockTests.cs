@@ -261,7 +261,7 @@ Message: Should be called only once")]
 		}
 
 		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "IDemo.VoidStringArg(\"Ayende\"); Expected #1, Actual #1.\r\nIDemo.VoidStringArg(\"Ayende\"); Expected #1, Actual #0.")]
+		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(callback method: RhinoMockTests.CallMethodOnDemo); }' but was: 'IDemo.VoidStringArg(\"Ayende\");'")]
 		public void RecursiveExpectationsOnOrdered()
 		{
 			demo = (IDemo) mocks.CreateMock(typeof (IDemo));

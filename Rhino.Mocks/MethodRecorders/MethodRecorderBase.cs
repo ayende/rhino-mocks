@@ -51,7 +51,7 @@ namespace Rhino.Mocks.MethodRecorders
 		///		* Method Recorders
 		/// </summary>
 		protected IList recordedActions = new ArrayList();
-		
+
 		/// <summary>
 		/// The current recorder.
 		/// </summary>
@@ -78,7 +78,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// All the repeatable methods calls.
 		/// </summary>
 		private ProxyMethodExpectationsDictionary repeatableMethods;
-		
+
 		/// <summary>
 		/// Counts the recursion depth of the current expectation search stack
 		/// </summary>
@@ -126,6 +126,14 @@ namespace Rhino.Mocks.MethodRecorders
 			Validate.IsNotNull(args, "args");
 			if (replayerToCall != null)
 				return replayerToCall.GetRecordedExpectation(invocation,proxy, method, args);
+			
+			//merge recorders that contains only a single empty recorder
+			if(recordedActions.Count==1 && recordedActions[0] is IMethodRecorder)
+			{
+				replayerToCall = (IMethodRecorder) recordedActions[0];
+				return replayerToCall.GetRecordedExpectation(invocation, proxy, method, args);
+			}
+
 			IExpectation expectation = DoGetRecordedExpectation(invocation,proxy, method, args);
 			if (HasExpectations == false)
 				MoveToParentReplayer();
@@ -141,7 +149,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <param name="method">Method.</param>
 		/// <returns>List of all relevant expectation</returns>
 		public abstract ExpectationsList GetAllExpectationsForProxyAndMethod(object proxy, MethodInfo method);
-		
+
 		/// <summary>
 		/// Gets the all expectations for proxy.
 		/// </summary>
@@ -153,11 +161,11 @@ namespace Rhino.Mocks.MethodRecorders
 			if (replayerToCall != null)
 				fromChild = replayerToCall.GetAllExpectationsForProxy(proxy);
 			mine = DoGetAllExpectationsForProxy(proxy);
-			if(fromChild!=null)
+			if (fromChild != null)
 			{
 				foreach (IExpectation expectation in fromChild)
 				{
-					if(mine.Contains(expectation)==false)
+					if (mine.Contains(expectation) == false)
 						mine.Add(expectation);
 				}
 			}
@@ -174,46 +182,46 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <param name="newExpectation">New expectation.</param>
 		public void ReplaceExpectation(object proxy, MethodInfo method, IExpectation oldExpectation, IExpectation newExpectation)
 		{
-            if (TryReplaceRepeatableExpectation(method, newExpectation, oldExpectation, proxy))
-                return;
-		    if (recorderToCall != null)
+			if (TryReplaceRepeatableExpectation(method, newExpectation, oldExpectation, proxy))
+				return;
+			if (recorderToCall != null)
 				recorderToCall.ReplaceExpectation(proxy, method, oldExpectation, newExpectation);
 			else
 				DoReplaceExpectation(proxy, method, oldExpectation, newExpectation);
 		}
 
-	    private bool TryReplaceRepeatableExpectation(MethodInfo method, IExpectation newExpectation, IExpectation oldExpectation, object proxy)
-	    {
-	        ProxyMethodPair pair = new ProxyMethodPair(proxy, method);
-            if (repeatableMethods.ContainsKey(pair))
-	        {
-                ExpectationsList expectationsList = repeatableMethods[pair];	            
-	            int indexOf = expectationsList.IndexOf(oldExpectation);
-	            if(indexOf!=-1)
-	            {
-	                expectationsList[indexOf] = newExpectation;
-                    return true;
-	            }
-	        }
-            return false;
-	    }
+		private bool TryReplaceRepeatableExpectation(MethodInfo method, IExpectation newExpectation, IExpectation oldExpectation, object proxy)
+		{
+			ProxyMethodPair pair = new ProxyMethodPair(proxy, method);
+			if (repeatableMethods.ContainsKey(pair))
+			{
+				ExpectationsList expectationsList = repeatableMethods[pair];
+				int indexOf = expectationsList.IndexOf(oldExpectation);
+				if (indexOf != -1)
+				{
+					expectationsList[indexOf] = newExpectation;
+					return true;
+				}
+			}
+			return false;
+		}
 
-        /// <summary>
-        /// Remove the all repeatable expectations for proxy.
-        /// </summary>
-        /// <param name="proxy">Mocked object.</param>
-        public void RemoveAllRepeatableExpectationsForProxy(object proxy)
-        {
-            ProxyMethodPair[] keys = new ProxyMethodPair[repeatableMethods.Keys.Count];
-            repeatableMethods.Keys.CopyTo(keys,0);
-            foreach (ProxyMethodPair pair in keys)
-            {
-                if (MockedObjectsEquality.Instance.Equals( pair.Proxy , proxy))
-                    repeatableMethods.Remove(pair);
-            }
-        }
+		/// <summary>
+		/// Remove the all repeatable expectations for proxy.
+		/// </summary>
+		/// <param name="proxy">Mocked object.</param>
+		public void RemoveAllRepeatableExpectationsForProxy(object proxy)
+		{
+			ProxyMethodPair[] keys = new ProxyMethodPair[repeatableMethods.Keys.Count];
+			repeatableMethods.Keys.CopyTo(keys, 0);
+			foreach (ProxyMethodPair pair in keys)
+			{
+				if (MockedObjectsEquality.Instance.Equals(pair.Proxy, proxy))
+					repeatableMethods.Remove(pair);
+			}
+		}
 
-	    /// <summary>
+		/// <summary>
 		/// Gets a value indicating whether this instance has expectations that weren't satisfied yet.
 		/// </summary>
 		/// <value>
@@ -296,11 +304,11 @@ namespace Rhino.Mocks.MethodRecorders
 			parentRecorder.MoveToParentReplayer();
 		}
 
-        /// <summary>
-        /// Gets the recorded expectation or null.
-        /// </summary>
-        public IExpectation GetRecordedExpectationOrNull(object proxy, MethodInfo method, object[] args)
-        {
+		/// <summary>
+		/// Gets the recorded expectation or null.
+		/// </summary>
+		public IExpectation GetRecordedExpectationOrNull(object proxy, MethodInfo method, object[] args)
+		{
 			recursionDepth += 1;
 			try
 			{
@@ -309,13 +317,13 @@ namespace Rhino.Mocks.MethodRecorders
 				else
 					return DoGetRecordedExpectationOrNull(proxy, method, args);
 			}
-        	finally
+			finally
 			{
 				recursionDepth -= 1;
-				if(recursionDepth==0)
+				if (recursionDepth == 0)
 					replayersToIgnoreForThisCall.Clear();
 			}
-        }
+		}
 
 		/// <summary>
 		/// Clear the replayer to call (and all its chain of replayers).
@@ -332,19 +340,19 @@ namespace Rhino.Mocks.MethodRecorders
 		/// Get the expectation for this method on this object with this arguments 
 		/// </summary>
 		public abstract ExpectationViolationException UnexpectedMethodCall(IInvocation invocation, object proxy, MethodInfo method, object[] args);
-		
+
 		/// <summary>
 		/// Gets the next expected calls string.
 		/// </summary>
 		public abstract string GetExpectedCallsMessage();
-		
+
 		#region Protected Methods
 
 
-        /// <summary>
-        /// Handles the real getting of the recorded expectation or null.
-        /// </summary>
-        protected abstract IExpectation DoGetRecordedExpectationOrNull(object proxy, MethodInfo method, object[] args);
+		/// <summary>
+		/// Handles the real getting of the recorded expectation or null.
+		/// </summary>
+		protected abstract IExpectation DoGetRecordedExpectationOrNull(object proxy, MethodInfo method, object[] args);
 
 		/// <summary>
 		/// Handle the real execution of this method for the derived class
@@ -376,7 +384,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// </summary>
 		protected abstract void DoRemoveExpectation(IExpectation expectation);
 
-		
+
 		/// <summary>
 		/// Handle the real execution of this method for the derived class
 		/// </summary>
@@ -391,7 +399,7 @@ namespace Rhino.Mocks.MethodRecorders
 		{
 			return replayersToIgnoreForThisCall.Contains(replayer) == false;
 		}
-		
+
 		/// <summary>
 		/// This check the methods that were setup using the SetupResult.For()
 		/// or LastCall.Repeat.Any() and that bypass the whole expectation model.
@@ -399,8 +407,8 @@ namespace Rhino.Mocks.MethodRecorders
 		public IExpectation GetRepeatableExpectation(object proxy, MethodInfo method, object[] args)
 		{
 			ProxyMethodPair pair = new ProxyMethodPair(proxy, method);
-            if (repeatableMethods.ContainsKey(pair)==false)
-                return null;
+			if (repeatableMethods.ContainsKey(pair) == false)
+				return null;
 			ExpectationsList list = repeatableMethods[pair];
 			foreach (IExpectation expectation in list)
 			{
@@ -417,7 +425,7 @@ namespace Rhino.Mocks.MethodRecorders
 					return expectation;
 				}
 			}
-            return null;
+			return null;
 		}
 
 		private void ExpectationNotOnList(ExpectationsList list, IExpectation expectation)
@@ -425,5 +433,5 @@ namespace Rhino.Mocks.MethodRecorders
 			if (list.Contains(expectation))
 				throw new InvalidOperationException("The result for " + expectation.ErrorMessage + " has already been setup.");
 		}
-    }
+	}
 }

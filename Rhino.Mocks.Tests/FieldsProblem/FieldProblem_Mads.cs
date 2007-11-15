@@ -10,7 +10,7 @@ http://groups.google.co.il/group/castle-project-devel/browse_thread/thread/1697e
 	public class FieldProblem_Mads
 	{
 		[Test]
-		public void TestMethodTest()
+		public void Unresolable_Framework_Bug_With_Generic_Method_On_Generic_Interface_With_Conditions_On_Both_Generics()
 		{
 			MockRepository mocks = new MockRepository();
 

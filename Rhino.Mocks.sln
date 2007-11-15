@@ -13,9 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks 2.0", "Rhino.Mo
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TextTemplating) = postSolution
-		TextTemplating = 1
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -48,5 +45,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TextTemplating) = postSolution
+		TextTemplating = 1
 	EndGlobalSection
 EndGlobal

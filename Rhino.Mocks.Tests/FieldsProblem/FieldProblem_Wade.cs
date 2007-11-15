@@ -43,6 +43,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 	}
 
+
 	[ComImport]
 	[CoClass(typeof (clsDBRecordSetClass))]
 	[Guid("1D606603-02F0-4443-8A54-9AE4EDB5EEFA")]

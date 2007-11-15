@@ -26,12 +26,11 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-
-using System;
-using MbUnit.Framework;
-
 namespace Rhino.Mocks.Tests
 {
+	using System;
+	using MbUnit.Framework;
+
 	[TestFixture]
 	public class EExpectTests
 	{
@@ -42,7 +41,7 @@ namespace Rhino.Mocks.Tests
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = this.mocks.CreateMock(typeof (IDemo)) as IDemo;
+			demo = mocks.CreateMock(typeof (IDemo)) as IDemo;
 		}
 
 		[TearDown]
@@ -76,9 +75,18 @@ namespace Rhino.Mocks.Tests
 
 		[Test]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void CanUseAnonymousDelegatesToCallVoidMethojds()
+		public void CanUseAnonymousDelegatesToCallVoidMethods()
 		{
 			Expect.Call(delegate { demo.VoidNoArgs(); }).Throw(new ArgumentNullException());
+			mocks.ReplayAll();
+			demo.VoidNoArgs();
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CanUseAnonymousDelegatesToCallVoidMethods_WithoutAnonymousDelegate()
+		{
+			Expect.Call(demo.VoidNoArgs).Throw(new ArgumentNullException());
 			mocks.ReplayAll();
 			demo.VoidNoArgs();
 		}

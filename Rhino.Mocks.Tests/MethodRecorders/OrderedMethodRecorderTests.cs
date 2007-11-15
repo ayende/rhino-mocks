@@ -132,7 +132,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		}
 
 		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { Unordered: {  } }' but was: 'IDemo.VoidNoArgs();'")]
+		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
 		public void ReplayErrorWhenInOtherReplayer()
 		{
 			OrderedMethodRecorder recorder = new OrderedMethodRecorder(new ProxyMethodExpectationsDictionary());
