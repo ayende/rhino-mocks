@@ -79,6 +79,7 @@
     <Compile Include="Constraints\Constraints.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constraints\AllPropertiesMatchConstraint.cs" />
     <Compile Include="Constraints\PublicField.cs" />
     <Compile Include="Constraints\Is.cs">
       <SubType>Code</SubType>

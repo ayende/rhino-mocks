@@ -110,6 +110,7 @@
     <Compile Include="Constraints\ContraintsErrorConditions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constraints\AllPropertiesMatchConstraintTest.cs" />
     <Compile Include="Constraints\ListConstraintTests.cs">
       <SubType>Code</SubType>
     </Compile>

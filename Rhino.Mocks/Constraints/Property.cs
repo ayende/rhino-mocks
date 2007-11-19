@@ -152,5 +152,23 @@ namespace Rhino.Mocks.Constraints
         {
             return !new PropertyIs(declaringType, propertyName, null);
         }
+
+        /// <summary>
+        /// constraints the parameter to have the exact same property values as the expected object.
+        /// </summary>
+        /// <param name="expected">An object, of the same type as the parameter, whose properties are set with the expected values.</param>
+        /// <returns>An instance of the constraint that will do the actual check.</returns>
+        /// <remarks>
+        /// The parameter's public property values and public field values will be matched against the expected object's
+        /// public property values and public field values. The first mismatch will be reported and no further matching is done.
+        /// The matching is recursive for any property or field that has properties or fields of it's own.
+        /// Collections are supported through IEnumerable, which means the constraint will check if the actual and expected
+        /// collection contain the same values in the same order, where the values contained by the collection can have properties
+        /// and fields of their own that will be checked as well because of the recursive nature of this constraint.
+        /// </remarks>
+        public static AbstractConstraint AllPropertiesMatch(object expected)
+        {
+            return new AllPropertiesMatchConstraint(expected);
+        }
 	}
 }
