@@ -33,6 +33,9 @@ using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
+	using Castle.Core.Interceptor;
+	using Castle.DynamicProxy;
+
 	[TestFixture]
 	public class FieldProblem_James
 	{
@@ -67,15 +70,30 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			m_mockery.VerifyAll();
 		}
 
-//		This is a compiler error now
-//		[Test]
-//		[ExpectedException(typeof(InvalidOperationException),"Type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]' doesn't match the return type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[System.Int32]' for method 'ILookupMapper`1.FindOneFoo();'")]
-//		public void ShouldGetValidErrorWhenGenericTypeMismatchOccurs()
-//		{
-//			ILookupMapper<int> mapper = m_mockery.CreateMock<ILookupMapper<int>>();
-//			Foo<string> retval = new Foo<string>();
-//			Expect.Call(mapper.FindOneFoo()).Return(retval);
-//		}
+		[Test]
+		public void CanMockMethodsReturnIntPtr()
+		{
+			IFooWithIntPtr mock = m_mockery.CreateMock<IFooWithIntPtr>();
+			using(m_mockery.Record())
+			{
+				Expect.Call(mock.Buffer(15)).Return(IntPtr.Zero);
+			}
+
+			using(m_mockery.Playback())
+			{
+				IntPtr buffer = mock.Buffer(15);
+				Assert.AreEqual(IntPtr.Zero, buffer);
+			}
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException),"Type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]' doesn't match the return type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[System.Int32]' for method 'ILookupMapper`1.FindOneFoo();'")]
+		public void ShouldGetValidErrorWhenGenericTypeMismatchOccurs()
+		{
+			ILookupMapper<int> mapper = m_mockery.CreateMock<ILookupMapper<int>>();
+			Foo<string> retval = new Foo<string>();
+			Expect.Call<object>(mapper.FindOneFoo()).Return(retval);
+		}
 	}
 
 	public interface ILookupMapper<T>
@@ -90,5 +108,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			return default(T);
 		}
+	}
+
+	public interface IFooWithIntPtr
+	{
+		IntPtr Buffer(UInt32 index);
 	}
 }

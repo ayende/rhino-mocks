@@ -59,11 +59,11 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Castle\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.DynamicProxy2, Version=2.0.0.1, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
@@ -71,9 +71,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Tools\MbUnit\MbUnit.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.2833.27231, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.2856.26907, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>TestDlls\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+      <HintPath>..\Rhino.Mocks.CPP.Interfaces\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

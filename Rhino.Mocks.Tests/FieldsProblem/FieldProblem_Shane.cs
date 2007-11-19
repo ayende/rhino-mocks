@@ -1,5 +1,7 @@
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
+	using System;
+	using System.Diagnostics;
 	using Exceptions;
 	using MbUnit.Framework;
 

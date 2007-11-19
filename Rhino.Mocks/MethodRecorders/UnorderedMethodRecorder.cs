@@ -99,7 +99,9 @@ namespace Rhino.Mocks.MethodRecorders
 			if (expectation == null)
 			{
 				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Unexpected method call error");
-				throw UnexpectedMethodCall(invocation, proxy, method, args);
+				ExpectationViolationException expectationViolationException = UnexpectedMethodCall(invocation, proxy, method, args);
+				MockRepository.SetExceptionToBeThrownOnVerify(proxy, expectationViolationException);
+				throw expectationViolationException;
 			}
 			return expectation;
 		}
@@ -371,9 +373,7 @@ namespace Rhino.Mocks.MethodRecorders
 				}
 			}
 			AppendNextExpected(proxy, method, sb);
-			ExpectationViolationException expectationViolationException = new ExpectationViolationException(sb.ToString());
-			MockRepository.SetExceptionToBeThrownOnVerify(proxy, expectationViolationException);
-			return expectationViolationException;
+			return new ExpectationViolationException(sb.ToString());
 		}
 
 		private class CalcExpectedAndActual

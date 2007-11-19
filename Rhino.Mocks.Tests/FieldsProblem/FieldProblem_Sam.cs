@@ -2,6 +2,8 @@ using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
+	using Exceptions;
+
 	[TestFixture]
 	public class FieldProblem_Sam
 	{
@@ -15,6 +17,39 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			Assert.AreEqual(3, myMock.AddTwoValues(1, 2));
 			mocks.VerifyAll();
 		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IInterfaceWithThreeMethods.C(); }' but was: 'IInterfaceWithThreeMethods.B();'")]
+		public void WillRememberExceptionInsideOrderRecorderEvenIfInsideCatchBlock()
+		{
+			MockRepository mockRepository = new MockRepository();
+			IInterfaceWithThreeMethods interfaceWithThreeMethods = mockRepository.CreateMock<IInterfaceWithThreeMethods>();
+
+			using (mockRepository.Ordered())
+			{
+				interfaceWithThreeMethods.A();
+				interfaceWithThreeMethods.C();
+			}
+
+			mockRepository.ReplayAll();
+
+			interfaceWithThreeMethods.A();
+			try
+			{
+				interfaceWithThreeMethods.B();
+			}
+			catch { /* valid for code under test to catch all */ }
+			interfaceWithThreeMethods.C();
+
+			mockRepository.VerifyAll();
+		}
+	}
+
+	public interface IInterfaceWithThreeMethods
+	{
+		void A();
+		void B();
+		void C();
 	}
 
 	public class SimpleOperations
