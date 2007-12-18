@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project 
 		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
 
 	<PropertyGroup>
 		<ProjectName>Rhino.Mocks</ProjectName>
@@ -23,28 +22,29 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<TestAssembly Include="$(MSBuildProjectDirectory)\Rhino.Mocks.Tests\bin\$(Configuration)\Rhino.Mocks.Tests.dll"/>
+		<TestAssembly Include="$(OutDir)\Rhino.Mocks.Tests.dll"/>
 	</ItemGroup>
 
 	<ItemGroup>
-		<ZipFiles Include="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"/>
-		<ZipFiles Include="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.xml"/>
+		<ZipFiles Include="$(OutDir)\Rhino.Mocks.dll"/>
+		<ZipFiles Include="$(OutDir)\Rhino.Mocks.xml"/>
 	</ItemGroup>
 	
 	<Target Name="BeforeZip">	
-			<Delete Files="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;"/>
-			<Move SourceFiles="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll;"
-				DestinationFiles="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;"/>
+			<Delete Files="$(OutDir)\Rhino.Mocks.Partial.dll;$(ArtifactsDir)\Rhino.Mocks*.zip"/>
+			<Move SourceFiles="$(OutDir)\Rhino.Mocks.dll;"
+				DestinationFiles="$(OutDir)\Rhino.Mocks.Partial.dll;"/>
 			<ILMerge
 				ToolPath="$(SharedLibsDir)\Tools\"
-				InputAssemblies="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.Partial.dll;
-				$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Castle.DynamicProxy2.dll;
-				$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Castle.Core.dll"
+				InputAssemblies="$(OutDir)\Rhino.Mocks.Partial.dll;
+				$(OutDir)\Castle.DynamicProxy2.dll;
+				$(OutDir)\Castle.Core.dll"
 				 ExcludeFile="$(MSBuildProjectDirectory)\ilmerge.exclude"
-				 OutputFile="$(MSBuildProjectDirectory)\Rhino.Mocks\bin\$(Configuration)\Rhino.Mocks.dll"
+				 OutputFile="$(OutDir)\Rhino.Mocks.dll"
 				 LogFile="$(logFile)"
 				 DebugInfo="true"
 				 XmlDocumentation="true"
 				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"/>
 	</Target>
+	<Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
 </Project>

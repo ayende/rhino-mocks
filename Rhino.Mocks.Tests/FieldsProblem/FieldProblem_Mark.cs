@@ -49,7 +49,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 	public class Log
 	{
-		private readonly ILogWriter logWriter;
 		private ILogWriter traceWriter;
 		private ILogWriter eventLogWriter;
 		private string systemLogging;

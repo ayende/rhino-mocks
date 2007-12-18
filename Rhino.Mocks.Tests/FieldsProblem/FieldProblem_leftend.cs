@@ -109,7 +109,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 					newAlbum.Save();
 					mView.ProcessSaveComplete();
 				}
-				catch (Exception ex)
+				catch
 				{
 					//handle exception
 				}
