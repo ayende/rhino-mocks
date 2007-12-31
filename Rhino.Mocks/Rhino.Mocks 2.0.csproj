@@ -128,6 +128,7 @@
     <Compile Include="Impl\StubRecordMockState.cs" />
     <Compile Include="Impl\StubReplayMockState.cs" />
     <Compile Include="Impl\TraceWriterExpectationLogger.cs" />
+    <Compile Include="Impl\TraceWriterWithStackTraceExpectationWriter.cs" />
     <Compile Include="Interfaces\IExpectationLogger.cs" />
     <Compile Include="Interfaces\IPartialMockMarker.cs" />
     <Compile Include="Interfaces\OriginalCallOptions.cs" />
