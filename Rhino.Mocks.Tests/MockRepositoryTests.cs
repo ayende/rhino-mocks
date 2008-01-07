@@ -147,7 +147,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Previous method 'IDemo.StringArgString(\"\");' require a return value or an exception to throw.")]
+        [ExpectedException(typeof(InvalidOperationException), "Previous method 'IDemo.StringArgString(\"\");' requires a return value or an exception to throw.")]
         public void NotClosingMethodBeforeReplaying()
         {
             demo.StringArgString("");
@@ -235,7 +235,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Previous method 'IDemo.ReturnIntNoArgs();' require a return value or an exception to throw.")]
+        [ExpectedException(typeof(InvalidOperationException), "Previous method 'IDemo.ReturnIntNoArgs();' requires a return value or an exception to throw.")]
         public void CallingSecondMethodWithoutSetupRequiredInfoOnFirstOne()
         {
             demo.ReturnIntNoArgs();

@@ -114,7 +114,7 @@ namespace Rhino.Mocks.Tests.Impl
 		}
 
 		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Previous method 'String.StartsWith(\"\");' require a return value or an exception to throw.")]
+		[ExpectedException(typeof (InvalidOperationException), "Previous method 'String.StartsWith(\"\");' requires a return value or an exception to throw.")]
 		public void CantMoveToReplayStateWithoutclosingLastMethod()
 		{
 			MockRepository mocks = new MockRepository();

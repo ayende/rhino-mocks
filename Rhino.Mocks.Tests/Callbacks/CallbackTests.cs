@@ -138,7 +138,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 
 
 		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Previous method 'IDemo.ReturnIntNoArgs(callback method: CallbackTests.NoArgsMethod);' require a return value or an exception to throw.")]
+		[ExpectedException(typeof (InvalidOperationException), "Previous method 'IDemo.ReturnIntNoArgs(callback method: CallbackTests.NoArgsMethod);' requires a return value or an exception to throw.")]
 		public void CallbackWhenMethodHasReturnValue()
 		{
 			demo.ReturnIntNoArgs();

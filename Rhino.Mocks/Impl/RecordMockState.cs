@@ -192,7 +192,7 @@ namespace Rhino.Mocks.Impl
 		protected virtual void AssertPreviousMethodIsClose()
 		{
 			if (lastExpectation != null && !lastExpectation.ActionsSatisfied)
-				throw new InvalidOperationException("Previous method '" + lastExpectation.ErrorMessage + "' require a return value or an exception to throw.");
+				throw new InvalidOperationException("Previous method '" + lastExpectation.ErrorMessage + "' requires a return value or an exception to throw.");
 		}
 
 		private Exception InvalidOperationOnRecord()
