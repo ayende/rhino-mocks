@@ -87,7 +87,7 @@ namespace Rhino.Mocks.Tests
 
 	#region TestFixture
 	[TestFixture]
-	public class MyTestFixture
+	public class FieldProblem_Owen
 	{
 		MockRepository m_objMockRepository;
 		IApplicationSession m_objIApplication;

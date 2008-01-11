@@ -636,6 +636,7 @@ namespace Rhino.Mocks
             }
             IMockState value = mockStateFactory((IMockedObject)proxy);
             proxies.Add(proxy, value);
+            GC.SuppressFinalize(proxy);//avoid issues with expectations created/validated on the finalizer thread
             return proxy;
         }
 

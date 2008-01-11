@@ -30,7 +30,10 @@
 		<ZipFiles Include="$(OutDir)\Rhino.Mocks.xml"/>
 	</ItemGroup>
 	
+	<Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
+	
 	<Target Name="BeforeZip">	
+			
 			<Delete Files="$(OutDir)\Rhino.Mocks.Partial.dll;$(ArtifactsDir)\Rhino.Mocks*.zip"/>
 			<Move SourceFiles="$(OutDir)\Rhino.Mocks.dll;"
 				DestinationFiles="$(OutDir)\Rhino.Mocks.Partial.dll;"/>
@@ -46,5 +49,5 @@
 				 XmlDocumentation="true"
 				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"/>
 	</Target>
-	<Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
+	
 </Project>
