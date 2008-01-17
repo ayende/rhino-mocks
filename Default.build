@@ -37,7 +37,7 @@
 			<Delete Files="$(OutDir)\Rhino.Mocks.Partial.dll;$(ArtifactsDir)\Rhino.Mocks*.zip"/>
 			<Move SourceFiles="$(OutDir)\Rhino.Mocks.dll;"
 				DestinationFiles="$(OutDir)\Rhino.Mocks.Partial.dll;"/>
-			<ILMerge
+			<ILMerge Condition="$(Configuration) == 'debug'"
 				ToolPath="$(SharedLibsDir)\Tools\"
 				InputAssemblies="$(OutDir)\Rhino.Mocks.Partial.dll;
 				$(OutDir)\Castle.DynamicProxy2.dll;
@@ -46,6 +46,18 @@
 				 OutputFile="$(OutDir)\Rhino.Mocks.dll"
 				 LogFile="$(logFile)"
 				 DebugInfo="true"
+				 XmlDocumentation="true"
+				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"/>
+
+			<ILMerge Condition="$(Configuration) != 'debug'"
+				ToolPath="$(SharedLibsDir)\Tools\"
+				InputAssemblies="$(OutDir)\Rhino.Mocks.Partial.dll;
+				$(OutDir)\Castle.DynamicProxy2.dll;
+				$(OutDir)\Castle.Core.dll"
+				 ExcludeFile="$(MSBuildProjectDirectory)\ilmerge.exclude"
+				 OutputFile="$(OutDir)\Rhino.Mocks.dll"
+				 LogFile="$(logFile)"
+				 DebugInfo="false"
 				 XmlDocumentation="true"
 				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"/>
 	</Target>
