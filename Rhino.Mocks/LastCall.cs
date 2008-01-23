@@ -45,13 +45,7 @@ namespace Rhino.Mocks
 	/// a specified object.
 	/// If the method has a return value, it's recommended to use Expect
 	/// </summary>
-	public
-#if dotNet2
- static
-#else
-    sealed
-#endif
- class LastCall
+	public static class LastCall
 	{
 		/*
 		 * Method: On

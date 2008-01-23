@@ -121,6 +121,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Coverage.cs" />
+    <Compile Include="DoNotExpectTests.cs" />
     <Compile Include="ExtendingRhinoMocks.cs" />
     <Compile Include="ExtendingRhinoMocks2.cs" />
     <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />

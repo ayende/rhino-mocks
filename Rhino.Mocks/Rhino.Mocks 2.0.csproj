@@ -93,6 +93,7 @@
     <Compile Include="Constraints\Text.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DoNotExpect.cs" />
     <Compile Include="Exceptions\ExpectationViolationException.cs">
       <SubType>Code</SubType>
     </Compile>
