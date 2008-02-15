@@ -45,6 +45,15 @@ namespace Rhino.Mocks.Tests
 		void VoidThreeArgs(int i, string s, float f );
 		void VoidThreeStringArgs(string s1, string s2, string s3);
 		void VoidValueTypeArrayArgs( short[] u );
+		void VoidConcreteDemo(ConcreteDemo demo);
+	}
+
+	public class ConcreteDemo
+	{
+		public override string ToString()
+		{
+			return "test";
+		}
 	}
 
 	internal enum EnumDemo

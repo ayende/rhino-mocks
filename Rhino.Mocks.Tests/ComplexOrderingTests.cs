@@ -28,37 +28,46 @@
 
 
 using System;
+using System.Reflection;
+using MbUnit.Framework;
+using Rhino.Mocks.Expectations;
+using Rhino.Mocks.Interfaces;
+using Rhino.Mocks.MethodRecorders;
+using Rhino.Mocks.Tests.Expectations;
+using Rhino.Mocks.Tests.MethodRecorders;
 
-namespace Rhino.Mocks.Impl
+namespace Rhino.Mocks.Tests
 {
-	/// <summary>
-	/// Options for special repeat option
-	/// </summary>
-	public enum RepeatableOption
+	using Generated;
+
+	[TestFixture]	
+	public class ComplexOrderingTests
 	{
-		/// <summary>
-		/// This method can be called only as many times as the IMethodOptions.Expect allows.
-		/// </summary>
-		Normal,
-		/// <summary>
-		/// This method should never be called
-		/// </summary>
-		Never,
-		/// <summary>
-		/// This method can be call any number of times
-		/// </summary>
-		Any,
-		/// <summary>
-		/// This method will call the original method
-		/// </summary>
-		OriginalCall,
-		/// <summary>
-		/// This method will call the original method, bypassing the mocking layer
-		/// </summary>
-		OriginalCallBypassingMocking,
-        /// <summary>
-        /// This method will simulate simple property behavior
-        /// </summary>
-        PropertyBehavior
+		private IMethodRecorder recorder,nestedRecorder;
+		private object proxy;
+		private MethodInfo method;
+		private IExpectation expectation;
+		private object[] args;
+
+		[SetUp]
+		public void SetUp()
+		{
+			recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
+			nestedRecorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
+			recorder.AddRecorder(nestedRecorder);
+
+			proxy = new object();
+			method = typeof (object).GetMethod("ToString");
+			expectation = new AnyArgsExpectation(new FakeInvocation(method));
+			args = new object[0];
+		}
+
+		[Test]
+		public void ComplexOrdering()
+		{
+			string expected = "Unordered: { Unordered: { Object.ToString(); } }";
+			recorder.Record(proxy,method, expectation);
+			Assert.AreEqual(expected, recorder.GetExpectedCallsMessage());
+		}
 	}
 }

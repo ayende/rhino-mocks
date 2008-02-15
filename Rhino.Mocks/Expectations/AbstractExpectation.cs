@@ -262,7 +262,7 @@ namespace Rhino.Mocks.Expectations
 					actionToExecute != null ||
 					returnValueSet ||
 					repeatableOption == RepeatableOption.OriginalCall ||
-					repeatableOption == RepeatableOption.OriginalCallBypassingMokcing ||
+					repeatableOption == RepeatableOption.OriginalCallBypassingMocking ||
 					repeatableOption == RepeatableOption.PropertyBehavior)
 					return true;
 				return false;

@@ -32,6 +32,7 @@ using System.Reflection;
 using System.Text;
 using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
+using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
 
 namespace Rhino.Mocks.Expectations
@@ -130,6 +131,10 @@ namespace Rhino.Mocks.Expectations
 			else if (arg == null)
 			{
 				return "null";
+			}
+			else if (arg is IMockedObject)
+			{
+				return arg.GetType().ToString();
 			}
 			else
 			{

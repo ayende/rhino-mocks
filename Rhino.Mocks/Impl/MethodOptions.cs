@@ -176,7 +176,7 @@ namespace Rhino.Mocks.Impl
 			{
 				proxy.RegisterMethodForCallingOriginal(expectation.Method);
 				repository.Recorder.RemoveExpectation(expectation);
-				expectation.RepeatableOption = RepeatableOption.OriginalCallBypassingMokcing;
+				expectation.RepeatableOption = RepeatableOption.OriginalCallBypassingMocking;
 			}
 			else
 			{

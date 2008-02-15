@@ -26,48 +26,42 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-
-using System;
-using System.Reflection;
-using MbUnit.Framework;
-using Rhino.Mocks.Expectations;
-using Rhino.Mocks.Interfaces;
-using Rhino.Mocks.MethodRecorders;
-using Rhino.Mocks.Tests.Expectations;
-using Rhino.Mocks.Tests.MethodRecorders;
+using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
 {
-	using Generated;
+	using System;
+	using MbUnit.Framework;
 
-	[TestFixture]	
-	public class ComplexOredering
+	[TestFixture]
+	public class VerifyTests
 	{
-		private IMethodRecorder recorder,nestedRecorder;
-		private object proxy;
-		private MethodInfo method;
-		private IExpectation expectation;
-		private object[] args;
+		private MockRepository mocks;
+		private ConcreteDemo demoParam;
+		private IDemo demo;
 
 		[SetUp]
 		public void SetUp()
 		{
-			recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
-			nestedRecorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
-			recorder.AddRecorder(nestedRecorder);
+			mocks = new MockRepository();
+			demoParam = mocks.CreateMock(typeof(ConcreteDemo)) as ConcreteDemo;
+			demo = mocks.CreateMock(typeof(IDemo)) as IDemo;
+		}
 
-			proxy = new object();
-			method = typeof (object).GetMethod("ToString");
-			expectation = new AnyArgsExpectation(new FakeInvocation(method));
-			args = new object[0];
+		[TearDown]
+		public void Teardown()
+		{
+			mocks.VerifyAll();
 		}
 
 		[Test]
-		public void ComplexOrdering()
+		[ExpectedException(typeof(ExpectationViolationException))]
+		public void MockParameterToStringShouldBeIgnoredIfItIsInVerifyState()
 		{
-			string expected = "Unordered: { Unordered: { Object.ToString(); } }";
-			recorder.Record(proxy,method, expectation);
-			Assert.AreEqual(expected, recorder.GetExpectedCallsMessage());
+			demo.VoidConcreteDemo(demoParam);
+			mocks.ReplayAll();
+			mocks.Verify(demoParam);
+			mocks.Verify(demo);
 		}
 	}
 }

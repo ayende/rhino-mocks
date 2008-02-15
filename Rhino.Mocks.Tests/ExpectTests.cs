@@ -32,7 +32,7 @@ namespace Rhino.Mocks.Tests
 	using MbUnit.Framework;
 
 	[TestFixture]
-	public class EExpectTests
+	public class ExpectTests
 	{
 		private MockRepository mocks;
 		private IDemo demo;
