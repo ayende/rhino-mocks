@@ -18,16 +18,18 @@ namespace Rhino.Mocks.Impl.RemotingMock
         private readonly IMethodCallMessage _message;
         private object _returnValue;
         private readonly RealProxy _realProxy;
+		private object[] _args; 
 
         public RemotingInvocation(RealProxy realProxy, IMethodCallMessage message)
         {
             _message = message;
             _realProxy = realProxy;
+			this._args = (object[])this._message.Properties["__Args"]; 
         }
 
         public object[] Arguments
         {
-            get { return (object[])_message.Properties["__Args"]; }
+            get { return _args; }
         }
 
         public Type[] GenericArguments

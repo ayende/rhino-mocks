@@ -25,6 +25,11 @@ namespace Rhino.Mocks.Impl.RemotingMock
             get { return _mockedObject; }
         }
 
+		private static IMessage ReturnValue(object value, object[] outParams, IMethodCallMessage mcm)
+		{
+			return new ReturnMessage(value, outParams, outParams == null ? 0 : outParams.Length, mcm.LogicalCallContext, mcm);
+		}
+
         public override IMessage Invoke(IMessage msg)
         {
             IMethodCallMessage mcm = msg as IMethodCallMessage;
@@ -54,7 +59,7 @@ namespace Rhino.Mocks.Impl.RemotingMock
             RemotingInvocation invocation = new RemotingInvocation(this, mcm);
             _interceptor.Intercept(invocation);
 
-            return ReturnValue(invocation.ReturnValue, mcm);
+			return ReturnValue(invocation.ReturnValue, invocation.Arguments, mcm);
         }
 
         private bool IsGetTypeMethod(IMethodCallMessage mcm)
