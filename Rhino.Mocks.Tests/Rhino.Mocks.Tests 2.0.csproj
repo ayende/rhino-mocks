@@ -150,6 +150,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Mark.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Maurice.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mithresh.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />
     <Compile Include="FieldsProblem\FieldProblem_OrenEl.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Wade.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Wendy.cs" />
     <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MarkHildreth.cs" />
     <Compile Include="FieldsProblem\SetupResultAndIgnoreArguments.cs" />
     <Compile Include="GenericMethods.cs" />
     <Compile Include="MockingDelegatesTests.cs" />
