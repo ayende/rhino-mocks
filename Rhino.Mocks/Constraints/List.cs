@@ -111,5 +111,19 @@ namespace Rhino.Mocks.Constraints
         {
             return new ListElement(index, constraint);
         }
+
+        /*
+         * Method ContainsAll
+         * Determines that all elements of the specified collection are in the the parameter collection 
+         */
+        ///<summary>
+        /// Determines that all elements of the specified collection are in the the parameter collection 
+        ///</summary>
+        ///<param name="collection">The collection to compare against</param>
+        ///<returns>The constraint which should be applied to the list parameter.</returns>
+        public static AbstractConstraint ContainsAll(IEnumerable collection)
+        {
+            return new ContainsAll(collection);
+        }
 	}
 }

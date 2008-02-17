@@ -88,6 +88,18 @@ namespace Rhino.Mocks.Tests.Constraints
             Assert.AreEqual("element at index 2 equal to Hello", list.Message);
         }
 
+        [Test]
+        public void ContainsAll()
+        {
+            AbstractConstraint list = List.ContainsAll(new string[] {"Ayende", "Rahien", "Hello", "World"});
+            Assert.IsTrue(list.Eval(new string[] {"Ayende", "Rahien", "Hello", "World"}));
+            Assert.IsFalse(list.Eval(new string[] { "Baaaah"}));
+            Assert.IsFalse(list.Eval(5));
+            list = List.ContainsAll(new string[] { "Ayende", "Rahien", "Hello", "World" });
+            Assert.IsFalse(list.Eval(new string[] { "Ayende", "Rahien" }));
+            Assert.AreEqual("list missing [Hello, World]", list.Message);
+        }
+
         private class FailsOnEqual
         {
             public override bool Equals(object obj)

@@ -651,6 +651,81 @@ namespace Rhino.Mocks.Constraints
 
     #endregion
 
+    #region ContainsAll Constraint
+
+    /// <summary>
+    /// Constrains that all elements are in the parameter list
+    /// </summary>
+    public class ContainsAll : AbstractConstraint
+    {
+        private IEnumerable these;
+        private ArrayList missing = new ArrayList();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainsAll"/> class.
+        /// </summary>
+        /// <param name="these">The these.</param>
+        public ContainsAll(IEnumerable these)
+        {
+            this.these = these;
+        }
+
+        /// <summary>
+        /// Gets the message for this constraint
+        /// </summary>
+        /// <value></value>
+        public override string Message
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("list missing [");
+                int i = 0;
+                foreach (object o in missing)
+                {
+                    if (i != 0)
+                        sb.Append(", ");
+                    sb.Append(o);
+                    i++;
+                }
+                sb.Append("]");
+                return sb.ToString();
+            }
+        }
+
+        /// <summary>
+        /// determains if the object pass the constraints
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Eval(object obj)
+        {
+            if (obj is IEnumerable)
+            {
+                foreach (object outer in these)
+                {
+                    bool foundThis = false;
+                    foreach (object inner in (IEnumerable) obj)
+                    {
+                        if (inner.Equals(outer))
+                        {
+                            foundThis = true;
+                            break;
+                        }
+                    }
+                    if (!foundThis && !missing.Contains(outer))
+                    {
+                        missing.Add(outer);
+                    }
+                }
+
+                return missing.Count == 0;
+            }
+            return false;
+        }
+    }
+        #endregion
+
     #endregion
 
     #region Logic Operator
