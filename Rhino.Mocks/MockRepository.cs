@@ -1156,5 +1156,23 @@ namespace Rhino.Mocks
 		{
 			return new MockRepository().Stub(type, argumentsForConstructor);
 		}
+
+		/// <summary>
+		/// Returns true if the passed mock is currently in replay mode.
+		/// </summary>
+		/// <param name="mock">The mock to test.</param>
+		/// <returns>True if the mock is in replay mode, false otherwise.</returns>
+		public bool IsInReplayMode(object mock)
+		{
+			if (mock == null) 
+				throw new ArgumentNullException("mock");
+
+			if (proxies.ContainsKey(mock))
+			{
+				return proxies[mock] is ReplayMockState;
+			}
+
+			throw new ArgumentException(mock + " is not a mock.", "mock");
+		}
 	}
 }
