@@ -11,13 +11,7 @@ namespace Rhino.Mocks.Constraints
     /// <summary>
     /// Central location for constraints for object's public fields
 	/// </summary>
-	public
-#if dotNet2
- static
-#else
-    sealed
-#endif
- class PublicField
+	public static class PublicField
 	{
         /*
          * Method: Value

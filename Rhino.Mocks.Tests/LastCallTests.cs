@@ -140,7 +140,7 @@ namespace Rhino.Mocks.Tests
 		{
 			demo.VoidNoArgs();
 			delegateWasCalled = false;
-			LastCall.Callback(new DelegateDefinations.NoArgsDelegate(delegateCalled));
+			LastCall.Callback(delegateCalled);
 			mocks.ReplayAll();
 
 			demo	.VoidNoArgs();

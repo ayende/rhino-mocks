@@ -268,7 +268,7 @@ Message: Should be called only once")]
 			using (mocks.Ordered())
 			{
 				demo.VoidNoArgs();
-				LastCall.On(demo).Callback(new DelegateDefinations.NoArgsDelegate(CallMethodOnDemo));
+				LastCall.On(demo).Callback(CallMethodOnDemo);
 				demo.VoidStringArg("Ayende");
 			}
 			mocks.Replay(demo);

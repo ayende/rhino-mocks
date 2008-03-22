@@ -31,13 +31,14 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\debug\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE;DEBUG;dotNet2</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DOTNET35</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -93,6 +94,9 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
@@ -137,6 +141,7 @@
     </Compile>
     <Compile Include="Coverage.cs" />
     <Compile Include="DoNotExpectTests.cs" />
+    <Compile Include="DotNet35Tests.cs" />
     <Compile Include="ExtendingRhinoMocks.cs" />
     <Compile Include="ExtendingRhinoMocks2.cs" />
     <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
@@ -332,6 +337,7 @@
     <Compile Include="StubAllTest.cs" />
     <Compile Include="StubTest.cs" />
     <Compile Include="TestInfo.cs" />
+    <Compile Include="Throws.cs" />
     <Compile Include="TraceWriterWithStackTraceExpectationWriterFixture.cs" />
     <Compile Include="VerifyTests.cs" />
     <Compile Include="WithTestFixture.cs" />

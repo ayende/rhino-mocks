@@ -35,13 +35,7 @@ namespace Rhino.Mocks
 	/// <summary>
 	/// Setup method calls to repeat any number of times.
 	/// </summary>
-	public
-#if dotNet2
- static
-#else
-    sealed
-#endif
-        class SetupResult
+	public static class SetupResult
 	{
 		/*
 		 * Method: For

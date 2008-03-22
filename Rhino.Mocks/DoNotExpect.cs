@@ -46,11 +46,6 @@ namespace Rhino.Mocks
             LastCall.Repeat.Never();
         }
 
-        ///<summary>
-        /// A delegate that executes an action
-        ///</summary>
-        public delegate void Action();
-
         /// <summary>
         /// Accepts a delegate that will execute inside the method which
         /// LastCall.Repeat.Never() will be applied to.
@@ -66,7 +61,6 @@ namespace Rhino.Mocks
         {
             if (actionToExecute == null)
                 throw new ArgumentNullException("actionToExecute", "The action to execute cannot be null");
-
             actionToExecute();
             LastCall.Repeat.Never();
         }

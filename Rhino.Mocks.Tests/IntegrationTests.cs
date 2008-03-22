@@ -67,9 +67,9 @@ namespace Rhino.Mocks.Tests
     
     public class Cage
     {
-        ///lots of info about cage
-        ///... ,,, ...
-        ///,,, ... ,,,
+        //lots of info about cage
+        //... ,,, ...
+        //,,, ... ,,,
 
     }
 

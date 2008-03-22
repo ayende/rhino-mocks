@@ -39,13 +39,7 @@ namespace Rhino.Mocks.Utilities
 	/// <summary>
 	/// Utility class for working with method calls.
 	/// </summary>
-	public
-#if dotNet2
-		static
-#else
-        sealed
-#endif
-		class MethodCallUtil
+	public static class MethodCallUtil
 	{
 		/// <summary>
 		/// Delegate to format the argument for the string representation of
@@ -68,7 +62,6 @@ namespace Rhino.Mocks.Utilities
 			Validate.IsNotNull(args, "args");
 			StringBuilder sb = new StringBuilder();
 			sb.Append(method.DeclaringType.Name).Append(".").Append(method.Name);
-#if dotNet2
 			if (invocation != null)
 			{
 				if (method.IsGenericMethod)
@@ -83,8 +76,6 @@ namespace Rhino.Mocks.Utilities
 					sb.Append(">");
 				}
 			}
-
-#endif
 			sb.Append("(");
 			int numberOfParameters = method.GetParameters().Length;
 			for (int i = 0; i < numberOfParameters; i++)

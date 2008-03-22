@@ -27,7 +27,6 @@
 #endregion
 
 
-#if dotNet2
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -149,4 +148,3 @@ namespace Rhino.Mocks
         }
     }
 }
-#endif

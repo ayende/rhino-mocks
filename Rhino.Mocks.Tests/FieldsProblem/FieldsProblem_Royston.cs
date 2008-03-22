@@ -45,8 +45,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mMocks = new MockRepository();
         }
 
-#if dotNet2
-
 		public interface IDuplicateType<T>
 		{
 			int Property { get; }
@@ -69,7 +67,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mMocks.ReplayAll();
 			mMocks.VerifyAll();
 		}
-#endif
 
         [Test]
         public void TestVirtualEntrypoint()

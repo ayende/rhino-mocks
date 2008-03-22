@@ -120,7 +120,6 @@ namespace Rhino.Mocks.Impl
         #endregion
 
         #region IEqualityComparer<object> Members
-#if dotNet2
         bool System.Collections.Generic.IEqualityComparer<object>.Equals(object x, object y)
         {
             return Compare(x, y) == 0;
@@ -130,7 +129,6 @@ namespace Rhino.Mocks.Impl
         {
             return this.GetHashCode(obj);
         }
-#endif
         #endregion
     }
 }

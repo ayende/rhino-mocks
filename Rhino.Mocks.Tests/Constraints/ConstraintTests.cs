@@ -49,8 +49,8 @@ namespace Rhino.Mocks.Tests.Constraints
 			mocks = new MockRepository();
 			demo = (IDemo) this.mocks.CreateMock(typeof (IDemo));
 		}
-#if dotNet2
-		[Test]
+
+        [Test]
 		public void UsingPredicate()
 		{
 			demo.VoidStringArg(null);
@@ -123,7 +123,7 @@ namespace Rhino.Mocks.Tests.Constraints
 		{
 			return false;
 		}
-#endif
+
         [Test]
         public void AndSeveralConstraings()
         {
@@ -219,7 +219,7 @@ namespace Rhino.Mocks.Tests.Constraints
 		public void AddConstraintAndThenTryToIgnoreArgs()
 		{
 			this.demo.VoidStringArg("Ayende");
-			LastCall.On(this.demo).Constraints(Text.Contains("World")).Callback(new DelegateDefinations.StringDelegate("".StartsWith));
+			LastCall.On(this.demo).Constraints(Text.Contains("World")).Callback<string>("".StartsWith);
 		}
 
 	}

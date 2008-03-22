@@ -40,13 +40,7 @@ namespace Rhino.Mocks.Constraints
 	/// <summary>
 	/// Central location for constraints
 	/// </summary>
-	public
-#if dotNet2
-    static
-#else
-    sealed
-#endif
-    class Is
+	public static class Is
 	{
 		/*
 		 * method: GreaterThan
@@ -213,7 +207,6 @@ namespace Rhino.Mocks.Constraints
 			return new TypeOf(type);
 		}
 		
-		#if dotNet2
         /*
 		 * Method: TypeOf
 		 * 
@@ -236,7 +229,5 @@ namespace Rhino.Mocks.Constraints
 		{
 			return new PredicateConstraint<T>(predicate);
 		}
-#endif
-
 	}
 }

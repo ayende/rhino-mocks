@@ -63,7 +63,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             throw new NotImplementedException("NIY, and I don't want my mock to get here!");
         }
     }
-#if dotNet2
+
     [TestFixture]
     public class RhinoDynamicMockOfGeneric
     {
@@ -99,7 +99,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         }
 
     }
-#endif
 
 }
 

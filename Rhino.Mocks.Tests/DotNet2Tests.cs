@@ -27,7 +27,6 @@
 #endregion
 
 
-#if dotNet2
 using System;
 using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
@@ -106,4 +105,3 @@ namespace Rhino.Mocks.Tests
 		}
 	}
 }
-#endif

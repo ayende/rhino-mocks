@@ -221,7 +221,6 @@ namespace Rhino.Mocks.Tests
             return 1;
         }
 
-#if dotNet2
         [Test]
         public void GenericDelegate()
         {
@@ -242,6 +241,5 @@ namespace Rhino.Mocks.Tests
                 act(i);
             }
         }
-#endif
     }
 }

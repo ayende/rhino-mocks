@@ -30,7 +30,7 @@
 using System;
 using System.Runtime.InteropServices;
 using MbUnit.Framework;
-using mshtml;
+using MSHTML;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {

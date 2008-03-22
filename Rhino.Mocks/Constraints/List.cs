@@ -41,13 +41,7 @@ namespace Rhino.Mocks.Constraints
 	/// <summary>
 	/// Central location for constraints about lists and collections
 	/// </summary>
-	public
-#if dotNet2
- static
-#else
-    sealed
-#endif
-        class List
+	public static class List
 	{
 
 		/*

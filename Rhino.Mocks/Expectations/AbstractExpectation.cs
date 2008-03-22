@@ -467,11 +467,9 @@ namespace Rhino.Mocks.Expectations
 				type = "null";
 				if (returnType.IsValueType == false)
 					return;
-#if dotNet2
 				if (returnType.IsGenericType &&
 					returnType.GetGenericTypeDefinition() == typeof(Nullable<>))
 					return;
-#endif
 			}
 			else
 			{

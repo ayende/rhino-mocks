@@ -72,11 +72,6 @@ namespace Rhino.Mocks
 			return LastCall.GetOptions<T>();
 		}
 
-		///<summary>
-		/// A delegate that execute an action
-		///</summary>
-		public delegate void Action();
-
 		/// <summary>
 		/// Accepts a delegate that will execute inside the method, and then return the resulting
 		/// <see cref="IMethodOptions{T}"/> instance.

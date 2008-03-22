@@ -52,7 +52,6 @@ namespace Rhino.Mocks.Tests
             CanCreateAStrictMultiMockFromTwoInterfacesCommon(mocks, demo);
         }
 
-#if dotNet2
         [Test]
         public void CanCreateAStrictMultiMockFromTwoInterfacesGeneric()
         {
@@ -60,7 +59,6 @@ namespace Rhino.Mocks.Tests
             IDemo demo = mocks.CreateMultiMock<IDemo>(typeof(IDisposable));
             CanCreateAStrictMultiMockFromTwoInterfacesCommon(mocks, demo);
         }
-#endif
 
         private static void CanCreateAStrictMultiMockFromTwoInterfacesCommon(MockRepository mocks, IDemo demo)
         {
@@ -90,7 +88,6 @@ namespace Rhino.Mocks.Tests
             ClearStrictCollectionAndDisposesItCommon(mocks, collection);
         }
 
-#if dotNet2
         [Test]
         public void ClearStrictCollectionAndDisposesItGeneric()
         {
@@ -98,7 +95,6 @@ namespace Rhino.Mocks.Tests
             CollectionBase collection = mocks.CreateMultiMock<CollectionBase>(typeof(IDisposable));
             ClearStrictCollectionAndDisposesItCommon(mocks, collection);
         }
-#endif
 
         private static void ClearStrictCollectionAndDisposesItCommon(MockRepository mocks, CollectionBase collection)
         {
@@ -129,7 +125,6 @@ namespace Rhino.Mocks.Tests
             CanCreateAStrictMultiMockFromClassAndTwoInterfacesCommon(mocks, reader);
         }
 
-#if dotNet2
         [Test]
         public void CanCreateAStrictMultiMockFromClassAndTwoInterfacesGeneric()
         {
@@ -138,7 +133,6 @@ namespace Rhino.Mocks.Tests
 
             CanCreateAStrictMultiMockFromClassAndTwoInterfacesCommon(mocks, reader);
         }
-#endif
 
         private static void CanCreateAStrictMultiMockFromClassAndTwoInterfacesCommon(MockRepository mocks, XmlReader reader)
         {
@@ -185,7 +179,6 @@ namespace Rhino.Mocks.Tests
             CommonConstructorArgsTest(mocks, stringBuilder, formatProvider, mockedWriter, MockType.Strict);
         }
 
-#if dotNet2
         [Test]
         public void CanCreateAStrictMultiMockWithConstructorArgsGeneric()
         {
@@ -202,7 +195,7 @@ namespace Rhino.Mocks.Tests
 
             CommonConstructorArgsTest(mocks, stringBuilder, formatProvider, mockedWriter, MockType.Strict);
         }
-#endif
+
         #endregion
 
         #region CanCreateADynamicMultiMockFromTwoInterfacesNonGeneric
@@ -218,7 +211,6 @@ namespace Rhino.Mocks.Tests
             CanCreateADynamicMultiMockFromTwoInterfacesCommon(mocks, demo, editable);
         }
 
-#if dotNet2
         [Test]
         public void CanCreateADynamicMultiMockFromTwoInterfacesGeneric()
         {
@@ -228,7 +220,6 @@ namespace Rhino.Mocks.Tests
 
             CanCreateADynamicMultiMockFromTwoInterfacesCommon(mocks, demo, editable);
         }
-#endif
 
         private static void CanCreateADynamicMultiMockFromTwoInterfacesCommon(MockRepository mocks, IDemo demo, IEditableObject editable)
         {
@@ -272,7 +263,6 @@ namespace Rhino.Mocks.Tests
             CommonConstructorArgsTest(mocks, stringBuilder, formatProvider, mockedWriter, MockType.Dynamic);
         }
 
-#if dotNet2
         [Test(Description = "Tests that we can dynamic generic multi-mock a class with constructor arguments")]
         public void CanCreateADynamicMultiMockWithConstructorArgsGeneric()
         {
@@ -288,7 +278,7 @@ namespace Rhino.Mocks.Tests
             );
             CommonConstructorArgsTest(mocks, stringBuilder, formatProvider, mockedWriter, MockType.Dynamic);
         }
-#endif
+
         #endregion
 
         #region CanCreateAPartialMultiMockFromClassAndTwoInterfacesNonGeneric
@@ -301,7 +291,6 @@ namespace Rhino.Mocks.Tests
             CanCreateAPartialMultiMockFromClassAndTwoInterfacesCommon(mocks, reader);
         }
 
-#if dotNet2
         [Test]
         public void CanCreateAPartialMultiMockFromClassAndTwoInterfacesGeneric()
         {
@@ -310,7 +299,6 @@ namespace Rhino.Mocks.Tests
 
             CanCreateAPartialMultiMockFromClassAndTwoInterfacesCommon(mocks, reader);
         }
-#endif
 
         private static void CanCreateAPartialMultiMockFromClassAndTwoInterfacesCommon(MockRepository mocks, XmlReader reader)
         {
@@ -357,7 +345,6 @@ namespace Rhino.Mocks.Tests
             CommonConstructorArgsTest(mocks, stringBuilder, formatProvider, mockedWriter, MockType.Partial);
         }
 
-#if dotNet2
         [Test(Description = "Tests that we can partial generic multi-mock a class with constructor arguments")]
         public void CanCreateAPartialMultiMockWithConstructorArgsGeneric()
         {
@@ -374,7 +361,6 @@ namespace Rhino.Mocks.Tests
             
             CommonConstructorArgsTest(mocks, stringBuilder, formatProvider, mockedWriter, MockType.Partial);
         }
-#endif
         #endregion
 
         #region Check cannot create multi mocks using extra classes

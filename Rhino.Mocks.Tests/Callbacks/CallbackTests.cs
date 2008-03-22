@@ -60,7 +60,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void CallbackIsCalled()
 		{
 			demo.VoidStringArg("Ayende");
-			LastCall.On(demo).Callback(new DelegateDefinations.StringDelegate(StringMethod));
+			LastCall.On(demo).Callback<string>(StringMethod);
 			mocks.Replay(demo);
 			demo.VoidStringArg("");
 			mocks.Verify(demo);
@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void GetSameArgumentsAsMethod()
 		{
 			demo.VoidThreeArgs(0, "", 0f);
-			LastCall.On(demo).Callback(new DelegateDefinations.ThreeArgsDelegate(ThreeArgsAreSame));
+			LastCall.On(demo).Callback<int, string, float>(ThreeArgsAreSame);
 			mocks.Replay(demo);
 			demo.VoidThreeArgs(1, "Ayende", 3.14f);
 			mocks.Verify(demo);
@@ -83,14 +83,14 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void DifferentArgumentsFromMethodThrows()
 		{
 			demo.VoidThreeArgs(0, "", 0f);
-			LastCall.On(demo).Callback(new DelegateDefinations.OtherThreeArgsDelegate(OtherThreeArgs));
+			LastCall.On(demo).Callback<int, string, string>(OtherThreeArgs);
 		}
 
 		[Test]
 		public void IgnoreArgsWhenUsingCallbacks()
 		{
 			demo.VoidThreeArgs(0, "", 0f);
-			LastCall.On(demo).Callback(new DelegateDefinations.ThreeArgsDelegate(ThreeArgsAreSame));
+			LastCall.On(demo).Callback<int, string, float>(ThreeArgsAreSame);
 			mocks.Replay(demo);
 			demo.VoidThreeArgs(1, "Ayende", 3.14f);
 			mocks.Verify(demo);
@@ -100,7 +100,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void SetReturnValueOnMethodWithCallback()
 		{
 			demo.ReturnIntNoArgs();
-			LastCall.On(demo).Callback(new DelegateDefinations.NoArgsDelegate(NoArgsMethod)).Return(5);
+			LastCall.On(demo).Callback(NoArgsMethod).Return(5);
 			mocks.Replay(demo);
 			Assert.AreEqual(5, demo.ReturnIntNoArgs());
 			mocks.Verify(demo);
@@ -111,7 +111,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void CallbackWithDifferentSignatureFails()
 		{
 			demo.VoidThreeArgs(0, "", 0f);
-			LastCall.On(demo).Callback(new DelegateDefinations.StringDelegate(StringMethod));
+			LastCall.On(demo).Callback<string>(StringMethod);
 		}
 
 		[Test]
@@ -119,7 +119,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void GetMessageFromCallbackWhenNotReplaying()
 		{
 			demo.VoidThreeArgs(0, "", 0f);
-			LastCall.On(demo).Callback(new DelegateDefinations.ThreeArgsDelegate(ThreeArgsAreSame));
+			LastCall.On(demo).Callback<int, string, float>(ThreeArgsAreSame);
 			mocks.Replay(demo);
 			mocks.Verify(demo);
 		}
@@ -129,7 +129,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void GetMessageFromCallbackWhenCalledTooMuch()
 		{
 			demo.VoidThreeArgs(0, "", 0f);
-			LastCall.On(demo).Callback(new DelegateDefinations.ThreeArgsDelegate(ThreeArgsAreSame));
+			LastCall.On(demo).Callback<int, string, float>(ThreeArgsAreSame);
 			mocks.Replay(demo);
 			demo.VoidThreeArgs(1, "Ayende", 3.14f);
 			demo.VoidThreeArgs(1, "Ayende", 3.14f);
@@ -142,7 +142,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void CallbackWhenMethodHasReturnValue()
 		{
 			demo.ReturnIntNoArgs();
-			LastCall.On(demo).Callback(new DelegateDefinations.NoArgsDelegate(NoArgsMethod));
+			LastCall.On(demo).Callback(NoArgsMethod);
 			mocks.Replay(demo);
 		}
 
@@ -152,7 +152,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void CallbackAndConstraintsOnSameMethod()
 		{
 			demo.StringArgString("");
-			LastCall.On(demo).Callback(new DelegateDefinations.StringDelegate(StringMethod))
+			LastCall.On(demo).Callback<string>(StringMethod)
 				.Constraints(Is.Anything());
 		}
 
@@ -161,7 +161,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void ExceptionInCallback()
 		{
 			demo.ReturnIntNoArgs();
-			LastCall.On(demo).Callback(new DelegateDefinations.NoArgsDelegate(NoArgsThrowing)).Return(5);
+			LastCall.On(demo).Callback(NoArgsThrowing).Return(5);
 			mocks.Replay(demo);
 			Assert.AreEqual(5, demo.ReturnIntNoArgs());
 		}
@@ -171,7 +171,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void CallbackCanFailExpectationByReturningFalse()
 		{
 			demo.VoidNoArgs();
-			LastCall.On(demo).Callback(new DelegateDefinations.NoArgsDelegate(NoArgsMethodFalse));
+			LastCall.On(demo).Callback(NoArgsMethodFalse);
 			mocks.Replay(demo);
 			demo.VoidThreeArgs(1, "Ayende", 3.14f);
 		}

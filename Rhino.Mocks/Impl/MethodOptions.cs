@@ -1,4 +1,5 @@
 ﻿#region license
+
 // Copyright (c) 2005 - 2007 Ayende Rahien (ayende@ayende.com)
 // All rights reserved.
 // 
@@ -24,8 +25,8 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#endregion
 
+#endregion
 
 using System;
 using Rhino.Mocks.Constraints;
@@ -79,7 +80,6 @@ namespace Rhino.Mocks.Impl
 			this.proxy = proxy;
 			this.repository = repository;
 			this.record = record;
-
 		}
 
 		#endregion
@@ -91,10 +91,11 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		public IMethodOptions<T> Constraints(params AbstractConstraint[] constraints)
 		{
-            if( expectation is ConstraintsExpectation )
-            {
-                throw new InvalidOperationException(string.Format("You have already specified constraints for this method. ({0})", this.expectation.ErrorMessage));
-            }
+			if (expectation is ConstraintsExpectation)
+			{
+				throw new InvalidOperationException(
+					string.Format("You have already specified constraints for this method. ({0})", this.expectation.ErrorMessage));
+			}
 			ConstraintsExpectation constraintsExpectation = new ConstraintsExpectation(expectation, constraints);
 			ReplaceExpectation(constraintsExpectation);
 			return this;
@@ -108,6 +109,101 @@ namespace Rhino.Mocks.Impl
 			CallbackExpectation callbackExpectation = new CallbackExpectation(expectation, callback);
 			ReplaceExpectation(callbackExpectation);
 			return this;
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback(Delegates.Function<bool> callback)
+		{
+			return Callback((Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0>(Delegates.Function<bool, TArg0> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1>(Delegates.Function<bool, TArg0, TArg1> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2>(Delegates.Function<bool, TArg0, TArg1, TArg2> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3, TArg4>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8> callback)
+		{
+			return Callback( (Delegate) callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public IMethodOptions<T> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9> callback)
+		{
+			return Callback( (Delegate) callback);
 		}
 
 
@@ -206,8 +302,10 @@ namespace Rhino.Mocks.Impl
 		public IEventRaiser GetEventRaiser()
 		{
 			AssertLastMethodWasEventAddOrRemove();
-			string eventName = expectation.Method.Name.StartsWith("add_") ?
-				expectation.Method.Name.Substring(4) : expectation.Method.Name.Substring(7);
+			string eventName = expectation.Method.Name.StartsWith("add_")
+			                   	?
+			                   		expectation.Method.Name.Substring(4)
+			                   	: expectation.Method.Name.Substring(7);
 			return new EventRaiser(proxy, eventName);
 		}
 
@@ -231,8 +329,8 @@ namespace Rhino.Mocks.Impl
 			MethodInfo method = expectation.Method;
 			//not a property geter or setter
 			if (false == (method.IsSpecialName &&
-				(method.Name.StartsWith("get_") ||
-				method.Name.StartsWith("set_"))))
+			              (method.Name.StartsWith("get_") ||
+			               method.Name.StartsWith("set_"))))
 				throw new InvalidOperationException("Last method call was not made on a setter or a getter");
 			PropertyInfo prop = GetPropertyFromMethod(method);
 			if (false == (prop.CanRead && prop.CanWrite))
@@ -243,7 +341,7 @@ namespace Rhino.Mocks.Impl
 		{
 			MethodInfo method = expectation.Method;
 			if (method.IsSpecialName == false ||
-				!(method.Name.StartsWith("add_") || method.Name.StartsWith("remove_")))
+			    !(method.Name.StartsWith("add_") || method.Name.StartsWith("remove_")))
 			{
 				throw new InvalidOperationException("The last method call " + method.Name + " was not an event add / remove method");
 			}
@@ -262,14 +360,15 @@ namespace Rhino.Mocks.Impl
 				types.Add(args[i].ParameterType);
 			}
 			PropertyInfo prop = expectation.Method.DeclaringType.GetProperty(propName,
-				(Type[])types.ToArray(typeof(Type)));
+			                                                                 (Type[]) types.ToArray(typeof (Type)));
 			return prop;
 		}
 
 		private void AssertMethodImplementationExists()
 		{
 			if (expectation.Method.IsAbstract)
-				throw new InvalidOperationException("Can't use CallOriginalMethod on method " + expectation.Method.Name + " because the method is abstract.");
+				throw new InvalidOperationException("Can't use CallOriginalMethod on method " + expectation.Method.Name +
+				                                    " because the method is abstract.");
 		}
 
 		private void ReplaceExpectation(IExpectation anyArgsExpectation)
@@ -372,11 +471,8 @@ namespace Rhino.Mocks.Impl
 		{
 			expectation.Expected = new Range(count, count);
 			return this;
-
 		}
 
 		#endregion
-
-
 	}
 }

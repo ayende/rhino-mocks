@@ -210,6 +210,101 @@ namespace Rhino.Mocks
 		}
 
 		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback(Delegates.Function<bool> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0>(Delegates.Function<bool, TArg0> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1>(Delegates.Function<bool, TArg0, TArg1> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2>(Delegates.Function<bool, TArg0, TArg1, TArg2> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3, TArg4>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
+		/// Set a callback method for the last call
+		/// </summary>
+		public static IMethodOptions<object> Callback<TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(
+			Delegates.Function<bool, TArg0, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9> callback)
+		{
+			return Callback((Delegate)callback);
+		}
+
+		/// <summary>
 		/// Call the original method on the class, bypassing the mocking layers, for the last call.
 		/// </summary>
 		[Obsolete("Use CallOriginalMethod(OriginalCallOptions options) overload to explicitly specify the call options")]

@@ -40,13 +40,7 @@ namespace Rhino.Mocks.Constraints
 	/// <summary>
 	/// Central location for constraints for object's properties
 	/// </summary>
-	public
-#if dotNet2
- static
-#else
-    sealed
-#endif
-        class Property
+	public static class Property
 	{
 		/*
 		 * Method: Value

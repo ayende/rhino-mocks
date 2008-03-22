@@ -1,65 +1,21 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Project 
-		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding='iso-8859-1' ?>
+<project
+	name="rhino-mocks"
+	default="build"
+	xmlns="http://nant.sf.net/release/0.85/nant.xsd"
+>
 
-	<PropertyGroup>
-		<ProjectName>Rhino.Mocks</ProjectName>
-		<ShortName>rhino-mocks</ShortName>
-		<SolutionFile>Rhino.Mocks.sln</SolutionFile>
-		<FlattenZipFile>True</FlattenZipFile>
-		<SectionId>-2</SectionId>
-		<Version>3.4.0</Version>
-		<ExtraInfo></ExtraInfo>
-	</PropertyGroup>
-	
-	<ItemGroup>
-		<AssemblyInfo Include="Item">
-			<File>$(MSBuildProjectDirectory)\Rhino.Mocks\AssemblyInfo.cs</File>
-		</AssemblyInfo>
-		<AssemblyInfo Include="Item">
-			<File>$(MSBuildProjectDirectory)\Rhino.Mocks.Tests\AssemblyInfo.cs</File>
-		</AssemblyInfo>
-	</ItemGroup>
-	
-	<ItemGroup>
-		<TestAssembly Include="$(OutDir)\Rhino.Mocks.Tests.dll"/>
-	</ItemGroup>
+	<property name="root.dir" value=".." />
+	<include buildfile="${root.dir}/common-project.xml" />
 
-	<ItemGroup>
-		<ZipFiles Include="$(OutDir)\Rhino.Mocks.dll"/>
-		<ZipFiles Include="$(OutDir)\Rhino.Mocks.xml"/>
-	</ItemGroup>
-	
-	<Import Project="$(MSBuildProjectDirectory)\..\Common.build.xml"/>
-	
-	<Target Name="BeforeZip">	
-			
-			<Delete Files="$(OutDir)\Rhino.Mocks.Partial.dll;$(ArtifactsDir)\Rhino.Mocks*.zip"/>
-			<Move SourceFiles="$(OutDir)\Rhino.Mocks.dll;"
-				DestinationFiles="$(OutDir)\Rhino.Mocks.Partial.dll;"/>
-			<ILMerge Condition="$(Configuration) == 'debug'"
-				ToolPath="$(SharedLibsDir)\Tools\"
-				InputAssemblies="$(OutDir)\Rhino.Mocks.Partial.dll;
-				$(OutDir)\Castle.DynamicProxy2.dll;
-				$(OutDir)\Castle.Core.dll"
-				 ExcludeFile="$(MSBuildProjectDirectory)\ilmerge.exclude"
-				 OutputFile="$(OutDir)\Rhino.Mocks.dll"
-				 LogFile="$(logFile)"
-				 DebugInfo="true"
-				 XmlDocumentation="true"
-				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"/>
+	<fileset id="buildfiles.all">
+		<!-- Files have to be in dependency order -->
+		<include name="Rhino.Mocks/default.build" />
+		<include name="Rhino.Mocks.Tests/default.build" if="${common.testrunner.enabled}"/>
+	</fileset>
 
-			<ILMerge Condition="$(Configuration) != 'debug'"
-				ToolPath="$(SharedLibsDir)\Tools\"
-				InputAssemblies="$(OutDir)\Rhino.Mocks.Partial.dll;
-				$(OutDir)\Castle.DynamicProxy2.dll;
-				$(OutDir)\Castle.Core.dll"
-				 ExcludeFile="$(MSBuildProjectDirectory)\ilmerge.exclude"
-				 OutputFile="$(OutDir)\Rhino.Mocks.dll"
-				 LogFile="$(logFile)"
-				 DebugInfo="false"
-				 XmlDocumentation="true"
-				 KeyFile="$(SharedLibsDir)\..\ayende-open-source.snk"/>
-	</Target>
+	<target name="build" depends="common.build" />
 	
-</Project>
+	<target name="generate-assemblyinfo" depends="common.assemblyinfo" />
+
+</project>

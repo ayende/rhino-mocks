@@ -318,8 +318,6 @@ namespace Rhino.Mocks.Constraints
 
 	#region Predicate Constraint
 	
-#if dotNet2
-	
 	/// <summary>
 	/// Evaluate a parameter using constraints
 	/// </summary>
@@ -371,8 +369,6 @@ namespace Rhino.Mocks.Constraints
 		}
 	}
 	
-	
-#endif
 	
 	#endregion
 

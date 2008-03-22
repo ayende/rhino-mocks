@@ -40,13 +40,7 @@ namespace Rhino.Mocks.Constraints
 	/// <summary>
 	/// Central location for all text related constraints
 	/// </summary>
-	public
-#if dotNet2
-    static
-#else
-    sealed
-#endif
-        class Text
+	public static class Text
 	{
 		/*
 		 * Method: StartsWith
