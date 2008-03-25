@@ -57,7 +57,7 @@ namespace Rhino.Mocks
         /// DoNotExpect.Call(delegate{ mockSrv.Stop(); });
         /// ...
         /// </example>
-        public static void Call(Action actionToExecute)
+        public static void Call(Expect.Action actionToExecute)
         {
             if (actionToExecute == null)
                 throw new ArgumentNullException("actionToExecute", "The action to execute cannot be null");

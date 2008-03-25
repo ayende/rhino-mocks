@@ -46,6 +46,11 @@ namespace Rhino.Mocks
 	/// </summary>
 	public static class Expect
 	{
+		///<summary>
+		///A delegate that can be used to get better syntax on Expect.Call(delegate { foo.DoSomething(); });
+		///</summary>
+		public delegate void Action();
+	
 		/*
 		 * Method: Call
 		 * Get the method options for the last method call, which usually will be a method call
