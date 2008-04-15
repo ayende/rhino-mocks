@@ -116,5 +116,46 @@ namespace Rhino.Mocks.Tests
 
             string prop = mock.Prop;
         }
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException),
+           "IDemo.VoidNoArgs(); Expected #1, Actual #0.")]
+        public void CanMoveToRecordFromReplyWithoutClearingExpectations()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo mock = mocks.CreateMock<IDemo>();
+
+            mock.VoidNoArgs();
+            mocks.ReplayAll();
+
+            mocks.BackToRecord(mock, BackToRecordOptions.None);
+            
+            mock.VoidNoArgs();
+            mocks.ReplayAll();
+
+            mock.VoidNoArgs();
+
+            mocks.VerifyAll();
+        }
+
+        [Test]
+        public void CanMoveToRecordFromVerifiedWithoutClearingExpectations()
+        {
+            MockRepository mocks = new MockRepository();
+            IDemo mock = mocks.CreateMock<IDemo>();
+
+            mock.VoidNoArgs();
+            mocks.ReplayAll();
+
+            mock.VoidNoArgs();
+            mocks.VerifyAll();
+
+            mocks.BackToRecord(mock, BackToRecordOptions.None);
+            mock.VoidNoArgs();
+            mocks.ReplayAll();
+
+            mock.VoidNoArgs();
+            mocks.VerifyAll();
+        }
     }
 }
