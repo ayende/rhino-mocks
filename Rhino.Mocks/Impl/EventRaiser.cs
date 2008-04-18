@@ -75,9 +75,24 @@ namespace Rhino.Mocks.Impl
 			if (subscribed != null)
 			{
 				AssertMatchingParameters(subscribed.Method, args);
-				subscribed.DynamicInvoke(args);
+			    try
+			    {
+			        subscribed.DynamicInvoke(args);
+			    }
+			    catch (TargetInvocationException e)
+			    {
+			        PreserveStackTrace(e.InnerException);
+			        throw e.InnerException;
+			    }
 			}
 		}
+
+        private static void PreserveStackTrace(Exception exception)
+        {
+            MethodInfo preserveStackTrace = typeof(Exception).GetMethod("InternalPreserveStackTrace",
+              BindingFlags.Instance | BindingFlags.NonPublic);
+            preserveStackTrace.Invoke(exception, null);
+        }
 
 		private static void AssertMatchingParameters(MethodInfo method, object[] args)
 		{
