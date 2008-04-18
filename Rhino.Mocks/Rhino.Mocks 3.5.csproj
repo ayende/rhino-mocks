@@ -129,6 +129,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Impl\NullLogger.cs" />
+    <Compile Include="Impl\RelaxedRecordMockState.cs" />
     <Compile Include="Impl\RemotingMock\IRemotingProxyOperation.cs" />
     <Compile Include="Impl\RemotingMock\RemotingMockGenerator.cs" />
     <Compile Include="Impl\RemotingMock\RemotingProxyDetector.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Interfaces\OriginalCallOptions.cs" />
     <Compile Include="MockRepositoryRecordPlayback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RhinoMocksExtensions.cs" />
     <Compile Include="Utilities\GenericsUtil.cs" />
     <Compile Include="Generated\ExpectationsListGenerated.cs">
       <SubType>Code</SubType>

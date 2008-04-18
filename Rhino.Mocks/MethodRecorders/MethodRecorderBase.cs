@@ -417,7 +417,7 @@ namespace Rhino.Mocks.MethodRecorders
 					expectation.AddActualCall();
 					if (expectation.RepeatableOption == RepeatableOption.Never)
 					{
-						string errMsg = string.Format("{0} Expected #{1}, Actual #{2}.", expectation.ErrorMessage, expectation.Expected, expectation.ActualCalls);
+						string errMsg = string.Format("{0} Expected #{1}, Actual #{2}.", expectation.ErrorMessage, expectation.Expected, expectation.ActualCallsCount);
 						ExpectationViolationException exception = new ExpectationViolationException(errMsg);
 						MockRepository.SetExceptionToBeThrownOnVerify(proxy, exception);
 						throw exception;

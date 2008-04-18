@@ -199,7 +199,7 @@ namespace Rhino.Mocks.Impl
 			sb.Append(expectationMessege).Append(' ');
 			sb.Append("Expected #");
 			sb.Append(expectation.Expected.ToString()).Append(", ");
-			sb.Append("Actual #").Append(expectation.ActualCalls).Append('.');
+			sb.Append("Actual #").Append(expectation.ActualCallsCount).Append('.');
 			return sb;
 		}
 

@@ -53,7 +53,7 @@ namespace Rhino.Mocks.Tests.Impl
 			mocks = new MockRepository();
 			proxy = new ProxyInstance(mocks);
 			startsWith = CreateMethodInfo();
-			record = new RecordMockState(proxy, ReplayMockStateTests.mocks);
+			record = new RecordMockState(proxy, mocks);
             record.MethodCall(new FakeInvocation(startsWith), startsWith, "2");
 			replay = new ReplayMockState(record);
 		}
@@ -85,7 +85,8 @@ namespace Rhino.Mocks.Tests.Impl
 		public void VerifyWhenAllExpectedCallsWereCalled()
 		{
 			MethodInfo methodInfo = CreateMethodInfo();
-			this.replay.MethodCall(new FakeInvocation(methodInfo), methodInfo, "2");
+            record.LastExpectation.ReturnValue = true;
+            this.replay.MethodCall(new FakeInvocation(methodInfo), methodInfo, "2");
 			this.replay.Verify();
 		}
 

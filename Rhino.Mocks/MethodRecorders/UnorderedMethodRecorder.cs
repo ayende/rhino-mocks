@@ -413,7 +413,7 @@ namespace Rhino.Mocks.MethodRecorders
 					{
 						expectedMin+= expectation.Expected.Min;
 						expectedMax += expectation.Expected.Max;
-						actual += expectation.ActualCalls;
+						actual += expectation.ActualCallsCount;
 					}
 				}
 			}
@@ -430,7 +430,7 @@ namespace Rhino.Mocks.MethodRecorders
 				sb.Append("\r\n");
 				sb.Append(expectation.ErrorMessage).Append(" Expected #");
 				sb.Append(expectation.Expected).Append(", Actual #");
-				sb.Append(expectation.ActualCalls).Append(".");
+				sb.Append(expectation.ActualCallsCount).Append(".");
 			}
 		}
 	}

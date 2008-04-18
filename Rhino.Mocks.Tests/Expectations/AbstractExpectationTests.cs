@@ -74,7 +74,7 @@ namespace Rhino.Mocks.Tests.Expectations
 			Range r = new Range(0, 30);
 			IExpectation test = GetExpectation(method, r, 5);
 			Assert.AreEqual(r, test.Expected);
-			Assert.AreEqual(5, test.ActualCalls);
+			Assert.AreEqual(5, test.ActualCallsCount);
 		}
 
 
@@ -119,11 +119,12 @@ namespace Rhino.Mocks.Tests.Expectations
 		{
 			Range r = new Range(0, 5);
 			IExpectation test = GetExpectation(method, r, 0);
-			Assert.AreEqual(0, test.ActualCalls);
-			test.AddActualCall();
-			Assert.AreEqual(1, test.ActualCalls);
-			test.AddActualCall();
-			Assert.AreEqual(2, test.ActualCalls);
+			Assert.AreEqual(0, test.ActualCallsCount);
+            test.AddActualCall();
+
+			Assert.AreEqual(1, test.ActualCallsCount);
+            test.AddActualCall();
+            Assert.AreEqual(2, test.ActualCallsCount);
 		}
 
 		[Test]

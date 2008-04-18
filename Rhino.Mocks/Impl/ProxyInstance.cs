@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using Rhino.Mocks.Interfaces;
@@ -50,7 +51,10 @@ namespace Rhino.Mocks.Impl
 		private IDictionary eventsSubscribers;
 		private Type[] implemented;
 
-		/// <summary>
+	    private readonly IDictionary<MethodInfo, ICollection<object[]>> methodToActualCalls = new Dictionary<MethodInfo, ICollection<object[]>>();
+	    private object[] constructorArguments = new object[0];
+
+	    /// <summary>
 		/// Create a new instance of <see cref="ProxyInstance"/>
 		/// </summary>
 		public ProxyInstance(MockRepository repository, params Type[] implemented)
@@ -225,7 +229,13 @@ namespace Rhino.Mocks.Impl
 		}
 
 
-		/// <summary>
+	    public object[] ConstructorArguments
+	    {
+	        get { return constructorArguments; }
+	        set { constructorArguments = value; }
+	    }
+
+	    /// <summary>
 		/// Gets the implemented types by this mocked object
 		/// </summary>
 		/// <value>The implemented.</value>
@@ -234,7 +244,24 @@ namespace Rhino.Mocks.Impl
 			get { return implemented; }
 		}
 
-		/// <summary>
+	    public ICollection<object[]> GetCallArgumentsFor(MethodInfo method)
+	    {
+            if (methodToActualCalls.ContainsKey(method) == false)
+                return new List<object[]>();
+	        return methodToActualCalls[method];
+	    }
+
+
+	    public void MethodCall(MethodInfo method, object[] args)
+	    {
+	        if(repository.IsInReplayMode(this)==false)
+	            return;
+            if (methodToActualCalls.ContainsKey(method) == false)
+                methodToActualCalls[method] = new List<object[]>();
+	        methodToActualCalls[method].Add(args);
+        }
+
+	    /// <summary>
 		/// Clears the state of the object, remove original calls, property behavior, subscribed events, etc.
 		/// </summary>
 		public void ClearState(BackToRecordOptions options)

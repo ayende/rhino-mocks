@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -369,8 +370,28 @@ namespace Rhino.Mocks.Constraints
 		}
 	}
 	
-	
-	#endregion
+    public class LambdaConstraint : AbstractConstraint
+    {
+        private readonly Expression expr;
+
+        public LambdaConstraint(Expression expr)
+        {
+            this.expr = expr;
+        }
+
+        public override bool Eval(object obj)
+        {
+            Delegate pred = (Delegate)expr.GetType().GetMethod("Compile").Invoke(expr, new object[0]);
+            return (bool) pred.DynamicInvoke(obj);
+        }
+
+        public override string Message
+        {
+            get { return expr.ToString(); }
+        }
+    }
+
+    #endregion
 
 	#region List constraints
 

@@ -28,6 +28,8 @@
 
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Interceptor;
 using Rhino.Mocks.Impl;
@@ -60,7 +62,7 @@ namespace Rhino.Mocks.Interfaces
 		/// <summary>
 		/// Number of call actually made for this method
 		/// </summary>
-		int ActualCalls { get; }
+		int ActualCallsCount { get; }
 
 		/// <summary>
 		/// If this expectation is still waiting for calls.
@@ -139,5 +141,5 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		/// <value>The invocation.</value>
 		IInvocation Originalinvocation { get;}
-	}
+    }
 }

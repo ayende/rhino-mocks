@@ -324,6 +324,7 @@
     <Compile Include="MultiMocks.cs" />
     <Compile Include="OrderTest.cs" />
     <Compile Include="PartialMockTests.cs" />
+    <Compile Include="RecordingMocks.cs" />
     <Compile Include="RemotingMockTests.cs" />
     <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
     <Compile Include="RefOutParameters.cs" />

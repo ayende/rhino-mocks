@@ -28,6 +28,7 @@
 
 
 using System;
+using System.Collections.Generic;
 
 namespace Rhino.Mocks.Interfaces
 {
@@ -103,5 +104,21 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		/// <value>The implemented.</value>
 		Type[] ImplementedTypes { get; }
+
+	    object[] ConstructorArguments { get; set; }
+
+	    /// <summary>
+        /// Get all the method calls arguments that were made against this object with the specificed 
+        /// method.
+        /// </summary>
+        /// <remarks>
+        /// Only method calls in replay mode are counted
+        /// </remarks>
+	    ICollection<object[]> GetCallArgumentsFor(MethodInfo method);
+
+        /// <summary>
+        /// Records the method call
+        /// </summary>
+	    void MethodCall(MethodInfo method, object[] args);
 	}
 }
