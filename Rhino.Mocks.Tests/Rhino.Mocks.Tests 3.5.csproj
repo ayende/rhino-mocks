@@ -103,6 +103,9 @@
     <Reference Include="System.EnterpriseServices">
       <Name>System.EnterpriseServices</Name>
     </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
@@ -144,6 +147,7 @@
     <Compile Include="DotNet35Tests.cs" />
     <Compile Include="ExtendingRhinoMocks.cs" />
     <Compile Include="ExtendingRhinoMocks2.cs" />
+    <Compile Include="FieldProblem_Will.cs" />
     <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
     <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Aharon.cs">
