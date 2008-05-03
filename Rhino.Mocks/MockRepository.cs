@@ -677,7 +677,7 @@ namespace Rhino.Mocks
             object proxy;
             try
             {
-                proxy = generator.CreateClassProxy(type, (Type[])types.ToArray(typeof(Type)),
+                proxy = Generator.CreateClassProxy(type, (Type[])types.ToArray(typeof(Type)),
                                                    ProxyGenerationOptions.Default,
                                                    argumentsForConstructor, interceptor);
             }
@@ -710,7 +710,7 @@ namespace Rhino.Mocks
             types.AddRange(extras);
             types.Add(typeof(IMockedObject));
             proxy =
-                generator.CreateInterfaceProxyWithoutTarget(type, (Type[])types.ToArray(typeof(Type)), interceptor);
+                Generator.CreateInterfaceProxyWithoutTarget(type, (Type[])types.ToArray(typeof(Type)), interceptor);
             IMockState value = mockStateFactory((IMockedObject)proxy);
             proxies.Add(proxy, value);
             return proxy;
@@ -727,7 +727,7 @@ namespace Rhino.Mocks
             RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance);
 
             Type[] types = new Type[] { typeof(IMockedObject) };
-            object target = generator.CreateInterfaceProxyWithoutTarget(
+            object target = Generator.CreateInterfaceProxyWithoutTarget(
                 delegateTargetInterfaceCreator.GetDelegateTargetInterface(type),
                 types, interceptor);
 
@@ -997,6 +997,11 @@ namespace Rhino.Mocks
                     return null;
                 return lastRepository.lastMockedObject;
             }
+        }
+
+        protected virtual ProxyGenerator Generator
+        {
+            get { return generator; }
         }
 
         /// <summary>

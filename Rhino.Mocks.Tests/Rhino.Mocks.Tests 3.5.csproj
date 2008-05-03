@@ -147,7 +147,6 @@
     <Compile Include="DotNet35Tests.cs" />
     <Compile Include="ExtendingRhinoMocks.cs" />
     <Compile Include="ExtendingRhinoMocks2.cs" />
-    <Compile Include="FieldProblem_Will.cs" />
     <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
     <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Aharon.cs">
@@ -329,6 +328,7 @@
     <Compile Include="MultiMocks.cs" />
     <Compile Include="OrderTest.cs" />
     <Compile Include="PartialMockTests.cs" />
+    <Compile Include="PersistentMockRepositoryTests.cs" />
     <Compile Include="RecordingMocks.cs" />
     <Compile Include="RemotingMockTests.cs" />
     <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
