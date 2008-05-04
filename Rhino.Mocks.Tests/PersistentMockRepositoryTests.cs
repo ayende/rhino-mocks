@@ -261,6 +261,6 @@ namespace Rhino.Mocks.Tests
 			Assert.IsTrue(caughtException is InvalidOperationException);
 		}
 
-		private static readonly long DEMO_FAST_CREATION_MAX = 40; // cached creation should be fast
+		private static readonly long DEMO_FAST_CREATION_MAX = 150; // cached creation should be fast
 	}
 }
