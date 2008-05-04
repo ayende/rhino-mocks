@@ -29,7 +29,9 @@
 
 using System;
 using System.Collections;
+#if DOTNET35
 using System.Linq.Expressions;
+#endif
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -369,7 +371,7 @@ namespace Rhino.Mocks.Constraints
 			return "obj";
 		}
 	}
-	
+	#if DOTNET35
     public class LambdaConstraint : AbstractConstraint
     {
         private readonly Expression expr;
@@ -391,6 +393,7 @@ namespace Rhino.Mocks.Constraints
         }
     }
 
+    #endif
     #endregion
 
 	#region List constraints

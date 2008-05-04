@@ -1,3 +1,4 @@
+#if DOTNET35
 using System;
 using MbUnit.Framework;
 using Rhino.Mocks.Constraints;
@@ -188,3 +189,4 @@ namespace Rhino.Mocks.Tests
         int Bar(string x);
     }
 }
+#endif

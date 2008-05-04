@@ -1,3 +1,4 @@
+#if DOTNET35
 using System;
 using System.Collections.Generic;
 using Rhino.Mocks.Constraints;
@@ -105,3 +106,4 @@ namespace Rhino.Mocks
         }
     }
 }
+#endif
