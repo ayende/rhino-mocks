@@ -70,32 +70,32 @@ namespace Rhino.Mocks
      *  [SetUp]
      *  public void Setup()
      *  {
-     *  	mocks = new MockRepository();
+     *      mocks = new MockRepository();
      *  }
      *
-     *	[Test]
-     *	public void CallMethodOnObject()
-     *	{
-     *		
-     *		IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
-     *		// Setting up an expectation for a call to IDemo.VoidNoArg
-     *		demo.VoidNoArg();
-     *		mocks.ReplayAll();
-     *		// Fullifying the expectation for call to IDemo.VoidNoArg
-     *		demo.VoidNoArg();
-     *	}
+     *    [Test]
+     *    public void CallMethodOnObject()
+     *    {
+     *        
+     *        IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+     *        // Setting up an expectation for a call to IDemo.VoidNoArg
+     *        demo.VoidNoArg();
+     *        mocks.ReplayAll();
+     *        // Fullifying the expectation for call to IDemo.VoidNoArg
+     *        demo.VoidNoArg();
+     *    }
      *
      *  [TearDown]
      *  public void Teardown()
      *  {
-     *	 	mocks.VerifyAll();
+     *         mocks.VerifyAll();
      *  }
      * (end)
      * 
      * Class Responsbilities:
      * 
      *  - Create and manage mock object throughout their life time
-     *	 
+     *     
      * See Also:
      * - <Rhino.Mocks.MockRepository.CreateMock>
      * - <Rhino.Mocks.MockRepository.DynamicMock>
@@ -118,11 +118,22 @@ namespace Rhino.Mocks
         #region Variables
 
         /*
-		 * Variable: lastRepository
-		 * A static variable that is used to hold the repository that last had a method call
-		 * on one of its mock objects.
-		 * 
-		 */
+         * Variable: generatorMap
+         * A static variable that is used to hold a map of Types to ProxyGenerators
+         * 
+         */
+
+        /// <summary>
+        /// This is a map of types to ProxyGenerators.
+        /// </summary>
+        private static readonly IDictionary<Type, ProxyGenerator> generatorMap = new Dictionary<Type, ProxyGenerator>();
+
+        /*
+         * Variable: lastRepository
+         * A static variable that is used to hold the repository that last had a method call
+         * on one of its mock objects.
+         * 
+         */
 
         /// <summary>
         /// This is used to record the last repository that has a method called on it.
@@ -169,9 +180,9 @@ namespace Rhino.Mocks
         #region Properties
 
         /*
-		 * Property: Recorder
-		 * Gets the current recorder for the repository.
-		 */
+         * Property: Recorder
+         * Gets the current recorder for the repository.
+         */
 
         /// <summary>
         /// Gets the recorder.
@@ -187,8 +198,8 @@ namespace Rhino.Mocks
         #region c'tors
 
         /* function: MockRepository
-		 * Create a new instance of MockRepository
-		 */
+         * Create a new instance of MockRepository
+         */
 
         /// <summary>
         /// Creates a new <see cref="MockRepository"/> instance.
@@ -208,33 +219,33 @@ namespace Rhino.Mocks
         #region Methods
 
         /*
-		 * Method: Ordered
-		 * Moves the _entire_ <MockRepository> to use ordered recording.
-		 * 
-		 * This call is only valid during the recording phase.
-		 * This call affects all mock objects that were created from this repository.
-		 * 
-		 * The orderring is ended when the returned IDisposable's Dispose() method is called.
-		 * (start code)
-		 *	[Test]
- 		 *	public void CallMethodOnObject()
- 		 *	{
- 		 *		IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
-		 *		//Moving to ordered mocking.
- 		 *		using(mocks.Ordered()
-		 *		{
-		 *			demo.VoidNoArg();
-		 *			demo.IntNoArg();
-		 *		}
-		 *		//Must exit the ordering before calling 
-		 *		mocks.ReplayAll();
-		 *		//If we would try to call them in any other order, the test would fail
-		 *		demo.VoidNoArg();
-		 *		demo.IntNoArg();
-		 *	}
-		 * (end)
-		 * 
-		 */
+         * Method: Ordered
+         * Moves the _entire_ <MockRepository> to use ordered recording.
+         * 
+         * This call is only valid during the recording phase.
+         * This call affects all mock objects that were created from this repository.
+         * 
+         * The orderring is ended when the returned IDisposable's Dispose() method is called.
+         * (start code)
+         *    [Test]
+          *    public void CallMethodOnObject()
+          *    {
+          *        IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+         *        //Moving to ordered mocking.
+          *        using(mocks.Ordered()
+         *        {
+         *            demo.VoidNoArg();
+         *            demo.IntNoArg();
+         *        }
+         *        //Must exit the ordering before calling 
+         *        mocks.ReplayAll();
+         *        //If we would try to call them in any other order, the test would fail
+         *        demo.VoidNoArg();
+         *        demo.IntNoArg();
+         *    }
+         * (end)
+         * 
+         */
 
         /// <summary>
         /// Move the repository to ordered mode
@@ -252,34 +263,34 @@ namespace Rhino.Mocks
          * This call affects all mock objects that were created from this repository.
          * 
          * (start code)
-         *	[Test]
-         *	public void CallMethodOnObject()
-         *	{
-         *		IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
-         *		//Moving to ordered mocking.
-         *		using(mocks.Ordered()
-         *		{
-         *			demo.VoidNoArg();
-         *			using(mocks.Unordered()
-         *			{
-         *				demo.VoidNoArg();
-         *				demo.IntNoArg();
-         *			}
-         *			demo.IntNoArg();
-         *		}
-         *		//Must exit the ordering before calling 
-         *		mocks.ReplayAll();
-         *		//The expectations we set up is:
-         *		// 1. demo.VoidNoArgs();
-         *		// 2. in any order:
-         *		//		1. demo.VoidNoArg();
-         *		//		2. demo.IntNoArg();
-         *		// 3. demo.IntNoArg();
-         *		demo.VoidNoArg();
-         *		demo.IntNoArg();
-         *		demo.VoidNoArg();
-         *		demo.IntNoArg();
-         *	}
+         *    [Test]
+         *    public void CallMethodOnObject()
+         *    {
+         *        IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+         *        //Moving to ordered mocking.
+         *        using(mocks.Ordered()
+         *        {
+         *            demo.VoidNoArg();
+         *            using(mocks.Unordered()
+         *            {
+         *                demo.VoidNoArg();
+         *                demo.IntNoArg();
+         *            }
+         *            demo.IntNoArg();
+         *        }
+         *        //Must exit the ordering before calling 
+         *        mocks.ReplayAll();
+         *        //The expectations we set up is:
+         *        // 1. demo.VoidNoArgs();
+         *        // 2. in any order:
+         *        //        1. demo.VoidNoArg();
+         *        //        2. demo.IntNoArg();
+         *        // 3. demo.IntNoArg();
+         *        demo.VoidNoArg();
+         *        demo.IntNoArg();
+         *        demo.VoidNoArg();
+         *        demo.IntNoArg();
+         *    }
          */
 
         /// <summary>
@@ -588,9 +599,9 @@ namespace Rhino.Mocks
         #region Implementation Details
 
         /*
-		 * Method: MethodCall
-		 * Handles a method call for a mock object.
-		 */
+         * Method: MethodCall
+         * Handles a method call for a mock object.
+         */
 
         internal object MethodCall(IInvocation invocation, object proxy, MethodInfo method, object[] args)
         {
@@ -677,7 +688,7 @@ namespace Rhino.Mocks
             object proxy;
             try
             {
-                proxy = Generator.CreateClassProxy(type, (Type[])types.ToArray(typeof(Type)),
+                proxy = GetProxyGenerator(type).CreateClassProxy(type, (Type[])types.ToArray(typeof(Type)),
                                                    ProxyGenerationOptions.Default,
                                                    argumentsForConstructor, interceptor);
             }
@@ -710,7 +721,7 @@ namespace Rhino.Mocks
             types.AddRange(extras);
             types.Add(typeof(IMockedObject));
             proxy =
-                Generator.CreateInterfaceProxyWithoutTarget(type, (Type[])types.ToArray(typeof(Type)), interceptor);
+                GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(type, (Type[])types.ToArray(typeof(Type)), interceptor);
             IMockState value = mockStateFactory((IMockedObject)proxy);
             proxies.Add(proxy, value);
             return proxy;
@@ -727,7 +738,7 @@ namespace Rhino.Mocks
             RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance);
 
             Type[] types = new Type[] { typeof(IMockedObject) };
-            object target = Generator.CreateInterfaceProxyWithoutTarget(
+            object target = GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(
                 delegateTargetInterfaceCreator.GetDelegateTargetInterface(type),
                 types, interceptor);
 
@@ -914,19 +925,19 @@ namespace Rhino.Mocks
          * If this happens to you, you may need to avoid the using statement until you figure out what is wrong:
          * The using statement:
          * (start code)
-         *	using(MockRepository mocks = new MockRepository())
-         *	{
-         *		// Some action that cause an unexpected exception
-         *		// which would cause unsatisfied expectation and cause
-         *		// VerifyAll() to fail.
-         *	}
+         *    using(MockRepository mocks = new MockRepository())
+         *    {
+         *        // Some action that cause an unexpected exception
+         *        // which would cause unsatisfied expectation and cause
+         *        // VerifyAll() to fail.
+         *    }
          * (end)
          *
          * The unrolled using statement:
          * (start code)
-         *	MockRepository mocks = new MockRepository())
-         *	//The afore mentioned action
-         *	mocks.VerifyAll()//won't occur if an exception is thrown
+         *    MockRepository mocks = new MockRepository())
+         *    //The afore mentioned action
+         *    mocks.VerifyAll()//won't occur if an exception is thrown
          * (end)
          * 
          * This way you can get the real exception from the unit testing framework.
@@ -999,10 +1010,22 @@ namespace Rhino.Mocks
             }
         }
 
-        protected virtual ProxyGenerator Generator
+        /// <summary>
+        /// Gets the proxy generator for a specific type. Having a single ProxyGenerator
+        /// with multiple types linearly degrades the performance so this implementation
+        /// keeps one ProxyGenerator per type. 
+        /// </summary>
+        protected virtual ProxyGenerator GetProxyGenerator(Type type)
         {
-            get { return generator; }
+            if (!generatorMap.ContainsKey(type))
+            {
+                generatorMap[type] = new ProxyGenerator();
+            }
+
+            return generatorMap[type];
         }
+
+
 
         /// <summary>
         /// Set the exception to be thrown when verified is called.

@@ -298,16 +298,13 @@ namespace Rhino.Mocks
 		/// <summary>
 		/// Return Generator based on PersistentProxyBuilder
 		/// </summary>
-		protected override ProxyGenerator Generator
+		protected override ProxyGenerator GetProxyGenerator(Type type)
 		{
-			get
+			if (proxyGenerator == null)
 			{
-				if (proxyGenerator == null)
-				{
-					proxyGenerator = new ProxyGenerator(persistentProxyBuilder);
-				}
-				return proxyGenerator;
+				proxyGenerator = new ProxyGenerator(persistentProxyBuilder);
 			}
+			return proxyGenerator;
 		}
 
 
