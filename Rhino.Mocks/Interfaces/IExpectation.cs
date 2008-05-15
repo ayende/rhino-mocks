@@ -141,5 +141,10 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		/// <value>The invocation.</value>
 		IInvocation Originalinvocation { get;}
+
+        /// <summary>
+        /// Allow to set the return value in the future, if it was already set.
+        /// </summary>
+	    void IgnoreMissingReturnValueUntilExecuteTime();
     }
 }

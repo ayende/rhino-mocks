@@ -60,6 +60,12 @@ namespace Rhino.Mocks.Interfaces
 		/// <returns>IRepeat that defines how many times the method will return this value</returns>
 		IMethodOptions<T> Return(T objToReturn);
 
+        /// <summary>
+        /// Allow to override this return value in the future
+        /// </summary>
+        /// <returns>IRepeat that defines how many times the method will return this value</returns>
+        IMethodOptions<T> TentativeReturn();
+
 		/*
 		 * Method: Throw
 		 * 

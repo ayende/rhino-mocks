@@ -705,12 +705,6 @@ namespace Rhino.Mocks
             return new RecordDynamicMockState(mockedObject, this);
         }
 
-        private IMockState CreateRelaxedDynamicRecordState(IMockedObject mockedObject)
-        {
-            return new RelaxedRecordMockState(mockedObject, this);
-        }
-
-
         private IMockState CreatePartialRecordState(IMockedObject mockedObject)
         {
             return new RecordPartialMockState(mockedObject, this);
@@ -1125,24 +1119,6 @@ namespace Rhino.Mocks
             if (ShouldUseRemotingProxy(typeof(T), argumentsForConstructor))
                 return (T)RemotingMock(typeof(T), CreateRecordState);
             return (T)CreateMockObject(typeof(T), CreateRecordState, new Type[0], argumentsForConstructor);
-        }
-
-
-        /// <summary>
-        /// ???
-        /// TODO: Name this method and supply documentation
-        /// </summary>
-        public T ToBeNamedMock<T>(params object[] argumentsForConstructor)
-        {
-            T mock;
-            if (ShouldUseRemotingProxy(typeof(T), argumentsForConstructor))
-                mock = (T)RemotingMock(typeof(T), CreateRelaxedDynamicRecordState);
-            else
-                mock = (T)CreateMockObject(typeof(T), CreateRelaxedDynamicRecordState, new Type[0], argumentsForConstructor);
-        
-
-            Replay(mock);
-            return mock;
         }
 
         private static bool ShouldUseRemotingProxy(Type type, object[] argumentsForConstructor)

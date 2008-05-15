@@ -105,6 +105,8 @@ namespace Rhino.Mocks.Expectations
         /// </summary>
         private IInvocation originalInvocation;
 
+        private bool ignoreMissingReturnValueUntilExecuteTime = false;
+
         #endregion
 
         #region Properties
@@ -262,6 +264,7 @@ namespace Rhino.Mocks.Expectations
                     exceptionToThrow != null ||
                     actionToExecute != null ||
                     returnValueSet ||
+                    ignoreMissingReturnValueUntilExecuteTime ||
                     repeatableOption == RepeatableOption.OriginalCall ||
                     repeatableOption == RepeatableOption.OriginalCallBypassingMocking ||
                     repeatableOption == RepeatableOption.PropertyBehavior)
@@ -300,10 +303,20 @@ namespace Rhino.Mocks.Expectations
         }
 
         /// <summary>
+        /// Allow to set the return value in the future, if it was already set.
+        /// </summary>
+        public void IgnoreMissingReturnValueUntilExecuteTime()
+        {
+            ignoreMissingReturnValueUntilExecuteTime = true;
+        }
+
+        /// <summary>
         /// Returns the return value or throw the exception and setup output / ref parameters
         /// </summary>
         public object ReturnOrThrow(IInvocation invocation, object[] args)
         {
+            ignoreMissingReturnValueUntilExecuteTime = false;
+
             if (ActionsSatisfied == false)
                 throw new InvalidOperationException("Method '" + ErrorMessage + "' requires a return value or an exception to throw.");
 
@@ -431,6 +444,8 @@ namespace Rhino.Mocks.Expectations
 
         private void ActionOnMethodNotSpesified()
         {
+            if(ignoreMissingReturnValueUntilExecuteTime)
+                return;
             if (returnValueSet == false && exceptionToThrow == null && actionToExecute == null)
                 return;
             if (this.Expected != null && this.Expected.Max == 0)// we have choosen Repeat.Never

@@ -229,7 +229,18 @@ namespace Rhino.Mocks.Impl
 			return this;
 		}
 
-		/// <summary>
+
+        /// <summary>
+        /// Set the return value for the method, but allow to override this return value in the future
+        /// </summary>
+        /// <returns>IRepeat that defines how many times the method will return this value</returns>
+        public IMethodOptions<T> TentativeReturn()
+	    {
+            expectation.IgnoreMissingReturnValueUntilExecuteTime();
+            return this;
+	    }
+
+	    /// <summary>
 		/// Throws the specified exception when the method is called.
 		/// </summary>
 		/// <param name="exception">Exception to throw</param>

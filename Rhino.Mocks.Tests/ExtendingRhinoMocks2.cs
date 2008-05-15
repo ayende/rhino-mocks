@@ -86,7 +86,7 @@ namespace Rhino.Mocks.Tests
 
 
 		/// <summary>
-		/// Verify that we can move to replay state and move 
+		/// AssertWasCalled that we can move to replay state and move 
 		/// to the reply state.
 		/// </summary>
 		protected override IMockState DoReplay()
