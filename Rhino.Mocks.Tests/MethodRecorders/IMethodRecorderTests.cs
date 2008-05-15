@@ -50,7 +50,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = this.mocks.CreateMock(typeof (IDemo)) as IDemo;
+			demo = this.mocks.StrictMock(typeof (IDemo)) as IDemo;
 			voidNoArgs = typeof (IDemo).GetMethod("VoidNoArgs");
 			voidThreeArgs = typeof (IDemo).GetMethod("VoidThreeStringArgs");
 			expectationOne = new AnyArgsExpectation(new FakeInvocation(this.voidNoArgs));

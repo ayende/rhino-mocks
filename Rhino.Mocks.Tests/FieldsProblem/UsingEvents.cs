@@ -49,7 +49,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void VerifyingThatEventWasAttached()
 		{
-			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents events = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			events.Blah += new EventHandler(events_Blah);
 			mocks.ReplayAll();
 			MethodThatSubscribeToEventBlah(events);
@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void VerifyingThatAnEventWasFired()
 		{
-			IEventSubscriber subscriber = (IEventSubscriber)mocks.CreateMock(typeof(IEventSubscriber));
+			IEventSubscriber subscriber = (IEventSubscriber)mocks.StrictMock(typeof(IEventSubscriber));
 			IWithEvents events = new WithEvents();
 			// This doesn't create an expectation because no method is called on subscriber!!
 			events.Blah += new EventHandler(subscriber.Hanlder);
@@ -82,7 +82,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 
-			IEventSubscriber subscriber = (IEventSubscriber)mocks.CreateMock(typeof(IEventSubscriber));
+			IEventSubscriber subscriber = (IEventSubscriber)mocks.StrictMock(typeof(IEventSubscriber));
 			IWithEvents events = new WithEvents();
 			// This doesn't create an expectation because no method is called on subscriber!!
 			events.Blah += new EventHandler(subscriber.Hanlder);
@@ -95,7 +95,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void CanSetExpectationToUnsubscribeFromEvent()
 		{
-			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents events = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			events.Blah += new EventHandler(events_Blah);
 			events.Blah -= new EventHandler(events_Blah);
 			mocks.ReplayAll();
@@ -108,7 +108,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[ExpectedException(typeof(ExpectationViolationException), "IWithEvents.add_Blah(System.EventHandler); Expected #1, Actual #0.")]
 		public void VerifyingExceptionIfEventIsNotAttached()
 		{
-			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents events = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			events.Blah += new EventHandler(events_Blah);
 			mocks.ReplayAll();
 			mocks.VerifyAll();
@@ -118,7 +118,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void VerifyingThatCanAttackOtherEvent()
 		{
-			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents events = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			events.Blah += new EventHandler(events_Blah);
 			LastCall.IgnoreArguments();
 			mocks.ReplayAll();
@@ -132,7 +132,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		   "You have called the event raiser with the wrong number of parameters. Expected 2 but was 0")]
 		public void BetterErrorMessageOnIncorrectParametersCount()
 		{
-			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents events = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			events.Blah += null;
 			raiser = LastCall.IgnoreArguments().GetEventRaiser();
 			mocks.ReplayAll();
@@ -146,7 +146,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		  "Parameter #2 is System.Int32 but should be System.EventArgs")]
 		public void BetterErrorMessageOnIncorrectParameters()
 		{
-			IWithEvents events = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents events = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			events.Blah += null;
 			raiser = LastCall.IgnoreArguments().GetEventRaiser();
 			mocks.ReplayAll();
@@ -168,13 +168,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void RaiseEvent()
 		{
-			IWithEvents eventHolder = (IWithEvents)mocks.CreateMock(typeof(IWithEvents));
+			IWithEvents eventHolder = (IWithEvents)mocks.StrictMock(typeof(IWithEvents));
 			eventHolder.Blah += null;
 			LastCall.IgnoreArguments();
 			raiser = LastCall.GetEventRaiser();
 			eventHolder.RaiseEvent();
 			LastCall.Do(new System.Threading.ThreadStart(UseEventRaiser));
-			IEventSubscriber eventSubscriber = (IEventSubscriber)mocks.CreateMock(typeof(IEventSubscriber));
+			IEventSubscriber eventSubscriber = (IEventSubscriber)mocks.StrictMock(typeof(IEventSubscriber));
 			eventSubscriber.Hanlder(this, EventArgs.Empty);
 
 			mocks.ReplayAll();

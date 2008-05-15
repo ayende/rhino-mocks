@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Tests
 		public void DeleteThisTest()
 		{
 			MockRepository mockRepository = new MockRepository();
-			MockedClass mock = mockRepository.CreateMock<MockedClass>();
+			MockedClass mock = mockRepository.StrictMock<MockedClass>();
 			
 			mock.Method("expectedParameter");
 
@@ -59,9 +59,9 @@ namespace Rhino.Mocks.Tests
 
 	public class ErnstMockRepository : MockRepository
 	{
-		public T CreateMockObjectThatVerifyAndCallOriginalMethod<T>()
+		public T StrictMockObjectThatVerifyAndCallOriginalMethod<T>()
 		{
-			return (T) CreateMockObject(typeof (T), new CreateMockState(CreateVerifyAndCallOriginalMockState), new Type[0]);
+            return (T)CreateMockObject(typeof(T), new CreateMockState(CreateVerifyAndCallOriginalMockState), new Type[0]);
 		}
 
 		private IMockState CreateVerifyAndCallOriginalMockState(IMockedObject mockedObject)

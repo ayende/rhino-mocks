@@ -40,7 +40,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void UsingBackToRecordWithSetUpResult()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = (IDemo) mocks.CreateMock(typeof(IDemo));
+            IDemo demo = (IDemo) mocks.StrictMock(typeof(IDemo));
             SetupResult.For(demo.Prop).Return("Here is 1 sample greeting");
             mocks.Replay(demo);
             Assert.AreEqual("Here is 1 sample greeting",demo.Prop);

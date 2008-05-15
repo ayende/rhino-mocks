@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			method = typeof (IDemo).GetMethod("VoidThreeArgs");
 			callbackCalled = false;
 		}

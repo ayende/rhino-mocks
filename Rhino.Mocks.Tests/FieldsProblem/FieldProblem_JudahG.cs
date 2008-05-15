@@ -16,7 +16,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void IsMatching()
 		{
 			MockRepository mocks = new MockRepository();
-			IView view = mocks.CreateMock<IView>();
+			IView view = mocks.StrictMock<IView>();
 			using (mocks.Record())
 			{
 				view.Foo = null;

@@ -44,8 +44,8 @@ namespace Rhino.Mocks.Tests
 		public void Setup()
 		{
 			mocks = new MockRepository();
-			target = (IRefAndOut)mocks.CreateMock(typeof(IRefAndOut));
-			remotingTarget = mocks.CreateMock<RemotingProxyWithOutRef>();
+			target = (IRefAndOut)mocks.StrictMock(typeof(IRefAndOut));
+			remotingTarget = mocks.StrictMock<RemotingProxyWithOutRef>();
 		}
 
 		[Test]

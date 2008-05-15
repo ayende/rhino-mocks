@@ -56,7 +56,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void CallingMockedDelegatesWithoutOn()
         {
-            ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.CreateMock(typeof(ObjectDelegateWithNoParams));
+            ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
             Expect.Call(d1()).Return(1);
 
             mocks.ReplayAll();
@@ -67,8 +67,8 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void MockTwoDelegatesWithTheSameName()
         {
-            ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.CreateMock(typeof(ObjectDelegateWithNoParams));
-            Tests.ObjectDelegateWithNoParams d2 = (Tests.ObjectDelegateWithNoParams)mocks.CreateMock(typeof(Tests.ObjectDelegateWithNoParams));
+            ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
+            Tests.ObjectDelegateWithNoParams d2 = (Tests.ObjectDelegateWithNoParams)mocks.StrictMock(typeof(Tests.ObjectDelegateWithNoParams));
 
             Expect.On(d1).Call(d1()).Return(1);
             Expect.On(d2).Call(d2()).Return(2);
@@ -84,7 +84,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void MockObjectDelegateWithNoParams()
         {
-            ObjectDelegateWithNoParams d = (ObjectDelegateWithNoParams)mocks.CreateMock(typeof(ObjectDelegateWithNoParams));
+            ObjectDelegateWithNoParams d = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
 
             Expect.On(d).Call(d()).Return("abc");
             Expect.On(d).Call(d()).Return("def");
@@ -108,7 +108,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void MockVoidDelegateWithNoParams()
         {
-            VoidDelegateWithParams d = (VoidDelegateWithParams)mocks.CreateMock(typeof(VoidDelegateWithParams));
+            VoidDelegateWithParams d = (VoidDelegateWithParams)mocks.StrictMock(typeof(VoidDelegateWithParams));
             d("abc");
             d("efg");
 
@@ -131,7 +131,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void MockStringDelegateWithParams()
         {
-            StringDelegateWithParams d = (StringDelegateWithParams)mocks.CreateMock(typeof(StringDelegateWithParams));
+            StringDelegateWithParams d = (StringDelegateWithParams)mocks.StrictMock(typeof(StringDelegateWithParams));
 
             Expect.On(d).Call(d(1, "111")).Return("abc");
             Expect.On(d).Call(d(2, "222")).Return("def");
@@ -155,7 +155,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void MockIntDelegateWithRefAndOutParams()
         {
-            IntDelegateWithRefAndOutParams d = (IntDelegateWithRefAndOutParams)mocks.CreateMock(typeof(IntDelegateWithRefAndOutParams));
+            IntDelegateWithRefAndOutParams d = (IntDelegateWithRefAndOutParams)mocks.StrictMock(typeof(IntDelegateWithRefAndOutParams));
 
             int a = 3;
             string b = null;
@@ -182,7 +182,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void InterceptsDynamicInvokeAlso()
         {
-            IntDelegateWithRefAndOutParams d = (IntDelegateWithRefAndOutParams)mocks.CreateMock(typeof(IntDelegateWithRefAndOutParams));
+            IntDelegateWithRefAndOutParams d = (IntDelegateWithRefAndOutParams)mocks.StrictMock(typeof(IntDelegateWithRefAndOutParams));
 
             int a = 3;
             string b = null;
@@ -211,7 +211,7 @@ namespace Rhino.Mocks.Tests
         [ExpectedException(typeof(InvalidOperationException), "Cannot mock the Delegate base type.")]
         public void DelegateBaseTypeCannotBeMocked()
         {
-            mocks.CreateMock(typeof(Delegate));
+            mocks.StrictMock(typeof(Delegate));
         }
 
         private int Return1_Plus2_A(ref int a, out string b)
@@ -224,7 +224,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void GenericDelegate()
         {
-            Action<int> action = mocks.CreateMock<Action<int>>();
+            Action<int> action = mocks.StrictMock<Action<int>>();
             for (int i = 0; i < 10; i++)
             {
                 action(i);

@@ -29,7 +29,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mockery = new MockRepository();
 
-			ITestInterface mockObj = mockery.CreateMockWithRemoting<ITestInterface>();
+			ITestInterface mockObj = mockery.StrictMockWithRemoting<ITestInterface>();
 			mockObj.AddService<IDisposable, SqlConnection>();
 			LastCall.Return(mockObj);
 			mockery.ReplayAll();
@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mockery = new MockRepository();
 
-			ITestInterface mockObj = mockery.CreateMockWithRemoting<ITestInterface>();
+			ITestInterface mockObj = mockery.StrictMockWithRemoting<ITestInterface>();
 			mockObj.AddService<IDisposable, SqlConnection>();
 			LastCall.Return(mockObj);
 			mockery.ReplayAll();

@@ -33,7 +33,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         {
             get
             {
-                _daoFactory = _daoFactory ?? Mocks.CreateMock<IDaoFactory>();
+                _daoFactory = _daoFactory ?? Mocks.StrictMock<IDaoFactory>();
                 return _daoFactory;
             }
         }
@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         {
             get
             {
-                _blFactory = _blFactory ?? Mocks.CreateMock<IBLFactory>();
+                _blFactory = _blFactory ?? Mocks.StrictMock<IBLFactory>();
                 return _blFactory;
             }
         }

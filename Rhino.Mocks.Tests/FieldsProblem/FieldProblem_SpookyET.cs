@@ -57,8 +57,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         {
             byte[] responseData = Encoding.UTF8.GetBytes("200 OK");
             Stream stream = new MemoryStream(responseData);
-            WebRequest request = (WebRequest)mocks.CreateMock(typeof(WebRequest));
-            WebResponse response = (WebResponse)mocks.CreateMock(typeof(WebResponse));
+            WebRequest request = (WebRequest)mocks.StrictMock(typeof(WebRequest));
+            WebResponse response = (WebResponse)mocks.StrictMock(typeof(WebResponse));
             Expect.On(request).Call(request.GetResponse()).Return(response);
             Expect.On(response).Call(response.GetResponseStream()).Return(stream);
 
@@ -78,7 +78,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         [Test]
         public void UsingReturnAndThenIgnoreArgs()
         {
-            IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+            IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
             Expect.On(demo).Call(demo.StringArgString(null)).Return("ayende").IgnoreArguments();
             mocks.ReplayAll();
             Assert.AreEqual("ayende", demo.StringArgString("rahien"));
@@ -92,8 +92,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             WebResponse webResponseMock;
 
             mockRepository = new MockRepository();
-            webRequestMock = (WebRequest)mockRepository.CreateMock(typeof(WebRequest));
-            webResponseMock = (WebResponse)mockRepository.CreateMock(typeof(WebResponse));
+            webRequestMock = (WebRequest)mockRepository.StrictMock(typeof(WebRequest));
+            webResponseMock = (WebResponse)mockRepository.StrictMock(typeof(WebResponse));
 
             using (mockRepository.Ordered())
             {

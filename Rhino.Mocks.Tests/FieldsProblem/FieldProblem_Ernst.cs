@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CallOriginalMethodProblem2()
 		{
 			MockRepository mockRepository = new MockRepository();
-			MockedClass mock = mockRepository.CreateMock<MockedClass>();
+			MockedClass mock = mockRepository.StrictMock<MockedClass>();
 
 			mock.Method(null);
 			LastCall.Constraints(Is.Equal("parameter")).CallOriginalMethod
@@ -58,7 +58,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanUseBackToRecordOnMethodsThatCallToCallOriginalMethod()
 		{
 			MockRepository repository = new MockRepository();
-			TestClass mock = repository.CreateMock<TestClass>();
+			TestClass mock = repository.StrictMock<TestClass>();
 
 			mock.Method();
 			LastCall.CallOriginalMethod
@@ -91,7 +91,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanUseBackToRecordOnMethodsThatCallPropertyBehavior()
 		{
 			MockRepository repository = new MockRepository();
-			TestClass mock = repository.CreateMock<TestClass>();
+			TestClass mock = repository.StrictMock<TestClass>();
 
 			Expect.Call(mock.Id).PropertyBehavior();
 

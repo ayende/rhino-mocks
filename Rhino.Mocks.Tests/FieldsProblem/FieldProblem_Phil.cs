@@ -66,7 +66,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void VerifyingThatEventWasAttached()
 		{
 			MockRepository mocks = new MockRepository();
-			IWithEvent events = (IWithEvent)mocks.CreateMock(typeof(IWithEvent));
+			IWithEvent events = (IWithEvent)mocks.StrictMock(typeof(IWithEvent));
 			events.Load += null; //ugly syntax, I know, but the only way to get this to work
 			IEventRaiser raiser = LastCall.IgnoreArguments().GetEventRaiser();
 			mocks.ReplayAll();

@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = this.mocks.CreateMock(typeof (IDemo)) as IDemo;
+			demo = this.mocks.StrictMock(typeof (IDemo)) as IDemo;
 		}
 
         [Test]

@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void MockWebUIPageClass()
         {
             MockRepository mocks = new MockRepository();
-            Page page = (Page)mocks.CreateMock(typeof(Page));
+            Page page = (Page)mocks.StrictMock(typeof(Page));
             page.Validate();
             mocks.ReplayAll();
             page.Validate();
@@ -52,7 +52,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void MockClassWithVirtualMethodCallFromConstructor()
         {
             MockRepository mocks = new MockRepository();
-            ClassWithVirtualMethodCallFromConstructor cwvmcfc = (ClassWithVirtualMethodCallFromConstructor)mocks.CreateMock(typeof(ClassWithVirtualMethodCallFromConstructor));
+            ClassWithVirtualMethodCallFromConstructor cwvmcfc = (ClassWithVirtualMethodCallFromConstructor)mocks.StrictMock(typeof(ClassWithVirtualMethodCallFromConstructor));
             Assert.IsNotNull(cwvmcfc);
             Expect.Call(cwvmcfc.ToString()).Return("Success");
             mocks.ReplayAll();

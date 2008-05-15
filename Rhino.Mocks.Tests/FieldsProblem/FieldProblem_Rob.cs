@@ -16,7 +16,7 @@ ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.ExpectedBar>(""foo""); Exp
 		public void Ayende_View_On_Mocking()
 		{
 			MockRepository mocks = new MockRepository();
-			ISomeSystem mockSomeSystem = mocks.CreateMock<ISomeSystem>();
+			ISomeSystem mockSomeSystem = mocks.StrictMock<ISomeSystem>();
 
 			using (mocks.Record())
 			{

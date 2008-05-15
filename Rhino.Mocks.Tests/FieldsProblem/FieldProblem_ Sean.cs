@@ -11,8 +11,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanMockMethodWithEnvironmentPermissions()
 		{
 			MockRepository mocks = new MockRepository();
-			IEmployeeRepository employeeRepository = mocks.CreateMock<IEmployeeRepository>();
-			IEmployee employee = mocks.CreateMock<IEmployee>();
+			IEmployeeRepository employeeRepository = mocks.StrictMock<IEmployeeRepository>();
+			IEmployee employee = mocks.StrictMock<IEmployee>();
 			
 			using (mocks.Record())
 			{

@@ -53,7 +53,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void MockAbsPropertyGetter()
 		{
-			AbsCls ac = (AbsCls)mocks.CreateMock(typeof(AbsCls));
+			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
 			Expect.Call(ac.AbPropGet).Return("n");
 			mocks.ReplayAll();
 			Assert.AreEqual("n", ac.AbPropGet);
@@ -62,7 +62,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void MockAbsPropertySetter()
 		{
-			AbsCls ac = (AbsCls)mocks.CreateMock(typeof(AbsCls));
+			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
 			Expect.Call(ac.AbPropSet = "n");
 			mocks.ReplayAll();
 			ac.AbPropSet = "n";
@@ -72,7 +72,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void MockAbsProp()
 		{
-			AbsCls ac = (AbsCls)mocks.CreateMock(typeof(AbsCls));
+			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
 			Expect.Call(ac.AbProp = "n");
 			Expect.Call(ac.AbProp).Return("u");
 			mocks.ReplayAll();
@@ -83,7 +83,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void MockAbstractMethod()
 		{
-			AbsCls ac = (AbsCls)mocks.CreateMock(typeof(AbsCls));
+			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
 			Expect.Call(ac.Method()).Return(45);
 			mocks.ReplayAll();
 			Assert.AreEqual(45, ac.Method());

@@ -59,10 +59,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			// This should not blow up.
 
 			IDuplicateType<object[]> mock1 =
-				mMocks.CreateMock<IDuplicateType<object[]>>();
+				mMocks.StrictMock<IDuplicateType<object[]>>();
 
 			IDuplicateType<object[]> mock2 =
-				mMocks.CreateMock<IDuplicateType<object[]>>();
+				mMocks.StrictMock<IDuplicateType<object[]>>();
 
 			mMocks.ReplayAll();
 			mMocks.VerifyAll();
@@ -95,7 +95,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         [Test]
         public void BackToRecordProblem()
         {
-            IIntf1 i1 = (IIntf1)mMocks.CreateMock(typeof(IIntf1));
+            IIntf1 i1 = (IIntf1)mMocks.StrictMock(typeof(IIntf1));
 
             using (mMocks.Ordered())
             {

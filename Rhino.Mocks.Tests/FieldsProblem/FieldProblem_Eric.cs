@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockAClassWithFinalizer()
 		{
 			MockRepository mocks = new MockRepository();
-			ClassWithFinalizer withFinalizer = (ClassWithFinalizer) mocks.CreateMock(typeof (ClassWithFinalizer));
+			ClassWithFinalizer withFinalizer = (ClassWithFinalizer) mocks.StrictMock(typeof (ClassWithFinalizer));
 			mocks.ReplayAll();
 			mocks.VerifyAll();//move it to verify state
 			withFinalizer = null;// abandon the variable, will make it avialable for GC.

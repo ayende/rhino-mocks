@@ -100,7 +100,7 @@ namespace Rhino.Mocks.Tests
 	{
 		public object QueryableMock(Type type)
 		{
-			return CreateMockObject(type, new CreateMockState(CreateQueryMockState), new Type[0]);
+            return CreateMockObject(type, new CreateMockState(CreateQueryMockState), new Type[0]);
 		}
 
 		private IMockState CreateQueryMockState(IMockedObject mockedObject)

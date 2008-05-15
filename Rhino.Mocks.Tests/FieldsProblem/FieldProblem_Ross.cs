@@ -42,8 +42,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 
-			IClass1 class1 = mocks.CreateMock<IClass1>();
-			IClass2 class2 = mocks.CreateMock<IClass2>();
+			IClass1 class1 = mocks.StrictMock<IClass1>();
+			IClass2 class2 = mocks.StrictMock<IClass2>();
 
 			class1.Method1<int>(1);
 			class2.Method2(mocks);

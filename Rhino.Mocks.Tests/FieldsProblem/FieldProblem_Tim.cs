@@ -42,7 +42,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockInternalClass()
 		{
 			MockRepository mocker = new MockRepository();
-			InternalClass mockInternalClass = mocker.CreateMock<InternalClass>();
+			InternalClass mockInternalClass = mocker.StrictMock<InternalClass>();
 
 			Assert.IsNotNull(mockInternalClass);
 		}

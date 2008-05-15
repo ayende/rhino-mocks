@@ -51,7 +51,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void TestExpectCall()
 		{
 			MockRepository mocks = new MockRepository();
-			ICache<string, int> mockCache = mocks.CreateMock<ICache<string, int>>();
+			ICache<string, int> mockCache = mocks.StrictMock<ICache<string, int>>();
 			Expect.Call(mockCache.GetValue("a")).Do((Func<string, int>)delegate
 			{
 				return 1;
@@ -68,7 +68,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void TestLastCall()
 		{
 			MockRepository mocks = new MockRepository();
-			ICache<string, int> mockCache = mocks.CreateMock<ICache<string, int>>();
+			ICache<string, int> mockCache = mocks.StrictMock<ICache<string, int>>();
 			mockCache.Add("a", 1);
 			LastCall.Do((Proc<string, int>)delegate
 			{
@@ -84,7 +84,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void TestExpectCallWithNonGenericDelegate()
 		{
 			MockRepository mocks = new MockRepository();
-			ICache<string, int> mockCache = mocks.CreateMock<ICache<string, int>>();
+			ICache<string, int> mockCache = mocks.StrictMock<ICache<string, int>>();
 			IMethodOptions<int> opts = Expect.Call(mockCache.GetValue("a"));
 			opts.Do(new StringInt(GetValue));
 			mocks.ReplayAll();

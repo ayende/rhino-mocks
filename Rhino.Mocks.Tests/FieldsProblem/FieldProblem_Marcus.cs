@@ -61,7 +61,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
             try
             {
-                ClassWithThrowingCtor c = mocks.CreateMock(typeof(ClassWithThrowingCtor)) as ClassWithThrowingCtor;
+                ClassWithThrowingCtor c = mocks.StrictMock(typeof(ClassWithThrowingCtor)) as ClassWithThrowingCtor;
                 Assert.IsNotNull(c);
                 Assert.Fail("Exception expected");
             }

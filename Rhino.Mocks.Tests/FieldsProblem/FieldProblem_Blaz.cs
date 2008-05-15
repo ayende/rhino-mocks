@@ -38,8 +38,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void SameNameInterface()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo1 = (IDemo)mocks.CreateMock(typeof(IDemo));
-            Other.IDemo demo2 = (Other.IDemo)mocks.CreateMock(typeof(Other.IDemo));
+            IDemo demo1 = (IDemo)mocks.StrictMock(typeof(IDemo));
+            Other.IDemo demo2 = (Other.IDemo)mocks.StrictMock(typeof(Other.IDemo));
             
             Assert.AreNotEqual(demo1.GetType(), demo2.GetType());
         }

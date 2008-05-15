@@ -37,10 +37,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
     public class FieldProblem_JohanIndexProp 
     {
         [Test]
-        public void CreateMockWithIndexedProp()
+        public void StrictMockWithIndexedProp()
         {
             MockRepository mocks = new MockRepository();
-            IWithIndexedProperty index = (IWithIndexedProperty)mocks.CreateMock(typeof(IWithIndexedProperty));
+            IWithIndexedProperty index = (IWithIndexedProperty)mocks.StrictMock(typeof(IWithIndexedProperty));
             Expect.Call(index.get_Foo("Blah")).Return(5);
             index.set_Foo("Foo",2);
             mocks.ReplayAll();

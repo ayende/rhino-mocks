@@ -313,11 +313,22 @@ namespace Rhino.Mocks
         /// </summary>
         /// <param name="type">Type.</param>
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        [Obsolete("Use StrictMock instead")]
         public object CreateMock(Type type, params object[] argumentsForConstructor)
+        {
+            return StrictMock(type, argumentsForConstructor);
+        }
+
+        /// <summary>
+        /// Creates a strict mock for the specified type.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        public object StrictMock(Type type, params object[] argumentsForConstructor)
         {
             if (ShouldUseRemotingProxy(type, argumentsForConstructor))
                 return RemotingMock(type, CreateRecordState);
-            return CreateMultiMock(type, new Type[0], argumentsForConstructor);
+            return StrictMultiMock(type, new Type[0], argumentsForConstructor);
         }
 
         /// <summary>
@@ -325,7 +336,18 @@ namespace Rhino.Mocks
         /// </summary>
         /// <param name="type">Type.</param>
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        [Obsolete("Use StrictMockWithRemoting instead")]
         public object CreateMockWithRemoting(Type type, params object[] argumentsForConstructor)
+        {
+            return StrictMockWithRemoting(type, argumentsForConstructor);
+        }
+
+        /// <summary>
+        /// Creates a strict remoting mock for the specified type.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        public object StrictMockWithRemoting(Type type, params object[] argumentsForConstructor)
         {
             return RemotingMock(type, CreateRecordState);
         }
@@ -336,7 +358,19 @@ namespace Rhino.Mocks
         /// <typeparam name="T"></typeparam>
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
         /// <returns></returns>
+        [Obsolete("Use StrictMockWithRemoting instead")]
         public T CreateMockWithRemoting<T>(params object[] argumentsForConstructor)
+        {
+            return StrictMockWithRemoting<T>(argumentsForConstructor);
+        }
+
+        /// <summary>
+        /// Creates a strict remoting mock for the specified type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        /// <returns></returns>
+        public T StrictMockWithRemoting<T>(params object[] argumentsForConstructor)
         {
             return (T)RemotingMock(typeof(T), CreateRecordState);
         }
@@ -345,9 +379,19 @@ namespace Rhino.Mocks
         /// Creates a mock from several types, with strict semantics.
         /// Only <paramref name="mainType"/> may be a class.
         /// </summary>
+        [Obsolete("Use StrictMultiMock instead")]
         public object CreateMultiMock(Type mainType, params Type[] extraTypes)
         {
-            return CreateMultiMock(mainType, extraTypes, new object[0]);
+            return StrictMultiMock(mainType, extraTypes);
+        }
+
+        /// <summary>
+        /// Creates a strict mock from several types, with strict semantics.
+        /// Only <paramref name="mainType"/> may be a class.
+        /// </summary>
+        public object StrictMultiMock(Type mainType, params Type[] extraTypes)
+        {
+            return StrictMultiMock(mainType, extraTypes, new object[0]);
         }
 
         /// <summary>
@@ -357,7 +401,20 @@ namespace Rhino.Mocks
         /// <param name="mainType">The main type to mock.</param>
         /// <param name="extraTypes">Extra interface types to mock.</param>
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class.</param>
+        [Obsolete("Use StrictMultiMock instead")]
         public object CreateMultiMock(Type mainType, Type[] extraTypes, params object[] argumentsForConstructor)
+        {
+            return StrictMultiMock(mainType, extraTypes, argumentsForConstructor);
+        }
+
+        /// <summary>
+        /// Creates a strict mock from several types, with strict semantics.
+        /// Only <paramref name="mainType"/> may be a class.
+        /// </summary>
+        /// <param name="mainType">The main type to mock.</param>
+        /// <param name="extraTypes">Extra interface types to mock.</param>
+        /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class.</param>
+        public object StrictMultiMock(Type mainType, Type[] extraTypes, params object[] argumentsForConstructor)
         {
             return CreateMockObject(mainType, CreateRecordState, extraTypes, argumentsForConstructor);
         }
@@ -1053,12 +1110,23 @@ namespace Rhino.Mocks
         /// Creates a mock for the spesified type.
         /// </summary>
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        [Obsolete("Use StrictMock instead")]
         public T CreateMock<T>(params object[] argumentsForConstructor)
+        {
+            return StrictMock<T>(argumentsForConstructor);
+        }
+
+        /// <summary>
+        /// Creates a strict mock for the spesified type.
+        /// </summary>
+        /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        public T StrictMock<T>(params object[] argumentsForConstructor)
         {
             if (ShouldUseRemotingProxy(typeof(T), argumentsForConstructor))
                 return (T)RemotingMock(typeof(T), CreateRecordState);
             return (T)CreateMockObject(typeof(T), CreateRecordState, new Type[0], argumentsForConstructor);
         }
+
 
         /// <summary>
         /// ???
@@ -1104,9 +1172,18 @@ namespace Rhino.Mocks
         /// <summary>
         /// Creates a mock object from several types.
         /// </summary>
+        [Obsolete("Use StrictMultiMock instead")]
         public T CreateMultiMock<T>(params Type[] extraTypes)
         {
-            return (T)CreateMultiMock(typeof(T), extraTypes);
+            return StrictMultiMock<T>(extraTypes);
+        }
+        
+        /// <summary>
+        /// Creates a strict mock object from several types.
+        /// </summary>
+        public T StrictMultiMock<T>(params Type[] extraTypes)
+        {
+            return (T)StrictMultiMock(typeof(T), extraTypes);
         }
 
         /// <summary>
@@ -1130,9 +1207,21 @@ namespace Rhino.Mocks
         /// </summary>
         /// <param name="extraTypes">Extra interface types to mock.</param>
         /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        [Obsolete("Use StrictMultiMock instead")]
         public T CreateMultiMock<T>(Type[] extraTypes, params object[] argumentsForConstructor)
         {
-            return (T)CreateMultiMock(typeof(T), extraTypes, argumentsForConstructor);
+            return StrictMultiMock<T>(extraTypes, argumentsForConstructor);
+        }
+
+
+        /// <summary>
+        /// Create a strict mock object from several types with strict semantics.
+        /// </summary>
+        /// <param name="extraTypes">Extra interface types to mock.</param>
+        /// <param name="argumentsForConstructor">Arguments for the class' constructor, if mocking a concrete class</param>
+        public T StrictMultiMock<T>(Type[] extraTypes, params object[] argumentsForConstructor)
+        {
+            return (T)StrictMultiMock(typeof(T), extraTypes, argumentsForConstructor);
         }
 
         /// <summary>

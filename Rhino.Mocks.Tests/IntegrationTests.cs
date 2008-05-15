@@ -111,8 +111,8 @@ public void UsingPartialMocks()
         {
             MockRepository mocks = new MockRepository();
 
-            ISongBird maleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird)),
-                femaleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird));
+            ISongBird maleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird)),
+                femaleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird));
 
             using (mocks.Ordered())
             {
@@ -142,7 +142,7 @@ public void UsingPartialMocks()
         public void ExampleUsingParameterMatchingAndConstraints()
         {
             MockRepository mocks = new MockRepository();
-            ISongBird bird = (ISongBird)mocks.CreateMock(typeof(ISongBird));
+            ISongBird bird = (ISongBird)mocks.StrictMock(typeof(ISongBird));
             bird.Eat("seeds", 500); //verifying expected values
             bird.Sing();
             LastCall.On(bird).Return("Chirp, Chirp");
@@ -169,8 +169,8 @@ public void UsingPartialMocks()
         public void UnorderedExecutionOfOrderedSequence()
         {
             MockRepository mocks = new MockRepository();
-            ISongBird maleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird)),
-                femaleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird));
+            ISongBird maleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird)),
+                femaleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird));
 
             using (mocks.Ordered())
             {
@@ -197,8 +197,8 @@ public void UsingPartialMocks()
         public void OrderedExecutionOfUnorderedSequence()
         {
             MockRepository mocks = new MockRepository();
-            ISongBird maleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird)),
-                femaleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird));
+            ISongBird maleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird)),
+                femaleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird));
 
             using (mocks.Ordered())
             {
@@ -229,8 +229,8 @@ public void UsingPartialMocks()
         public void SetupResultWithNestedOrdering()
         {
             MockRepository mocks = new MockRepository();
-            ISongBird maleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird)),
-                femaleBird = (ISongBird)mocks.CreateMock(typeof(ISongBird));
+            ISongBird maleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird)),
+                femaleBird = (ISongBird)mocks.StrictMock(typeof(ISongBird));
 
             SetupResult.On(maleBird).Call(maleBird.Sing()).Return("");
             using (mocks.Ordered())

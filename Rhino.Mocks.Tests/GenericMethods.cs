@@ -37,17 +37,17 @@ namespace Rhino.Mocks.Tests
 	public class GenericMethods
 	{
 		[Test]
-		public void CanCreateMockOfInterfaceWithGenericMethod()
+		public void CanStrictMockOfInterfaceWithGenericMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			mocks.CreateMock<IFactory>();
+			mocks.StrictMock<IFactory>();
 		}
 
 		[Test]
 		public void CanSetExpectationsOnInterfaceWithGenericMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			IFactory factory = mocks.CreateMock<IFactory>();
+			IFactory factory = mocks.StrictMock<IFactory>();
 			Expect.Call(factory.Create<string>()).Return("working?");
 			mocks.ReplayAll();
 			string result = factory.Create<string>();
@@ -61,7 +61,7 @@ IFactory.Create<System.String>(); Expected #1, Actual #0." )]
 		public void WillGetErrorIfCallingMethodWithDifferentGenericArgument()
 		{
 			MockRepository mocks = new MockRepository();
-			IFactory factory = mocks.CreateMock<IFactory>();
+			IFactory factory = mocks.StrictMock<IFactory>();
 			Expect.Call(factory.Create<string>()).Return("working?");
 			mocks.ReplayAll();
 			factory.Create<int>();
@@ -73,7 +73,7 @@ IFactory.Create<System.String>(); Expected #1, Actual #0." )]
 //		public void WillGiveErrorIfThereIsTypeMismatchInGenericParameters()
 //		{
 //			MockRepository mocks = new MockRepository();
-//			IFactory factory = mocks.CreateMock<IFactory>();
+//			IFactory factory = mocks.StrictMock<IFactory>();
 //			Expect.Call(factory.Create<string>()).Return(1);
 //		}
 
@@ -82,7 +82,7 @@ IFactory.Create<System.String>(); Expected #1, Actual #0." )]
 		public void WillGiveErrorIfMissingCallToGenericMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			IFactory factory = mocks.CreateMock<IFactory>();
+			IFactory factory = mocks.StrictMock<IFactory>();
 			Expect.Call(factory.Create<string>()).Return("working?");
 			mocks.ReplayAll();
 			mocks.VerifyAll();

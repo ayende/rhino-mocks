@@ -23,7 +23,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void Init()
 		{
 			mocks = new MockRepository();
-			service = mocks.CreateMock<IMyService>();
+			service = mocks.StrictMock<IMyService>();
 		}
 		[TearDown]
 		public void Verify()

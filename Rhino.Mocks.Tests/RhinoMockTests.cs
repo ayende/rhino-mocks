@@ -46,7 +46,7 @@ namespace Rhino.Mocks.Tests
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = this.mocks.CreateMock(typeof (IDemo)) as IDemo;
+			demo = this.mocks.StrictMock(typeof (IDemo)) as IDemo;
 		}
 
 		[Test]
@@ -181,7 +181,7 @@ Message: Should be called only once")]
 		[Test]
 		public void UsingSeveralObjectAndMixingOrderAndUnorder()
 		{
-			IList second = mocks.CreateMock(typeof (IList)) as IList;
+			IList second = mocks.StrictMock(typeof (IList)) as IList;
 			using (mocks.Ordered())
 			{
 				demo.EnumNoArgs();
@@ -221,7 +221,7 @@ Message: Should be called only once")]
 		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.EnumNoArgs(); }' but was: 'IList.Clear();'")]
 		public void SeveralMocksUsingOrdered()
 		{
-			IList second = mocks.CreateMock(typeof (IList)) as IList;
+			IList second = mocks.StrictMock(typeof (IList)) as IList;
 			using (mocks.Ordered())
 			{
 				demo.EnumNoArgs();
@@ -251,7 +251,7 @@ Message: Should be called only once")]
 		[Test]
 		public void RecursiveExpectationsOnUnordered()
 		{
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			demo.VoidNoArgs();
 			LastCall.On(demo).Callback(new DelegateDefinations.NoArgsDelegate(CallMethodOnDemo));
 			demo.VoidStringArg("Ayende");
@@ -264,7 +264,7 @@ Message: Should be called only once")]
 		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(callback method: RhinoMockTests.CallMethodOnDemo); }' but was: 'IDemo.VoidStringArg(\"Ayende\");'")]
 		public void RecursiveExpectationsOnOrdered()
 		{
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			using (mocks.Ordered())
 			{
 				demo.VoidNoArgs();
@@ -280,7 +280,7 @@ Message: Should be called only once")]
 		[ExpectedException(typeof (ExpectationViolationException), "IDemo.VoidThreeStringArgs(\"c\", \"b\", \"a\"); Expected #0, Actual #1.\r\nIDemo.VoidThreeStringArgs(\"a\", \"b\", \"c\"); Expected #1, Actual #0.")]
 		public void GetArgsOfEpectedAndActualMethodCallOnException()
 		{
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			demo.VoidThreeStringArgs("a","b","c");
 			mocks.Replay(demo);
 			demo.VoidThreeStringArgs("c","b","a");
@@ -291,7 +291,7 @@ Message: Should be called only once")]
 		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidStringArg(\"Ayende\"); }' but was: 'IDemo.VoidThreeStringArgs(\"\", \"\", \"\");'")]
 		public void SteppingFromInnerOrderringToOuterWithoutFullifingAllOrderringInInnerThrows()
 		{
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			demo.VoidThreeStringArgs("", "", "");
 			using (mocks.Ordered())
 			{
@@ -308,7 +308,7 @@ Message: Should be called only once")]
 		{
 			MockRepository mocks = new MockRepository();
 			ObjectThatOverrideToString oid = (ObjectThatOverrideToString)
-				mocks.CreateMock(typeof (ObjectThatOverrideToString));
+				mocks.StrictMock(typeof (ObjectThatOverrideToString));
 			Expect.On(oid).Call(oid.ToString()).Return("bla");
 			mocks.ReplayAll();
 			Assert.AreEqual("bla", oid.ToString());
@@ -319,7 +319,7 @@ Message: Should be called only once")]
 		[ExpectedException(typeof (AssertionException), "ErrorMessage")]
 		public void CallbackThatThrows()
 		{
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			demo.VoidNoArgs();
 			LastCall.Callback(new DelegateDefinations.NoArgsDelegate(ThrowFromCallback));
 			mocks.ReplayAll();

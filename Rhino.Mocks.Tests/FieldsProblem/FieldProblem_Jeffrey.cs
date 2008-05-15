@@ -42,8 +42,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void DelegateToGenericMock()
 		{
 			MockRepository mocks = new MockRepository();
-			IEMailFormatter<string> formatterMock = mocks.CreateMock<IEMailFormatter<string>>();
-			SmtpEMailSenderBase<string> senderMock = (SmtpEMailSenderBase<string>)mocks.CreateMock(typeof(SmtpEMailSenderBase<string>));
+			IEMailFormatter<string> formatterMock = mocks.StrictMock<IEMailFormatter<string>>();
+			SmtpEMailSenderBase<string> senderMock = (SmtpEMailSenderBase<string>)mocks.StrictMock(typeof(SmtpEMailSenderBase<string>));
 			senderMock.SetFormatter(formatterMock);
 			LastCall.Do((Action<IEMailFormatter<string>>)delegate(IEMailFormatter<string> formatter)
 			{
@@ -61,8 +61,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void Invalid_DelegateToGenericMock()
 		{
 			MockRepository mocks = new MockRepository();
-			IEMailFormatter<string> formatterMock = mocks.CreateMock<IEMailFormatter<string>>();
-			SmtpEMailSenderBase<string> senderMock = (SmtpEMailSenderBase<string>)mocks.CreateMock(typeof(SmtpEMailSenderBase<string>));
+			IEMailFormatter<string> formatterMock = mocks.StrictMock<IEMailFormatter<string>>();
+			SmtpEMailSenderBase<string> senderMock = (SmtpEMailSenderBase<string>)mocks.StrictMock(typeof(SmtpEMailSenderBase<string>));
 			senderMock.SetFormatter(formatterMock);
 			LastCall.Do((Action<IEMailFormatter<int>>)delegate(IEMailFormatter<int> formatter)
 			{

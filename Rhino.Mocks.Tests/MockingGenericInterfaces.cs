@@ -54,7 +54,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void MockAGenericInterface()
         {
-            IList<int> list = mocks.CreateMock<IList<int>>();
+            IList<int> list = mocks.StrictMock<IList<int>>();
             Assert.IsNotNull(list);
             Expect.Call(list.Count).Return(5);
             mocks.ReplayAll();

@@ -11,7 +11,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void Test()
 		{
 			MockRepository mocks = new MockRepository();
-			SimpleOperations myMock = mocks.CreateMock<SimpleOperations>();
+			SimpleOperations myMock = mocks.StrictMock<SimpleOperations>();
 			Expect.Call(myMock.AddTwoValues(1, 2)).Return(3);
 			mocks.ReplayAll();
 			Assert.AreEqual(3, myMock.AddTwoValues(1, 2));
@@ -23,7 +23,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void WillRememberExceptionInsideOrderRecorderEvenIfInsideCatchBlock()
 		{
 			MockRepository mockRepository = new MockRepository();
-			IInterfaceWithThreeMethods interfaceWithThreeMethods = mockRepository.CreateMock<IInterfaceWithThreeMethods>();
+			IInterfaceWithThreeMethods interfaceWithThreeMethods = mockRepository.StrictMock<IInterfaceWithThreeMethods>();
 
 			using (mockRepository.Ordered())
 			{

@@ -10,7 +10,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void CanUseOutIntPtr()
         {
             MockRepository mocks = new MockRepository();
-            IFooWithOutIntPtr mock = mocks.CreateMock<IFooWithOutIntPtr>();
+            IFooWithOutIntPtr mock = mocks.StrictMock<IFooWithOutIntPtr>();
             IntPtr parameter;
             mock.GetBar(out parameter);
             LastCall.IgnoreArguments().Return(5).OutRef(new IntPtr(3));

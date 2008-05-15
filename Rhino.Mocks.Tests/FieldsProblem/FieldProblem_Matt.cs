@@ -75,8 +75,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void ClearedModelSetsItemsOnView()
         {
             MockRepository mocks = new MockRepository();
-            IModel model = mocks.CreateMock<IModel>();
-            IView view = mocks.CreateMock<IView>();
+            IModel model = mocks.StrictMock<IModel>();
+            IView view = mocks.StrictMock<IView>();
             model.ModelChanged += null;
             LastCall.IgnoreArguments();
             IEventRaiser eventRaiser = LastCall.GetEventRaiser();

@@ -102,8 +102,8 @@ namespace Rhino.Mocks.Tests
 		{
 			#region Mock Objects
 			m_objMockRepository = new MockRepository();
-			m_objIApplication = (IApplicationSession)m_objMockRepository.CreateMock(typeof(IApplicationSession));
-			m_objIMetricBroker = (IMetricBroker)m_objMockRepository.CreateMock(typeof(IMetricBroker));
+			m_objIApplication = (IApplicationSession)m_objMockRepository.StrictMock(typeof(IApplicationSession));
+			m_objIMetricBroker = (IMetricBroker)m_objMockRepository.StrictMock(typeof(IMetricBroker));
 			#endregion
 
 			#region DataSets

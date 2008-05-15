@@ -39,11 +39,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void ReproducedWithOutArraysContainingMockedObject2()
 		{
 			MockRepository mocks = new MockRepository();
-			IPlugin plugin = mocks.CreateMock<IPlugin>();
+			IPlugin plugin = mocks.StrictMock<IPlugin>();
 			IPlugin[] allPlugins;
 
 			// PluginMng
-			IPluginMng pluginMng = (IPluginMng) mocks.CreateMock(typeof (IPluginMng));
+			IPluginMng pluginMng = (IPluginMng) mocks.StrictMock(typeof (IPluginMng));
 			pluginMng.GetPlugins(out allPlugins);
 
 			LastCall.IgnoreArguments().OutRef(
@@ -62,7 +62,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockGenericMethod1()
 		{
 			MockRepository mocks = new MockRepository();
-			IWithGeneric1 stubbed = mocks.CreateMock<IWithGeneric1>();
+			IWithGeneric1 stubbed = mocks.StrictMock<IWithGeneric1>();
 
 			byte myValue = 3;
 			int returnedValue = 3;
@@ -79,7 +79,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockGenericMethod2()
 		{
 			MockRepository mocks = new MockRepository();
-			IWithGeneric2 stubbed = mocks.CreateMock<IWithGeneric2>();
+			IWithGeneric2 stubbed = mocks.StrictMock<IWithGeneric2>();
 
 			byte myValue = 4;
 			Expect.Call(stubbed.DoNothing<byte>(myValue)).Return(myValue);
@@ -94,7 +94,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanMockComplexReturnType()
 		{
 			MockRepository mocks = new MockRepository();
-			IWithGeneric2 stubbed = mocks.CreateMock<IWithGeneric2>();
+			IWithGeneric2 stubbed = mocks.StrictMock<IWithGeneric2>();
 
 			byte myValue = 4;
 			List<byte> bytes = new List<byte>();

@@ -15,7 +15,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			MockRepository mocks = new MockRepository();
 
-			ITest mockProxy = mocks.CreateMock<ITest>();
+			ITest mockProxy = mocks.StrictMock<ITest>();
 
 			int intTest = 0;
 

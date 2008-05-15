@@ -48,7 +48,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockGenericInterface_CanSetProperties()
 		{
 			MockRepository mocks = new MockRepository();
-			ITestGen<int> test = mocks.CreateMock<ITestGen<int>>();
+			ITestGen<int> test = mocks.StrictMock<ITestGen<int>>();
 
 			SetupResult.For(test.Foo).PropertyBehavior();
 
@@ -64,7 +64,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockNormalInterface_CanSetProperties()
 		{
 			MockRepository mocks = new MockRepository();
-			ITestNormal test = mocks.CreateMock<ITestNormal>();
+			ITestNormal test = mocks.StrictMock<ITestNormal>();
 
 			SetupResult.For(test.Foo).PropertyBehavior();
 

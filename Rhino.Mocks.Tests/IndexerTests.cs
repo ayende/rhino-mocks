@@ -44,7 +44,7 @@ namespace Rhino.Mocks.Tests
 		public void SettingExpectationOnIndexer()
 		{
 			MockRepository mocks = new MockRepository();
-			IndexerInterface indexer = (IndexerInterface) mocks.CreateMock(typeof (IndexerInterface));
+			IndexerInterface indexer = (IndexerInterface) mocks.StrictMock(typeof (IndexerInterface));
 			Expect.On(indexer).Call(indexer["1"]).Return("First");
 			mocks.ReplayAll();
 			Assert.AreEqual("First", indexer["1"]);

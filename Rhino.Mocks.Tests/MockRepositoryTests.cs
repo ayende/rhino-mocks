@@ -44,7 +44,7 @@ namespace Rhino.Mocks.Tests
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = this.mocks.CreateMock(typeof(IDemo)) as IDemo;
+			demo = this.mocks.StrictMock(typeof(IDemo)) as IDemo;
 		}
 
 		[Test]
@@ -465,7 +465,7 @@ namespace Rhino.Mocks.Tests
 		public void MockObjectThrowsForUnexpectedCall()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+			IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
 			mocks.ReplayAll();
 			demo.VoidNoArgs();
 			mocks.VerifyAll();
@@ -478,7 +478,7 @@ namespace Rhino.Mocks.Tests
 		public void MockObjectThrowsForUnexpectedCall_WhenVerified_IfFirstExceptionWasCaught()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+			IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
 			mocks.ReplayAll();
 			try
 			{
@@ -503,7 +503,7 @@ namespace Rhino.Mocks.Tests
 		public void RepositoryThrowsWithConstructorArgsForMockInterface()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo), "Foo");
+			IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo), "Foo");
 		}
 
 		[Test]
@@ -511,7 +511,7 @@ namespace Rhino.Mocks.Tests
 		public void RepositoryThrowsWithConstructorArgsForMockDelegate()
 		{
 			MockRepository mocks = new MockRepository();
-			EventHandler handler = (EventHandler)mocks.CreateMock(typeof(EventHandler), "Foo");
+			EventHandler handler = (EventHandler)mocks.StrictMock(typeof(EventHandler), "Foo");
 		}
 
 		[Test]
@@ -521,7 +521,7 @@ namespace Rhino.Mocks.Tests
 			MockRepository mocks = new MockRepository();
 			// There is no constructor on object that takes a string
 			// parameter, so this should fail.
-			object o = mocks.CreateMock(typeof(object), "Foo");
+			object o = mocks.StrictMock(typeof(object), "Foo");
 		}
 
 		[Test]

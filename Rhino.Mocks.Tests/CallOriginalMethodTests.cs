@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests
         {
             MockRepository mocks = new MockRepository();
             MockingClassesTests.DemoClass demo = (MockingClassesTests.DemoClass)
-                mocks.CreateMock(typeof(MockingClassesTests.DemoClass));
+                mocks.StrictMock(typeof(MockingClassesTests.DemoClass));
 
             SetupResult.For(demo.Prop).CallOriginalMethod(OriginalCallOptions.NoExpectation);
             SetupResult.For(demo.Prop = 0).CallOriginalMethod(OriginalCallOptions.NoExpectation);
@@ -63,7 +63,7 @@ namespace Rhino.Mocks.Tests
         public void CantCallOriginalMethodOnInterface()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+            IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
             SetupResult.For(demo.ReturnIntNoArgs()).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
         }
 
@@ -72,7 +72,7 @@ namespace Rhino.Mocks.Tests
         public void CantCallOriginalMethodOnAbstractMethod()
         {
             MockRepository mocks = new MockRepository();
-            MockingClassesTests.AbstractDemo demo = (MockingClassesTests.AbstractDemo)mocks.CreateMock(typeof(MockingClassesTests.AbstractDemo));
+            MockingClassesTests.AbstractDemo demo = (MockingClassesTests.AbstractDemo)mocks.StrictMock(typeof(MockingClassesTests.AbstractDemo));
             SetupResult.For(demo.Six()).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
         }
 

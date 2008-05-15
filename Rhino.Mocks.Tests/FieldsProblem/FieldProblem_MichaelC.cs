@@ -12,7 +12,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void EventRaiser_ShouldRaiseEvent_OnlyOnce()
 		{
 			MockRepository mocks = new MockRepository();
-			IWithEvent mock = mocks.CreateMock<IWithEvent>();
+			IWithEvent mock = mocks.StrictMock<IWithEvent>();
 			int countOne = 0;
 			int countTwo = 0;
 			mock.Load += null;

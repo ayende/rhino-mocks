@@ -63,7 +63,7 @@ namespace Rhino.Mocks.Tests
 			mocks.ReplayAll();//we aren't using this, because we force an exception, which will be re-thrown on verify()
 			
 			MockRepository seperateMocks = new MockRepository();
-			demo = (IDemo)seperateMocks.CreateMock(typeof (IDemo));
+			demo = (IDemo)seperateMocks.StrictMock(typeof (IDemo));
 			demo.StringArgString("");
 			LastCall.Constraints(Is.Null());
 			LastCall.Return("aaa").Repeat.Twice();
@@ -157,7 +157,7 @@ namespace Rhino.Mocks.Tests
 		public void Setup()
 		{
 			mocks = new MockRepository();
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 		}
 
 		[TearDown]

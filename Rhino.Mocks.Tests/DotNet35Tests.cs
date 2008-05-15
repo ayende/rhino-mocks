@@ -12,7 +12,7 @@ namespace Rhino.Mocks.Tests
 		public void NaturalSyntaxForCallingMethods()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			using (mocks.Record())
 			{
 				Expect.Call(demo.VoidNoArgs);
@@ -28,7 +28,7 @@ namespace Rhino.Mocks.Tests
 		public void NaturalSyntaxForCallingMethods_WithArguments()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			using (mocks.Record())
 			{
 				Expect.Call( () => demo.VoidStringArg("blah") );
@@ -44,7 +44,7 @@ namespace Rhino.Mocks.Tests
 		public void NaturalSyntaxForCallingMethods_WithArguments_WhenNotCalled_WouldFailVerification()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			using (mocks.Record())
 			{
 				Expect.Call(() => demo.VoidStringArg("blah"));
@@ -60,7 +60,7 @@ namespace Rhino.Mocks.Tests
 		public void NaturalSyntaxForCallingMethods_WithArguments_WhenCalledWithDifferentArgument()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			using (mocks.Record())
 			{
 				Expect.Call(() => demo.VoidStringArg("blah"));
@@ -77,7 +77,7 @@ IDemo.VoidStringArg(""blah""); Expected #1, Actual #0.",delegate
 		public void CanCallMethodWithParameters_WithoutSpecifyingParameters_WillAcceptAnyParameter()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			using (mocks.Record())
 			{
 				Expect.Call(() => demo.VoidStringArg("blah")).IgnoreArguments();

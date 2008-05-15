@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests
         public void CanMoveToRecordAndThenReplay()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+            IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
             Expect.Call(demo.Prop).Return("ayende");
             mocks.Replay(demo);
             Assert.AreEqual("ayende", demo.Prop);
@@ -58,7 +58,7 @@ namespace Rhino.Mocks.Tests
         public void CanMoveToRecordFromVerified()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+            IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
             Expect.Call(demo.Prop).Return("ayende");
             
             mocks.Replay(demo);
@@ -77,7 +77,7 @@ namespace Rhino.Mocks.Tests
         public void CanSpecifyClearOnlyEvents()
         {
             MockRepository mocks = new MockRepository();
-            IWithEvent withEvent = mocks.CreateMock<IWithEvent>();
+            IWithEvent withEvent = mocks.StrictMock<IWithEvent>();
             bool called = false;
             withEvent.Load += delegate { called = true; };
             IEventRaiser raiser = LastCall.GetEventRaiser();
@@ -93,7 +93,7 @@ namespace Rhino.Mocks.Tests
         public void CanClearOnlyOriginalMethodCalls()
         {
             MockRepository mocks = new MockRepository();
-            AbstractClass abstractClass = mocks.CreateMock<AbstractClass>();
+            AbstractClass abstractClass = mocks.StrictMock<AbstractClass>();
             Expect.Call(abstractClass.Add(0)).CallOriginalMethod(OriginalCallOptions.NoExpectation);
             mocks.BackToRecord(abstractClass, BackToRecordOptions.OriginalMethodsToCall);
             mocks.ReplayAll();
@@ -107,7 +107,7 @@ namespace Rhino.Mocks.Tests
         public void CanClearOnlyPropertyBehavior()
         {
             MockRepository mocks = new MockRepository();
-            IDemo mock = mocks.CreateMock<IDemo>();
+            IDemo mock = mocks.StrictMock<IDemo>();
             Expect.Call(mock.Prop).PropertyBehavior();
 
             mocks.BackToRecord(mock,BackToRecordOptions.PropertyBehavior);
@@ -123,7 +123,7 @@ namespace Rhino.Mocks.Tests
         public void CanMoveToRecordFromReplyWithoutClearingExpectations()
         {
             MockRepository mocks = new MockRepository();
-            IDemo mock = mocks.CreateMock<IDemo>();
+            IDemo mock = mocks.StrictMock<IDemo>();
 
             mock.VoidNoArgs();
             mocks.ReplayAll();
@@ -142,7 +142,7 @@ namespace Rhino.Mocks.Tests
         public void CanMoveToRecordFromVerifiedWithoutClearingExpectations()
         {
             MockRepository mocks = new MockRepository();
-            IDemo mock = mocks.CreateMock<IDemo>();
+            IDemo mock = mocks.StrictMock<IDemo>();
 
             mock.VoidNoArgs();
             mocks.ReplayAll();

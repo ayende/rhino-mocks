@@ -10,7 +10,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void The_value_of_a_variable_used_as_an_out_parameter_should_not_be_used_as_a_constraint_on_an_expectation()
         {
             MockRepository mockRepository = new MockRepository();
-            ServiceBeingCalled service = mockRepository.CreateMock<ServiceBeingCalled>();
+            ServiceBeingCalled service = mockRepository.StrictMock<ServiceBeingCalled>();
             const int theNumberToReturnFromTheServiceOutParameter = 20;
             
             using(mockRepository.Record())

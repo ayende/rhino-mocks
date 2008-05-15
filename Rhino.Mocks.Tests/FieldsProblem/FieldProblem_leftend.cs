@@ -19,7 +19,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks = new MockRepository();
 			viewMock =
 				(IAddAlbumPresenter) mocks.DynamicMock(typeof (IAddAlbumPresenter));
-			albumMock = mocks.CreateMock<IAlbum>();
+			albumMock = mocks.StrictMock<IAlbum>();
 
 			viewMock.Save += null;
 			LastCall.IgnoreArguments().Constraints(Is.NotNull());

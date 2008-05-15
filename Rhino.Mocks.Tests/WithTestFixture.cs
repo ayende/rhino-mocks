@@ -40,7 +40,7 @@ namespace Rhino.Mocks.Tests
         public void SetupMyOwnRepository()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = mocks.CreateMock<IDemo>();
+            IDemo demo = mocks.StrictMock<IDemo>();
             With.Mocks(mocks,delegate
             {
                 Expect.Call(demo.ReturnStringNoArgs()).Return("Hi");
@@ -53,7 +53,7 @@ namespace Rhino.Mocks.Tests
         {
             With.Mocks(new MockRepository(),delegate
             {
-                IDemo demo = Mocker.Current.CreateMock<IDemo>();
+                IDemo demo = Mocker.Current.StrictMock<IDemo>();
                 Expect.Call(demo.ReturnIntNoArgs()).Return(5);
                 Mocker.Current.ReplayAll();
                 Assert.AreEqual(5, demo.ReturnIntNoArgs());
@@ -74,7 +74,7 @@ namespace Rhino.Mocks.Tests
         {
             With.Mocks(delegate
             {
-                IDemo demo = Mocker.Current.CreateMock<IDemo>();
+                IDemo demo = Mocker.Current.StrictMock<IDemo>();
                 Expect.Call(demo.ReturnIntNoArgs()).Return(5);
                 Mocker.Current.ReplayAll();
             });
@@ -86,7 +86,7 @@ namespace Rhino.Mocks.Tests
         {
             With.Mocks(delegate
             {
-                IDemo demo = Mocker.Current.CreateMock<IDemo>();
+                IDemo demo = Mocker.Current.StrictMock<IDemo>();
                 Expect.Call(demo.ReturnIntNoArgs()).Return(5);
             });
         }
@@ -98,7 +98,7 @@ namespace Rhino.Mocks.Tests
         {
             With.Mocks(delegate
             {
-                IDemo demo = Mocker.Current.CreateMock<IDemo>();
+                IDemo demo = Mocker.Current.StrictMock<IDemo>();
                 Expect.Call(demo.ReturnIntNoArgs()).Return(5);
                 Mocker.Current.ReplayAll();
                 throw new IndexOutOfRangeException("foo");
@@ -112,7 +112,7 @@ namespace Rhino.Mocks.Tests
         {
             With.Mocks(delegate
             {
-                IDemo demo = Mocker.Current.CreateMock<IDemo>();
+                IDemo demo = Mocker.Current.StrictMock<IDemo>();
                 Expect.Call(demo.ReturnIntNoArgs()).Return(5);
                 throw new IndexOutOfRangeException("foo");
             });
@@ -122,7 +122,7 @@ namespace Rhino.Mocks.Tests
         public void UsingTheWithMocksExceptingVerifyConstruct()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = mocks.CreateMock<IDemo>();
+            IDemo demo = mocks.StrictMock<IDemo>();
 
             With.Mocks(mocks)
             .Expecting(delegate
@@ -140,7 +140,7 @@ namespace Rhino.Mocks.Tests
         public void UsingTheWithMocksExceptingVerifyConstruct_ThrowsIfExpectationIsMissed()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = mocks.CreateMock<IDemo>();
+            IDemo demo = mocks.StrictMock<IDemo>();
 
             With.Mocks(mocks)
             .Expecting(delegate
@@ -157,7 +157,7 @@ namespace Rhino.Mocks.Tests
         public void UsingTheWithMocksExceptingVerifyConstruct_GiveCorrectExceptionWhenMocking()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = mocks.CreateMock<IDemo>();
+            IDemo demo = mocks.StrictMock<IDemo>();
 
             With.Mocks(mocks)
             .Expecting(delegate
@@ -174,7 +174,7 @@ namespace Rhino.Mocks.Tests
         public void UsingTheWithMocksExceptingInSameOrderVerifyConstruct_ShouldTakeCareOfOrder()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = mocks.CreateMock<IDemo>();
+            IDemo demo = mocks.StrictMock<IDemo>();
             bool verificationFailed; 
 
             try

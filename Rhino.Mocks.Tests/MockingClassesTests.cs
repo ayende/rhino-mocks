@@ -44,7 +44,7 @@ namespace Rhino.Mocks.Tests
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demoClass = (DemoClass) mocks.CreateMock(typeof (DemoClass));
+			demoClass = (DemoClass) mocks.StrictMock(typeof (DemoClass));
 		}
 
 
@@ -77,7 +77,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void MockClassWithParametrizedCtor()
 		{
-			ParametrizedCtor pc = mocks.CreateMock(typeof (ParametrizedCtor), 3, "Hello") as ParametrizedCtor;
+			ParametrizedCtor pc = mocks.StrictMock(typeof (ParametrizedCtor), 3, "Hello") as ParametrizedCtor;
 			Assert.AreEqual(3, pc.Int);
 			Assert.AreEqual("Hello", pc.String);
 			pc.Add(0, 1);
@@ -90,11 +90,11 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void MockClassWithOverloadedCtor()
 		{
-			OverLoadedCtor oc = mocks.CreateMock(typeof (OverLoadedCtor), 1) as OverLoadedCtor;
+			OverLoadedCtor oc = mocks.StrictMock(typeof (OverLoadedCtor), 1) as OverLoadedCtor;
 			OverLoadCtorExercise(oc, 1, null);
-			oc = mocks.CreateMock(typeof (OverLoadedCtor), "Hello") as OverLoadedCtor;
+			oc = mocks.StrictMock(typeof (OverLoadedCtor), "Hello") as OverLoadedCtor;
 			OverLoadCtorExercise(oc, 0, "Hello");
-			oc = mocks.CreateMock(typeof (OverLoadedCtor), 33, "Hello") as OverLoadedCtor;
+			oc = mocks.StrictMock(typeof (OverLoadedCtor), 33, "Hello") as OverLoadedCtor;
 			OverLoadCtorExercise(oc, 33, "Hello");
 		}
 
@@ -102,7 +102,7 @@ namespace Rhino.Mocks.Tests
 		[ExpectedException(typeof (MissingMethodException), "Can't find a constructor with matching arguments")]
 		public void BadParamsToCtor()
 		{
-			mocks.CreateMock(typeof (OverLoadedCtor), "Ayende", 55);
+			mocks.StrictMock(typeof (OverLoadedCtor), "Ayende", 55);
 		}
 
 
@@ -111,7 +111,7 @@ namespace Rhino.Mocks.Tests
 		public void MockSealedClass()
 		{
 			MockRepository mocks = new MockRepository();
-			mocks.CreateMock(typeof (File));
+			mocks.StrictMock(typeof (File));
 		}
 
         [Test]

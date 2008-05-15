@@ -20,7 +20,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			// setup
 			MockRepository mocks = new MockRepository();
-			ISomeService m_SomeServiceMock = mocks.CreateMock<ISomeService>();
+			ISomeService m_SomeServiceMock = mocks.StrictMock<ISomeService>();
 			SomeClient sut = new SomeClient(m_SomeServiceMock);
 
 			using (mocks.Ordered())
@@ -57,7 +57,7 @@ ISomeService.DoSomething<System.String>(null, ""foo""); Expected #1, Actual #0."
 		public void UnexpectedCallToGenericMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			ISomeService m_SomeServiceMock = mocks.CreateMock<ISomeService>();
+			ISomeService m_SomeServiceMock = mocks.StrictMock<ISomeService>();
 			m_SomeServiceMock.DoSomething<string>(null, "foo");
 			mocks.ReplayAll();
 			m_SomeServiceMock.DoSomething<int>(null, 5);

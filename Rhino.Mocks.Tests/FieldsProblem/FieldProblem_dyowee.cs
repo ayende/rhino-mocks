@@ -13,7 +13,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockingRecordSet()
 		{
 			MockRepository mr = new MockRepository();
-			Recordset mock = mr.CreateMock<ADODB.Recordset>();
+			Recordset mock = mr.StrictMock<ADODB.Recordset>();
 			Assert.IsNotNull(mock);
 			Expect.Call(mock.ActiveConnection).Return("test");
 			mr.ReplayAll();

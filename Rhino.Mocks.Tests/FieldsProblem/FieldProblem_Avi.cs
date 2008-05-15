@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         {
             MockRepository mocks = new MockRepository();
 
-            ClassWithThrowingCtor mockClass1 = (ClassWithThrowingCtor)mocks.CreateMock(typeof(ClassWithThrowingCtor), CallOptions.DontCallCtor);
+            ClassWithThrowingCtor mockClass1 = (ClassWithThrowingCtor)mocks.StrictMock(typeof(ClassWithThrowingCtor), CallOptions.DontCallCtor);
         }
 
     }
@@ -80,8 +80,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void TestMockOnGenericWithDifferentTypes()
         {
             MockRepository mocks = new MockRepository();
-            IComparable<int> mock1 = mocks.CreateMock<IComparable<int>>();
-            IComparable<bool> mock2 = mocks.CreateMock<IComparable<bool>>();
+            IComparable<int> mock1 = mocks.StrictMock<IComparable<int>>();
+            IComparable<bool> mock2 = mocks.StrictMock<IComparable<bool>>();
         }
 
         [Test]

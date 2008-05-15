@@ -75,9 +75,9 @@ namespace Rhino.Mocks.Tests
         }
 
 		[Test]
-		public void CanCreateMockOnClassWithInternalMethod()
+		public void CanStrictMockOnClassWithInternalMethod()
 		{
-			WithInternalMethod withInternalMethod = mocks.CreateMock<WithInternalMethod>();
+			WithInternalMethod withInternalMethod = mocks.StrictMock<WithInternalMethod>();
 			withInternalMethod.Foo();
 			LastCall.Throw(new Exception("foo"));
 			mocks.ReplayAll();

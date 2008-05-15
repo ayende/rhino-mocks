@@ -52,7 +52,7 @@ namespace Rhino.Mocks.Tests.Callbacks
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = (IDemo) mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			callbackCalled = false;
 		}
 

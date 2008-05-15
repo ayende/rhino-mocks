@@ -14,7 +14,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void WillMerge_UnorderedRecorder_WhenRecorderHasSingleRecorderInside()
 		{
 			MockRepository mocks = new MockRepository();
-			ICustomer customer = mocks.CreateMock<ICustomer>();
+			ICustomer customer = mocks.StrictMock<ICustomer>();
 
 			CustomerMapper mapper = new CustomerMapper();
 

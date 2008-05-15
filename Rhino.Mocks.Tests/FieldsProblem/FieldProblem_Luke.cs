@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanMockIE()
 		{
 			MockRepository mockRepository = new MockRepository();
-			IHTMLEventObj2 mock = mockRepository.CreateMock<IHTMLEventObj2>();
+			IHTMLEventObj2 mock = mockRepository.StrictMock<IHTMLEventObj2>();
 			Assert.IsNotNull(mock);
 		}
 
@@ -50,7 +50,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 			IServiceProvider serviceProvider = (IServiceProvider)
-											   mocks.CreateMultiMock(typeof(IServiceProvider), typeof(IHTMLDataTransfer));
+											   mocks.StrictMultiMock(typeof(IServiceProvider), typeof(IHTMLDataTransfer));
 			Assert.IsNotNull(serviceProvider);
 		}
 
@@ -58,14 +58,14 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void TryToMockClassWithProtectedInternalAbstractClass()
 		{
 			MockRepository mockRepository = new MockRepository();
-			mockRepository.CreateMock<SomeClassWithProtectedInternalAbstractClass>();
+			mockRepository.StrictMock<SomeClassWithProtectedInternalAbstractClass>();
 		}
 
 		[Test] 
 		public void TryToMockClassWithProtectedAbstractClass()
 		{
 			MockRepository mockRepository = new MockRepository();
-			mockRepository.CreateMock<SomeClassWithProtectedAbstractClass>();
+			mockRepository.StrictMock<SomeClassWithProtectedAbstractClass>();
 		}
 
 		public abstract class

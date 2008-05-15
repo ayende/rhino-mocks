@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests.Constraints
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = (IDemo) this.mocks.CreateMock(typeof (IDemo));
+			demo = (IDemo) this.mocks.StrictMock(typeof (IDemo));
 		}
 
         [Test]

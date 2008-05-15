@@ -56,7 +56,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void TestInvalidValue()
 		{
-			IMockInterface mockedInterface = mockRepository.CreateMock<IMockInterface>();
+			IMockInterface mockedInterface = mockRepository.StrictMock<IMockInterface>();
 			Expect.Call(mockedInterface.InvalidValue).Return(100UL);
 			mockRepository.ReplayAll();
 			Assert.AreEqual(100UL, mockedInterface.InvalidValue);

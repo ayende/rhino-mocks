@@ -17,7 +17,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CorrectResultForExpectedWhenUsingTimes()
 		{
 			MockRepository mocks = new MockRepository();
-			IView view = mocks.CreateMock<IView>();
+			IView view = mocks.StrictMock<IView>();
 			using (mocks.Record())
 			{
 				view.RedrawDisplay(null);
@@ -37,7 +37,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CorrectResultForExpectedWhenUsingTimesWithRange()
 		{
 			MockRepository mocks = new MockRepository();
-			IView view = mocks.CreateMock<IView>();
+			IView view = mocks.StrictMock<IView>();
 			using (mocks.Record())
 			{
 				view.RedrawDisplay(null);

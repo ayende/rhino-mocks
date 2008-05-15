@@ -56,7 +56,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void InitClass()
 		{
-				EmployeeInfo info = (EmployeeInfo)mocks.CreateMock(typeof(EmployeeInfo), "ID001");
+				EmployeeInfo info = (EmployeeInfo)mocks.StrictMock(typeof(EmployeeInfo), "ID001");
 
 				mocks.ReplayAll();
 

@@ -48,7 +48,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void NestedOrderedAndAtLeastOnce()
 		{
 			MockRepository mocks = new MockRepository();
-			IMyObject myObject = mocks.CreateMock(typeof(IMyObject)) as IMyObject;
+			IMyObject myObject = mocks.StrictMock(typeof(IMyObject)) as IMyObject;
 
 			using (mocks.Ordered())
 			{
@@ -75,7 +75,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void ShouldFailInNestedOrderringIfMethodWasNotCalled()
 		{
 			MockRepository mocks = new MockRepository();
-			IMyObject myObject = mocks.CreateMock(typeof(IMyObject)) as IMyObject;
+			IMyObject myObject = mocks.StrictMock(typeof(IMyObject)) as IMyObject;
 
 			using (mocks.Ordered())
 			{
@@ -96,7 +96,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void NestedInorderedAndAtLeastOnce()
 		{
 			MockRepository mocks = new MockRepository();
-			IMyObject myObject = mocks.CreateMock(typeof(IMyObject)) as IMyObject;
+			IMyObject myObject = mocks.StrictMock(typeof(IMyObject)) as IMyObject;
 
 			using (mocks.Ordered())
 			{
@@ -121,7 +121,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void UnorderedAndAtLeastOnce_CallingAnExtraMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			IMyObject myObject = mocks.CreateMock(typeof(IMyObject)) as IMyObject;
+			IMyObject myObject = mocks.StrictMock(typeof(IMyObject)) as IMyObject;
 
 			using (mocks.Unordered())
 			{
@@ -144,7 +144,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void OrderedAndAtLeastOnce_CallingAnExtraMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			IMyObject myObject = mocks.CreateMock(typeof(IMyObject)) as IMyObject;
+			IMyObject myObject = mocks.StrictMock(typeof(IMyObject)) as IMyObject;
 
 			using (mocks.Ordered())
 			{

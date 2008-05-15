@@ -16,8 +16,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         [Test]
         public void IgnoreArguments()
         {
-            IFoo myFoo = _mockRepository.CreateMock<IFoo>();
-            IBar<int> myBar = _mockRepository.CreateMock<IBar<int>>();
+            IFoo myFoo = _mockRepository.StrictMock<IFoo>();
+            IBar<int> myBar = _mockRepository.StrictMock<IBar<int>>();
 
             using(_mockRepository.Record())
             using (_mockRepository.Ordered())

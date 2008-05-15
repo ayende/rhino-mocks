@@ -116,7 +116,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			IEventRaiser load = LastCall.IgnoreArguments().GetEventRaiser();
 			mocks.Replay(viewMocks); //we move just this to replay state.
 			PresenterBase<IView> presenterBase =
-				mocks.CreateMock<PresenterBase<IView>>(viewMocks);
+				mocks.StrictMock<PresenterBase<IView>>(viewMocks);
 			presenterBase.Initialize();
 			presenterBase.Load();
 			mocks.ReplayAll();

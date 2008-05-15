@@ -39,7 +39,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CreatedClosedGenericType()
 		{
 			MockRepository mocks = new MockRepository();
-			mocks.CreateMock<ClosedGenericType>();
+			mocks.StrictMock<ClosedGenericType>();
 		}
 
 
@@ -48,7 +48,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 			IGenericType<object> mock =
-				mocks.CreateMock<IGenericType<object>>();
+				mocks.StrictMock<IGenericType<object>>();
 			IMethodOptions<object> methodOptions = Expect.Call(mock.MyMethod());
 			methodOptions.Do((MyDelegate)delegate { return new object(); });
 		}
@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void DoubleGeneric()
 		{
 			MockRepository mocks = new MockRepository();
-			IDoubleGeneric<int> mock = mocks.CreateMock<IDoubleGeneric<int>>();
+			IDoubleGeneric<int> mock = mocks.StrictMock<IDoubleGeneric<int>>();
 			Expect.Call(mock.Method<string>(1, ""));
 		}
 	}

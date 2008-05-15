@@ -48,7 +48,7 @@ namespace Rhino.Mocks.Tests
         public void CanCreateAStrictMultiMockFromTwoInterfacesNonGeneric()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = (IDemo)mocks.CreateMultiMock(typeof(IDemo), typeof(IDisposable));
+            IDemo demo = (IDemo)mocks.StrictMultiMock(typeof(IDemo), typeof(IDisposable));
             CanCreateAStrictMultiMockFromTwoInterfacesCommon(mocks, demo);
         }
 
@@ -56,7 +56,7 @@ namespace Rhino.Mocks.Tests
         public void CanCreateAStrictMultiMockFromTwoInterfacesGeneric()
         {
             MockRepository mocks = new MockRepository();
-            IDemo demo = mocks.CreateMultiMock<IDemo>(typeof(IDisposable));
+            IDemo demo = mocks.StrictMultiMock<IDemo>(typeof(IDisposable));
             CanCreateAStrictMultiMockFromTwoInterfacesCommon(mocks, demo);
         }
 
@@ -83,7 +83,7 @@ namespace Rhino.Mocks.Tests
         public void ClearStrictCollectionAndDisposesItNonGeneric()
         {
             MockRepository mocks = new MockRepository();
-            CollectionBase collection = (CollectionBase)mocks.CreateMultiMock(typeof(CollectionBase),
+            CollectionBase collection = (CollectionBase)mocks.StrictMultiMock(typeof(CollectionBase),
                                                                               typeof(IDisposable));
             ClearStrictCollectionAndDisposesItCommon(mocks, collection);
         }
@@ -92,7 +92,7 @@ namespace Rhino.Mocks.Tests
         public void ClearStrictCollectionAndDisposesItGeneric()
         {
             MockRepository mocks = new MockRepository();
-            CollectionBase collection = mocks.CreateMultiMock<CollectionBase>(typeof(IDisposable));
+            CollectionBase collection = mocks.StrictMultiMock<CollectionBase>(typeof(IDisposable));
             ClearStrictCollectionAndDisposesItCommon(mocks, collection);
         }
 
@@ -120,7 +120,7 @@ namespace Rhino.Mocks.Tests
         public void CanCreateAStrictMultiMockFromClassAndTwoInterfacesNonGeneric()
         {
             MockRepository mocks = new MockRepository();
-            XmlReader reader = (XmlReader)mocks.CreateMultiMock(typeof(XmlReader), typeof(ICloneable), typeof(IHasXmlNode));
+            XmlReader reader = (XmlReader)mocks.StrictMultiMock(typeof(XmlReader), typeof(ICloneable), typeof(IHasXmlNode));
 
             CanCreateAStrictMultiMockFromClassAndTwoInterfacesCommon(mocks, reader);
         }
@@ -129,7 +129,7 @@ namespace Rhino.Mocks.Tests
         public void CanCreateAStrictMultiMockFromClassAndTwoInterfacesGeneric()
         {
             MockRepository mocks = new MockRepository();
-            XmlReader reader = mocks.CreateMultiMock<XmlReader>(typeof(ICloneable), typeof(IHasXmlNode));
+            XmlReader reader = mocks.StrictMultiMock<XmlReader>(typeof(ICloneable), typeof(IHasXmlNode));
 
             CanCreateAStrictMultiMockFromClassAndTwoInterfacesCommon(mocks, reader);
         }
@@ -167,9 +167,9 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
 
             StringBuilder stringBuilder = new StringBuilder();
-            IFormatProvider formatProvider = (IFormatProvider)mocks.CreateMock(typeof(IFormatProvider));
+            IFormatProvider formatProvider = (IFormatProvider)mocks.StrictMock(typeof(IFormatProvider));
 
-            StringWriter mockedWriter = (StringWriter)mocks.CreateMultiMock(
+            StringWriter mockedWriter = (StringWriter)mocks.StrictMultiMock(
                 typeof(StringWriter),
                 new Type[] { typeof(IDataErrorInfo) },
                 stringBuilder,
@@ -185,9 +185,9 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
 
             StringBuilder stringBuilder = new StringBuilder();
-            IFormatProvider formatProvider = mocks.CreateMock<IFormatProvider>();
+            IFormatProvider formatProvider = mocks.StrictMock<IFormatProvider>();
 
-            StringWriter mockedWriter = mocks.CreateMultiMock<StringWriter>(
+            StringWriter mockedWriter = mocks.StrictMultiMock<StringWriter>(
                 new Type[] { typeof(IDataErrorInfo) },
                 stringBuilder,
                 formatProvider
@@ -252,7 +252,7 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
 
             StringBuilder stringBuilder = new StringBuilder();
-            IFormatProvider formatProvider = (IFormatProvider)mocks.CreateMock(typeof(IFormatProvider));
+            IFormatProvider formatProvider = (IFormatProvider)mocks.StrictMock(typeof(IFormatProvider));
 
             StringWriter mockedWriter = (StringWriter)mocks.DynamicMultiMock(
                 typeof(StringWriter),
@@ -269,7 +269,7 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
 
             StringBuilder stringBuilder = new StringBuilder();
-            IFormatProvider formatProvider = mocks.CreateMock<IFormatProvider>();
+            IFormatProvider formatProvider = mocks.StrictMock<IFormatProvider>();
 
             StringWriter mockedWriter = mocks.DynamicMultiMock<StringWriter>(
                 new Type[] { typeof(IDataErrorInfo) },
@@ -333,7 +333,7 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
 
             StringBuilder stringBuilder = new StringBuilder();
-            IFormatProvider formatProvider = (IFormatProvider)mocks.CreateMock(typeof(IFormatProvider));
+            IFormatProvider formatProvider = (IFormatProvider)mocks.StrictMock(typeof(IFormatProvider));
 
             StringWriter mockedWriter = (StringWriter)mocks.PartialMultiMock(
                 typeof(StringWriter),
@@ -351,7 +351,7 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
 
             StringBuilder stringBuilder = new StringBuilder();
-            IFormatProvider formatProvider = mocks.CreateMock<IFormatProvider>();
+            IFormatProvider formatProvider = mocks.StrictMock<IFormatProvider>();
 
             StringWriter mockedWriter = mocks.PartialMultiMock<StringWriter>(
                 new Type[] { typeof(IDataErrorInfo) },
@@ -369,7 +369,7 @@ namespace Rhino.Mocks.Tests
         public void CannotMultiMockUsingClassesAsExtras()
         {
             MockRepository mocks = new MockRepository();
-            mocks.CreateMultiMock(typeof(XmlReader), typeof(XmlWriter));
+            mocks.StrictMultiMock(typeof(XmlReader), typeof(XmlWriter));
         }
         #endregion
 
@@ -395,7 +395,7 @@ namespace Rhino.Mocks.Tests
         public void RepeatedInterfaceMultiMocks()
         {
             MockRepository mocks = new MockRepository();
-            object o = mocks.CreateMultiMock(typeof(MultiClass), typeof(ISpecialMulti));
+            object o = mocks.StrictMultiMock(typeof(MultiClass), typeof(ISpecialMulti));
 
             Assert.IsTrue(o is MultiClass, "Object should be MultiClass");
             Assert.IsTrue(o is IMulti, "Object should be IMulti");

@@ -39,7 +39,7 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 		{
 			MockRepository mockRepository;
 			mockRepository = new MockRepository();
-			IFoo mockedFoo = mockRepository.CreateMock<IFoo>();
+			IFoo mockedFoo = mockRepository.StrictMock<IFoo>();
 			using (mockRepository.Record())
 			{
 				Expect.Call(mockedFoo.Bar()).Return(42);
@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 		{
 			MockRepository mockRepository;
 			mockRepository = new MockRepository();
-			IFoo mockedFoo = mockRepository.CreateMock<IFoo>();
+			IFoo mockedFoo = mockRepository.StrictMock<IFoo>();
 			using (mockRepository.Record())
 			{
 				Expect.Call(mockedFoo.Bar()).Return(42);
@@ -74,7 +74,7 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 		{
 			MockRepository mockRepository;
 			mockRepository = new MockRepository();
-			IFoo mockedFoo = mockRepository.CreateMock<IFoo>();
+			IFoo mockedFoo = mockRepository.StrictMock<IFoo>();
 			using (mockRepository.Record())
 			{
 				mockedFoo.Bar();//create expectation but doesn't setup return value

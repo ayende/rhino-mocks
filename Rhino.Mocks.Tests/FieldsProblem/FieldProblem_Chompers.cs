@@ -13,7 +13,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void MockingPropertyThatReturnsStream()
 		{
 			MockRepository mocks = new MockRepository();
-			IBaseMessagePart messagePart = mocks.CreateMock<IBaseMessagePart>();
+			IBaseMessagePart messagePart = mocks.StrictMock<IBaseMessagePart>();
 			MemoryStream stream = new MemoryStream();
 			Expect.Call(messagePart.Data).Return(stream).Repeat.Any();
 			mocks.ReplayAll();

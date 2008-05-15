@@ -15,7 +15,7 @@ http://groups.google.co.il/group/castle-project-devel/browse_thread/thread/1697e
 			MockRepository mocks = new MockRepository();
 
 			TestInterface<List<string>> mockedInterface =
-				mocks.CreateMock<TestInterface<List<string>>>();
+				mocks.StrictMock<TestInterface<List<string>>>();
 		}
 	}
 

@@ -11,7 +11,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanMockInterfaceWithMethodsHavingModOpt()
 		{
 			MockRepository mocks = new MockRepository();
-			IHaveMethodWithModOpts mock = mocks.CreateMock<IHaveMethodWithModOpts>();
+			IHaveMethodWithModOpts mock = mocks.StrictMock<IHaveMethodWithModOpts>();
 			Assert.IsNotNull(mock);
 		}
 	}

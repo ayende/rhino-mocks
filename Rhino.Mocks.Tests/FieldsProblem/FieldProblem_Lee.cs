@@ -12,7 +12,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void IgnoringArgumentsOnGenericMethod()
 		{
 			MockRepository mocks = new MockRepository();
-			IHaveGenericMethod mock = mocks.CreateMock<IHaveGenericMethod>();
+			IHaveGenericMethod mock = mocks.StrictMock<IHaveGenericMethod>();
 			
 			mock.Foo(15);
 			LastCall.IgnoreArguments().Return(true);

@@ -12,7 +12,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         public void UsingArrayAndOutParam()
         {
             MockRepository mockRepository = new MockRepository();
-            ITest test = mockRepository.CreateMock<ITest>();
+            ITest test = mockRepository.StrictMock<ITest>();
             string b;
             test.ArrayWithOut(new string[] { "data" }, out b);
 

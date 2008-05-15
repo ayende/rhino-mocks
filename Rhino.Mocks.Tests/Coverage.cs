@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Tests
 		public void TryingToGetEventRaiserFromNonEvenTrhows()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			demo.EnumNoArgs();
 			LastCall.GetEventRaiser();
 		}
@@ -80,7 +80,7 @@ namespace Rhino.Mocks.Tests
 		public void UsingCallOriginalWithSetter()
 		{
 			MockRepository mocks = new MockRepository();
-			WithParameters withParameters = mocks.CreateMock<WithParameters>(1);
+			WithParameters withParameters = mocks.StrictMock<WithParameters>(1);
 			withParameters.Int = 5;
 			LastCall.PropertyBehavior();
 			mocks.ReplayAll();
@@ -94,7 +94,7 @@ namespace Rhino.Mocks.Tests
 		public void MockObjCanHandleGetEventSubscribersCallsWithoutEventsRegistered()
 		{
 			MockRepository mocks = new MockRepository();
-			WithParameters withParameters = mocks.CreateMock<WithParameters>(1);
+			WithParameters withParameters = mocks.StrictMock<WithParameters>(1);
 			IMockedObject mocked = (IMockedObject) withParameters;
 			Delegate eventSubscribers = mocked.GetEventSubscribers("ff");
 			Assert.IsNull(eventSubscribers);
@@ -139,7 +139,7 @@ namespace Rhino.Mocks.Tests
 		public void WillGetPartialRecordFromPartialRecord()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			IMockState mockState = new RecordPartialMockState((IMockedObject)demo, mocks).BackToRecord();
 			Assert.AreEqual(typeof(RecordPartialMockState), mockState.GetType());
 		}
@@ -148,7 +148,7 @@ namespace Rhino.Mocks.Tests
 		public void WillGetPartialRecordFromPartialReplay()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			IMockState mockState = new ReplayPartialMockState(new RecordPartialMockState((IMockedObject)demo, mocks)).BackToRecord();
 			Assert.AreEqual(typeof(RecordPartialMockState), mockState.GetType());
 		}
@@ -157,7 +157,7 @@ namespace Rhino.Mocks.Tests
 		public void WillGetDynamicRecordFromDynamicReplay()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = mocks.CreateMock<IDemo>();
+			IDemo demo = mocks.StrictMock<IDemo>();
 			IMockState mockState = new ReplayDynamicMockState(new RecordDynamicMockState((IMockedObject)demo, mocks)).BackToRecord();
 			Assert.AreEqual(typeof(RecordDynamicMockState), mockState.GetType());
 		}

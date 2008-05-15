@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests
         public void Setup()
         {
             mocks = new MockRepository();
-            demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+            demo = (IDemo)mocks.StrictMock(typeof(IDemo));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void SayHelloWorld()
         {
-            INameSource nameSource = (INameSource)mocks.CreateMock(typeof(INameSource));
+            INameSource nameSource = (INameSource)mocks.StrictMock(typeof(INameSource));
             Expect.Call(nameSource.CreateName(null,null)).IgnoreArguments().
                     Do(new NameSourceDelegate(Formal));
             mocks.ReplayAll();

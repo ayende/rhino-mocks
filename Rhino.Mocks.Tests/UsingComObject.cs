@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests
             MockRepository mocks = new MockRepository();
             Type fsoType = Type.GetTypeFromProgID("Scripting.FileSystemObject");
             Scripting.FileSystemObject fso = (Scripting.FileSystemObject)Activator.CreateInstance(fsoType);
-            IMockTest test = mocks.CreateMock(typeof(IMockTest)) as IMockTest;
+            IMockTest test = mocks.StrictMock(typeof(IMockTest)) as IMockTest;
             Expect.Call(test.GetFileSystemObject()).Return(fso);
             mocks.ReplayAll();
             Assert.AreSame(fso, test.GetFileSystemObject());

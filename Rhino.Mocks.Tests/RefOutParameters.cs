@@ -48,7 +48,7 @@ namespace Rhino.Mocks.Tests
         public void UseTheOutMethodToSpecifyOutputAndRefParameters()
         {
             MockRepository mocks = new MockRepository();
-            MyClass myClass = (MyClass) mocks.CreateMock(typeof (MyClass));
+            MyClass myClass = (MyClass) mocks.StrictMock(typeof (MyClass));
             int i;
             string s = null, s2;
             myClass.MyMethod(out i, ref s, 1, out s2);
@@ -69,7 +69,7 @@ namespace Rhino.Mocks.Tests
         public void UseTheOutMethodToSpecifyOutputAndRefParameters_CanOnlyBeCalledOnce()
         {
             MockRepository mocks = new MockRepository();
-            MyClass myClass = (MyClass) mocks.CreateMock(typeof (MyClass));
+            MyClass myClass = (MyClass) mocks.StrictMock(typeof (MyClass));
             int i;
             string s = null, s2;
             myClass.MyMethod(out i, ref s, 1, out s2);
@@ -80,7 +80,7 @@ namespace Rhino.Mocks.Tests
     	public void GivingLessParametersThanWhatIsInTheMethodWillNotThrow()
     	{
     		   MockRepository mocks = new MockRepository();
-            MyClass myClass = (MyClass) mocks.CreateMock(typeof (MyClass));
+            MyClass myClass = (MyClass) mocks.StrictMock(typeof (MyClass));
             int i;
             string s = null, s2;
             myClass.MyMethod(out i, ref s, 1, out s2);

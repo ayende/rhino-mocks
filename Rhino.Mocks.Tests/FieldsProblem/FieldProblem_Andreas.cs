@@ -39,7 +39,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void BackToRecordAll_EraseAllRecordedExpectations()
 		{
 			MockRepository repository = new MockRepository();
-			TestedClass mockObject = (TestedClass)repository.CreateMock(typeof(TestedClass));
+			TestedClass mockObject = (TestedClass)repository.StrictMock(typeof(TestedClass));
 
 			mockObject.AnyMethod();
 			repository.BackToRecordAll();

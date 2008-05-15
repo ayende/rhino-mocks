@@ -17,7 +17,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 
-			GenericContainer<string> stringContainer = mocks.CreateMock<GenericContainer<string>>();
+			GenericContainer<string> stringContainer = mocks.StrictMock<GenericContainer<string>>();
 
 			Expect.Call(stringContainer.Item).PropertyBehavior();
 
@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 
-			GenericContainer<DateTime> dateTimeContainer = mocks.CreateMock<GenericContainer<DateTime>>();
+			GenericContainer<DateTime> dateTimeContainer = mocks.StrictMock<GenericContainer<DateTime>>();
 
 			Expect.Call(dateTimeContainer.Item).PropertyBehavior();
 
@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			MockRepository mocks = new MockRepository();
 
-			GenericContainer<int> dateTimeContainer = mocks.CreateMock<GenericContainer<int>>();
+			GenericContainer<int> dateTimeContainer = mocks.StrictMock<GenericContainer<int>>();
 
 			Expect.Call(dateTimeContainer.Item).PropertyBehavior();
 

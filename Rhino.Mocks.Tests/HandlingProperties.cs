@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests
         public void Setup()
         {
             mocks = new MockRepository();
-            demo = (IDemo)mocks.CreateMock(typeof(IDemo));
+            demo = (IDemo)mocks.StrictMock(typeof(IDemo));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void IndexedPropertiesSupported()
         {
-            IWithIndexers x = (IWithIndexers)mocks.CreateMock(typeof(IWithIndexers));
+            IWithIndexers x = (IWithIndexers)mocks.StrictMock(typeof(IWithIndexers));
             Expect.Call(x[1]).PropertyBehavior();
             Expect.Call(x["",1]).PropertyBehavior();
             mocks.ReplayAll();
@@ -105,7 +105,7 @@ namespace Rhino.Mocks.Tests
         [ExpectedException(typeof(InvalidOperationException), "Can't return a value for property Item because no value was set and the Property return a value type.")]
         public void IndexPropertyWhenValueTypeAndNotFoundThrows()
         {
-            IWithIndexers x = (IWithIndexers)mocks.CreateMock(typeof(IWithIndexers));
+            IWithIndexers x = (IWithIndexers)mocks.StrictMock(typeof(IWithIndexers));
             Expect.Call(x[1]).PropertyBehavior();
             mocks.ReplayAll();
             int dummy =  x[1];
@@ -114,7 +114,7 @@ namespace Rhino.Mocks.Tests
         [Test]
         public void IndexPropertyWhenRefTypeAndNotFoundReturnNull()
         {
-            IWithIndexers x = (IWithIndexers)mocks.CreateMock(typeof(IWithIndexers));
+            IWithIndexers x = (IWithIndexers)mocks.StrictMock(typeof(IWithIndexers));
             Expect.Call(x["",3]).PropertyBehavior();
             mocks.ReplayAll();
             Assert.IsNull(x["", 2]);

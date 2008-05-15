@@ -187,7 +187,7 @@ namespace Rhino.Mocks.Tests
         {
             MockRepository mocks = new MockRepository();
 
-            I1 i = mocks.CreateMock(typeof(I1)) as I1;
+            I1 i = mocks.StrictMock(typeof(I1)) as I1;
 
             mockConfigurer(mocks, i);
 
