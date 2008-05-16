@@ -1279,7 +1279,10 @@ namespace Rhino.Mocks
         /// <param name="argumentsForConstructor">The arguments for constructor.</param>
         public static object GenerateStub(Type type, params object[] argumentsForConstructor)
         {
-            return new MockRepository().Stub(type, argumentsForConstructor);
+            MockRepository repository = new MockRepository();
+            object stub = repository.Stub(type, argumentsForConstructor);
+            repository.Replay(stub);
+            return stub;
         }
 
         /// <summary>
@@ -1298,6 +1301,17 @@ namespace Rhino.Mocks
             }
 
             throw new ArgumentException(mock + " is not a mock.", "mock");
+        }
+
+        /// <summary>
+        /// Generate a mock object without needing the mock repository
+        /// </summary>
+        public static T GenerateMock<T>()
+        {
+            MockRepository repository = new MockRepository();
+            T mock = repository.DynamicMock<T>();
+            repository.Replay(mock);
+            return mock;
         }
     }
 }

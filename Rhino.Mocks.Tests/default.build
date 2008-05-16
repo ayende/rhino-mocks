@@ -13,8 +13,6 @@
 		<assemblyfileset id="project.references" basedir="${build.dir}">
 			<include name="MbUnit.Framework.dll"/>
 			<include name="Rhino.Mocks.dll" />
-			<include name="Castle.DynamicProxy2.dll" />
-			<include name="Castle.Core.dll" />
 			<include name="Interop.ADODB.dll" />
 			<include name="Interop.mshtml.dll" />
 			<include name="Scripting.dll" />

@@ -43,6 +43,7 @@ namespace Rhino.Mocks
                 return null;
             });
         }
+
         public static IMethodOptions<R> Stub<T, R>(this T mock, Func<T, R> action)
         {
             return Expect(mock, action).Repeat.Times(0, 1);
@@ -58,7 +59,8 @@ namespace Rhino.Mocks
                 {
                     constraints.Add(new LambdaConstraint(expression));
                 }
-                options.Constraints(constraints.ToArray());
+                if (constraints.Count != 0)
+                    options.Constraints(constraints.ToArray());
             });
         }
 
@@ -71,7 +73,7 @@ namespace Rhino.Mocks
                 T mockToRecordExpectation = mocks.DynamicMock<T>(mockedObject.ConstructorArguments);
                 action(mockToRecordExpectation);
                 AssertExactlySingleExpectaton(mocks, mockToRecordExpectation);
-                
+
                 IMethodOptions<object> lastMethodCall = mocks.LastMethodCall<object>(mockToRecordExpectation);
                 lastMethodCall.TentativeReturn();
                 if (setupConstraints != null)
@@ -89,16 +91,19 @@ namespace Rhino.Mocks
                     if (expected.IsExpected(args))
                         return;
                 }
-
-
                 throw new ExpectationViolationException("Expectd that " + expectationsToVerify[0].ErrorMessage +
                                                         " would be called, but is was it was not found on the actual calls made on the mocked object");
-
             }
             finally
             {
                 argumentPredicates = null;
             }
+        }
+
+        public static void VerifyAllExpectations(this object mockObject)
+        {
+            IMockedObject mockedObject = MockRepository.GetMockedObject(mockObject);
+            mockedObject.Repository.Verify(mockedObject);
         }
 
         private static void AssertExactlySingleExpectaton<T>(MockRepository mocks, T mockToRecordExpectation)

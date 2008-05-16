@@ -1,6 +1,7 @@
 #if DOTNET35
 using System;
 using MbUnit.Framework;
+using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
@@ -63,11 +64,109 @@ namespace Rhino.Mocks.Tests
         {
             MockRepository mocks = new MockRepository();
             IFoo54 demo = mocks.DynamicMock<IFoo54>();
+            mocks.Replay(demo);
 
             demo.Stub(x => x.DoSomething()).Return(1);
 
             Assert.AreEqual(1, demo.DoSomething());
         }
+
+        [Test]
+        public void CanUseStubSyntax_WithoutExplicitMockRepository()
+        {
+            var foo54 = MockRepository.GenerateStub<IFoo54>();
+ 
+            foo54.Stub(x => x.DoSomething()).Return(1);
+
+            Assert.AreEqual(1, foo54.DoSomething());
+
+            foo54.AssertWasCalled(x => x.DoSomething());
+        }
+
+        [Test]
+        public void CanAssertOnMethodUsingDirectArgumentMatching()
+        {
+            var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+            foo54.Bar("blah");
+
+            foo54.AssertWasCalled(x => x.Bar("blah"));
+        }
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException),
+            "Expectd that IFoo54.Bar(\"blah1\"); would be called, but is was it was not found on the actual calls made on the mocked object")]
+        public void CanAssertOnMethodUsingDirectArgumentMatching_WhenWrongArumentPassed()
+        {
+            var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+            foo54.Bar("blah");
+
+            foo54.AssertWasCalled(x => x.Bar("blah1"));
+        }
+
+        [Test]
+        public void CanUseExpectSyntax_WithoutExplicitMockRepository()
+        {
+            var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+            foo54.Expect(x => x.DoSomething()).Return(1);
+
+            Assert.AreEqual(1, foo54.DoSomething());
+
+            foo54.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void CanUseExpectSyntax_WithoutExplicitMockRepository_UsingConsraints()
+        {
+            var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+            foo54.Expect(x => x.Bar(null)).Constraints(Text.StartsWith("boo")).Return(1);
+
+            Assert.AreEqual(1, foo54.Bar("boo is a great language"));
+
+            foo54.VerifyAllExpectations();
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException),@"IFoo54.Bar(starts with ""boo""); Expected #1, Actual #0.")]
+        public void CanUseExpectSyntax_WithoutExplicitMockRepository_UsingConsraints_WhenViolated()
+        {
+            var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+            foo54.Expect(x => x.Bar(null)).Constraints(Text.StartsWith("boo")).Return(1);
+
+            Assert.AreEqual(0, foo54.Bar("great test"));
+
+            foo54.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void CanUseStubSyntax_WithoutExplicitMockRepository_UsingConsraints_WhenExpectationNotMatching()
+        {
+            var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+            foo54.Stub(x => x.Bar(null)).Constraints(Text.StartsWith("boo")).Return(1);
+
+            Assert.AreEqual(0, foo54.Bar("great test"));
+
+            foo54.VerifyAllExpectations();
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(ExpectationViolationException), "IFoo54.DoSomething(); Expected #1, Actual #0.")]
+        public void CanUseExpectSyntax_WithoutExplicitMockRepository_WhenCallIsNotBeingMade()
+        {
+            var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+            foo54.Expect(x => x.DoSomething()).Return(1);
+
+            foo54.VerifyAllExpectations();
+        }
+
 
         [Test]
         public void CanUseNonRecordReplayModel_Stub_OnVoidMethod()

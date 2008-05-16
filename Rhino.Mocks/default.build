@@ -9,7 +9,7 @@
 	<include buildfile="${root.dir}/common-project.xml" />
 
 	<target name="init" depends="common.init">
-		<property name="assembly.version" value="3.4.0.0" />
+		<property name="assembly.version" value="3.5.0.1" />
 		<property name="assembly.description" value="Rhino Mocks - Mocking Framework" />
 
 		<assemblyfileset id="project.references" basedir="${build.dir}">
@@ -20,6 +20,19 @@
 
 	<target name="generate-assemblyinfo" depends="init common.generate-assemblyinfo" />
 
-	<target name="build" description="Build ${project::get-name()}" depends="generate-assemblyinfo common.compile-dll" />
+	<target name="merge-asms" depends="init common.generate-assemblyinfo" >
+		<delete file="${build.dir}/Rhino.Mocks.Partial.dll"/>
+		<move file="${build.dir}/Rhino.Mocks.dll" tofile="${build.dir}/Rhino.Mocks.Partial.dll"/>
+		<exec program="${lib.dir}/Tools/ILMerge.exe" basedir="${build.dir}">
+			<arg value="${path::get-full-path( build.dir+'/Rhino.Mocks.Partial.dll')}" />
+			<arg value="${path::get-full-path( build.dir + '/Castle.DynamicProxy2.dll')}" />
+			<arg value="${path::get-full-path( build.dir + '/Castle.Core.dll')}" />
+			<arg value="/out:${path::get-full-path( build.dir + '/Rhino.Mocks.dll') }" />
+			<arg value="/t:library" />
+			<arg value="/keyfile:${path::get-full-path( root.dir + '/ayende-open-source.snk' )}" />
+		</exec>
+	</target>
+	
+	<target name="build" description="Build ${project::get-name()}" depends="generate-assemblyinfo common.compile-dll merge-asms" />
 
 </project>
