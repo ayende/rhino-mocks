@@ -336,6 +336,19 @@ namespace Rhino.Mocks.Tests
 
             demo.AssertWasCalled(x => { });
         }
+
+        [Test]
+        public void TypeShouldBeInferredFromMockNotReference()
+        {
+            MockRepository mocks = new MockRepository();
+            IFoo54 demo = mocks.DynamicMock<Foo54>(0);
+
+            demo.Stub(x => x.DoSomethingElse());
+
+            demo.DoSomethingElse();
+
+            demo.AssertWasCalled(x => x.DoSomethingElse());
+        }
     }
 
     public interface IFoo54
@@ -343,6 +356,28 @@ namespace Rhino.Mocks.Tests
         int DoSomething();
         void DoSomethingElse();
         int Bar(string x);
+    }
+
+    public class Foo54 : IFoo54
+    {
+        public Foo54(int i)
+        {
+
+        }
+
+        public virtual int DoSomething()
+        {
+            return 0;
+        }
+
+        public virtual void DoSomethingElse()
+        {
+        }
+
+        public virtual int Bar(string x)
+        {
+            return 0;
+        }
     }
 }
 #endif

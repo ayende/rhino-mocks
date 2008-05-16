@@ -70,7 +70,7 @@ namespace Rhino.Mocks
             {
                 IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
                 MockRepository mocks = mockedObject.Repository;
-                T mockToRecordExpectation = mocks.DynamicMock<T>(mockedObject.ConstructorArguments);
+                T mockToRecordExpectation = (T)mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
                 action(mockToRecordExpectation);
                 AssertExactlySingleExpectaton(mocks, mockToRecordExpectation);
 
