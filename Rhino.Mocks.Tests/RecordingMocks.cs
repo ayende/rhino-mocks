@@ -349,6 +349,18 @@ namespace Rhino.Mocks.Tests
 
             demo.AssertWasCalled(x => x.DoSomethingElse());
         }
+
+        [Test]
+        [Ignore]
+        public void AssertShouldWorkWithoutStub()
+        {
+            MockRepository mocks = new MockRepository();
+            IFoo54 demo = mocks.DynamicMock<IFoo54>();
+
+            demo.DoSomethingElse();
+
+            demo.AssertWasCalled(x => x.DoSomethingElse());
+        }
     }
 
     public interface IFoo54
