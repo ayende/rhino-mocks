@@ -30,6 +30,8 @@
 			<arg value="/out:${path::get-full-path( build.dir + '/Rhino.Mocks.dll') }" />
 			<arg value="/t:library" />
 			<arg value="/keyfile:${path::get-full-path( root.dir + '/ayende-open-source.snk' )}" />
+			<arg value="/internalize:../ilmerge.exclude" />
+			<arg value="/ndebug" unless="${build.debug}" />
 		</exec>
 	</target>
 	
