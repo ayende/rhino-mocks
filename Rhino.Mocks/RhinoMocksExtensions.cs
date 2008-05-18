@@ -68,30 +68,14 @@ namespace Rhino.Mocks
         {
             try
             {
-                IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
-                MockRepository mocks = mockedObject.Repository;
-                T mockToRecordExpectation = (T)mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
-                action(mockToRecordExpectation);
-                AssertExactlySingleExpectaton(mocks, mockToRecordExpectation);
+            	var verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
 
-                IMethodOptions<object> lastMethodCall = mocks.LastMethodCall<object>(mockToRecordExpectation);
-                lastMethodCall.TentativeReturn();
-                if (setupConstraints != null)
+				foreach (object[] args in verificationInformation.ArgumentsForAllCalls)
                 {
-                    setupConstraints(lastMethodCall);
-                }
-                ExpectationsList expectationsToVerify = mocks.Replayer.GetAllExpectationsForProxy(mockToRecordExpectation);
-                if (expectationsToVerify.Count == 0)
-                    throw new InvalidOperationException("The expectation was removed from the waiting expectations list, did you call Repeat.Any() ? This is not supported in AssertWasCalled()");
-                IExpectation expected = expectationsToVerify[0];
-                ICollection<object[]> argumentsForAllCalls = mockedObject.GetCallArgumentsFor(expected.Method);
-
-                foreach (object[] args in argumentsForAllCalls)
-                {
-                    if (expected.IsExpected(args))
+					if (verificationInformation.Expected.IsExpected(args))
                         return;
                 }
-                throw new ExpectationViolationException("Expectd that " + expectationsToVerify[0].ErrorMessage +
+				throw new ExpectationViolationException("Expectd that " + verificationInformation.ExpectationsToVerify[0].ErrorMessage +
                                                         " would be called, but is was it was not found on the actual calls made on the mocked object");
             }
             finally
@@ -100,7 +84,73 @@ namespace Rhino.Mocks
             }
         }
 
-        public static void VerifyAllExpectations(this object mockObject)
+
+		public static void AssertWasNotCalled<T>(this T mock, Action<T> action)
+		{
+			argumentPredicates = new List<Expression>();
+			AssertWasNotCalled(mock, action, delegate(IMethodOptions<object> options)
+			{
+				var constraints = new List<AbstractConstraint>();
+				foreach (var expression in argumentPredicates)
+				{
+					constraints.Add(new LambdaConstraint(expression));
+				}
+				if (constraints.Count != 0)
+					options.Constraints(constraints.ToArray());
+			});
+		}
+
+    	public static void AssertWasNotCalled<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
+		{
+			try
+			{
+				var verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
+
+				foreach (object[] args in verificationInformation.ArgumentsForAllCalls)
+				{
+					if (verificationInformation.Expected.IsExpected(args))
+						throw new ExpectationViolationException("Expectd that " + verificationInformation.ExpectationsToVerify[0].ErrorMessage +
+													" would not be called, but is was it was found on the actual calls made on the mocked object");
+				}
+			}
+			finally
+			{
+				argumentPredicates = null;
+			}
+		}
+
+
+    	private static ExpectationVerificationInformation GetExpectationsToVerify<T>(T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
+    	{
+    		ICollection<object[]> argumentsForAllCalls;
+    		IExpectation expected;
+    		IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
+    		MockRepository mocks = mockedObject.Repository;
+    		T mockToRecordExpectation = (T)mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
+    		action(mockToRecordExpectation);
+    		
+			AssertExactlySingleExpectaton<T>(mocks, mockToRecordExpectation);
+
+    		IMethodOptions<object> lastMethodCall = mocks.LastMethodCall<object>(mockToRecordExpectation);
+    		lastMethodCall.TentativeReturn();
+    		if (setupConstraints != null)
+    		{
+    			setupConstraints(lastMethodCall);
+    		}
+    		ExpectationsList expectationsToVerify = mocks.Replayer.GetAllExpectationsForProxy(mockToRecordExpectation);
+    		if (expectationsToVerify.Count == 0)
+    			throw new InvalidOperationException("The expectation was removed from the waiting expectations list, did you call Repeat.Any() ? This is not supported in AssertWasCalled()");
+    		expected = expectationsToVerify[0];
+    		argumentsForAllCalls = mockedObject.GetCallArgumentsFor(expected.Method);
+    		return new ExpectationVerificationInformation
+    		       	{
+    		       		ArgumentsForAllCalls = argumentsForAllCalls,
+    		       		ExpectationsToVerify = expectationsToVerify,
+    		       		Expected = expected
+    		       	};
+    	}
+
+    	public static void VerifyAllExpectations(this object mockObject)
         {
             IMockedObject mockedObject = MockRepository.GetMockedObject(mockObject);
             mockedObject.Repository.Verify(mockedObject);
@@ -124,7 +174,16 @@ namespace Rhino.Mocks
         }
     }
 
-    public static class Arg<T>
+	public class ExpectationVerificationInformation
+	{
+		public IExpectation Expected { get; set; }
+
+		public ICollection<object[]> ArgumentsForAllCalls { get; set; }
+
+		public ExpectationsList ExpectationsToVerify { get; set; }
+	}
+
+	public static class Arg<T>
     {
         public static T Matches(Expression<Predicate<T>> predicate)
         {

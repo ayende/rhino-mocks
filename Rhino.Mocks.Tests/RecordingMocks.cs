@@ -83,6 +83,30 @@ namespace Rhino.Mocks.Tests
             foo54.AssertWasCalled(x => x.DoSomething());
         }
 
+		[Test]
+		public void CanUseStubSyntax_WithoutExplicitMockRepository_VerifyMethodWasNotCalled()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.DoSomething()).Return(1);
+
+
+			foo54.AssertWasNotCalled(x => x.DoSomething());
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException), "Expectd that IFoo54.DoSomething(); would not be called, but is was it was found on the actual calls made on the mocked object")]
+		public void CanUseStubSyntax_WithoutExplicitMockRepository_VerifyMethodWasNotCalled_WillThrowIfCalled()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.DoSomething()).Return(1);
+
+			Assert.AreEqual(1, foo54.DoSomething());
+
+			foo54.AssertWasNotCalled(x => x.DoSomething());
+		}
+
         [Test]
         public void CanAssertOnMethodUsingDirectArgumentMatching()
         {

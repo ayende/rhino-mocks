@@ -94,6 +94,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -213,6 +214,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Shane.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Shanon.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Stephan.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_StevenS.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Thierry.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Tim.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Wade.cs" />
