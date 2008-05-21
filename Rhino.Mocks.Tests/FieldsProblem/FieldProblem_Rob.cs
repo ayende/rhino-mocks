@@ -11,6 +11,25 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	public class FieldProblem_Rob
 	{
 		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),
+			"IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+		public void CanFailIfCalledMoreThanOnceUsingDynamicMock()
+		{
+			MockRepository mocks = new MockRepository();
+			IDemo demo = mocks.DynamicMock<IDemo>();
+			demo.VoidNoArgs();
+			LastCall.Repeat.Once();// doesn't realy matter
+			demo.VoidNoArgs();
+			LastCall.Repeat.Never();
+
+			mocks.ReplayAll();
+
+			demo.VoidNoArgs();//should work
+
+			demo.VoidNoArgs();// will fail
+		}
+
+		[Test]
 		[ExpectedException(typeof(ExpectationViolationException),@"ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.UnexpectedBar>(""foo""); Expected #1, Actual #1.
 ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.ExpectedBar>(""foo""); Expected #1, Actual #0.")]
 		public void Ayende_View_On_Mocking()
