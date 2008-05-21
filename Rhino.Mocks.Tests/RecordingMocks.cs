@@ -95,7 +95,7 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "Expectd that IFoo54.DoSomething(); would not be called, but is was it was found on the actual calls made on the mocked object")]
+		[ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomething(); would not be called, but it was found on the actual calls made on the mocked object.")]
 		public void CanUseStubSyntax_WithoutExplicitMockRepository_VerifyMethodWasNotCalled_WillThrowIfCalled()
 		{
 			var foo54 = MockRepository.GenerateStub<IFoo54>();
@@ -119,7 +119,7 @@ namespace Rhino.Mocks.Tests
 
         [Test]
         [ExpectedException(typeof(ExpectationViolationException),
-            "Expectd that IFoo54.Bar(\"blah1\"); would be called, but is was it was not found on the actual calls made on the mocked object")]
+            "Expected that IFoo54.Bar(\"blah1\"); would be called, but it was not found on the actual calls made on the mocked object.")]
         public void CanAssertOnMethodUsingDirectArgumentMatching_WhenWrongArumentPassed()
         {
             var foo54 = MockRepository.GenerateMock<IFoo54>();
@@ -224,7 +224,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ExpectationViolationException), "Expectd that IFoo54.DoSomething(); would be called, but is was it was not found on the actual calls made on the mocked object")]
+        [ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomething(); would be called, but it was not found on the actual calls made on the mocked object.")]
         public void CanUseNonRecordReplayModel_Stub_AndThenVerify_WhenNotCalled_WillCauseError()
         {
             MockRepository mocks = new MockRepository();
@@ -280,7 +280,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ExpectationViolationException), "Expectd that IFoo54.Bar(a => (a.StartsWith(\"b\") && a.Contains(\"ba\"))); would be called, but is was it was not found on the actual calls made on the mocked object")]
+        [ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.Bar(a => (a.StartsWith(\"b\") && a.Contains(\"ba\"))); would be called, but it was not found on the actual calls made on the mocked object.")]
         public void CanAssertOnMethodCallUsingConstraints_WhenMethodNotFound()
         {
             MockRepository mocks = new MockRepository();
@@ -315,7 +315,7 @@ namespace Rhino.Mocks.Tests
         // Add repeat never
 
         [Test]
-        [ExpectedException(typeof(ExpectationViolationException), "Expectd that IFoo54.DoSomething(); would be called, but is was it was not found on the actual calls made on the mocked object")]
+        [ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomething(); would be called, but it was not found on the actual calls made on the mocked object.")]
         public void WillFailVerificationsOfMethod_IfWereNotCalled()
         {
             MockRepository mocks = new MockRepository();
@@ -325,7 +325,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ExpectationViolationException), "Expectd that IFoo54.DoSomethingElse(); would be called, but is was it was not found on the actual calls made on the mocked object")]
+        [ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomethingElse(); would be called, but it was not found on the actual calls made on the mocked object.")]
         public void WillFailVerificationsOfMethod_IfWereNotCalled_OnVoidMethod()
         {
             MockRepository mocks = new MockRepository();
