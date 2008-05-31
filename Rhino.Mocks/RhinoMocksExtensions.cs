@@ -126,6 +126,12 @@ namespace Rhino.Mocks
     		IExpectation expected;
     		IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
     		MockRepository mocks = mockedObject.Repository;
+
+			if(mocks.IsInReplayMode(mockedObject)==false)
+			{
+				throw new InvalidOperationException("Cannot assert on an object that is not in replay mode. Did you forget to call ReplayAll() ?");
+			}
+
     		T mockToRecordExpectation = (T)mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
     		action(mockToRecordExpectation);
     		
