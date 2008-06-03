@@ -79,7 +79,23 @@ namespace Rhino.Mocks.Tests.Impl
 			recordState.Verify();
 		}
 
-		[Test]
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object {Rhino.Mocks.Tests.IAnimal} is in record state.")]
+        public void VerifyOnRecordThrowsOneMockType() {
+            MockRepository mocks = new MockRepository();
+            RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks, typeof(IAnimal)), mocks);
+            recordState.Verify();
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object {Rhino.Mocks.Tests.IAnimal, Rhino.Mocks.Tests.IDemo} is in record state.")]
+        public void VerifyOnRecordThrowsTwoMockTypes() {
+            MockRepository mocks = new MockRepository();
+            RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks, typeof(IAnimal), typeof(IDemo)), mocks);
+            recordState.Verify();
+        }
+
+        [Test]
 		public void LastExpectationIsFilledOnCall()
 		{
 			MockRepository mocks = new MockRepository();

@@ -55,7 +55,7 @@ namespace Rhino.Mocks.Tests.Expectations
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, "43", 5.2f});
 			object[] args = new object[] {1, "43"};
 			Assert.IsFalse(expectation.IsExpected(args));
-			Assert.AreEqual("IDemo.VoidThreeArgs(1, \"43\", 5.2);", expectation.ErrorMessage);
+            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, \"43\", {0:N1});", 5.2),expectation.ErrorMessage);
 		}
 
 		[Test]
@@ -106,7 +106,7 @@ namespace Rhino.Mocks.Tests.Expectations
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, "43", 5.2f});
 			object[] args = new object[] {1, "43", 6.4f};
 			Assert.IsFalse(expectation.IsExpected(args));
-			Assert.AreEqual("IDemo.VoidThreeArgs(1, \"43\", 5.2);", expectation.ErrorMessage);
+            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, \"43\", {0:N1});", 5.2), expectation.ErrorMessage);
 		}
 
 		[Test]
@@ -136,14 +136,14 @@ namespace Rhino.Mocks.Tests.Expectations
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, arr1, 3});
 			object[] args = new object[] {1, arr2, 3};
 			Assert.IsFalse(expectation.IsExpected(args));
-			Assert.AreEqual("IDemo.VoidThreeArgs(1, [\"1\", 2, 4.5], 3);", expectation.ErrorMessage);
+            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, [\"1\", 2, {0:N1}], 3);", 4.5), expectation.ErrorMessage);
 		}
 
 		[Test]
 		public void CreateErrorMessageWhenParametersAreNull()
 		{
 			ArgsEqualExpectation expectation =new ArgsEqualExpectation(new FakeInvocation(method), new object[]{1,null, 3.3f});
-			Assert.AreEqual("IDemo.VoidThreeArgs(1, null, 3.3);",expectation.ErrorMessage);
+			Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, null, {0:N1});", 3.3),expectation.ErrorMessage);
 		}
 
 		[Test]
@@ -154,7 +154,7 @@ namespace Rhino.Mocks.Tests.Expectations
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, arr1});
 			object[] args = new object[] {1, arr2};
 			Assert.IsFalse(expectation.IsExpected(args));
-			Assert.AreEqual("IDemo.VoidThreeArgs(1, [\"1\", 2, 4.5], missing parameter);", expectation.ErrorMessage);
+            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, [\"1\", 2, {0:N1}], missing parameter);", 4.5), expectation.ErrorMessage);
 		}
 
 		[Test]

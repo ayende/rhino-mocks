@@ -81,7 +81,7 @@ namespace Rhino.Mocks.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object is in record state.")]
+        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object {Rhino.Mocks.Tests.IDemo} is in record state.")]
         public void UsingTheWithMocksConstruct_ThrowsIfReplayAllNotCalled()
         {
             With.Mocks(delegate

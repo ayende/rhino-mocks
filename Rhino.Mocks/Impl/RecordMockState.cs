@@ -197,7 +197,14 @@ namespace Rhino.Mocks.Impl
 
 		private Exception InvalidOperationOnRecord()
 		{
-			return new InvalidOperationException("This action is invalid when the mock object is in record state.");
+            // Format the mock types into a string for display in the exception message,
+            // using the pattern {Namespace.IType1, Namespace.IType2}.
+            string mockedTypes = string.Empty;
+            if (this.mockedObject.ImplementedTypes.Length > 0) {
+                mockedTypes = string.Format("{{{0}}} ", string.Join(", ", Array.ConvertAll<Type, string>(this.mockedObject.ImplementedTypes, delegate(Type ty) { return ty.FullName; })));
+            }
+
+            return new InvalidOperationException(string.Format("This action is invalid when the mock object {0}is in record state.", mockedTypes));
         }
 
         private static IExpectation BuildDefaultExpectation(IInvocation invocation, MethodInfo method, object[] args)
