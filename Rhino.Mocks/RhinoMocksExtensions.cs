@@ -22,6 +22,23 @@ namespace Rhino.Mocks
 			});
 		}
 
+		public static void BackToRecord<T>(this T mock)
+		{
+			BackToRecord(mock, BackToRecordOptions.All);
+		}
+
+		public static void BackToRecord<T>(this T mock, BackToRecordOptions options)
+		{
+			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
+			mockedObject.Repository.BackToRecord(mock, options);
+		}
+
+		public static MockRepository GetMockRepository<T>(this T mock)
+		{
+			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
+			return mockedObject.Repository;
+		}
+
 		public static IMethodOptions<R> Expect<T, R>(this T mock, Func<T, R> action)
 		{
 			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
