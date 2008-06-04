@@ -87,9 +87,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Tools\MbUnit\MbUnit.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.2856.26907, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=x86">
+    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3077.40500, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Rhino.Mocks.CPP.Interfaces\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+      <HintPath>..\..\SharedLibs\net-3.5\Interop\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

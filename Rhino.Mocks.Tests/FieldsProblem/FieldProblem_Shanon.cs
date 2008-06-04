@@ -7,7 +7,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	public class FieldProblem_Shanon
 	{
 		[Test]
-		[Ignore("ModOpts in Reflection Emits - delayed for now")]
 		public void CanMockInterfaceWithMethodsHavingModOpt()
 		{
 			MockRepository mocks = new MockRepository();
