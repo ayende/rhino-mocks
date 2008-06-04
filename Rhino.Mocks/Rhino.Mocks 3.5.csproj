@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arg.cs" />
     <Compile Include="BackToRecordOptions.cs" />
     <Compile Include="Constraints\AbstractConstraint.cs">
       <SubType>Code</SubType>
@@ -128,6 +129,7 @@
     <Compile Include="Expectations\ConstraintsExpectation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExpectationVerificationInformation.cs" />
     <Compile Include="Impl\NullLogger.cs" />
     <Compile Include="Impl\RemotingMock\IRemotingProxyOperation.cs" />
     <Compile Include="Impl\RemotingMock\RemotingMockGenerator.cs" />

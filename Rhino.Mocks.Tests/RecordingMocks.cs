@@ -28,6 +28,7 @@
 
 #if DOTNET35
 using System;
+using System.Collections.Generic;
 using MbUnit.Framework;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
@@ -37,6 +38,65 @@ namespace Rhino.Mocks.Tests
     [TestFixture]
     public class RecordingMocks
     {
+		[Test]
+		public void CanAssertOnCountOfCallsMade()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.DoSomething()).Return(1);
+
+			Assert.AreEqual(1, foo54.DoSomething());
+
+			foo54.AssertWasCalled(x => x.DoSomething());
+			Assert.AreEqual(1, foo54.GetArgumentsForCallsMadeOn(x => x.DoSomething()).Count);
+		}
+
+		[Test]
+		public void WhenCallingMethodWithNoParameters_WillReturnZeroLengthArrayForEachCall()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.DoSomething()).Return(1);
+
+			Assert.AreEqual(1, foo54.DoSomething());
+
+			foo54.AssertWasCalled(x => x.DoSomething());
+			IList<object[]> arguments = foo54.GetArgumentsForCallsMadeOn(x => x.DoSomething());
+			Assert.AreEqual(0, arguments[0].Length);
+		}
+
+		[Test]
+		public void WhenCallingMethodWithParameters_WillReturnArgumentsInResultingArray()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.Bar("foo")).Return(1);
+
+			Assert.AreEqual(1, foo54.Bar("foo"));
+			Assert.AreEqual(0, foo54.Bar("bar"));
+
+			IList<object[]> arguments = foo54.GetArgumentsForCallsMadeOn(x => x.Bar(Arg<string>.Matches( s => true)));
+			Assert.AreEqual(2, arguments.Count);
+			Assert.AreEqual("foo", arguments[0][0]);
+			Assert.AreEqual("bar", arguments[1][0]);
+		}
+
+		[Test]
+		public void WhenCallingMethodWithParameters_WillReturnArgumentsInResultingArray_UsingConstraints()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.Bar("foo")).Return(1);
+
+			Assert.AreEqual(1, foo54.Bar("foo"));
+			Assert.AreEqual(0, foo54.Bar("bar"));
+
+			IList<object[]> arguments = foo54.GetArgumentsForCallsMadeOn(x => x.Bar(null), o => o.IgnoreArguments());
+			Assert.AreEqual(2, arguments.Count);
+			Assert.AreEqual("foo", arguments[0][0]);
+			Assert.AreEqual("bar", arguments[1][0]);
+		}
+
         [Test]
         public void CanUseNonRecordReplayModel_Expect()
         {
