@@ -768,11 +768,11 @@ namespace Rhino.Mocks
                                                                                         implementedTypesForGenericInvocationDiscoverability
                                                                                             .ToArray()));
 
-            ArrayList types = new ArrayList();
+			List<Type> types = new List<Type>();
             types.AddRange(extras);
             types.Add(typeof(IMockedObject));
             proxy =
-                GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(type, (Type[])types.ToArray(typeof(Type)), interceptor);
+                GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(type, types.ToArray(), interceptor);
             IMockState value = mockStateFactory((IMockedObject)proxy);
             proxies.Add(proxy, value);
             return proxy;
