@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 
 <project 
-	name="Rhino.Mocks.Tests" 
+	name="Rhino.Mocks.Tests.Model" 
 	default="test" 
 	xmlns="http://nant.sf.net/release/0.85/nant.xsd"
 >
@@ -11,13 +11,7 @@
 
 	<target name="init" depends="common.init">
 		<assemblyfileset id="project.references" basedir="${build.dir}">
-			<include name="MbUnit.Framework.dll"/>
 			<include name="Rhino.Mocks.dll" />
-			<include name="Rhino.Mocks.Tests.Model.dll" />
-			<include name="Interop.ADODB.dll" />
-			<include name="Interop.mshtml.dll" />
-			<include name="Scripting.dll" />
-			<include name="Rhino.Mocks.CPP.Interfaces.dll" />
 		</assemblyfileset>
 
 		<resourcefileset id="project.resources" prefix="Resources" dynamicprefix="false" basedir="${src.dir}">

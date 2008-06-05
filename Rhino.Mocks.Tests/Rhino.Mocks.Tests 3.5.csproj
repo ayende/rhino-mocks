@@ -184,6 +184,7 @@
     <Compile Include="FieldsProblem\FieldProblem_oblomov.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />
     <Compile Include="FieldsProblem\FieldProblem_OrenEl.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Rabashani.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Rob.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Robert.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Kevin.cs" />
@@ -362,6 +363,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rhino.Mocks.Tests.Model\Rhino.Mocks.Tests.Model.csproj">
+      <Project>{3078B943-10A5-41FA-A68A-7C4FC98506A0}</Project>
+      <Name>Rhino.Mocks.Tests.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rhino.Mocks\Rhino.Mocks 2.0.csproj">
       <Name>Rhino.Mocks</Name>
       <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
