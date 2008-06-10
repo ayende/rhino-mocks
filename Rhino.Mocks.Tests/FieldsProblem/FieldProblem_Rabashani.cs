@@ -10,7 +10,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanMockInternalInterface()
 		{
 			MockRepository mocks = new MockRepository();
-			var mock = mocks.StrictMock<IInternal>();
+			IInternal mock = mocks.StrictMock<IInternal>();
 			mock.Foo();
 			mocks.ReplayAll();
 			mock.Foo();
@@ -21,7 +21,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanMockInternalClass()
 		{
 			MockRepository mocks = new MockRepository();
-			var mock = mocks.StrictMock<Internal>();
+			Internal mock = mocks.StrictMock<Internal>();
 			Expect.Call(mock.Bar()).Return("blah");
 			mocks.ReplayAll();
 			Assert.AreEqual("blah", mock.Bar());
@@ -32,7 +32,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void CanPartialMockInternalClass()
 		{
 			MockRepository mocks = new MockRepository();
-			var mock = mocks.PartialMock<Internal>();
+			Internal mock = mocks.PartialMock<Internal>();
 			Expect.Call(mock.Foo()).Return("blah");
 			mocks.ReplayAll();
 			Assert.AreEqual("blah", mock.Foo());

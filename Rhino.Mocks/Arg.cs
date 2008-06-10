@@ -1,3 +1,4 @@
+#if DOTNET35
 using System;
 using System.Linq.Expressions;
 
@@ -17,3 +18,5 @@ namespace Rhino.Mocks
 		}
 	}
 }
+
+#endif

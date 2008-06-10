@@ -6,10 +6,12 @@ namespace Rhino.Mocks
 {
 	public class ExpectationVerificationInformation
 	{
-		public IExpectation Expected { get; set; }
-
-		public IList<object[]> ArgumentsForAllCalls { get; set; }
-
-		public ExpectationsList ExpectationsToVerify { get; set; }
+	    private IExpectation expected;
+		private IList<object[]> argumentsForAllCalls;
+		private ExpectationsList expectationsToVerify;
+		
+		public IExpectation Expected { get { return expected; } set { expected = value; } }
+		public IList<object[]> ArgumentsForAllCalls { get { return argumentsForAllCalls; } set { argumentsForAllCalls = value; }  }
+		public ExpectationsList ExpectationsToVerify { get { return expectationsToVerify; } set { expectationsToVerify = value; }  }
 	}
 }
