@@ -26,9 +26,6 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-
-using System;
-using System.Text;
 using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem

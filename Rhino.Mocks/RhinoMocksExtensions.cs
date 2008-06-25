@@ -341,6 +341,13 @@ namespace Rhino.Mocks
 		}
 
 
+		/// <summary>
+		/// Gets the event raiser for the event that was called in the action passed
+		/// </summary>
+		/// <typeparam name="TEventSource">The type of the event source.</typeparam>
+		/// <param name="mockObject">The mock object.</param>
+		/// <param name="eventSubscription">The event subscription.</param>
+		/// <returns></returns>
         public static IEventRaiser GetEventRaiser<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription) 
         {
             return mockObject
@@ -349,12 +356,29 @@ namespace Rhino.Mocks
                 .GetEventRaiser();    
         }
 
+		/// <summary>
+		/// Raise the specified event using the passed arguments.
+		/// The even is extracted from the passed labmda
+		/// </summary>
+		/// <typeparam name="TEventSource">The type of the event source.</typeparam>
+		/// <param name="mockObject">The mock object.</param>
+		/// <param name="eventSubscription">The event subscription.</param>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, object sender, EventArgs args) 
         {
             var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
             eventRaiser.Raise(sender, args);
         }
 
+		/// <summary>
+		/// Raise the specified event using the passed arguments.
+		/// The even is extracted from the passed labmda
+		/// </summary>
+		/// <typeparam name="TEventSource">The type of the event source.</typeparam>
+		/// <param name="mockObject">The mock object.</param>
+		/// <param name="eventSubscription">The event subscription.</param>
+		/// <param name="args">The args.</param>
         public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, params object[] args) 
         {
             var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
