@@ -371,22 +371,41 @@ namespace Rhino.Mocks.Constraints
 			return "obj";
 		}
 	}
+
 	#if DOTNET35
+
+	/// <summary>
+	/// A constraint based on lambda expression, we are using Expression{T} 
+	/// because we want to be able to get good error reporting on that.
+	/// </summary>
     public class LambdaConstraint : AbstractConstraint
     {
         private readonly Expression expr;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="LambdaConstraint"/> class.
+		/// </summary>
+		/// <param name="expr">The expr.</param>
         public LambdaConstraint(Expression expr)
         {
             this.expr = expr;
         }
 
+		/// <summary>
+		/// determains if the object pass the constraints
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
         public override bool Eval(object obj)
         {
             Delegate pred = (Delegate)expr.GetType().GetMethod("Compile").Invoke(expr, new object[0]);
             return (bool) pred.DynamicInvoke(obj);
         }
 
+		/// <summary>
+		/// Gets the message for this constraint
+		/// </summary>
+		/// <value></value>
         public override string Message
         {
             get { return expr.ToString(); }
@@ -394,6 +413,7 @@ namespace Rhino.Mocks.Constraints
     }
 
     #endif
+
     #endregion
 
 	#region List constraints

@@ -229,6 +229,10 @@ namespace Rhino.Mocks.Impl
 		}
 
 
+		/// <summary>
+		/// Gets or sets the constructor arguments.
+		/// </summary>
+		/// <value>The constructor arguments.</value>
 	    public object[] ConstructorArguments
 	    {
 	        get { return constructorArguments; }
@@ -244,6 +248,15 @@ namespace Rhino.Mocks.Impl
 			get { return implemented; }
 		}
 
+		/// <summary>
+		/// Get all the method calls arguments that were made against this object with the specificed
+		/// method.
+		/// </summary>
+		/// <param name="method"></param>
+		/// <returns></returns>
+		/// <remarks>
+		/// Only method calls in replay mode are counted
+		/// </remarks>
 	    public ICollection<object[]> GetCallArgumentsFor(MethodInfo method)
 	    {
             if (methodToActualCalls.ContainsKey(method) == false)
@@ -252,6 +265,11 @@ namespace Rhino.Mocks.Impl
 	    }
 
 
+		/// <summary>
+		/// Records the method call
+		/// </summary>
+		/// <param name="method"></param>
+		/// <param name="args"></param>
 	    public void MethodCall(MethodInfo method, object[] args)
 	    {
 	        if(repository.IsInReplayMode(this)==false)

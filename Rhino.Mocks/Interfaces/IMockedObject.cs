@@ -105,6 +105,10 @@ namespace Rhino.Mocks.Interfaces
 		/// <value>The implemented.</value>
 		Type[] ImplementedTypes { get; }
 
+		/// <summary>
+		/// Gets or sets the constructor arguments.
+		/// </summary>
+		/// <value>The constructor arguments.</value>
 	    object[] ConstructorArguments { get; set; }
 
 	    /// <summary>

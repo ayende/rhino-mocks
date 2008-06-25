@@ -4,7 +4,7 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks
 {
-	public class ExpectationVerificationInformation
+	internal class ExpectationVerificationInformation
 	{
 	    private IExpectation expected;
 		private IList<object[]> argumentsForAllCalls;
