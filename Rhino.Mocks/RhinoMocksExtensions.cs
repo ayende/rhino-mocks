@@ -340,6 +340,27 @@ namespace Rhino.Mocks
 			mockedObject.Repository.Verify(mockedObject);
 		}
 
+
+        public static IEventRaiser GetEventRaiser<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription) 
+        {
+            return mockObject
+                .Stub(eventSubscription)
+                .IgnoreArguments()
+                .GetEventRaiser();    
+        }
+
+        public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, object sender, EventArgs args) 
+        {
+            var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
+            eventRaiser.Raise(sender, args);
+        }
+
+        public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, params object[] args) 
+        {
+            var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
+            eventRaiser.Raise(args);
+        }
+
 		private static void AssertExactlySingleExpectaton<T>(MockRepository mocks, T mockToRecordExpectation)
 		{
 			if (mocks.Replayer.GetAllExpectationsForProxy(mockToRecordExpectation).Count == 0)

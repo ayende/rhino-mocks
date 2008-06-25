@@ -210,6 +210,43 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		{
 			raiser.Raise(this, EventArgs.Empty);
 		}
+
+#if DOTNET35
+		
+        [Test]
+        public void RaiseEventUsingExtensionMethod() 
+        {
+            IWithEvents eventHolder = (IWithEvents)mocks.Stub(typeof(IWithEvents));
+            bool called = false;
+            eventHolder.Blah += delegate {
+                called = true;
+            };
+            
+            eventHolder.Raise(stub => stub.Blah += null, this, EventArgs.Empty);
+            
+            Assert.IsTrue(called);
+        }
+
+        [Test]
+        public void UsingEventRaiserFromExtensionMethod() 
+        {
+            IWithEvents eventHolder = (IWithEvents)mocks.Stub(typeof(IWithEvents));
+            IEventRaiser eventRaiser = eventHolder.GetEventRaiser(stub => stub.Blah += null);
+            bool called = false;
+            eventHolder.Blah += delegate {
+                called = true;
+            };
+
+            mocks.ReplayAll();
+
+            eventRaiser.Raise(this, EventArgs.Empty);
+
+            mocks.VerifyAll();
+
+            Assert.IsTrue(called);
+		}
+#endif
+
 	}
 
 	public interface IWithEvents
