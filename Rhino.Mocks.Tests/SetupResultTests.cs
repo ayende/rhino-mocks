@@ -43,7 +43,7 @@ namespace Rhino.Mocks.Tests
 		public void SetUp()
 		{
 			mocks = new MockRepository();
-			demo = this.mocks.StrictMock(typeof (IDemo)) as IDemo;
+			demo = mocks.StrictMock(typeof (IDemo)) as IDemo;
 		}
 
         [Test]
@@ -139,7 +139,8 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(InvalidOperationException),"The result for IDemo.ReturnStringNoArgs(); has already been setup.")]
+		[ExpectedException(typeof(InvalidOperationException),
+			"The result for IDemo.ReturnStringNoArgs(); has already been setup.")]
 		public void ExpectNeverSetupTwiceThrows()
 		{
 			demo.ReturnStringNoArgs();

@@ -1313,5 +1313,16 @@ namespace Rhino.Mocks
             repository.Replay(mock);
             return mock;
         }
+
+		/// <summary>
+		/// Determines whether the specified proxy is a stub.
+		/// </summary>
+		/// <param name="proxy">The proxy.</param>
+    	protected internal static bool IsStub(object proxy)
+		{
+			MockRepository repository = GetMockedObject(proxy).Repository;
+			IMockState mockState = repository.proxies[proxy];
+			return mockState is StubRecordMockState || mockState is StubReplayMockState;
+		}
     }
 }

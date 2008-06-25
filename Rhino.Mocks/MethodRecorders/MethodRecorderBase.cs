@@ -87,7 +87,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// <summary>
 		/// Creates a new <see cref="MethodRecorderBase"/> instance.
 		/// </summary>
-		public MethodRecorderBase(ProxyMethodExpectationsDictionary repeatableMethods)
+		protected MethodRecorderBase(ProxyMethodExpectationsDictionary repeatableMethods)
 		{
 			this.repeatableMethods = repeatableMethods;
 			recorderToCall = null;
@@ -99,7 +99,7 @@ namespace Rhino.Mocks.MethodRecorders
 		/// </summary>
 		/// <param name="parentRecorder">Parent recorder.</param>
 		/// <param name="repeatableMethods">Repeatable methods</param>
-		public MethodRecorderBase(IMethodRecorder parentRecorder, ProxyMethodExpectationsDictionary repeatableMethods)
+		protected MethodRecorderBase(IMethodRecorder parentRecorder, ProxyMethodExpectationsDictionary repeatableMethods)
 			: this(repeatableMethods)
 		{
 			this.parentRecorder = parentRecorder;
@@ -125,16 +125,16 @@ namespace Rhino.Mocks.MethodRecorders
 			Validate.IsNotNull(method, "method");
 			Validate.IsNotNull(args, "args");
 			if (replayerToCall != null)
-				return replayerToCall.GetRecordedExpectation(invocation,proxy, method, args);
-			
+				return replayerToCall.GetRecordedExpectation(invocation, proxy, method, args);
+
 			//merge recorders that contains only a single empty recorder
-			if(recordedActions.Count==1 && recordedActions[0] is IMethodRecorder)
+			if (recordedActions.Count == 1 && recordedActions[0] is IMethodRecorder)
 			{
-				replayerToCall = (IMethodRecorder) recordedActions[0];
+				replayerToCall = (IMethodRecorder)recordedActions[0];
 				return replayerToCall.GetRecordedExpectation(invocation, proxy, method, args);
 			}
 
-			IExpectation expectation = DoGetRecordedExpectation(invocation,proxy, method, args);
+			IExpectation expectation = DoGetRecordedExpectation(invocation, proxy, method, args);
 			if (HasExpectations == false)
 				MoveToParentReplayer();
 			return expectation;
@@ -251,7 +251,8 @@ namespace Rhino.Mocks.MethodRecorders
 			if (repeatableMethods.ContainsKey(pair) == false)
 				repeatableMethods.Add(pair, new ExpectationsList());
 			ExpectationsList expectationsList = repeatableMethods[pair];
-			ExpectationNotOnList(expectationsList, expectation);
+			ExpectationNotOnList(expectationsList, expectation,
+				MockRepository.IsStub(proxy));
 			expectationsList.Add(expectation);
 		}
 
@@ -428,10 +429,17 @@ namespace Rhino.Mocks.MethodRecorders
 			return null;
 		}
 
-		private void ExpectationNotOnList(ExpectationsList list, IExpectation expectation)
+		private void ExpectationNotOnList(ExpectationsList list, IExpectation expectation, bool isStub)
 		{
-			if (list.Contains(expectation))
+			bool expectationExists = list.Contains(expectation);
+			if (expectationExists == false)
+				return;
+			bool isProeprty = expectation.Method.IsSpecialName &&
+							  (expectation.Method.Name.StartsWith("get_") ||
+								expectation.Method.Name.StartsWith("set_"));
+			if (isStub == false || isProeprty == false)
 				throw new InvalidOperationException("The result for " + expectation.ErrorMessage + " has already been setup.");
+			throw new InvalidOperationException("The result for " + expectation.ErrorMessage + " has already been setup. Properties are already stubbed with PropertyBehavior by default, no action is required");
 		}
 	}
 }
