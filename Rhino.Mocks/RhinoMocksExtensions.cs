@@ -79,7 +79,11 @@ namespace Rhino.Mocks
 		public static void BackToRecord<T>(this T mock, BackToRecordOptions options)
 		{
 			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
-			mockedObject.Repository.BackToRecord(mock, options);
+			var mocks = mockedObject.Repository;
+			var isInReplayMode = mocks.IsInReplayMode(mockedObject);
+			mocks.BackToRecord(mock, options);
+			if(isInReplayMode)
+				mocks.Replay(mockedObject);
 		}
 
 		/// <summary>
@@ -106,11 +110,13 @@ namespace Rhino.Mocks
 		{
 			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
 			MockRepository mocks = mockedObject.Repository;
+			var isInReplayMode = mocks.IsInReplayMode(mock);
 			mocks.BackToRecord(mock, BackToRecordOptions.None);
 			action(mock);
 			IMethodOptions<R> options = LastCall.GetOptions<R>();
 			options.TentativeReturn();
-			mocks.Replay(mock);
+			if (isInReplayMode)
+				mocks.Replay(mock);
 			return options;
 		}
 

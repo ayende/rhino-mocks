@@ -232,12 +232,14 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         {
             IWithEvents eventHolder = (IWithEvents)mocks.Stub(typeof(IWithEvents));
             IEventRaiser eventRaiser = eventHolder.GetEventRaiser(stub => stub.Blah += null);
-            bool called = false;
+			
+			mocks.ReplayAll();
+			
+			bool called = false;
             eventHolder.Blah += delegate {
                 called = true;
             };
 
-            mocks.ReplayAll();
 
             eventRaiser.Raise(this, EventArgs.Empty);
 

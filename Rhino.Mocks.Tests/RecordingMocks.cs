@@ -59,6 +59,7 @@ namespace Rhino.Mocks.Tests
 			foo.BackToRecord();
 
 			foo.Stub(x => x.bar()).Return("closed").Repeat.Any();
+
 			// several calls to 'foo.bar()
 			Assert.AreEqual(foo.bar(), "closed");
 			Assert.AreEqual(foo.bar(), "closed");
@@ -130,6 +131,7 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Expect(x => x.DoSomething()).Return(1);
+			mocks.Replay(demo);
 			Assert.AreEqual(1, demo.DoSomething());
 			demo.Expect(x => x.DoSomething()).Return(15);
 			Assert.AreEqual(15, demo.DoSomething());
@@ -144,6 +146,7 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Expect(x => x.DoSomethingElse());
+			mocks.Replay(demo);
 			demo.DoSomethingElse();
 			mocks.VerifyAll();
 		}
@@ -157,7 +160,8 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Expect(x => x.DoSomethingElse());
-
+			mocks.Replay(demo);
+			
 			mocks.VerifyAll();
 		}
 
@@ -170,6 +174,7 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Expect(x => x.DoSomething());
+			mocks.Replay(demo);
 			Assert.AreEqual(1, demo.DoSomething());
 		}
 
@@ -178,10 +183,10 @@ namespace Rhino.Mocks.Tests
 		{
 			MockRepository mocks = new MockRepository();
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
-			mocks.Replay(demo);
 
 			demo.Stub(x => x.DoSomething()).Return(1);
 
+			mocks.Replay(demo);
 			Assert.AreEqual(1, demo.DoSomething());
 		}
 
@@ -313,7 +318,8 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Stub(x => x.DoSomethingElse()).Throw(new InvalidOperationException("foo"));
-
+			mocks.Replay(demo);
+			
 			try
 			{
 				demo.DoSomethingElse();
@@ -332,7 +338,8 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Stub(x => x.DoSomething()).Return(1);
-
+			mocks.Replay(demo);
+			
 			Assert.AreEqual(1, demo.DoSomething());
 			demo.AssertWasCalled(x => x.DoSomething());
 		}
@@ -345,7 +352,8 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Stub(x => x.DoSomething()).Return(1);
-
+			mocks.Replay(demo);
+			
 			demo.AssertWasCalled(x => x.DoSomething());
 		}
 
@@ -356,7 +364,8 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
 			demo.Stub(x => x.DoSomething()).Return(1);
-
+			mocks.Replay(demo);
+			
 			mocks.VerifyAll();
 		}
 
@@ -486,7 +495,8 @@ namespace Rhino.Mocks.Tests
 			IFoo54 demo = mocks.DynamicMock<Foo54>(0);
 
 			demo.Stub(x => x.DoSomethingElse());
-
+			mocks.Replay(demo);
+			
 			demo.DoSomethingElse();
 
 			demo.AssertWasCalled(x => x.DoSomethingElse());
