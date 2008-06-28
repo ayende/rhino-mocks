@@ -212,6 +212,10 @@ namespace Rhino.Mocks
             recorders.Push(rootRecorder);
             proxies = new ProxyStateDictionary();
             delegateProxies = new Hashtable(MockedObjectsEquality.Instance);
+            
+            // clean up Arg data to avoid the static data to be carried from one unit test
+            // to another.
+            ArgManager.Clear();
         }
 
         #endregion

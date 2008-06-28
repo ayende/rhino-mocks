@@ -87,9 +87,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLibs\Tools\MbUnit\MbUnit.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3077.40500, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=x86">
+    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3078.4206, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\net-3.5\Interop\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+      <HintPath>..\..\SharedLibs\Interop\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -124,6 +124,7 @@
     <Compile Include="ComplexOrderingTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ArgConstraintTests.cs" />
     <Compile Include="Constraints\ComparableConstraintsTests.cs">
       <SubType>Code</SubType>
     </Compile>

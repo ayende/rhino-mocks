@@ -427,19 +427,6 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Cannot pass explicit delegate to setup the expectation and also use Arg<T>.Matches")]
-		public void CannotSpecifyConstraintsAndArgMatching()
-		{
-			MockRepository mocks = new MockRepository();
-			IFoo54 demo = mocks.DynamicMock<IFoo54>();
-			mocks.ReplayAll();
-			demo.AssertWasCalled(x => x.Bar(Arg<string>.Matches(a => a.StartsWith("b") && a.Contains("ba"))), o => o.Repeat.Once());
-		}
-
-
-		// Add repeat never
-
-		[Test]
 		[ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomething(); would be called, but it was not found on the actual calls made on the mocked object.")]
 		public void WillFailVerificationsOfMethod_IfWereNotCalled()
 		{

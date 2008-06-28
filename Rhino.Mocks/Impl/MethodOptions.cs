@@ -74,12 +74,19 @@ namespace Rhino.Mocks.Impl
 		/// <param name="record">the recorder for this proxy</param>
 		/// <param name="proxy">the proxy for this expectation</param>
 		/// <param name="expectation">Expectation.</param>
-		public MethodOptions(MockRepository repository, RecordMockState record, IMockedObject proxy, IExpectation expectation)
+		/// <param name="expectationReplacable">If the expectation still can be replaced by a Constraint call</param>
+		public MethodOptions(
+			MockRepository repository, 
+			RecordMockState record, 
+			IMockedObject proxy, 
+			IExpectation expectation,
+			bool expectationReplacable)
 		{
 			this.expectation = expectation;
 			this.proxy = proxy;
 			this.repository = repository;
 			this.record = record;
+			this.expectationReplaced = !expectationReplacable;
 		}
 
 		#endregion

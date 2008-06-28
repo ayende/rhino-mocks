@@ -49,6 +49,7 @@ namespace Rhino.Mocks.Impl
 		private readonly IMockedObject mockedObject;
 		private int methodCallsCount = 0;
 		private IExpectation lastExpectation;
+		private bool expectationReplacable = true;
 
 		#endregion
 
@@ -78,7 +79,7 @@ namespace Rhino.Mocks.Impl
 		{
 			if (lastExpectation == null)
 				throw new InvalidOperationException("There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?");
-			return new MethodOptions<T>(repository, this, mockedObject, lastExpectation);
+			return new MethodOptions<T>(repository, this, mockedObject, lastExpectation, expectationReplacable);
 		}
 
 		/// <summary>
@@ -136,15 +137,36 @@ namespace Rhino.Mocks.Impl
 		/// <param name="args">The arguments this method was called with</param>
 		public object MethodCall(IInvocation invocation, MethodInfo method, params object[] args)
 		{
-			AssertPreviousMethodIsClose();
-			repository.lastMockedObject = mockedObject;
-			MockRepository.lastRepository = repository;
-		    IExpectation expectation = BuildDefaultExpectation(invocation, method, args);
-		    repository.Recorder.Record(mockedObject, method, expectation);
-			lastExpectation = expectation;
-			methodCallsCount++;
-			RhinoMocks.Logger.LogRecordedExpectation(invocation, expectation);
-			return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
+			try {
+				AssertPreviousMethodIsClose();
+				repository.lastMockedObject = mockedObject;
+				MockRepository.lastRepository = repository;
+				IExpectation expectation;
+				
+				// Has the Arg class been used?
+				if (ArgManager.HasBeenUsed)
+				{
+					expectation = BuildParamExpectation(invocation, method);
+					// make the expectation not replacable (by a subsequent Constraint(...) call)
+					this.expectationReplacable = false;
+				} 
+				else
+				{
+					expectation = BuildDefaultExpectation(invocation, method, args);
+				}
+				repository.Recorder.Record(mockedObject, method, expectation);
+				lastExpectation = expectation;
+				methodCallsCount++;
+				RhinoMocks.Logger.LogRecordedExpectation(invocation, expectation);
+				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
+			}
+			finally
+			{
+				// Consume the Arg constraints only once, and reset it after each call.
+				// this is in the finally block to make sure that an exeption does not
+				// make subsequent unit tests fail.
+				ArgManager.Clear();
+			}
 		}
 
 	    /// <summary>
@@ -223,6 +245,14 @@ namespace Rhino.Mocks.Impl
             }
             return new ConstraintsExpectation(invocation, constraints);
         }
+
+		private static IExpectation BuildParamExpectation(IInvocation invocation, MethodInfo method)
+		{
+			ArgManager.CheckMethodSignature(method);
+			IExpectation expectation = new ConstraintsExpectation(invocation, ArgManager.GetAllConstraints());
+			expectation.OutRefParams = ArgManager.GetAllReturnValues();
+			return expectation;
+		}
 
         #endregion
 

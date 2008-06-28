@@ -29,8 +29,6 @@
 #if DOTNET35
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Interfaces;
@@ -42,8 +40,6 @@ namespace Rhino.Mocks
 	/// </summary>
 	public static class RhinoMocksExtensions
 	{
-		[ThreadStatic] internal static IList<Expression> argumentPredicates;
-
 		/// <summary>
 		/// Create an expectation on this mock for this action to occur
 		/// </summary>
@@ -82,7 +78,7 @@ namespace Rhino.Mocks
 			var mocks = mockedObject.Repository;
 			var isInReplayMode = mocks.IsInReplayMode(mockedObject);
 			mocks.BackToRecord(mock, options);
-			if(isInReplayMode)
+			if (isInReplayMode)
 				mocks.Replay(mockedObject);
 		}
 
@@ -189,7 +185,6 @@ namespace Rhino.Mocks
 		/// </example>
 		public static IList<object[]> GetArgumentsForCallsMadeOn<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
 		{
-			argumentPredicates = new List<Expression>();
 			return GetExpectationsToVerify(mock, action, setupConstraints).ArgumentsForAllCalls;
 		}
 
@@ -201,19 +196,11 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		public static void AssertWasCalled<T>(this T mock, Action<T> action)
 		{
-			argumentPredicates = new List<Expression>();
 			AssertWasCalled(mock, action, DefaultConstraintSetup);
 		}
 
 		private static void DefaultConstraintSetup(IMethodOptions<object> options)
 		{
-			var constraints = new List<AbstractConstraint>();
-			foreach (Expression expression in argumentPredicates)
-			{
-				constraints.Add(new LambdaConstraint(expression));
-			}
-			if (constraints.Count != 0)
-				options.Constraints(constraints.ToArray());
 		}
 
 		/// <summary>
@@ -226,23 +213,16 @@ namespace Rhino.Mocks
 		/// <param name="setupConstraints">The setup constraints.</param>
 		public static void AssertWasCalled<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
 		{
-			try
-			{
-				ExpectationVerificationInformation verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
+			ExpectationVerificationInformation verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
 
-				foreach (var args in verificationInformation.ArgumentsForAllCalls)
-				{
-					if (verificationInformation.Expected.IsExpected(args))
-						return;
-				}
-				throw new ExpectationViolationException("Expected that " +
-				                                        verificationInformation.ExpectationsToVerify[0].ErrorMessage +
-				                                        " would be called, but it was not found on the actual calls made on the mocked object.");
-			}
-			finally
+			foreach (var args in verificationInformation.ArgumentsForAllCalls)
 			{
-				argumentPredicates = null;
+				if (verificationInformation.Expected.IsExpected(args))
+					return;
 			}
+			throw new ExpectationViolationException("Expected that " +
+													verificationInformation.ExpectationsToVerify[0].ErrorMessage +
+													" would be called, but it was not found on the actual calls made on the mocked object.");
 		}
 
 
@@ -254,17 +234,7 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		public static void AssertWasNotCalled<T>(this T mock, Action<T> action)
 		{
-			argumentPredicates = new List<Expression>();
-			AssertWasNotCalled(mock, action, delegate(IMethodOptions<object> options)
-			{
-				var constraints = new List<AbstractConstraint>();
-				foreach (Expression expression in argumentPredicates)
-				{
-					constraints.Add(new LambdaConstraint(expression));
-				}
-				if (constraints.Count != 0)
-					options.Constraints(constraints.ToArray());
-			});
+			AssertWasNotCalled(mock, action, DefaultConstraintSetup);
 		}
 
 		/// <summary>
@@ -276,30 +246,23 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		/// <param name="setupConstraints">The setup constraints.</param>
 		public static void AssertWasNotCalled<T>(this T mock, Action<T> action,
-		                                         Action<IMethodOptions<object>> setupConstraints)
+												 Action<IMethodOptions<object>> setupConstraints)
 		{
-			try
-			{
-				ExpectationVerificationInformation verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
+			ExpectationVerificationInformation verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
 
-				foreach (var args in verificationInformation.ArgumentsForAllCalls)
-				{
-					if (verificationInformation.Expected.IsExpected(args))
-						throw new ExpectationViolationException("Expected that " +
-						                                        verificationInformation.ExpectationsToVerify[0].ErrorMessage +
-						                                        " would not be called, but it was found on the actual calls made on the mocked object.");
-				}
-			}
-			finally
+			foreach (var args in verificationInformation.ArgumentsForAllCalls)
 			{
-				argumentPredicates = null;
+				if (verificationInformation.Expected.IsExpected(args))
+					throw new ExpectationViolationException("Expected that " +
+															verificationInformation.ExpectationsToVerify[0].ErrorMessage +
+															" would not be called, but it was found on the actual calls made on the mocked object.");
 			}
 		}
 
 
 		private static ExpectationVerificationInformation GetExpectationsToVerify<T>(T mock, Action<T> action,
-		                                                                             Action<IMethodOptions<object>>
-		                                                                             	setupConstraints)
+																					 Action<IMethodOptions<object>>
+																						setupConstraints)
 		{
 			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
 			MockRepository mocks = mockedObject.Repository;
@@ -311,7 +274,7 @@ namespace Rhino.Mocks
 			}
 
 			var mockToRecordExpectation =
-				(T) mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
+				(T)mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
 			action(mockToRecordExpectation);
 
 			AssertExactlySingleExpectaton(mocks, mockToRecordExpectation);
@@ -329,11 +292,11 @@ namespace Rhino.Mocks
 			IExpectation expected = expectationsToVerify[0];
 			ICollection<object[]> argumentsForAllCalls = mockedObject.GetCallArgumentsFor(expected.Method);
 			return new ExpectationVerificationInformation
-			       	{
+					{
 						ArgumentsForAllCalls = new List<object[]>(argumentsForAllCalls),
-			       		ExpectationsToVerify = expectationsToVerify,
-			       		Expected = expected
-			       	};
+						ExpectationsToVerify = expectationsToVerify,
+						Expected = expected
+					};
 		}
 
 		/// <summary>
@@ -354,13 +317,13 @@ namespace Rhino.Mocks
 		/// <param name="mockObject">The mock object.</param>
 		/// <param name="eventSubscription">The event subscription.</param>
 		/// <returns></returns>
-        public static IEventRaiser GetEventRaiser<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription) 
-        {
-            return mockObject
-                .Stub(eventSubscription)
-                .IgnoreArguments()
-                .GetEventRaiser();    
-        }
+		public static IEventRaiser GetEventRaiser<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription)
+		{
+			return mockObject
+				.Stub(eventSubscription)
+				.IgnoreArguments()
+				.GetEventRaiser();
+		}
 
 		/// <summary>
 		/// Raise the specified event using the passed arguments.
@@ -371,11 +334,11 @@ namespace Rhino.Mocks
 		/// <param name="eventSubscription">The event subscription.</param>
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, object sender, EventArgs args) 
-        {
-            var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
-            eventRaiser.Raise(sender, args);
-        }
+		public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, object sender, EventArgs args)
+		{
+			var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
+			eventRaiser.Raise(sender, args);
+		}
 
 		/// <summary>
 		/// Raise the specified event using the passed arguments.
@@ -385,11 +348,11 @@ namespace Rhino.Mocks
 		/// <param name="mockObject">The mock object.</param>
 		/// <param name="eventSubscription">The event subscription.</param>
 		/// <param name="args">The args.</param>
-        public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, params object[] args) 
-        {
-            var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
-            eventRaiser.Raise(args);
-        }
+		public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, params object[] args)
+		{
+			var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
+			eventRaiser.Raise(args);
+		}
 
 		private static void AssertExactlySingleExpectaton<T>(MockRepository mocks, T mockToRecordExpectation)
 		{

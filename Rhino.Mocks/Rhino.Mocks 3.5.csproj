@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arg.cs" />
+    <Compile Include="ArgManager.cs" />
     <Compile Include="BackToRecordOptions.cs" />
     <Compile Include="Constraints\AbstractConstraint.cs">
       <SubType>Code</SubType>
@@ -89,6 +90,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constraints\AllPropertiesMatchConstraint.cs" />
+    <Compile Include="Constraints\IsArg.cs" />
+    <Compile Include="Constraints\ListArg.cs" />
+    <Compile Include="Constraints\OutRefArgDummy.cs" />
     <Compile Include="Constraints\PublicField.cs" />
     <Compile Include="Constraints\Is.cs">
       <SubType>Code</SubType>
@@ -102,6 +106,7 @@
     <Compile Include="Constraints\Text.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constraints\TextArg.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="DoNotExpect.cs" />
     <Compile Include="Exceptions\ExpectationViolationException.cs">

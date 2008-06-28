@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgConstraintTests.cs" />
     <Compile Include="BackToRecord.cs" />
     <Compile Include="Callbacks\CallbackTests.cs">
       <SubType>Code</SubType>
