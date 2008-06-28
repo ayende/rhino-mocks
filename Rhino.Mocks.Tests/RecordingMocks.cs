@@ -60,6 +60,8 @@ namespace Rhino.Mocks.Tests
 
 			foo.Stub(x => x.bar()).Return("closed").Repeat.Any();
 
+            foo.Replay();
+
 			// several calls to 'foo.bar()
 			Assert.AreEqual(foo.bar(), "closed");
 			Assert.AreEqual(foo.bar(), "closed");

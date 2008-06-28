@@ -76,11 +76,22 @@ namespace Rhino.Mocks
 		{
 			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
 			var mocks = mockedObject.Repository;
-			var isInReplayMode = mocks.IsInReplayMode(mockedObject);
 			mocks.BackToRecord(mock, options);
-			if (isInReplayMode)
-				mocks.Replay(mockedObject);
 		}
+
+        /// <summary>
+        /// Cause the mock state to change to replay, any further call is compared to the 
+        /// ones that were called in the record state.
+        /// </summary>
+        /// <param name="mock">the mocked object to move to replay state</param>
+        public static void Replay<T>(this T mock)
+        {
+            IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
+            var mocks = mockedObject.Repository;
+
+            if(mocks.IsInReplayMode(mock) != true)
+                mocks.Replay(mockedObject);
+        }
 
 		/// <summary>
 		/// Gets the mock repository for this specificied mock object
@@ -112,7 +123,7 @@ namespace Rhino.Mocks
 			IMethodOptions<R> options = LastCall.GetOptions<R>();
 			options.TentativeReturn();
 			if (isInReplayMode)
-				mocks.Replay(mock);
+				mocks.ReplayCore(mock, false);
 			return options;
 		}
 

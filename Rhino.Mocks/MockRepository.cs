@@ -559,7 +559,20 @@ namespace Rhino.Mocks
         /// <param name="obj">the object to move to replay state</param>
         public void Replay(object obj)
         {
-            NotInsideOrderring();
+            ReplayCore(obj, true);
+        }
+
+        /// <summary>
+        /// Cause the mock state to change to replay, any further call is compared to the 
+        /// ones that were called in the record state.
+        /// </summary>
+        /// <param name="obj">the object to move to replay state</param>
+        /// <param name="checkInsideOrdering"></param>
+        protected internal void ReplayCore(object obj, bool checkInsideOrdering)
+        {
+            if(checkInsideOrdering)
+                NotInsideOrderring();
+
             IsMockObjectFromThisRepository(obj);
             ClearLastProxy(obj);
             IMockState state = proxies[obj];
