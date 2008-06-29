@@ -81,6 +81,32 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
+		public void CanAssertMethodArgumentsNaturally()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.Bar("asd")).Return(1);
+
+			Assert.AreEqual(1, foo54.Bar("asd"));
+
+			foo54.AssertWasCalled(x => x.Bar(Arg.Text.EndsWith("d")));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),
+			"Expected that IFoo54.Bar(ends with \"d\"); would be called, but it was not found on the actual calls made on the mocked object.")]
+		public void CanAssertMethodArgumentsNaturally_WhenFailed()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.Bar("asdg")).Return(1);
+
+			Assert.AreEqual(1, foo54.Bar("asdg"));
+
+			foo54.AssertWasCalled(x => x.Bar(Arg.Text.EndsWith("d")));
+		}
+
+		[Test]
 		public void WhenCallingMethodWithNoParameters_WillReturnZeroLengthArrayForEachCall()
 		{
 			var foo54 = MockRepository.GenerateStub<IFoo54>();
