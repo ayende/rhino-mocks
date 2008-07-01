@@ -19,4 +19,19 @@
 	
 	<target name="generate-assemblyinfo" depends="common.assemblyinfo" />
 
+	<target name="zip" depends="set-project-configuration build">
+		<mkdir dir="${build.base.dir}/outputs"/>
+		<zip zipfile="${build.base.dir}/outputs/Rhino-Mocks-${nant.settings.currentframework}-${version}.zip">
+			<fileset basedir="${build.dir}">
+				<include name="Rhino.Mocks.dll"/>
+				<include name="Rhino.Mocks.xml"/>
+			</fileset>
+			<fileset basedir="${src.dir}">
+				<include name="acknowledgements.txt"/>
+			</fileset>
+			<fileset basedir="${root.dir}">
+				<include name="license.txt"/>
+			</fileset>
+		</zip>
+	</target>
 </project>
