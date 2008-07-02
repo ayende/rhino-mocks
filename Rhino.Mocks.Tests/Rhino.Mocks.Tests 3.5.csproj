@@ -357,6 +357,7 @@
     <Compile Include="Throws.cs" />
     <Compile Include="TraceWriterWithStackTraceExpectationWriterFixture.cs" />
     <Compile Include="VerifyTests.cs" />
+    <Compile Include="WhenCalledTests.cs" />
     <Compile Include="WithTestFixture.cs" />
     <Compile Include="UsingComObject.cs" />
     <Compile Include="Utilities\MethodCallTests.cs">

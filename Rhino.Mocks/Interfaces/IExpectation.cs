@@ -146,5 +146,10 @@ namespace Rhino.Mocks.Interfaces
         /// Allow to set the return value in the future, if it was already set.
         /// </summary>
 	    void IgnoreMissingReturnValueUntilExecuteTime();
-    }
+
+		/// <summary>
+		/// Occurs when the exceptation is match on a method call
+		/// </summary>
+		event Action<MethodInvocation> WhenCalled;
+	}
 }

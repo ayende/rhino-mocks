@@ -310,7 +310,12 @@ namespace Rhino.Mocks.Expectations
             ignoreMissingReturnValueUntilExecuteTime = true;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Occurs when the exceptation is match on a method call
+		/// </summary>
+    	public event Action<MethodInvocation> WhenCalled =delegate { };
+
+    	/// <summary>
         /// Returns the return value or throw the exception and setup output / ref parameters
         /// </summary>
         public object ReturnOrThrow(IInvocation invocation, object[] args)
@@ -322,15 +327,22 @@ namespace Rhino.Mocks.Expectations
 
             SetupOutputAndRefParameters(args);
             if (actionToExecute != null)
-                return ExecuteAction();
-            if (exceptionToThrow != null)
+            {
+            	object action = ExecuteAction();
+				WhenCalled(new MethodInvocation(invocation));
+            	return action;
+            }
+    		if (exceptionToThrow != null)
                 throw exceptionToThrow;
             if (RepeatableOption == RepeatableOption.OriginalCall)
             {
                 invocation.Proceed();
-                return invocation.ReturnValue;
+				WhenCalled(new MethodInvocation(invocation));
+				return invocation.ReturnValue;
             }
-            return returnValue;
+    		invocation.ReturnValue = returnValue;
+			WhenCalled(new MethodInvocation(invocation));
+			return invocation.ReturnValue;
         }
 
         /// <summary>

@@ -29,6 +29,7 @@
 #endregion
 
 using System;
+using Castle.Core.Interceptor;
 using Rhino.Mocks.Constraints;
 using System.Reflection;
 
@@ -222,6 +223,12 @@ namespace Rhino.Mocks.Interfaces
 		/// The delegate return value will be returned from the expectation.
 		/// </summary>
 		IMethodOptions<T> Do(Delegate action);
+
+		/// <summary>
+		/// Set a delegate to be called when the expectation is matched
+		/// and allow to optionally modify the invocation as needed
+		/// </summary>
+		IMethodOptions<T> Do(Action<MethodInvocation> action);
 
 		/*
 			 * Method: CallOriginalMethod

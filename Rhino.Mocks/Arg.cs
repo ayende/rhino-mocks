@@ -127,6 +127,15 @@ namespace Rhino.Mocks
 		/// Define constraints on text arguments.
 		/// </summary>
 		public static TextArg Text { get { return new TextArg(); } }
+
+		/// <summary>
+		/// Evaluate an equal constraint for <see cref="IComparable"/>.
+		/// </summary>
+		/// <param name="arg">The object the parameter should equal to</param>
+		public static T Is<T>(T arg)
+		{
+			return Arg<T>.Is.Equal(arg);
+		}
 	}
 }
 

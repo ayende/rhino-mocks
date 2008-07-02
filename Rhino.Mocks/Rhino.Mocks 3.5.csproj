@@ -149,6 +149,7 @@
     <Compile Include="Interfaces\IExpectationLogger.cs" />
     <Compile Include="Interfaces\IPartialMockMarker.cs" />
     <Compile Include="Interfaces\OriginalCallOptions.cs" />
+    <Compile Include="MethodInvocation.cs" />
     <Compile Include="MockRepositoryRecordPlayback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RhinoMocksExtensions.cs" />
