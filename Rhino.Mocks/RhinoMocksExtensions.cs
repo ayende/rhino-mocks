@@ -79,19 +79,19 @@ namespace Rhino.Mocks
 			mocks.BackToRecord(mock, options);
 		}
 
-        /// <summary>
-        /// Cause the mock state to change to replay, any further call is compared to the 
-        /// ones that were called in the record state.
-        /// </summary>
-        /// <param name="mock">the mocked object to move to replay state</param>
-        public static void Replay<T>(this T mock)
-        {
-            IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
-            var mocks = mockedObject.Repository;
+		/// <summary>
+		/// Cause the mock state to change to replay, any further call is compared to the 
+		/// ones that were called in the record state.
+		/// </summary>
+		/// <param name="mock">the mocked object to move to replay state</param>
+		public static void Replay<T>(this T mock)
+		{
+			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
+			var mocks = mockedObject.Repository;
 
-            if(mocks.IsInReplayMode(mock) != true)
-                mocks.Replay(mockedObject);
-        }
+			if (mocks.IsInReplayMode(mock) != true)
+				mocks.Replay(mockedObject);
+		}
 
 		/// <summary>
 		/// Gets the mock repository for this specificied mock object
@@ -157,7 +157,7 @@ namespace Rhino.Mocks
 		/// <returns></returns>
 		public static IMethodOptions<R> Stub<T, R>(this T mock, Func<T, R> action)
 		{
-			return Expect(mock, action).Repeat.Times(0, 1);
+			return Expect(mock, action).Repeat.Times(0, int.MaxValue);
 		}
 
 		/// <summary>

@@ -51,20 +51,47 @@ namespace Rhino.Mocks.Tests
 		{
 			var foo = MockRepository.GenerateStub<IFoo54>();
 
-			foo.Stub(x => x.bar()).Return("open").Repeat.Any();
+			foo.Stub(x => x.bar()).Return("open");
 			// several calls to 'foo.bar()
 			Assert.AreEqual(foo.bar(), "open");
 			Assert.AreEqual(foo.bar(), "open");
 			
 			foo.BackToRecord();
 
-			foo.Stub(x => x.bar()).Return("closed").Repeat.Any();
+			foo.Stub(x => x.bar()).Return("closed");
 
             foo.Replay();
 
 			// several calls to 'foo.bar()
 			Assert.AreEqual(foo.bar(), "closed");
 			Assert.AreEqual(foo.bar(), "closed");
+		}
+
+
+		[Test]
+		public void WhenStubbingWillAllowManyCallsOnTheSameExpectation()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.DoSomething()).Return(1);
+
+			for (int i = 0; i < 59; i++)
+			{
+				Assert.AreEqual(1, foo54.DoSomething());
+			}
+		}
+
+		[Test]
+		public void WhenStubbingCanSetNumberOfCallsThatWillBeMatched()
+		{
+			var foo54 = MockRepository.GenerateStub<IFoo54>();
+
+			foo54.Stub(x => x.DoSomething()).Return(1).Repeat.Once();
+			foo54.Stub(x => x.DoSomething()).Return(2).Repeat.Once();
+
+			Assert.AreEqual(1, foo54.DoSomething());
+			Assert.AreEqual(2, foo54.DoSomething());
+			Assert.AreEqual(0, foo54.DoSomething());// unexpected
 		}
 
 		[Test]
