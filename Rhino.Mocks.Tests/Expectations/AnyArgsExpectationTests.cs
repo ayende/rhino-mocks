@@ -89,7 +89,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		}
 	}
 
-	public class FakeInvocation : AbstractInvocation
+	internal class FakeInvocation : AbstractInvocation
 	{
 		public FakeInvocation(MethodInfo targetMethod) 
 			: base(null, null, null, null, targetMethod, new object[0])

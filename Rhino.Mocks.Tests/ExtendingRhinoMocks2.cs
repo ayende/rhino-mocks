@@ -95,7 +95,7 @@ namespace Rhino.Mocks.Tests
 		}
 	}
 
-	public class VerifyExpectationAndCallOriginalReplayState : ReplayMockState
+	internal class VerifyExpectationAndCallOriginalReplayState : ReplayMockState
 	{
 		public VerifyExpectationAndCallOriginalReplayState(RecordMockState previousState)
 			: base(previousState)

@@ -108,7 +108,7 @@ namespace Rhino.Mocks.Tests
 			return new QueryMockState(mockedObject);
 		}
 
-		public class QueryMockState : IMockState
+		internal class QueryMockState : IMockState
 		{
 			private readonly IMockedObject mockedObject;
 			public object LastCallFirstParam;

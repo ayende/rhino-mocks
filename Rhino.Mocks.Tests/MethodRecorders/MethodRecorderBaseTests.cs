@@ -130,7 +130,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			Assert.IsTrue(testRecorder.DoRemoveExpectationCalled);
 		}
 
-		public class TestMethodRecorder : MethodRecorderBase
+		internal class TestMethodRecorder : MethodRecorderBase
 		{
 			public bool DoRecordCalled,
 				DoGetRecordedExpectationCalled,
