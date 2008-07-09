@@ -43,13 +43,13 @@ namespace Rhino.Mocks.Impl
 	/// </summary>
 	public class ProxyInstance : MarshalByRefObject, IMockedObject
 	{
-		private MockRepository repository;
-		private int hashCode;
+		private readonly MockRepository repository;
+		private readonly int hashCode;
 		private IList originalMethodsToCall;
 		private IList propertiesToSimulate;
 		private IDictionary propertiesValues;
 		private IDictionary eventsSubscribers;
-		private Type[] implemented;
+		private readonly Type[] implemented;
 
 	    private readonly IDictionary<MethodInfo, ICollection<object[]>> methodToActualCalls = new Dictionary<MethodInfo, ICollection<object[]>>();
 	    private object[] constructorArguments = new object[0];
@@ -105,13 +105,20 @@ namespace Rhino.Mocks.Impl
 
 		/// <summary>
 		/// Register a property on the object that will behave as a simple property
+		/// Return true if there is already a value for the property
 		/// </summary>
-		public void RegisterPropertyBehaviorFor(PropertyInfo prop)
+		public bool RegisterPropertyBehaviorFor(PropertyInfo prop)
 		{
 			if (propertiesToSimulate == null)
 				propertiesToSimulate = new ArrayList();
-			propertiesToSimulate.Add(prop.GetGetMethod());
-			propertiesToSimulate.Add(prop.GetSetMethod());
+			var getMethod = prop.GetGetMethod(true);
+			var setMethod = prop.GetSetMethod(true);
+			if (propertiesToSimulate.Contains(getMethod) == false)
+				propertiesToSimulate.Add(getMethod);
+			if (propertiesToSimulate.Contains(setMethod) == false)
+				propertiesToSimulate.Add(setMethod);
+			return propertiesValues!=null &&
+				propertiesValues.Contains(GenerateKey(getMethod, new object[0]));
 		}
 
 		/// <summary>

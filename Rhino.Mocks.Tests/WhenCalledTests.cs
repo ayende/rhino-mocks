@@ -19,7 +19,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void Can_use_when_called_to_exceute_code_when_exceptation_is_matched_without_stupid_delegate_sig_overhead()
 		{
-			var wasCalled = true;
+			var wasCalled = false;
 			var stub = MockRepository.GenerateStub<IDemo>();
 			stub.Stub(x => x.StringArgString(Arg.Is("")))
 				.Return("blah")
@@ -39,6 +39,20 @@ namespace Rhino.Mocks.Tests
 			Assert.AreEqual("arg", stub.StringArgString(""));
 			Assert.IsTrue(wasCalled);
 		}
+
+		[Test]
+		public void Can_inspect_method_arguments()
+		{
+			var wasCalled = true;
+			var stub = MockRepository.GenerateStub<IDemo>();
+			stub.Stub(x => x.StringArgString(null))
+				.IgnoreArguments()
+				.Return("blah")
+				.Do(invocation => Assert.AreEqual("foo", invocation.Arguments[0]));
+			Assert.AreEqual("blah", stub.StringArgString("foo"));
+			Assert.IsTrue(wasCalled);
+		}
+
 	}
 }
 #endif

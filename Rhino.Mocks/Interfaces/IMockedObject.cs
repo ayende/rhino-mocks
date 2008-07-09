@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Interfaces
         /// <summary>
         /// Register a property on the object that will behave as a simple property
         /// </summary>
-        void RegisterPropertyBehaviorFor(PropertyInfo prop);
+        bool RegisterPropertyBehaviorFor(PropertyInfo prop);
 
         /// <summary>
         /// Check if the method was registered as a property method.

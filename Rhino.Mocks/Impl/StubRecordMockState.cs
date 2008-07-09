@@ -34,75 +34,75 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl
 {
-    /// <summary>
-    /// Behave like a stub, all properties and events acts normally, methods calls
-    /// return default values by default (but can use expectations to set them up), etc.
-    /// </summary>
-    public class StubRecordMockState : RecordMockState
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StubRecordMockState"/> class.
-        /// </summary>
-        /// <param name="mockedObject">The proxy that generates the method calls</param>
-        /// <param name="repository">Repository.</param>
-        public StubRecordMockState(IMockedObject mockedObject, MockRepository repository)
-            : base(mockedObject, repository)
-        {
-            Type[] types = mockedObject.ImplementedTypes;
-            SetPropertyBehavior(mockedObject, types);
-        }
+	/// <summary>
+	/// Behave like a stub, all properties and events acts normally, methods calls
+	/// return default values by default (but can use expectations to set them up), etc.
+	/// </summary>
+	public class StubRecordMockState : RecordMockState
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StubRecordMockState"/> class.
+		/// </summary>
+		/// <param name="mockedObject">The proxy that generates the method calls</param>
+		/// <param name="repository">Repository.</param>
+		public StubRecordMockState(IMockedObject mockedObject, MockRepository repository)
+			: base(mockedObject, repository)
+		{
+			Type[] types = mockedObject.ImplementedTypes;
+			SetPropertyBehavior(mockedObject, types);
+		}
 
-        private void SetPropertyBehavior(IMockedObject mockedObject, params Type[] types)
-        {
-            foreach (Type implementedType in types)
-            {
-                if (implementedType.BaseType != null && implementedType.BaseType != typeof(object))
-                {
-                    SetPropertyBehavior(mockedObject, implementedType.BaseType);
-                }
+		private void SetPropertyBehavior(IMockedObject mockedObject, params Type[] types)
+		{
+			foreach (Type implementedType in types)
+			{
+				if (implementedType.BaseType != null && implementedType.BaseType != typeof(object))
+				{
+					SetPropertyBehavior(mockedObject, implementedType.BaseType);
+				}
 
-                SetPropertyBehavior(mockedObject, implementedType.GetInterfaces());
+				SetPropertyBehavior(mockedObject, implementedType.GetInterfaces());
 
-                foreach (PropertyInfo property in implementedType.GetProperties())
-                {
-                    if (property.CanRead && property.CanWrite)
-                    {
-                        mockedObject.RegisterPropertyBehaviorFor(property);
-                        if (property.PropertyType.IsValueType)
-                        {
-                            //make sure that it creates a default value for value types
-                            mockedObject.HandleProperty(property.GetSetMethod(true),
-                                                        new object[] { Activator.CreateInstance(property.PropertyType) });
-                        }
-                    }
-                }
+				foreach (PropertyInfo property in implementedType.GetProperties())
+				{
+					if (property.CanRead && property.CanWrite)
+					{
+						var alreadyHasValue = mockedObject.RegisterPropertyBehaviorFor(property);
+						if (property.PropertyType.IsValueType && alreadyHasValue == false)
+						{
+							//make sure that it creates a default value for value types
+							mockedObject.HandleProperty(property.GetSetMethod(true),
+														new object[] { Activator.CreateInstance(property.PropertyType) });
+						}
+					}
+				}
 
-            }
-        }
+			}
+		}
 
-        /// <summary>
-        /// We don't care much about expectations here, so we will remove the exepctation if
-        /// it is not closed.
-        /// </summary>
-        protected override void AssertPreviousMethodIsClose()
-        {
-            if (LastExpectation == null)
-                return;
-            if (LastExpectation.ActionsSatisfied)
-                return;
-            Repository.Recorder.RemoveExpectation(LastExpectation);
-            LastExpectation = null;
-        }
+		/// <summary>
+		/// We don't care much about expectations here, so we will remove the exepctation if
+		/// it is not closed.
+		/// </summary>
+		protected override void AssertPreviousMethodIsClose()
+		{
+			if (LastExpectation == null)
+				return;
+			if (LastExpectation.ActionsSatisfied)
+				return;
+			Repository.Recorder.RemoveExpectation(LastExpectation);
+			LastExpectation = null;
+		}
 
-        /// <summary>
-        /// Verify that we can move to replay state and move
-        /// to the reply state.
-        /// </summary>
-        /// <returns></returns>
-        public override IMockState Replay()
-        {
-            AssertPreviousMethodIsClose();
-            return new StubReplayMockState(this);
-        }
-    }
+		/// <summary>
+		/// Verify that we can move to replay state and move
+		/// to the reply state.
+		/// </summary>
+		/// <returns></returns>
+		public override IMockState Replay()
+		{
+			AssertPreviousMethodIsClose();
+			return new StubReplayMockState(this);
+		}
+	}
 }
