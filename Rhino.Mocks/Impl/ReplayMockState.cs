@@ -158,7 +158,7 @@ namespace Rhino.Mocks.Impl
 				{
 					if (verifiedFailed)
 						sb.Append("\r\n");
-					sb.Append(BuildVerificationFailureMessage(expectation));
+					sb.Append(expectation.BuildVerificationFailureMessage());
 					verifiedFailed = true;
 				}
 			}
@@ -190,17 +190,6 @@ namespace Rhino.Mocks.Impl
 		private Exception InvalidInReplayState()
 		{
 			return new InvalidOperationException("This action is invalid when the mock object is in replay state.");
-		}
-
-		private StringBuilder BuildVerificationFailureMessage(IExpectation expectation)
-		{
-			StringBuilder sb = new StringBuilder();
-			string expectationMessege = expectation.ErrorMessage;
-			sb.Append(expectationMessege).Append(' ');
-			sb.Append("Expected #");
-			sb.Append(expectation.Expected.ToString()).Append(", ");
-			sb.Append("Actual #").Append(expectation.ActualCallsCount).Append('.');
-			return sb;
 		}
 
 		#endregion

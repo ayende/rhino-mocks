@@ -229,11 +229,13 @@ namespace Rhino.Mocks
 			foreach (var args in verificationInformation.ArgumentsForAllCalls)
 			{
 				if (verificationInformation.Expected.IsExpected(args))
-					return;
+				{
+					verificationInformation.Expected.AddActualCall();
+				}
 			}
-			throw new ExpectationViolationException("Expected that " +
-													verificationInformation.ExpectationsToVerify[0].ErrorMessage +
-													" would be called, but it was not found on the actual calls made on the mocked object.");
+			if (verificationInformation.Expected.ExpectationSatisfied)
+				return;
+			throw new ExpectationViolationException(verificationInformation.Expected.BuildVerificationFailureMessage());
 		}
 
 
@@ -265,7 +267,7 @@ namespace Rhino.Mocks
 			{
 				if (verificationInformation.Expected.IsExpected(args))
 					throw new ExpectationViolationException("Expected that " +
-															verificationInformation.ExpectationsToVerify[0].ErrorMessage +
+															verificationInformation.Expected.ErrorMessage +
 															" would not be called, but it was found on the actual calls made on the mocked object.");
 			}
 		}
@@ -305,7 +307,6 @@ namespace Rhino.Mocks
 			return new ExpectationVerificationInformation
 					{
 						ArgumentsForAllCalls = new List<object[]>(argumentsForAllCalls),
-						ExpectationsToVerify = expectationsToVerify,
 						Expected = expected
 					};
 		}

@@ -55,12 +55,12 @@ namespace Rhino.Mocks.Tests
 			// several calls to 'foo.bar()
 			Assert.AreEqual(foo.bar(), "open");
 			Assert.AreEqual(foo.bar(), "open");
-			
+
 			foo.BackToRecord();
 
 			foo.Stub(x => x.bar()).Return("closed");
 
-            foo.Replay();
+			foo.Replay();
 
 			// several calls to 'foo.bar()
 			Assert.AreEqual(foo.bar(), "closed");
@@ -121,7 +121,7 @@ namespace Rhino.Mocks.Tests
 
 		[Test]
 		[ExpectedException(typeof(ExpectationViolationException),
-			"Expected that IFoo54.Bar(ends with \"d\"); would be called, but it was not found on the actual calls made on the mocked object.")]
+			"IFoo54.Bar(ends with \"d\"); Expected #1, Actual #0.")]
 		public void CanAssertMethodArgumentsNaturally_WhenFailed()
 		{
 			var foo54 = MockRepository.GenerateStub<IFoo54>();
@@ -216,7 +216,7 @@ namespace Rhino.Mocks.Tests
 
 			demo.Expect(x => x.DoSomethingElse());
 			mocks.Replay(demo);
-			
+
 			mocks.VerifyAll();
 		}
 
@@ -293,7 +293,7 @@ namespace Rhino.Mocks.Tests
 
 		[Test]
 		[ExpectedException(typeof(ExpectationViolationException),
-			"Expected that IFoo54.Bar(\"blah1\"); would be called, but it was not found on the actual calls made on the mocked object.")]
+			"IFoo54.Bar(\"blah1\"); Expected #1, Actual #0.")]
 		public void CanAssertOnMethodUsingDirectArgumentMatching_WhenWrongArumentPassed()
 		{
 			var foo54 = MockRepository.GenerateMock<IFoo54>();
@@ -327,6 +327,57 @@ namespace Rhino.Mocks.Tests
 			foo54.VerifyAllExpectations();
 		}
 
+		[Test]
+		public void CanExpectOnNumberOfCallsMade()
+		{
+			var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+			foo54.Expect(x => x.DoSomething()).Repeat.Twice().Return(1);
+
+			foo54.DoSomething();
+			foo54.DoSomething();
+
+			foo54.VerifyAllExpectations();
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),
+			"IFoo54.DoSomething(); Expected #2, Actual #1.")]
+		public void CanExpectOnNumberOfCallsMade_WhenRepeatCountNotMet()
+		{
+			var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+			foo54.Expect(x => x.DoSomething()).Repeat.Twice().Return(1);
+
+			foo54.DoSomething();
+
+			foo54.VerifyAllExpectations();
+		}
+
+		[Test]
+		public void CanAssertOnNumberOfCallsMade()
+		{
+			var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+
+			foo54.DoSomething();
+			foo54.DoSomething();
+
+			foo54.AssertWasCalled(x => x.DoSomething(), o => o.Repeat.Twice());
+		}
+
+		[Test]
+		[ExpectedException(typeof(ExpectationViolationException),
+		    "IFoo54.DoSomething(); Expected #2, Actual #1.")]
+		public void CanAssertOnNumberOfCallsMade_WhenRepeatCountNotMet()
+		{
+			var foo54 = MockRepository.GenerateMock<IFoo54>();
+
+
+			foo54.DoSomething();
+
+			foo54.AssertWasCalled(x => x.DoSomething(), o => o.Repeat.Twice());
+		}
 
 		[Test]
 		[ExpectedException(typeof(ExpectationViolationException), @"IFoo54.Bar(starts with ""boo""); Expected #1, Actual #0.")]
@@ -374,7 +425,7 @@ namespace Rhino.Mocks.Tests
 
 			demo.Stub(x => x.DoSomethingElse()).Throw(new InvalidOperationException("foo"));
 			mocks.Replay(demo);
-			
+
 			try
 			{
 				demo.DoSomethingElse();
@@ -394,13 +445,13 @@ namespace Rhino.Mocks.Tests
 
 			demo.Stub(x => x.DoSomething()).Return(1);
 			mocks.Replay(demo);
-			
+
 			Assert.AreEqual(1, demo.DoSomething());
 			demo.AssertWasCalled(x => x.DoSomething());
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomething(); would be called, but it was not found on the actual calls made on the mocked object.")]
+		[ExpectedException(typeof(ExpectationViolationException), "IFoo54.DoSomething(); Expected #1, Actual #0.")]
 		public void CanUseNonRecordReplayModel_Stub_AndThenVerify_WhenNotCalled_WillCauseError()
 		{
 			MockRepository mocks = new MockRepository();
@@ -408,7 +459,7 @@ namespace Rhino.Mocks.Tests
 
 			demo.Stub(x => x.DoSomething()).Return(1);
 			mocks.Replay(demo);
-			
+
 			demo.AssertWasCalled(x => x.DoSomething());
 		}
 
@@ -420,7 +471,7 @@ namespace Rhino.Mocks.Tests
 
 			demo.Stub(x => x.DoSomething()).Return(1);
 			mocks.Replay(demo);
-			
+
 			mocks.VerifyAll();
 		}
 
@@ -458,7 +509,8 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.Bar(a => (a.StartsWith(\"b\") && a.Contains(\"ba\"))); would be called, but it was not found on the actual calls made on the mocked object.")]
+		[ExpectedException(typeof(ExpectationViolationException), 
+			"IFoo54.Bar(a => (a.StartsWith(\"b\") && a.Contains(\"ba\"))); Expected #1, Actual #0.")]
 		public void CanAssertOnMethodCallUsingConstraints_WhenMethodNotFound()
 		{
 			MockRepository mocks = new MockRepository();
@@ -482,7 +534,7 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomething(); would be called, but it was not found on the actual calls made on the mocked object.")]
+		[ExpectedException(typeof(ExpectationViolationException), "IFoo54.DoSomething(); Expected #1, Actual #0.")]
 		public void WillFailVerificationsOfMethod_IfWereNotCalled()
 		{
 			MockRepository mocks = new MockRepository();
@@ -493,7 +545,7 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "Expected that IFoo54.DoSomethingElse(); would be called, but it was not found on the actual calls made on the mocked object.")]
+		[ExpectedException(typeof(ExpectationViolationException), "IFoo54.DoSomethingElse(); Expected #1, Actual #0.")]
 		public void WillFailVerificationsOfMethod_IfWereNotCalled_OnVoidMethod()
 		{
 			MockRepository mocks = new MockRepository();
@@ -538,7 +590,7 @@ namespace Rhino.Mocks.Tests
 
 			demo.Stub(x => x.DoSomethingElse());
 			mocks.Replay(demo);
-			
+
 			demo.DoSomethingElse();
 
 			demo.AssertWasCalled(x => x.DoSomethingElse());

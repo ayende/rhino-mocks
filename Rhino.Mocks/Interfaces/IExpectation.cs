@@ -151,5 +151,11 @@ namespace Rhino.Mocks.Interfaces
 		/// Occurs when the exceptation is match on a method call
 		/// </summary>
 		event Action<MethodInvocation> WhenCalled;
+
+		/// <summary>
+		/// Builds the verification failure message.
+		/// </summary>
+		/// <returns></returns>
+		string BuildVerificationFailureMessage();
 	}
 }

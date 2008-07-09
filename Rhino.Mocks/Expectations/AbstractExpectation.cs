@@ -302,7 +302,22 @@ namespace Rhino.Mocks.Expectations
             actualCallsCount++;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Builds the verification failure message.
+		/// </summary>
+		/// <returns></returns>
+    	public string BuildVerificationFailureMessage()
+    	{
+			StringBuilder sb = new StringBuilder();
+			string expectationMessege = ErrorMessage;
+			sb.Append(expectationMessege).Append(' ');
+			sb.Append("Expected #");
+			sb.Append(Expected.ToString()).Append(", ");
+			sb.Append("Actual #").Append(ActualCallsCount).Append('.');
+			return sb.ToString();
+    	}
+
+    	/// <summary>
         /// Allow to set the return value in the future, if it was already set.
         /// </summary>
         public void IgnoreMissingReturnValueUntilExecuteTime()
