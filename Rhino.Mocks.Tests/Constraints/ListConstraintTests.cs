@@ -87,7 +87,7 @@ namespace Rhino.Mocks.Tests.Constraints
             Assert.IsFalse(list.Eval(5));
             Assert.AreEqual("element at index 2 equal to Hello", list.Message);
         }
-
+#if DOTNET35
         [Test]
         public void StringKeyedElement()
         {
@@ -97,6 +97,7 @@ namespace Rhino.Mocks.Tests.Constraints
             Assert.IsFalse(list.Eval(new Dictionary<string, string>() { { "Name", "Ayende" } }));
             Assert.AreEqual("element at key Color equal to Red", list.Message);
         }
+#endif
 
         [Test]
         public void ContainsAll()

@@ -1,3 +1,4 @@
+#if DOTNET35
 using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
@@ -37,3 +38,4 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		string MyStringValue { get; }
 	}
 }
+#endif

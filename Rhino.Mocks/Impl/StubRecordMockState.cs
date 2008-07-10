@@ -67,7 +67,7 @@ namespace Rhino.Mocks.Impl
 				{
 					if (property.CanRead && property.CanWrite)
 					{
-						var alreadyHasValue = mockedObject.RegisterPropertyBehaviorFor(property);
+						bool alreadyHasValue = mockedObject.RegisterPropertyBehaviorFor(property);
 						if (property.PropertyType.IsValueType && alreadyHasValue == false)
 						{
 							//make sure that it creates a default value for value types

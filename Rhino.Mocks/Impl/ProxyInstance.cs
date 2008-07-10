@@ -111,8 +111,8 @@ namespace Rhino.Mocks.Impl
 		{
 			if (propertiesToSimulate == null)
 				propertiesToSimulate = new ArrayList();
-			var getMethod = prop.GetGetMethod(true);
-			var setMethod = prop.GetSetMethod(true);
+			MethodInfo getMethod = prop.GetGetMethod(true);
+			MethodInfo setMethod = prop.GetSetMethod(true);
 			if (propertiesToSimulate.Contains(getMethod) == false)
 				propertiesToSimulate.Add(getMethod);
 			if (propertiesToSimulate.Contains(setMethod) == false)
