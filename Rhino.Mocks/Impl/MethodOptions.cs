@@ -326,6 +326,33 @@ namespace Rhino.Mocks.Impl
 		}
 
 		/// <summary>
+		/// Expect last (property) call as property setting, ignore the argument given
+		/// </summary>
+		/// <returns></returns>
+        public IMethodOptions<T> SetPropertyAndIgnoreArgument()
+        {
+            expectation.ReturnValue = default(T);
+            MethodInfo setter = PropertySetterFromMethod(expectation.Method);
+            repository.Recorder.RemoveExpectation(expectation);
+            setter.Invoke(proxy, new object[] {default(T)});
+            return LastCall.GetOptions<T>().IgnoreArguments();
+        }
+
+		/// <summary>
+		/// Expect last (property) call as property setting with a given argument.
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <returns></returns>
+        public IMethodOptions<T> SetPropertyWithArgument(T argument)
+        {
+            expectation.ReturnValue = default(T);
+            MethodInfo setter = PropertySetterFromMethod(expectation.Method);
+            repository.Recorder.RemoveExpectation(expectation);
+            setter.Invoke(proxy, new object[] { argument });
+            return LastCall.GetOptions<T>();
+        }
+
+		/// <summary>
 		/// Gets the event raiser for the last event
 		/// </summary>
 		public IEventRaiser GetEventRaiser()
@@ -375,6 +402,20 @@ namespace Rhino.Mocks.Impl
 				throw new InvalidOperationException("The last method call " + method.Name + " was not an event add / remove method");
 			}
 		}
+
+        private MethodInfo PropertySetterFromMethod(MethodInfo method)
+        {
+            //not a property geter or setter
+            if (false == (method.IsSpecialName &&
+                          (method.Name.StartsWith("get_") ||
+                           method.Name.StartsWith("set_"))))
+                throw new InvalidOperationException("Last method call was not made on a setter or a getter");
+            PropertyInfo prop = GetPropertyFromMethod(method);
+            if (!prop.CanWrite)
+                throw new InvalidOperationException("Property must be writeable");
+
+            return method.DeclaringType.GetMethod("set_" + method.Name.Substring(4));
+        }
 
 		private PropertyInfo GetPropertyFromMethod(MethodInfo method)
 		{

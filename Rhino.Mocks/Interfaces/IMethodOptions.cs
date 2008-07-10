@@ -282,6 +282,19 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		IMethodOptions<T> PropertyBehavior();
 
+        /// <summary>
+        /// Expect last (property) call as property setting, ignore the argument given
+        /// </summary>
+        /// <returns></returns>
+	    IMethodOptions<T> SetPropertyAndIgnoreArgument();
+
+        /// <summary>
+        /// Expect last (property) call as property setting with a given argument.
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+	    IMethodOptions<T> SetPropertyWithArgument(T argument);
+
 		/// <summary>
 		/// Get an event raiser for the last subscribed event.
 		/// </summary>
