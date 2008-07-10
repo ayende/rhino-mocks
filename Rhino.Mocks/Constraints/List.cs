@@ -106,6 +106,16 @@ namespace Rhino.Mocks.Constraints
             return new ListElement(index, constraint);
         }
 
+        /// <summary>
+        /// Determines that an element of the parameter collections conforms to another AbstractConstraint.
+        /// </summary>
+        /// <param name="key">The key of the element.</param>
+        /// <param name="constraint">The constraint which should be applied to the element.</param>
+        public static AbstractConstraint Element<T>(T key, AbstractConstraint constraint)
+        {
+            return new KeyedListElement<T>(key, constraint);
+        }
+
         /*
          * Method ContainsAll
          * Determines that all elements of the specified collection are in the the parameter collection 

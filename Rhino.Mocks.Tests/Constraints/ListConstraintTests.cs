@@ -89,6 +89,16 @@ namespace Rhino.Mocks.Tests.Constraints
         }
 
         [Test]
+        public void StringKeyedElement()
+        {
+            AbstractConstraint list = List.Element<string>("Color", Is.Equal("Red"));
+            Assert.IsTrue(list.Eval(new Dictionary<string, string>() { { "Name", "Ayende" }, { "Color", "Red" } }));
+            Assert.IsFalse(list.Eval(new Dictionary<string, string>() { { "Name", "Ayende" }, { "Color", "Blue" } }));
+            Assert.IsFalse(list.Eval(new Dictionary<string, string>() { { "Name", "Ayende" } }));
+            Assert.AreEqual("element at key Color equal to Red", list.Message);
+        }
+
+        [Test]
         public void ContainsAll()
         {
             AbstractConstraint list = List.ContainsAll(new string[] {"Ayende", "Rahien", "Hello", "World"});

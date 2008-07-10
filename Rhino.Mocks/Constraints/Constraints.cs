@@ -689,6 +689,67 @@ namespace Rhino.Mocks.Constraints
         }
     }
 
+    /// <summary>
+    /// Applies another AbstractConstraint to a specific generic keyed list element.
+    /// </summary>
+    public class KeyedListElement<T> : AbstractConstraint
+    {
+        private T _key;
+        private AbstractConstraint _constraint;
+
+        /// <summary>
+        /// Creates a new <see cref="T:KeyedListElement"/> instance.
+        /// </summary>
+        /// <param name="key">The key of the list element.</param>
+        /// <param name="constraint">The constraint that should be applied to the list element.</param>
+        public KeyedListElement(T key, AbstractConstraint constraint)
+        {
+            _key = key;
+            _constraint = constraint;
+        }
+
+        /// <summary>
+        /// Determines if the parameter conforms to this constraint.
+        /// </summary>
+        public override bool Eval(object obj)
+        {
+            MethodInfo methodInfo = obj.GetType().GetMethod("get_Item",
+                BindingFlags.Public | BindingFlags.GetProperty |
+                BindingFlags.DeclaredOnly | BindingFlags.Instance,
+                null, new Type[] { typeof(T) }, null);
+
+            if (methodInfo != null)
+            {
+                object value;
+
+                try
+                {
+                    value = methodInfo.Invoke(obj, new object[] { _key });
+                }
+                catch (TargetInvocationException)
+                {
+                    return false;
+                }
+
+                return _constraint.Eval(value);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the message for this constraint
+        /// </summary>
+        /// <value></value>
+        public override string Message
+        {
+            get
+            {
+                return "element at key " + _key.ToString() + " " + _constraint.Message;
+            }
+        }
+    }
+
     #endregion
 
     #region ContainsAll Constraint
