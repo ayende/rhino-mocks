@@ -117,6 +117,10 @@ namespace Rhino.Mocks.Expectations
         /// </summary>
         public object[] OutRefParams
         {
+			get
+			{
+				return outRefParams;
+			}
             set
             {
                 if (outRefParams != null)
@@ -407,6 +411,7 @@ namespace Rhino.Mocks.Expectations
             repeatableOption = expectation.RepeatableOption;
             exceptionToThrow = expectation.ExceptionToThrow;
             message = expectation.Message;
+        	outRefParams = expectation.OutRefParams;
         }
 
         #endregion

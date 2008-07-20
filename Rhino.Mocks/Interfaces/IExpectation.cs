@@ -130,7 +130,7 @@ namespace Rhino.Mocks.Interfaces
 	    /// The indexing is zero based and ignores any non out/ref parameter.
 	    /// It is possible not to pass all the parameters. This method can be called only once.
 	    /// </summary>
-	    object[] OutRefParams { set; }
+		object[] OutRefParams { get;  set; }
 
 		/// <summary>
 		/// Documentation Message
