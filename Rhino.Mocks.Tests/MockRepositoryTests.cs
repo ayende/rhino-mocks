@@ -552,6 +552,30 @@ namespace Rhino.Mocks.Tests
 			Assert.IsFalse(mocks.IsInReplayMode(demo));
 		}
 
+        [Test]
+        public void GenerateMockForClassWithNoDefaultConstructor() 
+        {
+            Assert.IsNotNull(MockRepository.GenerateMock<ClassWithNonDefaultConstructor>(null, 0));            
+        }
+
+        [Test]
+        public void GenerateMockForClassWithDefaultConstructor() 
+        {
+            Assert.IsNotNull(MockRepository.GenerateMock<ClassWithDefaultConstructor>());
+        }
+
+        [Test]
+        public void GenerateMockForInterface() 
+        {
+            Assert.IsNotNull(MockRepository.GenerateMock<IDemo>());
+        }
+
+        public class ClassWithNonDefaultConstructor 
+        {
+            public ClassWithNonDefaultConstructor(string someString, int someInt) {}
+        }
+        public class ClassWithDefaultConstructor {}        
+
 		#region Implementation
 
 		private enum DemoEnum

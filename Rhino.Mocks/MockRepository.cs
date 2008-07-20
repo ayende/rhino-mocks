@@ -1323,10 +1323,10 @@ namespace Rhino.Mocks
         /// <summary>
         /// Generate a mock object without needing the mock repository
         /// </summary>
-        public static T GenerateMock<T>()
+        public static T GenerateMock<T>(params object[] argumentsForConstructor)
         {
             MockRepository repository = new MockRepository();
-            T mock = repository.DynamicMock<T>();
+            T mock = repository.DynamicMock<T>(argumentsForConstructor);
             repository.Replay(mock);
             return mock;
         }
