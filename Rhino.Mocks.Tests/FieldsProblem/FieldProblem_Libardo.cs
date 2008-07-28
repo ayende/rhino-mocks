@@ -6,6 +6,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	[TestFixture]
 	public class FieldProblem_Libardo
 	{
+#if DOTNET35
 		[Test]
 		public void Can_mix_assert_was_call_with_verify_all()
 		{
@@ -21,6 +22,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 			mocks.VerifyAll(); // Can I still keep this somehow?
 		}
+#endif
 	}
 
 	public interface IErrorHandler

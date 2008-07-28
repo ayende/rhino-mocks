@@ -4,11 +4,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	using System.Data;
 	using Exceptions;
 	using MbUnit.Framework;
+	using Rhino.Mocks;
 
 	[TestFixture]
 	public class FieldProblem_Andrew
 	{
-
+#if DOTNET35
 		[Test]
 		[ExpectedException((typeof(ExpectationViolationException)), "IDbCommand.set_Connection(null); Expected #1, Actual #0.")]
 		public void Will_get_unexpect_error()
@@ -31,6 +32,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mockCommand.VerifyAllExpectations();
 		}
+#endif
 	}
 
 	public class TestException : Exception
