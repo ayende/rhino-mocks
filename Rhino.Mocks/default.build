@@ -31,7 +31,7 @@
 			<arg value="/t:library" />
 			<arg value="/keyfile:${path::get-full-path( root.dir + '/ayende-open-source.snk' )}" />
 			<arg value="/internalize:../ilmerge.exclude" />
-			<arg value="/ndebug" unless="${build.debug}" />
+			<arg value="/ndebug" unless="${build.debug == 'None'}" />
 		</exec>
 	</target>
 	
