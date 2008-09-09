@@ -231,6 +231,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Will.cs" />
     <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MarkHildreth.cs" />
+    <Compile Include="FieldsProblem\GenericMethodWithOutDecimalParameterTest.cs" />
     <Compile Include="FieldsProblem\SetupResultAndIgnoreArguments.cs" />
     <Compile Include="GenericMethods.cs" />
     <Compile Include="MockingDelegatesTests.cs" />

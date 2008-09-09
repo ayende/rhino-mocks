@@ -54,6 +54,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 		[Test]
+		[Ignore("Ignoring for now because of framework bug in SP1: https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=361606")]
 		public void DoubleGeneric()
 		{
 			MockRepository mocks = new MockRepository();
