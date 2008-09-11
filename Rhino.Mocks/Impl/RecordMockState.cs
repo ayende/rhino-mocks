@@ -34,7 +34,6 @@ using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
-using Castle.DynamicProxy;
 
 namespace Rhino.Mocks.Impl
 {
@@ -49,7 +48,6 @@ namespace Rhino.Mocks.Impl
 		private readonly IMockedObject mockedObject;
 		private int methodCallsCount = 0;
 		private IExpectation lastExpectation;
-		private bool expectationReplacable = true;
 
 		#endregion
 
@@ -79,7 +77,7 @@ namespace Rhino.Mocks.Impl
 		{
 			if (lastExpectation == null)
 				throw new InvalidOperationException("There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?");
-			return new MethodOptions<T>(repository, this, mockedObject, lastExpectation, expectationReplacable);
+			return new MethodOptions<T>(repository, this, mockedObject, lastExpectation);
 		}
 
 		/// <summary>
@@ -137,7 +135,8 @@ namespace Rhino.Mocks.Impl
 		/// <param name="args">The arguments this method was called with</param>
 		public object MethodCall(IInvocation invocation, MethodInfo method, params object[] args)
 		{
-			try {
+			try
+			{
 				AssertPreviousMethodIsClose();
 				repository.lastMockedObject = mockedObject;
 				MockRepository.lastRepository = repository;
@@ -147,8 +146,6 @@ namespace Rhino.Mocks.Impl
 				if (ArgManager.HasBeenUsed)
 				{
 					expectation = BuildParamExpectation(invocation, method);
-					// make the expectation not replacable (by a subsequent Constraint(...) call)
-					this.expectationReplacable = false;
 				} 
 				else
 				{

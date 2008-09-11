@@ -68,25 +68,22 @@ namespace Rhino.Mocks.Impl
 		#region C'tor
 
 		/// <summary>
-		/// Creates a new <see cref="T:MethodOptions`1"/> instance.
+		/// Creates a new <see cref="IMethodOptions{T}"/> instance.
 		/// </summary>
 		/// <param name="repository">the repository for this expectation</param>
 		/// <param name="record">the recorder for this proxy</param>
 		/// <param name="proxy">the proxy for this expectation</param>
 		/// <param name="expectation">Expectation.</param>
-		/// <param name="expectationReplacable">If the expectation still can be replaced by a Constraint call</param>
 		public MethodOptions(
 			MockRepository repository, 
 			RecordMockState record, 
 			IMockedObject proxy, 
-			IExpectation expectation,
-			bool expectationReplacable)
+			IExpectation expectation)
 		{
 			this.expectation = expectation;
 			this.proxy = proxy;
 			this.repository = repository;
 			this.record = record;
-			this.expectationReplaced = !expectationReplacable;
 		}
 
 		#endregion

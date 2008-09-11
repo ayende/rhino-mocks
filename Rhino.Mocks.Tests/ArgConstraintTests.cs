@@ -112,17 +112,6 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "This method has already been set to ConstraintsExpectation.")]
-		public void AddConstraintAndThenTryToIgnoreArgs()
-		{
-			Expect.Call(delegate
-			{
-				this.demoMock.VoidStringArg(Arg.Text.Contains("World"));
-			})
-				.IgnoreArguments();
-		}
-
-		[Test]
 		public void RefAndOutArgs()
 		{
 			testMock.RefOut(
