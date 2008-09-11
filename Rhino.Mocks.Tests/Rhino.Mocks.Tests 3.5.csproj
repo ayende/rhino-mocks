@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C63839EC-BEF3-4DCD-BE23-B6DA21E8BE20}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -169,6 +169,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Greg.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Harley.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Henrik.cs" />
     <Compile Include="FieldsProblem\FieldProblem_James.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Jodran.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Maurice.cs" />
     <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Mithresh.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Naraga.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
     <Compile Include="FieldsProblem\FieldProblem_oblomov.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />

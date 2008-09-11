@@ -34,6 +34,8 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl
 {
+	using System.Runtime.CompilerServices;
+
 	/// <summary>
 	/// Summary description for RhinoInterceptor.
 	/// </summary>
@@ -61,6 +63,7 @@ namespace Rhino.Mocks.Impl
 		/// <summary>
 		/// Intercept a method call and direct it to the repository.
 		/// </summary>
+		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Intercept(IInvocation invocation)
 		{
 			if (Array.IndexOf(objectMethods, invocation.Method) != -1)
