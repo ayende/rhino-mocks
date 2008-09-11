@@ -14,7 +14,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void GenericMethodWithOutDecimalParameter()
 		{
 			MockRepository mocks = new MockRepository();
-			IMyInterface mock = mocks.CreateMock<IMyInterface>();
+			IMyInterface mock = mocks.StrictMock<IMyInterface>();
 
 			decimal expectedOutParameter = 1.234M;
 			using (mocks.Record())
