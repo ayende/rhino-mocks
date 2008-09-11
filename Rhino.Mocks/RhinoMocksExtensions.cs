@@ -294,7 +294,7 @@ namespace Rhino.Mocks
 			}
 
 			var mockToRecordExpectation =
-				(T)mocks.DynamicMock(mockedObject.ImplementedTypes[0], mockedObject.ConstructorArguments);
+				(T)mocks.DynamicMock(FindAppropriteType(mockedObject), mockedObject.ConstructorArguments);
 			action(mockToRecordExpectation);
 
 			AssertExactlySingleExpectaton(mocks, mockToRecordExpectation);
@@ -316,6 +316,28 @@ namespace Rhino.Mocks
 						ArgumentsForAllCalls = new List<object[]>(argumentsForAllCalls),
 						Expected = expected
 					};
+		}
+
+		/// <summary>
+		/// Finds the approprite implementation type of this item.
+		/// This is the class or an interface outside of the rhino mocks.
+		/// </summary>
+		/// <param name="mockedObj">The mocked obj.</param>
+		/// <returns></returns>
+		private static Type FindAppropriteType(IMockedObject mockedObj)
+		{
+			foreach (var type in mockedObj.ImplementedTypes)
+			{
+				if(type.IsClass)
+					return type;
+			}
+			foreach (var type in mockedObj.ImplementedTypes)
+			{
+				if(type.Assembly==typeof(IMockedObject).Assembly)
+					continue;
+				return type;
+			}
+			return mockedObj.ImplementedTypes[0];
 		}
 
 		/// <summary>
