@@ -48,6 +48,7 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		/// <returns></returns>
 		public static IMethodOptions<VoidType> Expect<T>(this T mock, Action<T> action)
+			where T : class
 		{
 			return Expect<T, VoidType>(mock, t =>
 			{
@@ -114,7 +115,11 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		/// <returns></returns>
 		public static IMethodOptions<R> Expect<T, R>(this T mock, Func<T, R> action)
+			where T : class
 		{
+			if (mock == null)
+				throw new ArgumentNullException("mock", "You cannot mock a null instance");
+
 			IMockedObject mockedObject = MockRepository.GetMockedObject(mock);
 			MockRepository mocks = mockedObject.Repository;
 			var isInReplayMode = mocks.IsInReplayMode(mock);
@@ -137,6 +142,7 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		/// <returns></returns>
 		public static IMethodOptions<object> Stub<T>(this T mock, Action<T> action)
+			where T : class
 		{
 			return Stub<T, object>(mock, t =>
 			{
@@ -156,6 +162,7 @@ namespace Rhino.Mocks
 		/// <param name="action">The action.</param>
 		/// <returns></returns>
 		public static IMethodOptions<R> Stub<T, R>(this T mock, Func<T, R> action)
+			where T : class
 		{
 			return Expect(mock, action).Repeat.Times(0, int.MaxValue);
 		}
@@ -330,6 +337,7 @@ namespace Rhino.Mocks
 		/// <param name="eventSubscription">The event subscription.</param>
 		/// <returns></returns>
 		public static IEventRaiser GetEventRaiser<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription)
+			where TEventSource : class
 		{
 			return mockObject
 				.Stub(eventSubscription)
@@ -347,6 +355,7 @@ namespace Rhino.Mocks
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, object sender, EventArgs args)
+			where TEventSource : class
 		{
 			var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
 			eventRaiser.Raise(sender, args);
@@ -361,6 +370,7 @@ namespace Rhino.Mocks
 		/// <param name="eventSubscription">The event subscription.</param>
 		/// <param name="args">The args.</param>
 		public static void Raise<TEventSource>(this TEventSource mockObject, Action<TEventSource> eventSubscription, params object[] args)
+			where TEventSource : class
 		{
 			var eventRaiser = GetEventRaiser(mockObject, eventSubscription);
 			eventRaiser.Raise(args);
