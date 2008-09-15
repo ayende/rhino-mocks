@@ -9,7 +9,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	{
 		public class Model
 		{
-			public string UserName { get; set; }
+			private string userName;
+			public string UserName 
+			{ 
+				get { return userName; } 
+				set { userName = value; } 
+			}
 		}
 
 		public interface IView
