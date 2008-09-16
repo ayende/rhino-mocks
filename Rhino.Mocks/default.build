@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding='iso-8859-1' ?>
 <project
-	name="Rhino.Mocks"
+	name="Rhino.Mocks.Partial"
 	default="build"
 	xmlns="http://nant.sf.net/release/0.85/nant.xsd"
 >
@@ -21,8 +21,6 @@
 	<target name="generate-assemblyinfo" depends="init common.generate-assemblyinfo" />
 
 	<target name="merge-asms" depends="init common.generate-assemblyinfo" >
-		<delete file="${build.dir}/Rhino.Mocks.Partial.dll"/>
-		<move file="${build.dir}/Rhino.Mocks.dll" tofile="${build.dir}/Rhino.Mocks.Partial.dll"/>
 		<exec program="${lib.dir}/Tools/ILMerge.exe" basedir="${build.dir}">
 			<arg value="${path::get-full-path( build.dir+'/Rhino.Mocks.Partial.dll')}" />
 			<arg value="${path::get-full-path( build.dir + '/Castle.DynamicProxy2.dll')}" />
