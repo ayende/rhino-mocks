@@ -157,7 +157,7 @@ namespace Rhino.Mocks.Tests
 			Assert.AreEqual(1, foo54.Bar("foo"));
 			Assert.AreEqual(0, foo54.Bar("bar"));
 
-			IList<object[]> arguments = foo54.GetArgumentsForCallsMadeOn(x => x.Bar(Arg<string>.Matches(s => true)));
+			IList<object[]> arguments = foo54.GetArgumentsForCallsMadeOn(x => x.Bar(Arg<string>.Matches((string s) => true)));
 			Assert.AreEqual(2, arguments.Count);
 			Assert.AreEqual("foo", arguments[0][0]);
 			Assert.AreEqual("bar", arguments[1][0]);
@@ -505,9 +505,10 @@ namespace Rhino.Mocks.Tests
 
 			demo.Bar("blah baba");
 
-			demo.AssertWasCalled(x => x.Bar(Arg<string>.Matches(a => a.StartsWith("b") && a.Contains("ba"))));
+			demo.AssertWasCalled(x => x.Bar(Arg<string>.Matches((string a) => a.StartsWith("b") && a.Contains("ba"))));
 		}
 
+#if !FOR_NET_2_0 // we can't get the structure from a delegate, as happens on 2.0, so ignore this
 		[Test]
 		[ExpectedException(typeof(ExpectationViolationException), 
 			"IFoo54.Bar(a => (a.StartsWith(\"b\") && a.Contains(\"ba\"))); Expected #1, Actual #0.")]
@@ -520,8 +521,9 @@ namespace Rhino.Mocks.Tests
 
 			demo.Bar("yoho");
 
-			demo.AssertWasCalled(x => x.Bar(Arg<string>.Matches(a => a.StartsWith("b") && a.Contains("ba"))));
+			demo.AssertWasCalled(x => x.Bar(Arg<string>.Matches((string a) => a.StartsWith("b") && a.Contains("ba"))));
 		}
+#endif
 
 		[Test]
 		[ExpectedException(typeof(InvalidOperationException), "The expectation was removed from the waiting expectations list, did you call Repeat.Any() ? This is not supported in AssertWasCalled()")]

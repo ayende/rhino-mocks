@@ -18,6 +18,8 @@
 			<include name="Interop.mshtml.dll" />
 			<include name="Scripting.dll" />
 			<include name="Rhino.Mocks.CPP.Interfaces.dll" />
+			<include name="Castle.DynamicProxy2.dll" if="${skip.merge.asm}" />
+			<include name="Castle.Core.dll" if="${skip.merge.asm}" />
 		</assemblyfileset>
 
 		<resourcefileset id="project.resources" prefix="Resources" dynamicprefix="false" basedir="${src.dir}">
