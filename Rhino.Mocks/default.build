@@ -9,8 +9,8 @@
 	<include buildfile="${root.dir}/common-project.xml" />
 
 	<target name="init" depends="common.init">
-		<property name="assembly.version" value="3.5.0.2" />
-		<property name="assembly.description" value="Rhino Mocks 3.5 Release Candidate- Mocking Framework" />
+		<property name="assembly.version" value="3.5.0.1337" />
+		<property name="assembly.description" value="Rhino Mocks 3.5 - Mocking Framework" />
 
 		<assemblyfileset id="project.references" basedir="${build.dir}">
 			<include name="Castle.Core.dll" />

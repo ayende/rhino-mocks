@@ -8,7 +8,9 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	{
 		[Test]
 		[ExpectedException(typeof(InvalidOperationException),
-			"The result for TestClass.get_ReadOnly(); has already been setup. Properties are already stubbed with PropertyBehavior by default, no action is required")]
+			@"You are trying to set an expectation on a property that was defined to use PropertyBehavior.
+Instead of writing code such as this: mockObject.Stub(x => x.SomeProperty).Return(42);
+You can use the property directly to achieve the same result: mockObject.SomeProperty = 42;")]
 		public void SetupResult_For_writeable_property_on_stub_should_be_ignored()
 		{
 			MockRepository mocks = new MockRepository();

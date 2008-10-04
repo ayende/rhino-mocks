@@ -48,8 +48,9 @@ namespace Rhino.Mocks.Impl
 		private readonly IMockedObject mockedObject;
 		private int methodCallsCount = 0;
 		private IExpectation lastExpectation;
+	    private bool lastCallWasPropertyBehavior;
 
-		#endregion
+	    #endregion
 
 		#region Properties
 
@@ -59,7 +60,11 @@ namespace Rhino.Mocks.Impl
 		public IExpectation LastExpectation
 		{
 			get { return lastExpectation; }
-			set { lastExpectation = value; }
+			set
+			{
+			    lastCallWasPropertyBehavior = false;
+			    lastExpectation = value;
+			}
 		}
 
 		/// <summary>
@@ -75,9 +80,17 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		public IMethodOptions<T> GetLastMethodOptions<T>()
 		{
-			if (lastExpectation == null)
+            if(lastCallWasPropertyBehavior)
+            {
+                var message =
+                    @"You are trying to set an expectation on a property that was defined to use PropertyBehavior.
+Instead of writing code such as this: mockObject.Stub(x => x.SomeProperty).Return(42);
+You can use the property directly to achieve the same result: mockObject.SomeProperty = 42;";
+                throw new InvalidOperationException(message);
+            }
+		    if (LastExpectation == null)
 				throw new InvalidOperationException("There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?");
-			return new MethodOptions<T>(repository, this, mockedObject, lastExpectation);
+			return new MethodOptions<T>(repository, this, mockedObject, LastExpectation);
 		}
 
 		/// <summary>
@@ -98,7 +111,18 @@ namespace Rhino.Mocks.Impl
 			//not implementing this, since there is never a call to Verify() anyway.
 		}
 
-		/// <summary>
+        /// <summary>
+        /// This method is called to indicate that a property behavior call.
+        /// This is done so we generate good error message in the common case of people using
+        /// Stubbed properties with Return().
+        /// </summary>
+	    public void NotifyCallOnPropertyBehavior()
+	    {
+	        LastExpectation = null;
+	        lastCallWasPropertyBehavior = true;
+	    }
+
+	    /// <summary>
 		/// Gets the matching verify state for this state
 		/// </summary>
 		public IMockState VerifyState
@@ -152,7 +176,7 @@ namespace Rhino.Mocks.Impl
 					expectation = BuildDefaultExpectation(invocation, method, args);
 				}
 				repository.Recorder.Record(mockedObject, method, expectation);
-				lastExpectation = expectation;
+				LastExpectation = expectation;
 				methodCallsCount++;
 				RhinoMocks.Logger.LogRecordedExpectation(invocation, expectation);
 				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
@@ -210,8 +234,8 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		protected virtual void AssertPreviousMethodIsClose()
 		{
-			if (lastExpectation != null && !lastExpectation.ActionsSatisfied)
-				throw new InvalidOperationException("Previous method '" + lastExpectation.ErrorMessage + "' requires a return value or an exception to throw.");
+			if (LastExpectation != null && !LastExpectation.ActionsSatisfied)
+				throw new InvalidOperationException("Previous method '" + LastExpectation.ErrorMessage + "' requires a return value or an exception to throw.");
 		}
 
 		private Exception InvalidOperationOnRecord()

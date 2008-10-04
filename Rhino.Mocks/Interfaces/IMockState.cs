@@ -83,5 +83,12 @@ namespace Rhino.Mocks.Interfaces
 		/// This way, they are reported anyway when Verify() is called.
 		/// </summary>
 		void SetExceptionToThrowOnVerify(Exception ex);
+
+        /// <summary>
+        /// This method is called to indicate that a property behavior call.
+        /// This is done so we generate good error message in the common case of people using
+        /// Stubbed properties with Return().
+        /// </summary>
+	    void NotifyCallOnPropertyBehavior();
 	}
 }

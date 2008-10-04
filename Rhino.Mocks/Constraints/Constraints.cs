@@ -29,7 +29,7 @@
 
 using System;
 using System.Collections;
-#if DOTNET35
+#if !FOR_NET_2_0
 using System.Linq.Expressions;
 #endif
 using System.Reflection;
@@ -370,11 +370,11 @@ namespace Rhino.Mocks.Constraints
 		{
 			return "obj";
 		}
-	}
+    }
 
-	#if DOTNET35
+#if !FOR_NET_2_0
 
-	/// <summary>
+    /// <summary>
 	/// A constraint based on lambda expression, we are using Expression{T} 
 	/// because we want to be able to get good error reporting on that.
 	/// </summary>

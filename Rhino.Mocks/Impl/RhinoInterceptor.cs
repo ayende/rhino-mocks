@@ -84,6 +84,7 @@ namespace Rhino.Mocks.Impl
 			if (proxyInstance.IsPropertyMethod(invocation.GetConcreteMethod()))
 			{
 				invocation.ReturnValue = proxyInstance.HandleProperty(invocation.GetConcreteMethod(), invocation.Arguments);
+			    repository.RegisterPropertyBehaviorOn(proxyInstance);
 				return;
 			}
 			//This call handle the subscribe / remove this method call is for an event,

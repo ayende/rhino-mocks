@@ -226,7 +226,7 @@ namespace Rhino.Mocks.Impl
 		/// Set a delegate to be called when the expectation is matched.
 		/// The delegate return value will be returned from the expectation.
 		/// </summary>
-		public IMethodOptions<T> Do(Action<MethodInvocation> action)
+		public IMethodOptions<T> WhenCalled(Action<MethodInvocation> action)
 		{
 			expectation.WhenCalled += action;
 			return this;

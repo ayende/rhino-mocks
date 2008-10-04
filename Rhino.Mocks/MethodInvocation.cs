@@ -6,7 +6,7 @@ namespace Rhino.Mocks
 {
 	/// <summary>
 	/// This is a data structure that is used by 
-	/// <seealso cref="IMethodOptions{T}.Do(Action{MethodInvocation})"/> to pass
+	/// <seealso cref="IMethodOptions{T}.WhenCalled"/> to pass
 	/// the current method to the relevant delegate
 	/// </summary>
 	public class MethodInvocation

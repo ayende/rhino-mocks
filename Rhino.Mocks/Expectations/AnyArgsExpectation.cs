@@ -98,7 +98,7 @@ namespace Rhino.Mocks.Expectations
 			return Method.GetHashCode();
 		}
 
-		private  string AnyFormatArg(Array args, int i)
+		private static string AnyFormatArg(Array args, int i)
 		{
 			return "any";
 		}

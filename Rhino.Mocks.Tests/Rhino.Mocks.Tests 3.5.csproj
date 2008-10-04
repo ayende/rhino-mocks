@@ -230,6 +230,7 @@
     <Compile Include="FieldsProblem\FieldProblem_StevenS.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Thierry.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Tim.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_TrueWill.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Wade.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Wendy.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Will.cs" />

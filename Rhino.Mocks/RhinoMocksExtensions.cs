@@ -26,12 +26,12 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-#if DOTNET35
 using System;
 using System.Collections.Generic;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Interfaces;
+
 
 namespace Rhino.Mocks
 {
@@ -114,7 +114,7 @@ namespace Rhino.Mocks
 		/// <param name="mock">The mock.</param>
 		/// <param name="action">The action.</param>
 		/// <returns></returns>
-		public static IMethodOptions<R> Expect<T, R>(this T mock, Func<T, R> action)
+        public static IMethodOptions<R> Expect<T, R>(this T mock, Function<T, R> action)
 			where T : class
 		{
 			if (mock == null)
@@ -161,7 +161,7 @@ namespace Rhino.Mocks
 		/// <param name="mock">The mock.</param>
 		/// <param name="action">The action.</param>
 		/// <returns></returns>
-		public static IMethodOptions<R> Stub<T, R>(this T mock, Func<T, R> action)
+        public static IMethodOptions<R> Stub<T, R>(this T mock, Function<T, R> action)
 			where T : class
 		{
 			return Expect(mock, action).Repeat.Times(0, int.MaxValue);
@@ -425,5 +425,3 @@ namespace Rhino.Mocks
 		#endregion
 	}
 }
-
-#endif

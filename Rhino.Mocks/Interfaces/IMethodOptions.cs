@@ -228,7 +228,7 @@ namespace Rhino.Mocks.Interfaces
 		/// Set a delegate to be called when the expectation is matched
 		/// and allow to optionally modify the invocation as needed
 		/// </summary>
-		IMethodOptions<T> Do(Action<MethodInvocation> action);
+		IMethodOptions<T> WhenCalled(Action<MethodInvocation> action);
 
 		/*
 			 * Method: CallOriginalMethod

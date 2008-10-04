@@ -1344,5 +1344,16 @@ namespace Rhino.Mocks
 			IMockState mockState = repository.proxies[proxy];
 			return mockState is StubRecordMockState || mockState is StubReplayMockState;
 		}
+
+        /// <summary>
+        /// Register a call on a prperty behavior 
+        /// </summary>
+        /// <param name="instance"></param>
+	    protected internal void RegisterPropertyBehaviorOn(IMockedObject instance)
+	    {
+            lastRepository = this;
+            lastMockedObject=instance;
+            proxies[instance].NotifyCallOnPropertyBehavior();
+	    }
 	}
 }

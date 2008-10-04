@@ -23,7 +23,7 @@ namespace Rhino.Mocks.Tests
 			var stub = MockRepository.GenerateStub<IDemo>();
 			stub.Stub(x => x.StringArgString(Arg.Is("")))
 				.Return("blah")
-				.Do(delegate { wasCalled = true; });
+				.WhenCalled(delegate { wasCalled = true; });
 			Assert.AreEqual("blah", stub.StringArgString(""));
 			Assert.IsTrue(wasCalled);
 		}
@@ -31,26 +31,22 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void Can_modify_return_value()
 		{
-			var wasCalled = true;
 			var stub = MockRepository.GenerateStub<IDemo>();
 			stub.Stub(x => x.StringArgString(Arg.Is("")))
 				.Return("blah")
-				.Do(invocation => invocation.ReturnValue = "arg");
+				.WhenCalled(invocation => invocation.ReturnValue = "arg");
 			Assert.AreEqual("arg", stub.StringArgString(""));
-			Assert.IsTrue(wasCalled);
 		}
 
 		[Test]
 		public void Can_inspect_method_arguments()
 		{
-			var wasCalled = true;
 			var stub = MockRepository.GenerateStub<IDemo>();
 			stub.Stub(x => x.StringArgString(null))
 				.IgnoreArguments()
 				.Return("blah")
-				.Do(invocation => Assert.AreEqual("foo", invocation.Arguments[0]));
+				.WhenCalled(invocation => Assert.AreEqual("foo", invocation.Arguments[0]));
 			Assert.AreEqual("blah", stub.StringArgString("foo"));
-			Assert.IsTrue(wasCalled);
 		}
 
 	}

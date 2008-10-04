@@ -168,8 +168,8 @@ namespace Rhino.Mocks.Impl
 		{
 			if (propertiesValues == null)
 				propertiesValues = new Hashtable();
-
-			if (method.Name.StartsWith("get_"))
+		    
+            if (method.Name.StartsWith("get_"))
 			{
 				string key = GenerateKey(method, args);
 				if (propertiesValues.Contains(key) == false && method.ReturnType.IsValueType)

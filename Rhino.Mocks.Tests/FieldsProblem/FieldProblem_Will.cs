@@ -5,7 +5,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using MbUnit.Framework;
 
-namespace Rhino.Mocks.Tests
+namespace Rhino.Mocks.Tests.FieldsProblem
 {
     [TestFixture]
     public class FieldProblem_Will
@@ -24,6 +24,7 @@ namespace Rhino.Mocks.Tests
 
         }
     }
+
     [ServiceContract]
     public interface IServiceClassInterface
     {
@@ -40,4 +41,5 @@ namespace Rhino.Mocks.Tests
         }
     }
 }
+
 #endif

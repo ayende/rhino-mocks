@@ -143,7 +143,15 @@ namespace Rhino.Mocks.Impl
 			this.exceptionToThrowOnVerify = ex;
 		}
 
-		/// <summary>
+        /// <summary>
+        /// not relevant
+        /// </summary>
+	    public void NotifyCallOnPropertyBehavior()
+	    {
+	        // doesn't deal with recording anyway
+	    }
+
+	    /// <summary>
 		/// Verify that this mock expectations have passed.
 		/// </summary>
 		public virtual void Verify()

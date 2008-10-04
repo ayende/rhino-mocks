@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -71,12 +71,6 @@
     </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -270,6 +264,7 @@
     <None Include="..\..\ayende-open-source.snk">
       <Link>ayende-open-source.snk</Link>
     </None>
+    <Compile Include="CompatabilityWith2.0.cs" />
     <None Include="Diagram.cd" />
   </ItemGroup>
   <ItemGroup>

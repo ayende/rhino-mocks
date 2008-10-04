@@ -121,9 +121,17 @@ namespace Rhino.Mocks.Impl
 		public void SetExceptionToThrowOnVerify(Exception ex)
 		{
 			//not implementing this, we are already verified.
-		}
+        }
 
-		private Exception InvalidInVerifiedState()
+        /// <summary>
+        /// not relevant
+        /// </summary>
+        public void NotifyCallOnPropertyBehavior()
+	    {
+	        // doesn't deal with recording anyway
+	    }
+
+	    private Exception InvalidInVerifiedState()
 		{
 			return new InvalidOperationException("This action is invalid when the mock object is in verified state.");
 		}

@@ -159,6 +159,11 @@ namespace Rhino.Mocks.Tests
 			public void SetExceptionToThrowOnVerify(Exception ex)
 			{
 			}
+
+		    public void NotifyCallOnPropertyBehavior()
+		    {
+		        
+		    }
 		}
 
 		public object Query(object mock)
