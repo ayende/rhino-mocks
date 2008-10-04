@@ -1,4 +1,5 @@
 Castle.Core.Interceptor.IInvocation
+Castle.Core.Interceptor.IInterceptor
 Castle.Core.Interceptor.IProxyTargetAccessor
 Castle.DynamicProxy.AbstractInvocation
 Castle.DynamicProxy.Generators.AttributesToAvoidReplicating
