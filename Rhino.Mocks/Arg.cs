@@ -1,5 +1,5 @@
 using System;
-#if !FOR_NET_2_0
+#if DOTNET35
 using System.Linq.Expressions;
 #endif
 using Rhino.Mocks.Constraints;
@@ -22,7 +22,7 @@ namespace Rhino.Mocks
 	public static class Arg<T>
     {
 
-#if !FOR_NET_2_0
+#if DOTNET35
 
         /// <summary>
 		/// Register the predicate as a constraint for the current call.

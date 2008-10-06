@@ -1,3 +1,4 @@
+#if DOTNET35
 using System;
 using MbUnit.Framework;
 using Rhino.Mocks;
@@ -41,3 +42,4 @@ You can use the property directly to achieve the same result: mockObject.SomePro
     }
 
 }
+#endif

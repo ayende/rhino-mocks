@@ -82,7 +82,7 @@ namespace Rhino.Mocks.Impl
 		{
             if(lastCallWasPropertyBehavior)
             {
-                var message =
+                string message =
                     @"You are trying to set an expectation on a property that was defined to use PropertyBehavior.
 Instead of writing code such as this: mockObject.Stub(x => x.SomeProperty).Return(42);
 You can use the property directly to achieve the same result: mockObject.SomeProperty = 42;";
