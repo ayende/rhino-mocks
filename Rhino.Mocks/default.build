@@ -23,6 +23,9 @@
 	<target name="generate-assemblyinfo" depends="init common.generate-assemblyinfo" />
 
 	<target name="merge-asms" depends="init common.generate-assemblyinfo" unless="${skip.merge.asm}">
+		<if test="${file::exists(build.dir + '/Rhino.Mocks.xml')}">
+			<delete file="${build.dir}/Rhino.Mocks.xml" failonerror="true" />
+		</if>
 		<move file="${build.dir}/Rhino.Mocks.Partial.xml" tofile="${build.dir}/Rhino.Mocks.xml"/>
 		<exec program="${lib.dir}/Tools/ILMerge.exe" basedir="${build.dir}">
 			<arg value="${path::get-full-path( build.dir+'/Rhino.Mocks.Partial.dll')}" />
