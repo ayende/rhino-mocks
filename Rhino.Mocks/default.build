@@ -22,8 +22,9 @@
 
 	<target name="generate-assemblyinfo" depends="init common.generate-assemblyinfo" />
 
-	<target name="merge-asms" depends="init common.generate-assemblyinfo" >
-		<exec program="${lib.dir}/Tools/ILMerge.exe" basedir="${build.dir}" unless="${skip.merge.asm}">
+	<target name="merge-asms" depends="init common.generate-assemblyinfo" unless="${skip.merge.asm}">
+		<move file="${build.dir}/Rhino.Mocks.Partial.xml" tofile="${build.dir}/Rhino.Mocks.xml"/>
+		<exec program="${lib.dir}/Tools/ILMerge.exe" basedir="${build.dir}">
 			<arg value="${path::get-full-path( build.dir+'/Rhino.Mocks.Partial.dll')}" />
 			<arg value="${path::get-full-path( build.dir + '/Castle.DynamicProxy2.dll')}" />
 			<arg value="${path::get-full-path( build.dir + '/Castle.Core.dll')}" />
