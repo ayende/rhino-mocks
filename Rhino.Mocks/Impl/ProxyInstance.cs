@@ -53,6 +53,7 @@ namespace Rhino.Mocks.Impl
 
 	    private readonly IDictionary<MethodInfo, ICollection<object[]>> methodToActualCalls = new Dictionary<MethodInfo, ICollection<object[]>>();
 	    private object[] constructorArguments = new object[0];
+	    private IList<IMockedObject> dependentMocks = new List<IMockedObject>();
 
 	    /// <summary>
 		/// Create a new instance of <see cref="ProxyInstance"/>
@@ -64,7 +65,15 @@ namespace Rhino.Mocks.Impl
 			hashCode = MockedObjectsEquality.NextHashCode;
 		}
 
-		/// <summary>
+        /// <summary>
+        /// Mocks that are tied to this mock lifestyle
+        /// </summary>
+        public IList<IMockedObject> DependentMocks
+	    {
+            get { return dependentMocks; }
+	    }
+
+	    /// <summary>
 		/// The unique hash code of this proxy, which is not related
 		/// to the value of the GetHashCode() call on the object.
 		/// </summary>

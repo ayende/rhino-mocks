@@ -179,6 +179,9 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 				LastExpectation = expectation;
 				methodCallsCount++;
 				RhinoMocks.Logger.LogRecordedExpectation(invocation, expectation);
+			    object returnValue;
+                if (TryCreateReturnValue(expectation, out returnValue))
+                    return returnValue;
 				return ReturnValueUtil.DefaultValue(method.ReturnType, invocation);
 			}
 			finally
@@ -189,6 +192,24 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 				ArgManager.Clear();
 			}
 		}
+
+	    private bool TryCreateReturnValue(IExpectation expectation, out object returnValue)
+	    {
+            try
+	        {
+                returnValue = Repository.DynamicMock(expectation.Method.ReturnType);
+	        }
+	        catch (Exception)
+	        {
+                // couldn't create mock object for it, we fall back to returning a default value
+                returnValue = null;
+                return false;   
+	        }
+            mockedObject.DependentMocks.Add(MockRepository.GetMockedObject(returnValue));
+	        expectation.ReturnValue = returnValue;
+	        expectation.AllowTentativeReturn = true;
+	        return true;
+	    }
 
 	    /// <summary>
 		/// Verify that we can move to replay state and move 

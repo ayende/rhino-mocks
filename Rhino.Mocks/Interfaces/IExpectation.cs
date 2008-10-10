@@ -142,11 +142,6 @@ namespace Rhino.Mocks.Interfaces
 		/// <value>The invocation.</value>
 		IInvocation Originalinvocation { get;}
 
-        /// <summary>
-        /// Allow to set the return value in the future, if it was already set.
-        /// </summary>
-	    void IgnoreMissingReturnValueUntilExecuteTime();
-
 		/// <summary>
 		/// Occurs when the exceptation is match on a method call
 		/// </summary>
@@ -157,5 +152,10 @@ namespace Rhino.Mocks.Interfaces
 		/// </summary>
 		/// <returns></returns>
 		string BuildVerificationFailureMessage();
+
+        /// <summary>
+        /// Allow to set the return value in the future, if it was already set.
+        /// </summary>
+        bool AllowTentativeReturn { set;  get; }
 	}
 }

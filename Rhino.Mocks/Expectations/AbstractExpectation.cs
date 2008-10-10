@@ -103,9 +103,9 @@ namespace Rhino.Mocks.Expectations
         /// <summary>
         /// The method originalInvocation
         /// </summary>
-        private IInvocation originalInvocation;
+        private readonly IInvocation originalInvocation;
 
-        private bool ignoreMissingReturnValueUntilExecuteTime = false;
+        private bool allowTentativeReturn = false;
 
         #endregion
 
@@ -272,7 +272,7 @@ namespace Rhino.Mocks.Expectations
                     exceptionToThrow != null ||
                     actionToExecute != null ||
                     returnValueSet ||
-                    ignoreMissingReturnValueUntilExecuteTime ||
+                    allowTentativeReturn ||
                     repeatableOption == RepeatableOption.OriginalCall ||
                     repeatableOption == RepeatableOption.OriginalCallBypassingMocking ||
                     repeatableOption == RepeatableOption.PropertyBehavior)
@@ -325,14 +325,6 @@ namespace Rhino.Mocks.Expectations
 			return sb.ToString();
     	}
 
-    	/// <summary>
-        /// Allow to set the return value in the future, if it was already set.
-        /// </summary>
-        public void IgnoreMissingReturnValueUntilExecuteTime()
-        {
-            ignoreMissingReturnValueUntilExecuteTime = true;
-        }
-
 		/// <summary>
 		/// Occurs when the exceptation is match on a method call
 		/// </summary>
@@ -343,7 +335,7 @@ namespace Rhino.Mocks.Expectations
         /// </summary>
         public object ReturnOrThrow(IInvocation invocation, object[] args)
         {
-            ignoreMissingReturnValueUntilExecuteTime = false;
+            allowTentativeReturn = false;
 
             if (ActionsSatisfied == false)
                 throw new InvalidOperationException("Method '" + ErrorMessage + "' requires a return value or an exception to throw.");
@@ -417,6 +409,16 @@ namespace Rhino.Mocks.Expectations
             exceptionToThrow = expectation.ExceptionToThrow;
             message = expectation.Message;
         	outRefParams = expectation.OutRefParams;
+            allowTentativeReturn = expectation.AllowTentativeReturn;
+        }
+
+        /// <summary>
+        /// Allow to set the return value in the future, if it was already set.
+        /// </summary>
+        public bool AllowTentativeReturn
+        {
+            get { return allowTentativeReturn; }
+            set { allowTentativeReturn = value; }
         }
 
         #endregion
@@ -481,7 +483,7 @@ namespace Rhino.Mocks.Expectations
 
         private void ActionOnMethodNotSpesified()
         {
-            if(ignoreMissingReturnValueUntilExecuteTime)
+            if(allowTentativeReturn)
                 return;
             if (returnValueSet == false && exceptionToThrow == null && actionToExecute == null)
                 return;

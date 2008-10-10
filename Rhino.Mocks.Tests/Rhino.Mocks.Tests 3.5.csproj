@@ -350,6 +350,7 @@
     <Compile Include="PartialMockTests.cs" />
     <Compile Include="PropertySetterFixture.cs" />
     <Compile Include="RecordingMocks.cs" />
+    <Compile Include="RecursiveMocks.cs" />
     <Compile Include="RemotingMockTests.cs" />
     <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
     <Compile Include="RefOutParameters.cs" />

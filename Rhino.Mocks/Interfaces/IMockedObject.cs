@@ -39,6 +39,11 @@ namespace Rhino.Mocks.Interfaces
 	/// </summary>
 	public interface IMockedObject
 	{
+        /// <summary>
+        /// Mocks that are tied to this mock lifestyle
+        /// </summary>
+        IList<IMockedObject> DependentMocks { get; }
+
 		/// <summary>
 		/// The unique hash code of this mock, which is not related
 		/// to the value of the GetHashCode() call on the object.

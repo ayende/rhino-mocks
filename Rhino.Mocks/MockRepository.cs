@@ -577,6 +577,10 @@ namespace Rhino.Mocks
 			ClearLastProxy(obj);
 			IMockState state = proxies[obj];
 			proxies[obj] = state.Replay();
+		    foreach (var dependentMock in GetMockedObject(obj).DependentMocks)
+		    {
+		        ReplayCore(dependentMock, checkInsideOrdering);
+		    }
 		}
 
 		/*
@@ -622,6 +626,10 @@ namespace Rhino.Mocks
 			GetMockedObject(obj).ClearState(options);
 
 			proxies[obj] = proxies[obj].BackToRecord();
+            foreach (var dependentMock in GetMockedObject(obj).DependentMocks)
+		    {
+		        BackToRecord(dependentMock, options);
+		    }
 		}
 
 		/*
@@ -641,6 +649,10 @@ namespace Rhino.Mocks
 			try
 			{
 				proxies[obj].Verify();
+                foreach (var dependentMock in GetMockedObject(obj).DependentMocks)
+			    {
+			        Verify(dependentMock);
+			    }
 			}
 			finally
 			{

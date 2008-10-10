@@ -251,7 +251,7 @@ namespace Rhino.Mocks.Impl
         /// <returns>IRepeat that defines how many times the method will return this value</returns>
         public IMethodOptions<T> TentativeReturn()
 	    {
-            expectation.IgnoreMissingReturnValueUntilExecuteTime();
+            expectation.AllowTentativeReturn = true;
             return this;
 	    }
 
