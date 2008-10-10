@@ -1,10 +1,11 @@
+#if DOTNET35
 using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests
 {
 	using System;
 	using Exceptions;
-#if DOTNET35
+
 	[TestFixture]
 	public class DotNet35Tests
 	{
@@ -90,5 +91,5 @@ IDemo.VoidStringArg(""blah""); Expected #1, Actual #0.",delegate
 			}
 		}
 	}
-#endif
 }
+#endif

@@ -8,9 +8,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
     {
         public class A
         {
-            public int a { get; set;}
-            public int b { get; set; }
+		    private int _a, _b;
+            public int a { get {return _a;} set{_a = value;}}
+			public int b { get {return _b;} set{_b = value;}}
         }
+		
         public interface MyInterface
         {
             int retValue(A a);
