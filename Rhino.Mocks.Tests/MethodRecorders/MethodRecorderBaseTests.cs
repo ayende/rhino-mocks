@@ -33,6 +33,7 @@ using Castle.Core.Interceptor;
 using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Expectations;
+using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
 using Rhino.Mocks.Generated;
@@ -59,7 +60,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 
 			proxy = new object();
 			method = typeof (object).GetMethod("ToString");
-			expectation = new AnyArgsExpectation(new FakeInvocation(method));
+			expectation = new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1));
 			args = new object[0];
 		}
 
@@ -126,7 +127,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void DoRemoveExpectationCalled()
 		{
-			recorder.RemoveExpectation(new AnyArgsExpectation(new FakeInvocation(method)));
+			recorder.RemoveExpectation(new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1)));
 			Assert.IsTrue(testRecorder.DoRemoveExpectationCalled);
 		}
 

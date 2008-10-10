@@ -194,7 +194,7 @@ namespace Rhino.Mocks.Expectations
                 //this is handled the method recorder
                 if (repeatableOption == RepeatableOption.Any)
                     return true;
-                return actualCallsCount < expected.Max;
+                return expected.Max == null || actualCallsCount < expected.Max.Value;
             }
         }
 
@@ -207,7 +207,11 @@ namespace Rhino.Mocks.Expectations
             {
                 if (repeatableOption != RepeatableOption.Normal && repeatableOption != RepeatableOption.OriginalCall)
                     return true;
-                return expected.Min <= actualCallsCount && actualCallsCount <= expected.Max;
+                if(expected.Min > actualCallsCount )
+                    return false;
+                if(Expected.Max==null)
+                    return true;
+                return actualCallsCount <= expected.Max.Value;
             }
         }
 
@@ -388,13 +392,14 @@ namespace Rhino.Mocks.Expectations
         /// Creates a new <see cref="AbstractExpectation"/> instance.
         /// </summary>
         /// <param name="invocation">The originalInvocation for this method, required because it contains the generic type infromation</param>
-        protected AbstractExpectation(IInvocation invocation)
+        /// <param name="expectedRange">Number of method calls for this expectaions</param>
+		protected AbstractExpectation(IInvocation invocation, Range expectedRange)
         {
             Validate.IsNotNull(invocation, "originalInvocation");
             Validate.IsNotNull(invocation.Method, "method");
             this.originalInvocation = invocation;
             this.method = invocation.Method;
-            this.expected = new Range(1, 1);
+            this.expected = expectedRange;
         }
 
         /// <summary>
@@ -402,7 +407,7 @@ namespace Rhino.Mocks.Expectations
         /// </summary>
         /// <param name="expectation">Expectation.</param>
         protected AbstractExpectation(IExpectation expectation)
-            : this(expectation.Originalinvocation)
+            : this(expectation.Originalinvocation, new Range(1, 1))
         {
             returnValue = expectation.ReturnValue;
             returnValueSet = expectation.HasReturnValue;

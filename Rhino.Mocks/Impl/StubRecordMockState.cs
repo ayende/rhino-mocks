@@ -104,5 +104,14 @@ namespace Rhino.Mocks.Impl
 			AssertPreviousMethodIsClose();
 			return new StubReplayMockState(this);
 		}
+
+        /// <summary>
+        /// Get the default call count range expectaion
+        /// </summary>
+        /// <returns></returns>
+        protected override Range GetDefaultCallCountRangeExpectation()
+        {
+            return new Range(1, null);
+        }
 	}
 }

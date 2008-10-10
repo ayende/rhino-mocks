@@ -58,6 +58,15 @@ namespace Rhino.Mocks.Impl
 		}
 
         /// <summary>
+        /// Get the default call count range expectaion
+        /// </summary>
+        /// <returns></returns>
+        protected override Range GetDefaultCallCountRangeExpectation()
+        {
+            return new Range(1, null);
+        }
+
+        /// <summary>
         /// Gets a mock state that match the original mock state of the object.
         /// </summary>
         public override IMockState BackToRecord()

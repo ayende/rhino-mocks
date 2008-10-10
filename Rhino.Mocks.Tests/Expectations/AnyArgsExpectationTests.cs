@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests.Expectations
 
 		protected override IExpectation GetExpectation(MethodInfo m, Range r, int actual)
 		{
-			AnyArgsExpectation expectation = new AnyArgsExpectation(new FakeInvocation(m));
+			AnyArgsExpectation expectation = new AnyArgsExpectation(new FakeInvocation(m), new Range(1, 1));
 			SetupExpectation(expectation, r, actual);
 			return expectation;
 		}
@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Tests.Expectations
 		public void SetUp()
 		{
             method = typeof(int).GetMethod("CompareTo", new Type[] { typeof(object) });
-			equal = new ArgsEqualExpectation(new FakeInvocation(this.method), new object[] {1});
+			equal = new ArgsEqualExpectation(new FakeInvocation(this.method), new object[] {1}, new Range(1, 1));
 			any = new AnyArgsExpectation(this.equal);
 		}
 
@@ -78,14 +78,14 @@ namespace Rhino.Mocks.Tests.Expectations
 		[Test]
 		public void AnyArgsIsNotEqualsToNonAnyArgsExpectation()
 		{
-			IExpectation other = new ArgsEqualExpectation(new FakeInvocation(method), new object[0]);
+			IExpectation other = new ArgsEqualExpectation(new FakeInvocation(method), new object[0], new Range(1, 1));
 			Assert.AreNotEqual(any, other );
 		}
 
 		[Test]
 		public void AnyArgsEqualToAnyOtherAnyArgs()
 		{
-			Assert.AreEqual(any, new AnyArgsExpectation(new FakeInvocation(method)));
+			Assert.AreEqual(any, new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1)));
 		}
 	}
 

@@ -31,6 +31,7 @@ using System;
 using System.Reflection;
 using System.Text;
 using Castle.Core.Interceptor;
+using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Expectations
@@ -58,7 +59,8 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		/// <param name="invocation">Invocation for this expectation</param>
 		/// <param name="callback">Callback.</param>
-		public CallbackExpectation(IInvocation invocation, Delegate callback) : base(invocation)
+		/// <param name="expectedRange">Number of method calls for this expectaions</param>
+		public CallbackExpectation(IInvocation invocation, Delegate callback, Range expectedRange) : base(invocation, expectedRange)
 		{
 			this.callback = callback;
 			ValidateCallback();

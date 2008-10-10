@@ -31,8 +31,6 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
             MyInterface myInterface = mock.StrictMock<MyInterface>();
 
-            MyInterface myClass = new MyClass();
-
             A a = new A();
             a.a = 10;
             a.b = 12;

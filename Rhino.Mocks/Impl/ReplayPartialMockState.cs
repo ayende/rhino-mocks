@@ -65,18 +65,15 @@ namespace Rhino.Mocks.Impl
 				RhinoMocks.Logger.LogReplayedExpectation(invocation, expectation);
 				return expectation.ReturnOrThrow(invocation,args);
 			}
-			else if (method.IsAbstract == false)
-			{
-				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Partial mock: calling original method");
-				invocation.Proceed();
-				return invocation.ReturnValue;
-			}
-			else
-			{
-				RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Partial mock: abstract method called but was not expected");
-				//because the expectation doesn't exist, an exception will be thrown
-				return repository.Replayer.GetRecordedExpectation(invocation,proxy, method, args);
-			}
+		    if (method.IsAbstract == false)
+		    {
+		        RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Partial mock: calling original method");
+		        invocation.Proceed();
+		        return invocation.ReturnValue;
+		    }
+		    RhinoMocks.Logger.LogUnexpectedMethodCall(invocation, "Partial mock: abstract method called but was not expected");
+		    //because the expectation doesn't exist, an exception will be thrown
+		    return repository.Replayer.GetRecordedExpectation(invocation,proxy, method, args);
 		}
 
 

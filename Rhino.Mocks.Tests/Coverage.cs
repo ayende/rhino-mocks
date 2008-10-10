@@ -124,7 +124,7 @@ namespace Rhino.Mocks.Tests
 		[ExpectedException(typeof(InvalidOperationException),"Trying to run a Do() delegate when no arguments were matched to the expectation.")]
 		public void TryingToPassNullToReturnOrThrowWithActionWillThrow()
 		{
-			AnyArgsExpectation expectation = new AnyArgsExpectation(new FakeInvocation(typeof(object).GetMethod("ToString")));
+			AnyArgsExpectation expectation = new AnyArgsExpectation(new FakeInvocation(typeof(object).GetMethod("ToString")), new Range(1, 1));
 			expectation.ActionToExecute = (ToStringDelegate)delegate { return "fpp"; };
 			expectation.ReturnOrThrow(null,null);
 		}

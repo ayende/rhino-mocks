@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Tests.Expectations
 
 		protected override IExpectation GetExpectation(MethodInfo m, Range r, int actual)
 		{
-			IExpectation expectation = new ConstraintsExpectation(new FakeInvocation(m),new AbstractConstraint[0]); 
+			IExpectation expectation = new ConstraintsExpectation(new FakeInvocation(m),new AbstractConstraint[0], new Range(1, 1)); 
 			SetupExpectation(expectation, r, actual);
 			return expectation;
 		}
@@ -59,7 +59,7 @@ namespace Rhino.Mocks.Tests.Expectations
 					Is.Anything(),
 					Text.Like(@"[\w\d]+"),
 					Is.Equal(3.14f),
-				});
+				}, new Range(1, 1));
 		}
 
 		[Test]
@@ -71,14 +71,14 @@ namespace Rhino.Mocks.Tests.Expectations
 					Is.Anything(),
 					null,
 					Is.Equal(3.14f),
-			});
+			}, new Range(1, 1));
 		}
 
 		[Test]
 		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: constraints")]
 		public void NullConstraints()
 		{
-			new ConstraintsExpectation(new FakeInvocation(this.method), null);
+			new ConstraintsExpectation(new FakeInvocation(this.method), null, new Range(1, 1));
 		}
 
 		[Test]
@@ -104,7 +104,7 @@ namespace Rhino.Mocks.Tests.Expectations
 				{
 					Is.Anything(),
 					Is.Null()
-				});
+				}, new Range(1, 1));
 		}
 
 		[Test]
@@ -117,7 +117,7 @@ namespace Rhino.Mocks.Tests.Expectations
 					Is.Null(),
 					Is.NotNull(),
 					Text.Like("Song")
-				});
+				}, new Range(1, 1));
 
 		}
 
@@ -129,7 +129,7 @@ namespace Rhino.Mocks.Tests.Expectations
 					Is.Anything(),
 					Is.Null(),
 					Text.Like(@"[\w\d]+1234")
-				});
+				}, new Range(1, 1));
 			string message = "IDemo.VoidThreeArgs(anything, equal to null, like \"[\\w\\d]+1234\");";
 			Assert.AreEqual(message, expectation.ErrorMessage);
 		}

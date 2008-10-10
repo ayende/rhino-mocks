@@ -185,10 +185,10 @@ namespace Rhino.Mocks.Tests
 			MockRepository mocks = new MockRepository();
 			IFoo54 demo = mocks.DynamicMock<IFoo54>();
 
-			demo.Expect(x => x.DoSomething()).Return(1);
+			demo.Expect(x => x.DoSomething()).Return(1).Repeat.Once();
 			mocks.Replay(demo);
 			Assert.AreEqual(1, demo.DoSomething());
-			demo.Expect(x => x.DoSomething()).Return(15);
+            demo.Expect(x => x.DoSomething()).Return(15).Repeat.Once();
 			Assert.AreEqual(15, demo.DoSomething());
 
 			mocks.VerifyAll();

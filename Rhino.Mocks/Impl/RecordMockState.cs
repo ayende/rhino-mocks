@@ -250,12 +250,12 @@ You can use the property directly to achieve the same result: mockObject.SomePro
             return new InvalidOperationException(string.Format("This action is invalid when the mock object {0}is in record state.", mockedTypes));
         }
 
-        private static IExpectation BuildDefaultExpectation(IInvocation invocation, MethodInfo method, object[] args)
+        private IExpectation BuildDefaultExpectation(IInvocation invocation, MethodInfo method, object[] args)
         {
             ParameterInfo[] parameters = method.GetParameters();
             if (!Array.Exists(parameters, delegate(ParameterInfo p) { return p.IsOut; }))
             {
-                return new ArgsEqualExpectation(invocation, args);
+                return new ArgsEqualExpectation(invocation, args, GetDefaultCallCountRangeExpectation());
             }
 
             //The value of an incoming out parameter variable is ignored
@@ -264,13 +264,22 @@ You can use the property directly to achieve the same result: mockObject.SomePro
             {
                 constraints[i] = parameters[i].IsOut ? Is.Anything() : Is.Equal(args[i]);
             }
-            return new ConstraintsExpectation(invocation, constraints);
+            return new ConstraintsExpectation(invocation, constraints, GetDefaultCallCountRangeExpectation());
         }
 
-		private static IExpectation BuildParamExpectation(IInvocation invocation, MethodInfo method)
+        /// <summary>
+        /// Get the default call count range expectaion
+        /// </summary>
+        /// <returns></returns>
+	    protected virtual Range GetDefaultCallCountRangeExpectation()
+	    {
+	        return new Range(1, 1);
+	    }
+
+	    private static IExpectation BuildParamExpectation(IInvocation invocation, MethodInfo method)
 		{
 			ArgManager.CheckMethodSignature(method);
-			IExpectation expectation = new ConstraintsExpectation(invocation, ArgManager.GetAllConstraints());
+			IExpectation expectation = new ConstraintsExpectation(invocation, ArgManager.GetAllConstraints(), new Range(1, 1));
 			expectation.OutRefParams = ArgManager.GetAllReturnValues();
 			return expectation;
 		}

@@ -429,8 +429,8 @@ namespace Rhino.Mocks.Tests
             mockedWriter.Close();
 
             // Configure expectations for object through interface
-            Expect.Call(errorInfo.Error).Return(null);
-            Expect.Call(errorInfo.Error).Return("error!!!");
+            Expect.Call(errorInfo.Error).Return(null).Repeat.Once();
+            Expect.Call(errorInfo.Error).Return("error!!!").Repeat.Once();
 
             mocks.ReplayAll();
 

@@ -49,7 +49,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void SetUp()
 		{
 			endsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
-			expectation = new AnyArgsExpectation(new FakeInvocation(endsWith));
+			expectation = new AnyArgsExpectation(new FakeInvocation(endsWith), new Range(1, 1));
 			proxy = new ProxyInstance(null);
 		}
 
@@ -60,8 +60,8 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			ProxyInstance proxy2 = new ProxyInstance(null);
 			MethodInfo method1 = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) }),
 				method2 = endsWith;
-			IExpectation expectation1 = new AnyArgsExpectation(new FakeInvocation(method1)),
-				expectation2 = new AnyArgsExpectation(new FakeInvocation(method2));
+			IExpectation expectation1 = new AnyArgsExpectation(new FakeInvocation(method1), new Range(1, 1)),
+				expectation2 = new AnyArgsExpectation(new FakeInvocation(method2), new Range(1, 1));
 			ProxyMethodExpectationTriplet same1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				same2 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1);
 			Assert.AreEqual(same1, same2);

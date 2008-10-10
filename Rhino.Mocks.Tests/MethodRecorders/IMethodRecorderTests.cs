@@ -31,6 +31,7 @@ using System;
 using System.Reflection;
 using MbUnit.Framework;
 using Rhino.Mocks.Expectations;
+using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Tests.Expectations;
@@ -53,8 +54,8 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			demo = this.mocks.StrictMock(typeof (IDemo)) as IDemo;
 			voidNoArgs = typeof (IDemo).GetMethod("VoidNoArgs");
 			voidThreeArgs = typeof (IDemo).GetMethod("VoidThreeStringArgs");
-			expectationOne = new AnyArgsExpectation(new FakeInvocation(this.voidNoArgs));
-			expectationTwo = new AnyArgsExpectation(new FakeInvocation(voidThreeArgs));
+			expectationOne = new AnyArgsExpectation(new FakeInvocation(this.voidNoArgs), new Range(1, 1));
+			expectationTwo = new AnyArgsExpectation(new FakeInvocation(voidThreeArgs), new Range(1, 1));
 			recorder = CreateRecorder();
 			ChildSetup();
 		}
@@ -109,7 +110,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		public void ReplaceExpectation()
 		{
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
-			AnyArgsExpectation newExpectation = new AnyArgsExpectation(new FakeInvocation(voidNoArgs));
+			AnyArgsExpectation newExpectation = new AnyArgsExpectation(new FakeInvocation(voidNoArgs), new Range(1, 1));
 			recorder.ReplaceExpectation(demo, voidNoArgs, expectationOne, newExpectation);
 			ExpectationsList list = recorder.GetAllExpectationsForProxyAndMethod(demo, voidNoArgs);
 			Assert.AreSame(newExpectation, list[0]);
@@ -121,7 +122,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			recorder.AddRecorder(CreateRecorder());
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
 			
-			AnyArgsExpectation newExpectation = new AnyArgsExpectation(new FakeInvocation(voidNoArgs));
+			AnyArgsExpectation newExpectation = new AnyArgsExpectation(new FakeInvocation(voidNoArgs), new Range(1, 1));
 			recorder.ReplaceExpectation(demo, voidNoArgs, expectationOne, newExpectation);
 			ExpectationsList list = recorder.GetAllExpectationsForProxyAndMethod(demo, voidNoArgs);
 			Assert.AreSame(newExpectation, list[0]);

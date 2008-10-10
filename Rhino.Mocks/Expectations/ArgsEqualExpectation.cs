@@ -49,7 +49,8 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		/// <param name="expectedArgs">Expected args.</param>
 		/// <param name="invocation">The invocation for this expectation</param>
-		public ArgsEqualExpectation(IInvocation invocation, object[] expectedArgs) : base(invocation)
+        /// <param name="expectedRange">Number of method calls for this expectaions</param>
+		public ArgsEqualExpectation(IInvocation invocation, object[] expectedArgs, Range expectedRange) : base(invocation, expectedRange)
 		{
             this.expectedArgs = expectedArgs;
 		}

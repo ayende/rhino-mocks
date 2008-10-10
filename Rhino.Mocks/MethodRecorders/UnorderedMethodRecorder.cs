@@ -412,7 +412,7 @@ namespace Rhino.Mocks.MethodRecorders
 					if (expectation.IsExpected(args))
 					{
 						expectedMin+= expectation.Expected.Min;
-						expectedMax += expectation.Expected.Max;
+					    expectedMax += expectation.Expected.Max ?? expectation.Expected.Min;
 						actual += expectation.ActualCallsCount;
 					}
 				}

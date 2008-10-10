@@ -31,6 +31,7 @@ using MbUnit.Framework;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Generated;
+using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
 using Rhino.Mocks.Tests.Expectations;
@@ -45,7 +46,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		{
 			OrderedMethodRecorder recorder = new OrderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
-			recorder.Record(this.demo, voidThreeArgs, new AnyArgsExpectation(new FakeInvocation(voidThreeArgs)));
+			recorder.Record(this.demo, voidThreeArgs, new AnyArgsExpectation(new FakeInvocation(voidThreeArgs), new Range(1, 1)));
 
 			Assert.IsNotNull(recorder.GetRecordedExpectation(new FakeInvocation(voidNoArgs), this.demo, this.voidNoArgs, new object[0]));
 			Assert.IsNotNull(recorder.GetRecordedExpectation(new FakeInvocation(voidNoArgs), this.demo, this.voidThreeArgs, new object[0]));
@@ -66,7 +67,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		[Test]
 		public void RemoveExpectationWhenNestedOrdering()
 		{
-			IExpectation newExpectation = new ArgsEqualExpectation(new FakeInvocation(voidThreeArgs), new object[]{1,null,1f});
+			IExpectation newExpectation = new ArgsEqualExpectation(new FakeInvocation(voidThreeArgs), new object[]{1,null,1f}, new Range(1, 1));
 			recorder.Record(this.demo, this.voidNoArgs, expectationOne);
 			recorder.AddRecorder(CreateRecorder());
 			recorder.Record(this.demo, this.voidThreeArgs, expectationTwo);

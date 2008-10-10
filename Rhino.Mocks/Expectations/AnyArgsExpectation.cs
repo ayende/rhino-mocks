@@ -30,6 +30,7 @@
 using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
+using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
 
@@ -44,7 +45,8 @@ namespace Rhino.Mocks.Expectations
 		/// Creates a new <see cref="AnyArgsExpectation"/> instance.
 		/// </summary>
 		/// <param name="invocation">Invocation for this expectation</param>
-		public AnyArgsExpectation(IInvocation invocation) : base(invocation)
+        /// <param name="expectedRange">Number of method calls for this expectaions</param>
+        public AnyArgsExpectation(IInvocation invocation, Range expectedRange) : base(invocation, expectedRange)
 		{
 		}
 

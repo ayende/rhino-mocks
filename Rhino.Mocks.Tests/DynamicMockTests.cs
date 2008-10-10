@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Tests
 		[Test]
 		public void CanSetupExpectations()
 		{
-			Expect.Call(demo.ReturnIntNoArgs()).Return(30);
+			Expect.Call(demo.ReturnIntNoArgs()).Return(30).Repeat.Once();
 			mocks.ReplayAll();
 			Assert.AreEqual(30,demo.ReturnIntNoArgs(),"Expected call didn't return setup value");
 			Assert.AreEqual(0,demo.ReturnIntNoArgs(),"Unexpected call return non default value");

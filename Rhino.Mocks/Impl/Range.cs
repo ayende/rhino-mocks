@@ -34,14 +34,15 @@ namespace Rhino.Mocks.Impl
 	/// </summary>
 	public class Range
 	{
-		private int min, max;
+		private int min;
+	    private int? max;
 
-		/// <summary>
+	    /// <summary>
 		/// Creates a new <see cref="Range"/> instance.
 		/// </summary>
 		/// <param name="min">Min.</param>
 		/// <param name="max">Max.</param>
-		public Range(int min, int max)
+		public Range(int min, int? max)
 		{
 			this.min = min;
 			this.max = max;
@@ -60,7 +61,7 @@ namespace Rhino.Mocks.Impl
 		/// Gets or sets the max.
 		/// </summary>
 		/// <value></value>
-		public int Max
+		public int? Max
 		{
 			get { return max; }
 		}
@@ -72,10 +73,9 @@ namespace Rhino.Mocks.Impl
 		{
 			if (min == 0)
 				return max.ToString();
-			if (min != max)
+			if (max != null && min != max.Value)
 				return min + ".." + max;
-			else
-				return min.ToString();
+		    return min.ToString();
 		}
 
 
