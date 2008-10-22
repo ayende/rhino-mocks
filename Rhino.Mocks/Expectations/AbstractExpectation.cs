@@ -236,7 +236,8 @@ namespace Rhino.Mocks.Expectations
         /// </summary>
         public Delegate ActionToExecute
         {
-            set
+        	get { return actionToExecute; }
+        	set
             {
                 ActionOnMethodNotSpesified();
                 AssertReturnTypeMatch(value);
@@ -245,7 +246,7 @@ namespace Rhino.Mocks.Expectations
             }
         }
 
-        /// <summary>
+    	/// <summary>
         /// Gets or sets the exception to throw on a method matching this expectation.
         /// </summary>
         public Exception ExceptionToThrow
@@ -408,6 +409,7 @@ namespace Rhino.Mocks.Expectations
             repeatableOption = expectation.RepeatableOption;
             exceptionToThrow = expectation.ExceptionToThrow;
             message = expectation.Message;
+        	actionToExecute = expectation.ActionToExecute;
         	outRefParams = expectation.OutRefParams;
             allowTentativeReturn = expectation.AllowTentativeReturn;
         }

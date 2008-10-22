@@ -123,7 +123,7 @@ namespace Rhino.Mocks.Interfaces
         /// <summary>
         /// An action to execute when the method is matched.
         /// </summary>
-        Delegate ActionToExecute {set; }
+		Delegate ActionToExecute { get; set; }
 
 	    /// <summary>
 	    /// Set the out / ref parameters for the method call.

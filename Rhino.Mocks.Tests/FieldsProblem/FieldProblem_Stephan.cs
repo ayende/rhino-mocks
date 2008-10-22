@@ -64,6 +64,27 @@ ISomeService.DoSomething<System.String>(null, ""foo""); Expected #1, Actual #0."
 			mocks.VerifyAll();
 		}
 
+		[Test]
+		public void IgnoreArgumentsAfterDo()
+		{
+			MockRepository mocks = new MockRepository();
+			IDemo demo = mocks.DynamicMock<IDemo>();
+			bool didDo = false;
+			demo.VoidNoArgs();
+			LastCall
+					.Do((Action)delegate
+					{
+						didDo = true;
+					})
+					.IgnoreArguments();
+
+			mocks.ReplayAll();
+
+			demo.VoidNoArgs();
+			Assert.IsTrue(didDo, "Do has not been executed!");
+
+			mocks.VerifyAll();
+		}
 	}
 
 
