@@ -195,19 +195,45 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 
 	    private bool TryCreateReturnValue(IExpectation expectation, out object returnValue)
 	    {
-            try
-	        {
-                returnValue = Repository.DynamicMock(expectation.Method.ReturnType);
-	        }
-	        catch (Exception)
-	        {
-                // couldn't create mock object for it, we fall back to returning a default value
-                returnValue = null;
-                return false;   
-	        }
-            mockedObject.DependentMocks.Add(MockRepository.GetMockedObject(returnValue));
-	        expectation.ReturnValue = returnValue;
-	        expectation.AllowTentativeReturn = true;
+            returnValue = null;
+
+            //use already created instance if any
+            if (mockedObject.DependentMocks != null && mockedObject.DependentMocks.Count > 0)
+            {
+                foreach (IMockedObject dependentMock in mockedObject.DependentMocks)
+                {
+                    if (dependentMock.ImplementedTypes != null && dependentMock.ImplementedTypes.Length > 0)
+                    {
+                        foreach (Type type in dependentMock.ImplementedTypes)
+                        {
+                            if (type == expectation.Method.ReturnType)
+                            {
+                                returnValue = dependentMock;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //create new instance
+                try
+                {
+                    returnValue = Repository.DynamicMock(expectation.Method.ReturnType);
+                }
+                catch (Exception)
+                {
+                    // couldn't create mock object for it, we fall back to returning a default value
+                    returnValue = null;
+                    return false;
+                }
+
+                mockedObject.DependentMocks.Add(MockRepository.GetMockedObject(returnValue));
+
+                expectation.ReturnValue = returnValue;
+                expectation.AllowTentativeReturn = true;
+            }
+
 	        return true;
 	    }
 
