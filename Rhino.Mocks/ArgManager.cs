@@ -43,10 +43,17 @@ namespace Rhino.Mocks
 	internal class ArgManager
 	{
 		[ThreadStatic]
-		private static List<ArgumentDefinition> args = new List<ArgumentDefinition>();
+		private static List<ArgumentDefinition> args;
 
 
-		internal static bool HasBeenUsed { get { return args.Count > 0; } }
+		internal static bool HasBeenUsed 
+		{ 
+			get 
+			{
+				if (args == null) return false;
+				return args.Count > 0; 
+			} 
+		}
 
 		/// <summary>
 		/// Resets the static state
@@ -58,16 +65,19 @@ namespace Rhino.Mocks
 
 		internal static void AddInArgument(AbstractConstraint constraint)
 		{
+			InitializeThreadStatic();
 			args.Add(new ArgumentDefinition(constraint));
 		}
 
 		internal static void AddOutArgument(object returnValue)
 		{
+			InitializeThreadStatic();
 			args.Add(new ArgumentDefinition(returnValue));
 		}
 
 		internal static void AddRefArgument(AbstractConstraint constraint, object returnValue)
 		{
+			InitializeThreadStatic();
 			args.Add(new ArgumentDefinition(constraint, returnValue));
 		}
 
@@ -80,6 +90,7 @@ namespace Rhino.Mocks
 		/// <returns></returns>
 		internal static object[] GetAllReturnValues()
 		{
+			InitializeThreadStatic();
 			List<object> returnValues = new List<object>();
 			foreach (ArgumentDefinition arg in args)
 			{
@@ -98,6 +109,7 @@ namespace Rhino.Mocks
 		/// <returns></returns>
 		internal static AbstractConstraint[] GetAllConstraints()
 		{
+			InitializeThreadStatic();
 			List<AbstractConstraint> constraints = new List<AbstractConstraint>();
 			foreach (ArgumentDefinition arg in args)
 			{
@@ -108,6 +120,7 @@ namespace Rhino.Mocks
 
 		internal static void CheckMethodSignature(MethodInfo method)
 		{
+			InitializeThreadStatic();
 			ParameterInfo[] parameters = method.GetParameters();
 			AbstractConstraint[] constraints = new AbstractConstraint[parameters.Length];
 
@@ -150,6 +163,14 @@ namespace Rhino.Mocks
 						string.Format("Argument {0} must be defined using: Arg<T>.Is, Arg<T>.Text or Arg<T>.List",
 							i));
 				}
+			}
+		}
+
+		private static void InitializeThreadStatic()
+		{
+			if (args == null)
+			{
+				args = new List<ArgumentDefinition>();
 			}
 		}
 
