@@ -32,6 +32,10 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
+	using System;
+	using System.Diagnostics;
+	using System.IO;
+
 	[TestFixture]
 	public class PropertyWithTypeParameterTest
 	{
@@ -61,6 +65,21 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void DoubleGeneric()
 		{
+			var clrInstallationDir = Path.GetDirectoryName(typeof(object).Assembly.Location);
+			var mscorwksFilename = Path.Combine(clrInstallationDir, "mscorwks.dll");
+			FileVersionInfo clrVersion = FileVersionInfo.GetVersionInfo(mscorwksFilename);
+			if(clrVersion.ProductMajorPart == 2 && 
+				clrVersion.ProductMinorPart == 0 &&
+				clrVersion.ProductBuildPart == 50727)
+			{
+				// CLR 2.0, now need to check if we have the .NET 3.5 with SP1 installed,
+				// without the hotfix
+				if (clrVersion.ProductPrivatePart >= 3053 &&
+					clrVersion.ProductPrivatePart < 3068)
+				{
+					Assert.Ignore("You are running on .NET 3.5 SP1, without the KB 957542 hotfix. This version of the CLR has a bug that cause this test to fail");
+				}
+			}
 			MockRepository mocks = new MockRepository();
 			IDoubleGeneric<int> mock = mocks.StrictMock<IDoubleGeneric<int>>();
 			Expect.Call(mock.Method<string>(1, ""));
