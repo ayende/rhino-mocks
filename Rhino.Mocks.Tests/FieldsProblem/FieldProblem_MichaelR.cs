@@ -53,8 +53,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			methodOptions.Do((MyDelegate)delegate { return new object(); });
 		}
 
+		/// <summary>
+		/// If this fails with Execution Engine Exception, you need to install the hotfix 
+		/// for KB 957542.
+		/// There is a bug in .Net 3.5 SP1 that this test exposes.
+		/// </summary>
 		[Test]
-		[Ignore("Ignoring for now because of framework bug in SP1: https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=361606")]
 		public void DoubleGeneric()
 		{
 			MockRepository mocks = new MockRepository();
