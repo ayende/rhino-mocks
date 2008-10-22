@@ -72,11 +72,8 @@ ISomeService.DoSomething<System.String>(null, ""foo""); Expected #1, Actual #0."
 			bool didDo = false;
 			demo.VoidNoArgs();
 			LastCall
-					.Do((Action)delegate
-					{
-						didDo = true;
-					})
-					.IgnoreArguments();
+                .Do(SetToTrue(out didDo))
+				.IgnoreArguments();
 
 			mocks.ReplayAll();
 
@@ -85,8 +82,15 @@ ISomeService.DoSomething<System.String>(null, ""foo""); Expected #1, Actual #0."
 
 			mocks.VerifyAll();
 		}
-	}
+		
+		private delegate void PlaceHolder();
 
+        private PlaceHolder SetToTrue(out bool didDo)
+        {
+			didDo = true;
+            return delegate { };
+        }
+	}
 
 	public interface ISomeService
 	{

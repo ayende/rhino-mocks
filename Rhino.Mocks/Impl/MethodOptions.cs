@@ -335,7 +335,7 @@ namespace Rhino.Mocks.Impl
             MethodInfo setter = PropertySetterFromMethod(expectation.Method);
             repository.Recorder.RemoveExpectation(expectation);
             setter.Invoke(proxy, new object[] {default(T)});
-			var methodOptions = repository.LastMethodCall<T>(proxy).IgnoreArguments();
+			IMethodOptions<T> methodOptions = repository.LastMethodCall<T>(proxy).IgnoreArguments();
 			if (isInReplayMode)
 				repository.ReplayCore(proxy,true);
 			return methodOptions;
@@ -355,7 +355,7 @@ namespace Rhino.Mocks.Impl
             MethodInfo setter = PropertySetterFromMethod(expectation.Method);
             repository.Recorder.RemoveExpectation(expectation);
             setter.Invoke(proxy, new object[] { argument });
-			var methodOptions = repository.LastMethodCall<T>(proxy);
+			IMethodOptions<T> methodOptions = repository.LastMethodCall<T>(proxy);
 			if (isInReplayMode)
 				repository.ReplayCore(proxy, true);
 			return methodOptions;

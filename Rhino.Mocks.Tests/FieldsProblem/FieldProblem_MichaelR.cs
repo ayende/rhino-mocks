@@ -51,8 +51,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		public void UsingdoOnMethodWithGenericReturnValue()
 		{
 			MockRepository mocks = new MockRepository();
-			IGenericType<object> mock =
-				mocks.StrictMock<IGenericType<object>>();
+			IGenericType<object> mock = mocks.StrictMock<IGenericType<object>>();
 			IMethodOptions<object> methodOptions = Expect.Call(mock.MyMethod());
 			methodOptions.Do((MyDelegate)delegate { return new object(); });
 		}
@@ -65,8 +64,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		[Test]
 		public void DoubleGeneric()
 		{
-			var clrInstallationDir = Path.GetDirectoryName(typeof(object).Assembly.Location);
-			var mscorwksFilename = Path.Combine(clrInstallationDir, "mscorwks.dll");
+			string clrInstallationDir = Path.GetDirectoryName(typeof(object).Assembly.Location);
+			string mscorwksFilename = Path.Combine(clrInstallationDir, "mscorwks.dll");
 			FileVersionInfo clrVersion = FileVersionInfo.GetVersionInfo(mscorwksFilename);
 			if(clrVersion.ProductMajorPart == 2 && 
 				clrVersion.ProductMinorPart == 0 &&
