@@ -328,11 +328,17 @@ namespace Rhino.Mocks.Impl
 		/// <returns></returns>
         public IMethodOptions<T> SetPropertyAndIgnoreArgument()
         {
+			bool isInReplayMode = repository.IsInReplayMode(proxy);
+			if(isInReplayMode)
+				repository.BackToRecord(proxy,BackToRecordOptions.None);
             expectation.ReturnValue = default(T);
             MethodInfo setter = PropertySetterFromMethod(expectation.Method);
             repository.Recorder.RemoveExpectation(expectation);
             setter.Invoke(proxy, new object[] {default(T)});
-            return LastCall.GetOptions<T>().IgnoreArguments();
+			var methodOptions = repository.LastMethodCall<T>(proxy).IgnoreArguments();
+			if (isInReplayMode)
+				repository.ReplayCore(proxy,true);
+			return methodOptions;
         }
 
 		/// <summary>
@@ -342,11 +348,17 @@ namespace Rhino.Mocks.Impl
 		/// <returns></returns>
         public IMethodOptions<T> SetPropertyWithArgument(T argument)
         {
-            expectation.ReturnValue = default(T);
+			bool isInReplayMode = repository.IsInReplayMode(proxy);
+			if (isInReplayMode)
+				repository.BackToRecord(proxy, BackToRecordOptions.None);
+			expectation.ReturnValue = default(T);
             MethodInfo setter = PropertySetterFromMethod(expectation.Method);
             repository.Recorder.RemoveExpectation(expectation);
             setter.Invoke(proxy, new object[] { argument });
-            return LastCall.GetOptions<T>();
+			var methodOptions = repository.LastMethodCall<T>(proxy);
+			if (isInReplayMode)
+				repository.ReplayCore(proxy, true);
+			return methodOptions;
         }
 
 		/// <summary>
