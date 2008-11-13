@@ -1347,6 +1347,29 @@ namespace Rhino.Mocks
 		}
 
 		/// <summary>
+		/// Generate a mock object with dynamic replay semantics and remoting without needing the mock repository
+		/// </summary>
+		public static T GenerateDynamicMockWithRemoting<T>(params object[] argumentsForConstructor)
+		{
+			MockRepository repository = new MockRepository();
+			T mock = repository.DynamicMockWithRemoting<T>(argumentsForConstructor);
+			repository.Replay(mock);
+			return mock;
+		}
+
+		/// <summary>
+		/// Generate a mock object with strict replay semantics and remoting without needing the mock repository
+		/// </summary>
+		public static T GenerateStrictMockWithRemoting<T>(params object[] argumentsForConstructor)
+			where T: class
+		{
+			MockRepository repository = new MockRepository();
+			T mock = repository.StrictMockWithRemoting<T>(argumentsForConstructor);
+			repository.Replay(mock);
+			return mock;
+		}
+
+		/// <summary>
 		/// Determines whether the specified proxy is a stub.
 		/// </summary>
 		/// <param name="proxy">The proxy.</param>
