@@ -244,7 +244,34 @@ namespace Rhino.Mocks
 			if (verificationInformation.Expected.ExpectationSatisfied)
 				return;
 			throw new ExpectationViolationException(verificationInformation.Expected.BuildVerificationFailureMessage());
-		}
+        }
+
+        /// <summary>
+        /// Asserts that a particular method was called on this mock object that match
+        /// a particular constraint set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="mock">The mock.</param>
+        /// <param name="action">The action.</param>
+        public static void AssertWasCalled<T>(this T mock, Func<T, object> action)
+        {
+            var newAction = new Action<T>(t => action(t));
+            AssertWasCalled(mock, newAction, DefaultConstraintSetup);
+        }
+
+        /// <summary>
+        /// Asserts that a particular method was called on this mock object that match
+        /// a particular constraint set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="mock">The mock.</param>
+        /// <param name="action">The action.</param>
+        /// <param name="setupConstraints">The setup constraints.</param>
+        public static void AssertWasCalled<T>(this T mock, Func<T, object> action, Action<IMethodOptions<object>> setupConstraints)
+        {
+            var newAction = new Action<T>(t => action(t));
+            AssertWasCalled(mock, newAction, setupConstraints);
+        }
 
 
 		/// <summary>
@@ -266,8 +293,7 @@ namespace Rhino.Mocks
 		/// <param name="mock">The mock.</param>
 		/// <param name="action">The action.</param>
 		/// <param name="setupConstraints">The setup constraints.</param>
-		public static void AssertWasNotCalled<T>(this T mock, Action<T> action,
-												 Action<IMethodOptions<object>> setupConstraints)
+		public static void AssertWasNotCalled<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
 		{
 			ExpectationVerificationInformation verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
 
@@ -280,6 +306,30 @@ namespace Rhino.Mocks
 			}
 		}
 
+        /// <summary>
+        /// Asserts that a particular method was NOT called on this mock object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="mock">The mock.</param>
+        /// <param name="action">The action.</param>
+        public static void AssertWasNotCalled<T>(this T mock, Func<T, object> action)
+        {
+            var newAction = new Action<T>(t => action(t));
+            AssertWasNotCalled(mock, newAction, DefaultConstraintSetup);
+        }
+
+        /// <summary>
+        /// Asserts that a particular method was NOT called on this mock object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="mock">The mock.</param>
+        /// <param name="action">The action.</param>
+        /// <param name="setupConstraints">The setup constraints.</param>
+        public static void AssertWasNotCalled<T>(this T mock, Func<T, object> action, Action<IMethodOptions<object>> setupConstraints)
+        {
+            var newAction = new Action<T>(t => action(t));
+            AssertWasNotCalled(mock, newAction, setupConstraints);
+        }
 
 		private static ExpectationVerificationInformation GetExpectationsToVerify<T>(T mock, Action<T> action,
 																					 Action<IMethodOptions<object>>
@@ -317,7 +367,7 @@ namespace Rhino.Mocks
 						ArgumentsForAllCalls = new List<object[]>(argumentsForAllCalls),
 						Expected = expected
 					};
-		}
+        }
 
 		/// <summary>
 		/// Finds the approprite implementation type of this item.

@@ -494,7 +494,7 @@ namespace Rhino.Mocks.Tests
 			demo.DoSomething();
 
 			demo.AssertWasCalled(x => x.DoSomething());
-		}
+        }
 
 		[Test]
 		public void CanAssertOnMethodCallUsingConstraints()
@@ -507,6 +507,43 @@ namespace Rhino.Mocks.Tests
 
 			demo.AssertWasCalled(x => x.Bar(Arg<string>.Matches((string a) => a.StartsWith("b") && a.Contains("ba"))));
 		}
+
+        [Test]
+        public void CanAssertOnPropertyAccess()
+        {
+            MockRepository mocks = new MockRepository();
+            IFoo54 demo = mocks.DynamicMock<IFoo54>();
+            mocks.Replay(demo);
+
+            var result = demo.FooBar;
+
+            demo.AssertWasCalled(x => x.FooBar);
+        }
+
+        [Test]
+        public void CanAssertOnPropertyAccessWithConstraints()
+        {
+            MockRepository mocks = new MockRepository();
+            IFoo54 demo = mocks.DynamicMock<IFoo54>();
+            mocks.Replay(demo);
+
+            var result = demo.FooBar;
+            result = demo.FooBar;
+
+            demo.AssertWasCalled(x => x.FooBar, o => o.Repeat.Twice());
+        }
+
+        [Test]
+        public void CanAssertNotCalledOnPropertyAccess()
+        {
+            MockRepository mocks = new MockRepository();
+            IFoo54 demo = mocks.DynamicMock<IFoo54>();
+            mocks.Replay(demo);
+
+            demo.DoSomething();
+
+            demo.AssertWasNotCalled(x => x.FooBar);
+        }
 
 #if !FOR_NET_2_0 // we can't get the structure from a delegate, as happens on 2.0, so ignore this
 		[Test]
@@ -616,6 +653,7 @@ namespace Rhino.Mocks.Tests
 		void DoSomethingElse();
 		int Bar(string x);
 		string bar();
+        string FooBar { get; set; }
 	}
 
 	public class Foo54 : IFoo54
@@ -645,6 +683,8 @@ namespace Rhino.Mocks.Tests
 		{
 			return null;
 		}
+
+        public string FooBar { get; set; }
 
 		#endregion
 	}
