@@ -405,8 +405,7 @@ namespace Rhino.Mocks.Impl
 		private void AssertLastMethodWasEventAddOrRemove()
 		{
 			MethodInfo method = expectation.Method;
-			if (method.IsSpecialName == false ||
-			    !(method.Name.StartsWith("add_") || method.Name.StartsWith("remove_")))
+			if (!(method.Name.StartsWith("add_") || method.Name.StartsWith("remove_")))
 			{
 				throw new InvalidOperationException("The last method call " + method.Name + " was not an event add / remove method");
 			}
