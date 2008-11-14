@@ -106,8 +106,8 @@ namespace Rhino.Mocks.Impl
 		private bool IsEvent(IInvocation invocation)
 		{
 			return
-				invocation.Method.IsSpecialName &&
-				(invocation.Method.Name.StartsWith("add_") || invocation.Method.Name.StartsWith("remove_"));
+                invocation.Method.Name.StartsWith("add_") || 
+                invocation.Method.Name.StartsWith("remove_");
 		}
 	}
 }
