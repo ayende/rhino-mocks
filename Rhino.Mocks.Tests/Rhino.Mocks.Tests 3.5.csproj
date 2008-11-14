@@ -151,6 +151,7 @@
     <Compile Include="ExtendingRhinoMocks2.cs" />
     <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
     <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Adam.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Aharon.cs">
       <SubType>Component</SubType>
     </Compile>
