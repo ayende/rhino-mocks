@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Castle.Core.Interceptor;
 using Rhino.Mocks.Interfaces;
 
@@ -29,6 +30,17 @@ namespace Rhino.Mocks
 		{
 			get { return invocation.Arguments; }
 		}
+
+        /// <summary>
+        /// Get the method that was caused this invocation
+        /// </summary>
+	    public MethodInfo Method
+	    {
+	        get
+	        {
+	            return invocation.Method;
+	        }
+	    }
 
 		/// <summary>
 		/// Gets or sets the return value for this method invocation
