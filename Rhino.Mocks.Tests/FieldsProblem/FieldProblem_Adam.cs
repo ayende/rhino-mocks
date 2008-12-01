@@ -1,3 +1,4 @@
+#if DOTNET35
 using System;
 using System.ComponentModel;
 using MbUnit.Framework;
@@ -36,3 +37,4 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         }
     }
 }
+#endif
