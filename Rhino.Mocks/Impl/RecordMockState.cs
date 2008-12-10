@@ -208,31 +208,30 @@ You can use the property directly to achieve the same result: mockObject.SomePro
                         {
                             if (type == expectation.Method.ReturnType)
                             {
-                                returnValue = dependentMock;
+                                returnValue = dependentMock.MockedObjectInstance;
+                                return true;
                             }
                         }
                     }
                 }
+                return false;
             }
-            else
-            {
-                //create new instance
-                try
-                {
-                    returnValue = Repository.DynamicMock(expectation.Method.ReturnType);
-                }
-                catch (Exception)
-                {
-                    // couldn't create mock object for it, we fall back to returning a default value
-                    returnValue = null;
-                    return false;
-                }
+	        //create new instance
+	        try
+	        {
+	            returnValue = Repository.DynamicMock(expectation.Method.ReturnType);
+	        }
+	        catch (Exception)
+	        {
+	            // couldn't create mock object for it, we fall back to returning a default value
+	            returnValue = null;
+	            return false;
+	        }
 
-                mockedObject.DependentMocks.Add(MockRepository.GetMockedObject(returnValue));
+	        mockedObject.DependentMocks.Add(MockRepository.GetMockedObject(returnValue));
 
-                expectation.ReturnValue = returnValue;
-                expectation.AllowTentativeReturn = true;
-            }
+	        expectation.ReturnValue = returnValue;
+	        expectation.AllowTentativeReturn = true;
 
 	        return true;
 	    }

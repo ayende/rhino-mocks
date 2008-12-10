@@ -116,6 +116,11 @@ namespace Rhino.Mocks.Interfaces
 		/// <value>The constructor arguments.</value>
 	    object[] ConstructorArguments { get; set; }
 
+        /// <summary>
+        /// The mocked instance that this is representing
+        /// </summary>
+	    object MockedObjectInstance { get; set; }
+
 	    /// <summary>
         /// Get all the method calls arguments that were made against this object with the specificed 
         /// method.

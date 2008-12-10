@@ -255,6 +255,14 @@ namespace Rhino.Mocks.Impl
 	        set { constructorArguments = value; }
 	    }
 
+        /// <summary>
+        /// The mocked instance that this is representing
+        /// </summary>
+        public object MockedObjectInstance
+        {
+            get; set;
+        }
+
 	    /// <summary>
 		/// Gets the implemented types by this mocked object
 		/// </summary>

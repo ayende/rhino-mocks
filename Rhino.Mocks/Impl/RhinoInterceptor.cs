@@ -66,6 +66,7 @@ namespace Rhino.Mocks.Impl
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Intercept(IInvocation invocation)
 		{
+		    proxyInstance.MockedObjectInstance = invocation.Proxy;
 			if (Array.IndexOf(objectMethods, invocation.Method) != -1)
 			{
 				invocation.Proceed();
