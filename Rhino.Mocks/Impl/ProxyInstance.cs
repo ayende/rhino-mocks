@@ -258,9 +258,11 @@ namespace Rhino.Mocks.Impl
         /// <summary>
         /// The mocked instance that this is representing
         /// </summary>
+		private object mockedObjectInstance;
         public object MockedObjectInstance
         {
-            get; set;
+            get { return mockedObjectInstance; } 
+			set { mockedObjectInstance = value; }
         }
 
 	    /// <summary>

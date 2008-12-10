@@ -19,8 +19,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         [Test]
         public void ExpectTwoCallsReturningMarshalByRef()
         {
-            var res1 = new MarshalByRefToReturn();
-            var res2 = new MarshalByRefToReturn();
+            MarshalByRefToReturn res1 = new MarshalByRefToReturn();
+            MarshalByRefToReturn res2 = new MarshalByRefToReturn();
             Expect.Call(demo.ReturnMarshalByRefNoArgs()).Return(res1);
             Expect.Call(demo.ReturnMarshalByRefNoArgs()).Return(res2);
             mocks.ReplayAll();
