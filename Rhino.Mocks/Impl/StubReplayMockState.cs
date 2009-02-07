@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Impl
 		}
 
         /// <summary>
-        /// Gets a mock state that match the original mock state of the object.
+        /// Gets a mock state that matches the original mock state of the object.
         /// </summary>
         public override IMockState BackToRecord()
         {
@@ -87,7 +87,7 @@ namespace Rhino.Mocks.Impl
         {
             get
             {
-                return this;// there is no meaning to verified in stubs.
+                return this;// there is no meaning to be verified in stubs.
             }
         }
 	}

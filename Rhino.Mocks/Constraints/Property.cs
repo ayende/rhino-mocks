@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: Value
 		 * 
-		 * Determains that the parameter has property with the specified value
+		 * Determines that the parameter has property with the specified value
 		 * 
 		 */ 
 
@@ -96,7 +96,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: IsNull
 		 * 
-		 * Determains that the parameter has property with null value
+		 * Determines that the parameter has property with null value
 		 * 
 		 */ 
 		/// <summary>
@@ -123,7 +123,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: IsNotNull
 		 * 
-		 * Determains that the parameter has property with non-null value
+		 * Determines that the parameter has property with non-null value
 		 * 
 		 */ 
 		/// <summary>

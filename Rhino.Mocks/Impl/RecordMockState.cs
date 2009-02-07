@@ -314,7 +314,7 @@ You can use the property directly to achieve the same result: mockObject.SomePro
         }
 
         /// <summary>
-        /// Get the default call count range expectaion
+        /// Get the default call count range expectation
         /// </summary>
         /// <returns></returns>
 	    protected virtual Range GetDefaultCallCountRangeExpectation()

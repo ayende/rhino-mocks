@@ -64,7 +64,7 @@ namespace Rhino.Mocks.Impl
 		}
 
 		/// <summary>
-		/// Validate that the two argument are equals, including validation for
+		/// Validate that the two arguments are equals, including validation for
 		/// when the arguments are collections, in which case it will validate their values.
 		/// </summary>
 		public static bool AreEqual(object expectedArg, object actualArg)

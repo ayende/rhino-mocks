@@ -81,7 +81,7 @@ namespace Rhino.Mocks.Impl
 		}
 
 		/// <summary>
-		/// We don't care much about expectations here, so we will remove the exepctation if
+		/// We don't care much about expectations here, so we will remove the expectation if
 		/// it is not closed.
 		/// </summary>
 		protected override void AssertPreviousMethodIsClose()
@@ -106,7 +106,7 @@ namespace Rhino.Mocks.Impl
 		}
 
         /// <summary>
-        /// Get the default call count range expectaion
+        /// Get the default call count range expectation
         /// </summary>
         /// <returns></returns>
         protected override Range GetDefaultCallCountRangeExpectation()

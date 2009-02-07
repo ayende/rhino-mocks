@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Impl
         private long counter=0;
         
         /// <summary>
-        /// The scope for all the delegate interfaces create by this mock repositroy.
+        /// The scope for all the delegate interfaces create by this mock repository.
         /// </summary>
         private ModuleScope moduleScope = new ModuleScope();
 

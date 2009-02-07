@@ -59,7 +59,7 @@ namespace Rhino.Mocks.Impl
 
 
         /// <summary>
-        /// Gets a mock state that match the original mock state of the object.
+        /// Gets a mock state that matches the original mock state of the object.
         /// </summary>
         public override IMockState BackToRecord()
         {

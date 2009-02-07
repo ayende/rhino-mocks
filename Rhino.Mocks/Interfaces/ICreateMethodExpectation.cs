@@ -30,7 +30,7 @@
 namespace Rhino.Mocks.Interfaces
 {
 	/// <summary>
-	/// Interface to allows to call a method and immediatly get it's options.
+	/// Interface to allow calling a method and immediately get it's options.
 	/// </summary>
 	public interface ICreateMethodExpectation
 	{

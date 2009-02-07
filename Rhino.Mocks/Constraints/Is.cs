@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * method: GreaterThan
 		 * 
-		 * Determains whatever the parameter is greater than objToCompare.
+		 * Determines whatever the parameter is greater than objToCompare.
 		 * The parameter must implement IComparable 
 		 */ 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * method: LessThan
 		 * 
-		 * Determains whatever the parameter is less than objToCompare.
+		 * Determines whatever the parameter is less than objToCompare.
 		 * The parameter must implement IComparable 
 		 */ 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace Rhino.Mocks.Constraints
 	   /*
 		* method: LessThanOrEqual
 		* 
-		* Determains whatever the parameter is less than or equal to objToCompare.
+		* Determines whatever the parameter is less than or equal to objToCompare.
 		* The parameter must implement IComparable 
 		*/ 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace Rhino.Mocks.Constraints
 	   /*
 		* method: GreaterThanOrEqual
 		* 
-		* Determains whatever the parameter is greater than or equal to objToCompare.
+		* Determines whatever the parameter is greater than or equal to objToCompare.
 		* The parameter must implement IComparable 
 		*/ 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace Rhino.Mocks.Constraints
 	   /*
 		* method: Equal
 		* 
-		* Determains whatever the parameter equal to obj.
+		* Determines whatever the parameter equal to obj.
 		*/ 
 		/// <summary>
 		/// Evaluate an equal constraint for <see cref="IComparable"/>.
@@ -120,7 +120,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * method: NotEqual
 		 * 
-		 * Determains whatever the parameter does not equal to obj.
+		 * Determines whatever the parameter does not equal to obj.
 		 */ 
 		/// <summary>
 		/// Evaluate a not equal constraint for <see cref="IComparable"/>.
@@ -166,7 +166,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: Null
 		 * 
-		 * Determains whatever the parameter is null
+		 * Determines whatever the parameter is null
 		 * 
 		 */
 		/// <summary>
@@ -181,7 +181,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: NotNull
 		 * 
-		 * Determains whatever the parameter is not null
+		 * Determines whatever the parameter is not null
 		 * 
 		 */
 		/// <summary>
@@ -196,7 +196,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: TypeOf
 		 * 
-		 * Determains whatever the parameter if of the specified type.
+		 * Determines whatever the parameter if of the specified type.
 		 * 
 		 */
 		/// <summary>
@@ -210,7 +210,7 @@ namespace Rhino.Mocks.Constraints
         /*
 		 * Method: TypeOf
 		 * 
-		 * Determains whatever the parameter if of the specified type.
+		 * Determines whatever the parameter if of the specified type.
 		 * 
 		 */
         /// <summary>

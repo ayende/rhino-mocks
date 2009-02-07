@@ -6,7 +6,7 @@ using System.Collections;
 namespace Rhino.Mocks.Constraints
 {
 	/// <summary>
-	/// Provides access to the constraintes defined in the class <see cref="Text"/> to be used in context
+	/// Provides access to the constraints defined in the class <see cref="Text"/> to be used in context
 	/// with the <see cref="Arg&lt;T&gt;"/> syntax.
 	/// </summary>
 	public class ListArg<T> // where T : IEnumerable
@@ -14,7 +14,7 @@ namespace Rhino.Mocks.Constraints
 		internal ListArg() { ;}
 
 		/// <summary>
-		/// Determines whether the specified object is in the paramter.
+		/// Determines whether the specified object is in the parameter.
 		/// The parameter must be IEnumerable.
 		/// </summary>
 		/// <param name="obj">Obj.</param>
@@ -26,7 +26,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// Determains whatever the parameter is in the collection.
+		/// Determines whatever the parameter is in the collection.
 		/// </summary>
 		public T OneOf(IEnumerable collection)
 		{
@@ -35,7 +35,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// Determains that the parameter collection is identical to the specified collection
+		/// Determines that the parameter collection is identical to the specified collection
 		/// </summary>
 		public T Equal(IEnumerable collection)
 		{

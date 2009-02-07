@@ -37,7 +37,7 @@ using Rhino.Mocks.Utilities;
 namespace Rhino.Mocks.Expectations
 {
 	/// <summary>
-	/// Expectation that matchs any arguments for the method.
+	/// Expectation that matches any arguments for the method.
 	/// </summary>
 	public class AnyArgsExpectation : AbstractExpectation
 	{
@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Expectations
 		/// Creates a new <see cref="AnyArgsExpectation"/> instance.
 		/// </summary>
 		/// <param name="invocation">Invocation for this expectation</param>
-        /// <param name="expectedRange">Number of method calls for this expectaions</param>
+        /// <param name="expectedRange">Number of method calls for this expectations</param>
         public AnyArgsExpectation(IInvocation invocation, Range expectedRange) : base(invocation, expectedRange)
 		{
 		}

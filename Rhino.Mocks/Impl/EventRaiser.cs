@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Impl
 		IMockedObject proxy;
 
 		///<summary>
-		/// Create an event raise for the specified event on this instance.
+		/// Create an event raiser for the specified event on this instance.
 		///</summary>
 		public static IEventRaiser Create(object instance, string eventName)
 		{

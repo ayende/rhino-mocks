@@ -32,7 +32,7 @@ using Rhino.Mocks.Interfaces;
 namespace Rhino.Mocks.Impl
 {
 	/// <summary>
-	/// Allows to call a method and immediatly get it's options.
+	/// Allows to call a method and immediately get it's options.
 	/// Set the expected number for the call to Any() 
 	/// </summary>
 	public class CreateMethodExpectationForSetupResult : CreateMethodExpectation

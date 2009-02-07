@@ -131,7 +131,7 @@ namespace Rhino.Mocks.Expectations
         }
 
         /// <summary>
-        /// Specify whatever this expectation has a return value set
+        /// Specify whether this expectation has a return value set
         /// You can't check ReturnValue for this because a valid return value include null.
         /// </summary>
         public bool HasReturnValue
@@ -385,7 +385,7 @@ namespace Rhino.Mocks.Expectations
         /// Creates a new <see cref="AbstractExpectation"/> instance.
         /// </summary>
         /// <param name="invocation">The originalInvocation for this method, required because it contains the generic type infromation</param>
-        /// <param name="expectedRange">Number of method calls for this expectaions</param>
+        /// <param name="expectedRange">Number of method calls for this expectations</param>
 		protected AbstractExpectation(IInvocation invocation, Range expectedRange)
         {
             Validate.IsNotNull(invocation, "originalInvocation");

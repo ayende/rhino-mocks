@@ -34,11 +34,11 @@ namespace Rhino.Mocks.Exceptions
 {
 	/*
 	 * Class: ObjectNotMockFromThisRepositoryException
-	 * Signals that an object was call on a mock repostiroy which doesn't
+	 * Signals that an object was call on a mock repository which doesn't
 	 * belong to this mock repository or not a mock
 	 */ 
 	/// <summary>
-	/// Signals that an object was call on a mock repostiroy which doesn't
+	/// Signals that an object was call on a mock repository which doesn't
 	/// belong to this mock repository or not a mock
 	/// </summary>
 	[Serializable()]

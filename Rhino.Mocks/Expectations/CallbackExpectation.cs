@@ -59,7 +59,7 @@ namespace Rhino.Mocks.Expectations
 		/// </summary>
 		/// <param name="invocation">Invocation for this expectation</param>
 		/// <param name="callback">Callback.</param>
-		/// <param name="expectedRange">Number of method calls for this expectaions</param>
+		/// <param name="expectedRange">Number of method calls for this expectations</param>
 		public CallbackExpectation(IInvocation invocation, Delegate callback, Range expectedRange) : base(invocation, expectedRange)
 		{
 			this.callback = callback;

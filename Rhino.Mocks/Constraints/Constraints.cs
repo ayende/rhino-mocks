@@ -261,7 +261,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -339,7 +339,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// determains if the object pass the constraints
+		/// Determines if the object pass the constraints
 		/// </summary>
 		public override bool Eval(object obj)
 		{
@@ -392,7 +392,7 @@ namespace Rhino.Mocks.Constraints
         }
 
 		/// <summary>
-		/// determains if the object pass the constraints
+		/// Determines if the object pass the constraints
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
@@ -437,7 +437,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -511,7 +511,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -568,7 +568,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -795,7 +795,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -852,7 +852,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -890,7 +890,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -931,7 +931,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -975,7 +975,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -1017,7 +1017,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -1057,7 +1057,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -1097,7 +1097,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -1141,7 +1141,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -1174,7 +1174,7 @@ namespace Rhino.Mocks.Constraints
     public class Anything : AbstractConstraint
     {
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {
@@ -1217,7 +1217,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// determains if the object pass the constraints
+        /// Determines if the object pass the constraints
         /// </summary>
         public override bool Eval(object obj)
         {

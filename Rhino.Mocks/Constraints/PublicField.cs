@@ -16,7 +16,7 @@ namespace Rhino.Mocks.Constraints
         /*
          * Method: Value
          * 
-         * Determains that the parameter has a public field with the specified value
+         * Determines that the parameter has a public field with the specified value
          * 
          */
 
@@ -67,7 +67,7 @@ namespace Rhino.Mocks.Constraints
         /*
          * Method: IsNull
          * 
-         * Determains that the parameter has a public field with null value
+         * Determines that the parameter has a public field with null value
          * 
          */
         /// <summary>
@@ -94,7 +94,7 @@ namespace Rhino.Mocks.Constraints
         /*
          * Method: IsNotNull
          * 
-         * Determains that the parameter has a public field with non-null value
+         * Determines that the parameter has a public field with non-null value
          * 
          */
         /// <summary>

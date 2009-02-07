@@ -35,7 +35,7 @@ namespace Rhino.Mocks.Constraints
 	public abstract class AbstractConstraint
 	{
 		/// <summary>
-		/// determains if the object pass the constraints
+		/// Determines if the object pass the constraints
 		/// </summary>
 		public abstract bool Eval(object obj);
 

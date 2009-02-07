@@ -47,11 +47,11 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: IsIn
 		 * 
-		 * Determines whether the specified obj is in the paramter.
+		 * Determines whether the specified obj is in the parameter.
 		 * The parameter must be IEnumerable.
 		 */ 
 		/// <summary>
-		/// Determines whether the specified obj is in the paramter.
+		/// Determines whether the specified obj is in the parameter.
 		/// The parameter must be IEnumerable.
 		/// </summary>
 		/// <param name="obj">Obj.</param>
@@ -64,10 +64,10 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: OneOf
 		 * 
-		 * Determains whatever the parameter is in the collection.
+		 * Determines whatever the parameter is in the collection.
 		 */ 
 		/// <summary>
-		/// Determains whatever the parameter is in the collection.
+		/// Determines whatever the parameter is in the collection.
 		/// </summary>
 		public static AbstractConstraint OneOf(IEnumerable collection)
 		{
@@ -76,11 +76,11 @@ namespace Rhino.Mocks.Constraints
 
 		/*
 		 * Method Equal
-		 * Determains that the parameter collection is identical to the specified collection
+		 * Determines that the parameter collection is identical to the specified collection
 		 * This is done by iterating the collections and comparing each element.
 		 */ 
 		/// <summary>
-		/// Determains that the parameter collection is identical to the specified collection
+		/// Determines that the parameter collection is identical to the specified collection
 		/// </summary>
 		public static AbstractConstraint Equal(IEnumerable collection)
 		{

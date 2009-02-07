@@ -78,8 +78,8 @@ namespace Rhino.Mocks.MethodRecorders
 		}
 
 		/// <summary>
-		/// Determains whatever obj equals to this instance.
-		/// ProxyMethodPairs are equals when they point to the same /instance/ of
+		/// Determines whatever obj equals to this instance.
+		/// ProxyMethodPairs are equal when they point to the same /instance/ of
 		/// an object, and to the same method.
 		/// </summary>
 		/// <param name="obj">Obj.</param>

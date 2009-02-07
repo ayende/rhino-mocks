@@ -58,7 +58,7 @@ namespace Rhino.Mocks.Impl
 		}
 
         /// <summary>
-        /// Get the default call count range expectaion
+        /// Get the default call count range expectation
         /// </summary>
         /// <returns></returns>
         protected override Range GetDefaultCallCountRangeExpectation()

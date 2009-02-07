@@ -24,7 +24,7 @@ namespace Rhino.Mocks.Impl
 			this.writer = writer;
 		}
 		/// <summary>
-		/// Logs the expectation as is was recorded
+		/// Logs the expectation as it was recorded
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>
 		/// <param name="expectation">The expectation.</param>

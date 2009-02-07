@@ -90,7 +90,7 @@ namespace Rhino.Mocks.MethodRecorders
 		}
 
 		/// <summary>
-		/// Determains if the object equal to this instance
+		/// Determines if the object equal to this instance
 		/// </summary>
 		/// <param name="obj">Obj.</param>
 		/// <returns></returns>
