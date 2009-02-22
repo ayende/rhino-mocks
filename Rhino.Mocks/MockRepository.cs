@@ -1287,9 +1287,10 @@ namespace Rhino.Mocks
 		/// <returns></returns>
 		public object Stub(Type type, params object[] argumentsForConstructor)
 		{
-			CreateMockState createStub =
-				delegate(IMockedObject mockedObject) { return new StubRecordMockState(mockedObject, this); };
-			return CreateMockObject(type, createStub, new Type[0], argumentsForConstructor);
+			CreateMockState createStub = mockedObject => new StubRecordMockState(mockedObject, this);
+            if (ShouldUseRemotingProxy(type, argumentsForConstructor))
+                return RemotingMock(type, createStub);
+            return CreateMockObject(type, createStub, new Type[0], argumentsForConstructor);
 		}
 
 		/// <summary>
