@@ -204,6 +204,7 @@
     <Compile Include="FieldsProblem\FieldProblem_OrenEl.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Rabashani.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Raju.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_RepeatsWithGenerate.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Rob.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Robert.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Kevin.cs" />
