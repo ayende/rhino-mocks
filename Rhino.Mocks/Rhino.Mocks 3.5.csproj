@@ -265,6 +265,7 @@
       <Link>ayende-open-source.snk</Link>
     </None>
     <Compile Include="CompatabilityWith2.0.cs" />
+    <Compile Include="__ProtectAttribute.cs" />
     <None Include="Diagram.cd" />
   </ItemGroup>
   <ItemGroup>
