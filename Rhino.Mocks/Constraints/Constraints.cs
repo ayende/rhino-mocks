@@ -380,13 +380,13 @@ namespace Rhino.Mocks.Constraints
 	/// </summary>
     public class LambdaConstraint : AbstractConstraint
     {
-        private readonly Expression expr;
+        private readonly LambdaExpression expr;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LambdaConstraint"/> class.
 		/// </summary>
 		/// <param name="expr">The expr.</param>
-        public LambdaConstraint(Expression expr)
+        public LambdaConstraint(LambdaExpression expr)
         {
             this.expr = expr;
         }
@@ -398,11 +398,25 @@ namespace Rhino.Mocks.Constraints
 		/// <returns></returns>
         public override bool Eval(object obj)
         {
-            Delegate pred = (Delegate)expr.GetType().GetMethod("Compile").Invoke(expr, new object[0]);
-            return (bool) pred.DynamicInvoke(obj);
+            if (!IsArgumentTypeIsAssignableFrom(expr, obj)) 
+                return false;
+
+            return (bool)expr.Compile().DynamicInvoke(obj);
         }
 
-		/// <summary>
+        private bool IsArgumentTypeIsAssignableFrom(LambdaExpression predicate, object obj)
+        {
+            if(obj != null)
+            {
+                if (!predicate.Parameters[0].Type.IsAssignableFrom(obj.GetType()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
 		/// Gets the message for this constraint
 		/// </summary>
 		/// <value></value>

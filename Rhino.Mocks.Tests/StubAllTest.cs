@@ -150,6 +150,17 @@ namespace Rhino.Mocks.Tests
 			Assert.IsTrue(fish.IsFreshWater);
 		}
 
+        [Test]
+        public void StubCanHandlePolymorphicArgConstraints()
+        {
+            IAquarium aquarium = MockRepository.GenerateStub<IAquarium>();
+            aquarium.Stub(x => x.DetermineAge(Arg<MartianFish>.Matches(arg => arg.Planet == "mars"))).Return(100);
+            aquarium.Stub(x => x.DetermineAge(Arg<SpecificFish>.Is.TypeOf)).Return(5);
+            
+            Assert.IsFalse(typeof(MartianFish).IsAssignableFrom(typeof(SpecificFish)));
+            Assert.AreEqual(5, aquarium.DetermineAge(new SpecificFish()));
+        }
+
 	}
 
 	public interface ICat : IAnimal
@@ -179,6 +190,13 @@ namespace Rhino.Mocks.Tests
 		}
 	}
 
+   
+
+    public interface IAquarium
+    {
+        int DetermineAge(IFish fish);
+    }
+
 	public interface IFish
 	{
 		bool IsFreshWater { get; set; }
@@ -188,6 +206,12 @@ namespace Rhino.Mocks.Tests
 	{
 		public abstract bool IsFreshWater { get; set; }
 	}
+
+    public class MartianFish : IFish
+    {
+        public bool IsFreshWater { get; set; }
+        public string Planet { get; set; }
+    }
 
 	public class SpecificFish : Fish
 	{
