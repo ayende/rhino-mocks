@@ -15,7 +15,7 @@
 			<include name="Rhino.Mocks.dll" />
 			<include name="Rhino.Mocks.Tests.Model.dll" />
 			<include name="Interop.ADODB.dll" />
-			<include name="Interop.mshtml.dll" />
+			<include name="Interop.MSHTML.dll" />
 			<include name="Scripting.dll" />
 			<include name="Rhino.Mocks.CPP.Interfaces.dll" />
 			<include name="Castle.DynamicProxy2.dll" if="${skip.merge.asm}" />

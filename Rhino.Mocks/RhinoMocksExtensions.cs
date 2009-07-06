@@ -29,6 +29,7 @@
 #if DOTNET35
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Interfaces;
@@ -202,7 +203,7 @@ namespace Rhino.Mocks
 		/// var argsForCalls = foo54.GetArgumentsForCallsMadeOn(x =&gt; x.DoSomething(0))
 		/// </code>
 		/// </example>
-		public static IList<object[]> GetArgumentsForCallsMadeOn<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
+    public static IList<object[]> GetArgumentsForCallsMadeOn<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
 		{
 			return GetExpectationsToVerify(mock, action, setupConstraints).ArgumentsForAllCalls;
 		}
@@ -213,7 +214,7 @@ namespace Rhino.Mocks
 		/// <typeparam name="T"></typeparam>
 		/// <param name="mock">The mock.</param>
 		/// <param name="action">The action.</param>
-		public static void AssertWasCalled<T>(this T mock, Action<T> action)
+    public static void AssertWasCalled<T>(this T mock, Action<T> action)
 		{
 			AssertWasCalled(mock, action, DefaultConstraintSetup);
 		}
@@ -230,7 +231,7 @@ namespace Rhino.Mocks
 		/// <param name="mock">The mock.</param>
 		/// <param name="action">The action.</param>
 		/// <param name="setupConstraints">The setup constraints.</param>
-		public static void AssertWasCalled<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
+    public static void AssertWasCalled<T>(this T mock, Action<T> action, Action<IMethodOptions<object>> setupConstraints)
 		{
 			ExpectationVerificationInformation verificationInformation = GetExpectationsToVerify(mock, action, setupConstraints);
 
@@ -280,7 +281,7 @@ namespace Rhino.Mocks
 		/// <typeparam name="T"></typeparam>
 		/// <param name="mock">The mock.</param>
 		/// <param name="action">The action.</param>
-		public static void AssertWasNotCalled<T>(this T mock, Action<T> action)
+        public static void AssertWasNotCalled<T>(this T mock, Action<T> action)
 		{
 			AssertWasNotCalled(mock, action, DefaultConstraintSetup);
 		}
@@ -344,8 +345,8 @@ namespace Rhino.Mocks
 					"Cannot assert on an object that is not in replay mode. Did you forget to call ReplayAll() ?");
 			}
 
-			var mockToRecordExpectation =
-				(T)mocks.DynamicMock(FindAppropriteType(mockedObject), mockedObject.ConstructorArguments);
+		  var mockToRecordExpectation =
+				(T)mocks.DynamicMock(FindAppropriteType<T>(mockedObject), mockedObject.ConstructorArguments);
 			action(mockToRecordExpectation);
 
 			AssertExactlySingleExpectaton(mocks, mockToRecordExpectation);
@@ -375,16 +376,16 @@ namespace Rhino.Mocks
 		/// </summary>
 		/// <param name="mockedObj">The mocked obj.</param>
 		/// <returns></returns>
-		private static Type FindAppropriteType(IMockedObject mockedObj)
+		private static Type FindAppropriteType<T>(IMockedObject mockedObj)
 		{
 			foreach (var type in mockedObj.ImplementedTypes)
 			{
-				if(type.IsClass)
+				if(type.IsClass && typeof(T).IsAssignableFrom(type))
 					return type;
 			}
 			foreach (var type in mockedObj.ImplementedTypes)
 			{
-				if(type.Assembly==typeof(IMockedObject).Assembly)
+				if(type.Assembly==typeof(IMockedObject).Assembly ||  !typeof(T).IsAssignableFrom(type))
 					continue;
 				return type;
 			}
@@ -449,15 +450,24 @@ namespace Rhino.Mocks
 			eventRaiser.Raise(args);
 		}
 
+    /// <summary>TODO: Make this better!  It currently breaks down when mocking classes or
+    /// ABC's that call other virtual methods which are getting intercepted too.  I wish
+    /// we could just walk Expression{Action{Action{T}} to assert only a single
+    /// method is being made.
+    /// 
+    /// The workaround is to not call foo.AssertWasCalled .. rather foo.VerifyAllExpectations()</summary>
+    /// <typeparam name="T">The type of mock object</typeparam>
+    /// <param name="mocks">The mock repository</param>
+    /// <param name="mockToRecordExpectation">The actual mock object to assert expectations on.</param>
 		private static void AssertExactlySingleExpectaton<T>(MockRepository mocks, T mockToRecordExpectation)
 		{
 			if (mocks.Replayer.GetAllExpectationsForProxy(mockToRecordExpectation).Count == 0)
 				throw new InvalidOperationException(
 					"No expectations were setup to be verified, ensure that the method call in the action is a virtual (C#) / overridable (VB.Net) method call");
 
-			if (mocks.Replayer.GetAllExpectationsForProxy(mockToRecordExpectation).Count > 1)
-				throw new InvalidOperationException(
-					"You can only use a single expectation on AssertWasCalled(), use separate calls to AssertWasCalled() if you want to verify several expectations");
+      if (mocks.Replayer.GetAllExpectationsForProxy(mockToRecordExpectation).Count > 1)
+        throw new InvalidOperationException(
+          "You can only use a single expectation on AssertWasCalled(), use separate calls to AssertWasCalled() if you want to verify several expectations");
 		}
 
 		#region Nested type: VoidType
