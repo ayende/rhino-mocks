@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MbUnit.Framework.1.1</name>
+    </assembly>
+    <members>
+        <member name="T:MbUnit.Framework.RollBackAttribute">
+            <summary>
+            Tags methods to execute database operation in its own database
+            transaction.
+            </summary>
+            <remarks>
+            <para>
+            This attribute was invented by <b>Roy Osherove</b> (
+            http://weblogs.asp.net/rosherove/).
+            </para>
+            </remarks>
+        </member>
+    </members>
+</doc>

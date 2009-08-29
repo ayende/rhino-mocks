@@ -15,7 +15,7 @@
     <RootNamespace>Rhino.Mocks.Tests</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -77,27 +77,31 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Castle\Castle.Core.dll</HintPath>
+      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\SharedLibs\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ADODB, Version=2.8.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Interop\Interop.ADODB.dll</HintPath>
+      <HintPath>..\SharedLibs\Interop.ADODB.dll</HintPath>
     </Reference>
     <Reference Include="Interop.MSHTML, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Interop\Interop.MSHTML.dll</HintPath>
+      <HintPath>..\SharedLibs\Interop.MSHTML.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit.Framework, Version=1.0.2531.41788, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+    <Reference Include="MbUnit.Framework, Version=1.0.2700.29885, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Tools\MbUnit\MbUnit.Framework.dll</HintPath>
+      <HintPath>..\SharedLibs\MbUnit.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3078.4206, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Interop\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+      <HintPath>..\SharedLibs\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Scripting.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -365,6 +369,7 @@
     <Compile Include="MultiMocks.cs" />
     <Compile Include="OrderTest.cs" />
     <Compile Include="PartialMockTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertySetterFixture.cs" />
     <Compile Include="RecordingMocks.cs" />
     <Compile Include="RecursiveMocks.cs" />
@@ -412,11 +417,6 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\ayende-open-source.snk">
-      <Link>ayende-open-source.snk</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -434,14 +434,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Scripting">
-      <Guid>{420B2830-E718-11CF-893D-00A0C9054228}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
+    <None Include="..\ayende-open-source.snk">
+      <Link>ayende-open-source.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

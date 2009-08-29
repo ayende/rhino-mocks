@@ -15,7 +15,7 @@
     <RootNamespace>Rhino.Mocks</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
@@ -60,11 +60,11 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Castle\Castle.Core.dll</HintPath>
+      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\SharedLibs\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -262,11 +262,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="With.cs" />
-    <None Include="..\..\ayende-open-source.snk">
-      <Link>ayende-open-source.snk</Link>
-    </None>
     <Compile Include="CompatabilityWith2.0.cs" />
     <Compile Include="__ProtectAttribute.cs" />
+    <None Include="..\ayende-open-source.snk">
+      <Link>ayende-open-source.snk</Link>
+    </None>
     <None Include="Diagram.cd" />
   </ItemGroup>
   <ItemGroup>
