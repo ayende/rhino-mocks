@@ -1,1 +1,0 @@
-git filter-branch --prune-empty --tree-filter 'mv rhino-mocks mocks || :' -- --all

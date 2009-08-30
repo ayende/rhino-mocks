@@ -60,7 +60,7 @@ task Test -depends Compile {
   $old = pwd
   cd $build_dir
   exec ".\MbUnit.Cons.exe" "$build_dir\Rhino.Mocks.Tests.dll"
-  cd $old
+  cd $old		
 }
 
 task Merge {
