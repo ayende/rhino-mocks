@@ -70,7 +70,13 @@ task Merge {
 	Remove-Item Rhino.Mocks.Partial.dll -ErrorAction SilentlyContinue 
 	Rename-Item $build_dir\Rhino.Mocks.dll Rhino.Mocks.Partial.dll
 	
-	& $tools_dir\ILMerge.exe Rhino.Mocks.Partial.dll Castle.DynamicProxy2.dll Castle.Core.dll /out:Rhino.Mocks.dll /t:library "/keyfile:$base_dir\ayende-open-source.snk" "/internalize:$base_dir\ilmerge.exclude"
+	& $tools_dir\ILMerge.exe Rhino.Mocks.Partial.dll `
+		Castle.DynamicProxy2.dll `
+		Castle.Core.dll `
+		/out:Rhino.Mocks.dll `
+		/t:library `
+		"/keyfile:$base_dir\ayende-open-source.snk" `
+		"/internalize:$base_dir\ilmerge.exclude"
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to merge assemblies!"
     }
@@ -78,7 +84,12 @@ task Merge {
 }
 
 task Release -depends Test, Merge {
-	& $tools_dir\zip.exe -9 -A -j $release_dir\Rhino.Mocks.zip $build_dir\Rhino.Mocks.dll $build_dir\Rhino.Mocks.xml license.txt acknowledgements.txt
+	& $tools_dir\zip.exe -9 -A -j `
+		$release_dir\Rhino.Mocks.zip `
+		$build_dir\Rhino.Mocks.dll `
+		$build_dir\Rhino.Mocks.xml `
+		license.txt `
+		acknowledgements.txt
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute ZIP command"
     }
