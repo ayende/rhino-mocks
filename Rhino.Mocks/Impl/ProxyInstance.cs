@@ -327,11 +327,12 @@ namespace Rhino.Mocks.Impl
 
 		private static string GenerateKey(MethodInfo method, object[] args)
 		{
-			if ((method.Name.StartsWith("get_") && args.Length == 0) ||
+            var baseName = method.DeclaringType.FullName + method.Name.Substring(4); 
+            if ((method.Name.StartsWith("get_") && args.Length == 0) ||
 			    (method.Name.StartsWith("set_") && args.Length == 1))
-				return method.Name.Substring(4);
+				return baseName;
 			StringBuilder sb = new StringBuilder();
-			sb.Append(method.Name.Substring(4));
+            sb.Append(baseName);
 			int len = args.Length;
 			if (method.Name.StartsWith("set_"))
 				len--;

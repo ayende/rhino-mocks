@@ -156,6 +156,7 @@
     <Compile Include="Constraints\StringConstraintsTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Alex.cs" />
     <Compile Include="PartialMockTestsAAA.cs" />
     <Compile Include="MultiMocksWithAAA.cs" />
     <Compile Include="Coverage.cs" />
