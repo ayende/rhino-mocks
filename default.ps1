@@ -9,6 +9,8 @@ properties {
   $release_dir = "$base_dir\Release"
 } 
 
+include .\psake_ext.ps1
+	
 task default -depends Release
 
 task Clean { 
@@ -17,7 +19,6 @@ task Clean {
 } 
 
 task Init -depends Clean { 
-	. .\psake_ext.ps1
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Mocks\Properties\AssemblyInfo.cs" `
 		-title "Rhino Mocks $version" `
