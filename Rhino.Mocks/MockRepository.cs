@@ -783,11 +783,12 @@ namespace Rhino.Mocks
             RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance);
 
             Type[] types = new Type[] { typeof(IMockedObject) };
+            var delegateTargetInterface = delegateTargetInterfaceCreator.GetDelegateTargetInterface(type);
             object target = GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(
-                delegateTargetInterfaceCreator.GetDelegateTargetInterface(type),
+                delegateTargetInterface,
                 types, proxyGenerationOptions, interceptor);
 
-            proxy = Delegate.CreateDelegate(type, target, "Invoke");
+            proxy = Delegate.CreateDelegate(type, target, delegateTargetInterface.Name+ ".Invoke");
             delegateProxies.Add(target, proxy);
 
             IMockState value = mockStateFactory(GetMockedObject(proxy));

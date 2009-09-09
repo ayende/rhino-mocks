@@ -57,16 +57,17 @@ namespace Rhino.Mocks.Tests
         public void CallingMockedDelegatesWithoutOn()
         {
             ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
-            //Expect.Call(d1()).Return(1);
+            Expect.Call(d1()).Return(1);
 
-            //mocks.ReplayAll();
+            mocks.ReplayAll();
 
-            //Assert.AreEqual(1, d1());
+            Assert.AreEqual(1, d1());
         }
 
         [Test]
         public void MockTwoDelegatesWithTheSameName()
         {
+            SetUp();
             ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
             Tests.ObjectDelegateWithNoParams d2 = (Tests.ObjectDelegateWithNoParams)mocks.StrictMock(typeof(Tests.ObjectDelegateWithNoParams));
 
