@@ -325,7 +325,7 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 	    private static IExpectation BuildParamExpectation(IInvocation invocation, MethodInfo method)
 		{
 			ArgManager.CheckMethodSignature(method);
-			IExpectation expectation = new ConstraintsExpectation(invocation, ArgManager.GetAllConstraints(), new Range(1, 1));
+			IExpectation expectation = new ConstraintsExpectation(invocation, ArgManager.GetAllConstraints(), new Range(1, null));
 			expectation.OutRefParams = ArgManager.GetAllReturnValues();
 			return expectation;
 		}
