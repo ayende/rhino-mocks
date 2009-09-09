@@ -515,13 +515,21 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(MissingMethodException), "Can't find a constructor with matching arguments")]
 		public void RepositoryThrowsWithWrongConstructorArgsForMockClass()
 		{
 			MockRepository mocks = new MockRepository();
 			// There is no constructor on object that takes a string
 			// parameter, so this should fail.
-			object o = mocks.StrictMock(typeof(object), "Foo");
+            try
+            {
+                object o = mocks.StrictMock(typeof(object), "Foo"); 
+   
+                Assert.Fail("The above call should have failed");
+            }
+            catch(ArgumentException argEx)
+            {
+                Assert.Contains(argEx.Message,"Can not instantiate proxy of class: System.Object.");
+            }
 		}
 
 		[Test]

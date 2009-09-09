@@ -28,6 +28,7 @@
 
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using MbUnit.Framework;
 using Rhino.Mocks.Interfaces;
@@ -99,10 +100,20 @@ namespace Rhino.Mocks.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof (MissingMethodException), "Can't find a constructor with matching arguments")]
 		public void BadParamsToCtor()
 		{
-			mocks.StrictMock(typeof (OverLoadedCtor), "Ayende", 55);
+		    try
+		    {
+                mocks.StrictMock(typeof(OverLoadedCtor), "Ayende", 55);
+
+                Assert.Fail("The above call should have failed");
+		    }
+		    catch (ArgumentException argumentException)
+		    {
+		        var x = "Can not instantiate proxy of class: Rhino.Mocks.Tests.MockingClassesTests+OverLoadedCtor.\rCould not find a constructor that would match given arguments:\rSystem.String\r\nSystem.Int32";
+
+                Assert.Contains(argumentException.Message, "Can not instantiate proxy of class: Rhino.Mocks.Tests.MockingClassesTests+OverLoadedCtor");
+		    }			
 		}
 
 
