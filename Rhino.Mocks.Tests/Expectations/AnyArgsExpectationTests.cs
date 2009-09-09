@@ -92,7 +92,7 @@ namespace Rhino.Mocks.Tests.Expectations
 	internal class FakeInvocation : AbstractInvocation
 	{
 		public FakeInvocation(MethodInfo targetMethod) 
-			: base(null, null, null, null, targetMethod, new object[0])
+			: base(null, null, null, null, targetMethod, null, new object[0])
 		{
 		}
 

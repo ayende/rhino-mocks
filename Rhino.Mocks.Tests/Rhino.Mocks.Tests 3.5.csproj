@@ -95,6 +95,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\MbUnit.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3078.4206, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
@@ -157,6 +161,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FieldsProblem\FieldProblem_Alex.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bill.cs" />
     <Compile Include="PartialMockTestsAAA.cs" />
     <Compile Include="MultiMocksWithAAA.cs" />
     <Compile Include="Coverage.cs" />
