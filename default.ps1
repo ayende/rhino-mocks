@@ -5,6 +5,7 @@ properties {
   $buildartifacts_dir = "$build_dir\" 
   $sln_file = "$base_dir\Rhino.Mocks-vs2008.sln" 
   $version = "3.6.0.0"
+  $humanReadableversion = "3.6"
   $tools_dir = "$base_dir\Tools"
   $release_dir = "$base_dir\Release"
   $uploadCategory = "Rhino-Mocks"
@@ -21,6 +22,11 @@ task Clean {
 } 
 
 task Init -depends Clean { 
+
+	if($values.build -eq $null) {
+		$values.build = "PRIVATE-BUILD"
+	}
+	
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Mocks\Properties\AssemblyInfo.cs" `
 		-title "Rhino Mocks $version" `
@@ -90,8 +96,9 @@ task Merge {
 }
 
 task Release -depends Test, Merge {
+	$build = $values.build
 	& $tools_dir\zip.exe -9 -A -j `
-		$release_dir\Rhino.Mocks.zip `
+		$release_dir\Rhino.Mocks-$humanReadableversion-$build.zip `
 		$build_dir\Rhino.Mocks.dll `
 		$build_dir\Rhino.Mocks.xml `
 		license.txt `
@@ -101,10 +108,11 @@ task Release -depends Test, Merge {
     }
 }
 
-task Upload  {
+task Upload -depend Release {
 	if (Test-Path $uploadScript ) {
 		$log = git log -n 1 --oneline		
-		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Mocks.zip"
+		$build = $values.build
+		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Mocks-$humanReadableversion-$build.zip"
 		
 		if ($lastExitCode -ne 0) {
 			throw "Error: Failed to publish build"

@@ -25,7 +25,8 @@ param(
   [switch]$debug = $false,
   [switch]$help  = $false,
   [switch]$timing = $false,
-  [switch]$docs = $false
+  [switch]$docs = $false,
+  $values
 )
 
 if($help) {
