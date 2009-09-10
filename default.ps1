@@ -13,6 +13,12 @@ properties {
 } 
 
 include .\psake_ext.ps1
+
+$build = $env:CCNetLabel
+
+if ($build -eq $null ) {
+	$build  = "PRIVATE-BUILD"
+}
 	
 task default -depends Release
 
@@ -96,7 +102,6 @@ task Merge {
 }
 
 task Release -depends Test, Merge {
-	$build = $values.build
 	& $tools_dir\zip.exe -9 -A -j `
 		$release_dir\Rhino.Mocks-$humanReadableversion-$build.zip `
 		$build_dir\Rhino.Mocks.dll `
@@ -111,7 +116,6 @@ task Release -depends Test, Merge {
 task Upload -depend Release {
 	if (Test-Path $uploadScript ) {
 		$log = git log -n 1 --oneline		
-		$build = $values.build
 		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Mocks-$humanReadableversion-$build.zip"
 		
 		if ($lastExitCode -ne 0) {
