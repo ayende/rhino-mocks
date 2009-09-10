@@ -28,10 +28,6 @@ task Clean {
 } 
 
 task Init -depends Clean { 
-
-	if($values.build -eq $null) {
-		$values.build = "PRIVATE-BUILD"
-	}
 	
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Mocks\Properties\AssemblyInfo.cs" `
