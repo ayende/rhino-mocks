@@ -14,7 +14,7 @@ properties {
 
 include .\psake_ext.ps1
 
-$build = $env:CCNetLabel
+$build = $env:CCNetNumericLabel 
 
 if ($build -eq $null ) {
 	$build  = "PRIVATE-BUILD"
