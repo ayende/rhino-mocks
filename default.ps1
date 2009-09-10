@@ -13,12 +13,6 @@ properties {
 } 
 
 include .\psake_ext.ps1
-
-$build = $env:CCNetNumericLabel 
-
-if ($build -eq $null ) {
-	$build  = "PRIVATE-BUILD"
-}
 	
 task default -depends Release
 
@@ -99,7 +93,7 @@ task Merge {
 
 task Release -depends Test, Merge {
 	& $tools_dir\zip.exe -9 -A -j `
-		$release_dir\Rhino.Mocks-$humanReadableversion-$build.zip `
+		$release_dir\Rhino.Mocks-$humanReadableversion-$env:ccnetnumericlabel.zip `
 		$build_dir\Rhino.Mocks.dll `
 		$build_dir\Rhino.Mocks.xml `
 		license.txt `
@@ -112,7 +106,7 @@ task Release -depends Test, Merge {
 task Upload -depend Release {
 	if (Test-Path $uploadScript ) {
 		$log = git log -n 1 --oneline		
-		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Mocks-$humanReadableversion-$build.zip"
+		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Mocks-$humanReadableversion-$env:ccnetnumericlabel.zip"
 		
 		if ($lastExitCode -ne 0) {
 			throw "Error: Failed to publish build"
