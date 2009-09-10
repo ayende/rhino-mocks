@@ -7,6 +7,8 @@ properties {
   $version = "3.6.0.0"
   $tools_dir = "$base_dir\Tools"
   $release_dir = "$base_dir\Release"
+  $uploadCategory = "Rhino-Mocks"
+  $uploadScript = "C:\Builds\Upload\PublishBuild.build"
 } 
 
 include .\psake_ext.ps1
@@ -97,4 +99,18 @@ task Release -depends Test, Merge {
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute ZIP command"
     }
+}
+
+task Upload  {
+	if (Test-Path $uploadScript ) {
+		$log = git log -n 1 --oneline		
+		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Mocks.zip"
+		
+		if ($lastExitCode -ne 0) {
+			throw "Error: Failed to publish build"
+		}
+	}
+	else {
+		Write-Host "could not find upload script $uploadScript, skipping upload"
+	}
 }
