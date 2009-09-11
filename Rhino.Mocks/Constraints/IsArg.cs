@@ -27,6 +27,7 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Text;
 
 namespace Rhino.Mocks.Constraints
@@ -49,6 +50,7 @@ namespace Rhino.Mocks.Constraints
 		/// <param name="objToCompare">The object the parameter should be greater than</param>
 		public T GreaterThan(IComparable objToCompare)
 		{
+            objToCompare = ConvertObjectTypeToMatch(objToCompare);
 			ArgManager.AddInArgument(Is.GreaterThan(objToCompare));
 			return default(T);
 		}
@@ -59,6 +61,7 @@ namespace Rhino.Mocks.Constraints
 		/// <param name="objToCompare">The object the parameter should be less than</param>
 		public T LessThan(IComparable objToCompare)
 		{
+            objToCompare = ConvertObjectTypeToMatch(objToCompare);
 			ArgManager.AddInArgument(Is.LessThan(objToCompare));
 			return default(T);
 		}
@@ -69,6 +72,7 @@ namespace Rhino.Mocks.Constraints
 		/// <param name="objToCompare">The object the parameter should be less than or equal to</param>
 		public T LessThanOrEqual(IComparable objToCompare)
 		{
+		    objToCompare = ConvertObjectTypeToMatch(objToCompare);
 			ArgManager.AddInArgument(Is.LessThanOrEqual(objToCompare));
 			return default(T);
 		}
@@ -79,6 +83,7 @@ namespace Rhino.Mocks.Constraints
 		/// <param name="objToCompare">The object the parameter should be greater than or equal to</param>
 		public T GreaterThanOrEqual(IComparable objToCompare)
 		{
+            objToCompare = ConvertObjectTypeToMatch(objToCompare);
 			ArgManager.AddInArgument(Is.GreaterThanOrEqual(objToCompare));
 			return default(T);
 		}
@@ -89,17 +94,69 @@ namespace Rhino.Mocks.Constraints
 		/// <param name="obj">The object the parameter should equal to</param>
 		public T Equal(object obj)
 		{
+            obj = ConvertObjectTypeToMatch(obj);
 			ArgManager.AddInArgument(Is.Equal(obj));
 			return default(T);
 		}
 
+        /// <summary>
+        /// Converts the <see cref="IComparable" />object type to a better match if this is a primitive type.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <returns></returns>
+        private IComparable ConvertObjectTypeToMatch(IComparable obj)
+        {
+            var obj2 = ConvertObjectTypeToMatch(obj as object);
+            if (obj2 is IComparable)
+            {
+                obj = obj2 as IComparable;
+            }
 
-		/// <summary>
+            return obj;
+        }
+
+        /// <summary>
+        /// Converts the object type to match.
+        /// </summary>
+        /// <remarks>
+        /// Because of implicit conversions and the way ArgConstraints this method is needed to check
+        /// object type and potentially change the object type for a better "match" so that obj1.Equals(obj2)
+        /// will return the proper "answer"
+        /// </remarks>
+        /// <param name="obj">The obj.</param>
+        /// <returns></returns>
+	    private object ConvertObjectTypeToMatch(object obj)
+	    {
+	        if (typeof(T).IsPrimitive && typeof(T) != obj.GetType())
+	        {
+	            try
+	            {
+	                obj = Convert.ChangeType(obj, typeof(T));
+	            }
+	            catch (Exception ex)
+	            {
+	                if (ex is InvalidCastException || ex is FormatException)
+	                {
+
+	                }
+	                else
+	                {
+	                    throw;
+	                }
+	            }
+
+	        }
+	        return obj;
+	    }
+
+
+	    /// <summary>
 		/// Evaluate a not equal constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="obj">The object the parameter should not equal to</param>
 		public T NotEqual(object obj)
 		{
+            obj = ConvertObjectTypeToMatch(obj);
 			ArgManager.AddInArgument(Is.NotEqual(obj));
 			return default(T);
 		}
@@ -111,6 +168,7 @@ namespace Rhino.Mocks.Constraints
 		/// <param name="obj">The object the parameter should the same as.</param>
 		public T Same(object obj)
 		{
+            obj = ConvertObjectTypeToMatch(obj);
 			ArgManager.AddInArgument(Is.Same(obj));
 			return default(T);
 		}

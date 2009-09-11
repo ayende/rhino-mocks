@@ -303,6 +303,89 @@ namespace Rhino.Mocks.Tests
 		{
 			
 		}
-		
+
+        [Test]
+        public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsEqual()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+            stub.Stub(x => x.GetUser(Arg<long>.Is.Equal(1))).Return("test"); // 1 is inferred as Int32 (not Int64)
+
+            // Assert
+            Assert.AreEqual(null, stub.GetUser(0));
+            Assert.AreEqual("test", stub.GetUser(1));
+        }
+
+        [Test]
+        public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsNotEqual()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+            stub.Stub(x => x.GetUser(Arg<long>.Is.NotEqual(1))).Return("test"); // 1 is inferred as Int32 (not Int64)
+
+            // Assert
+            Assert.AreNotEqual("test", stub.GetUser(0));
+            Assert.AreNotEqual(null, stub.GetUser(1));
+        }
+
+        [Test]
+        public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsGreaterThan()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+            stub.Stub(x => x.GetUser(Arg<long>.Is.GreaterThan(1))).Return("test"); // 1 is inferred as Int32 (not Int64)
+
+            // Act
+            var value = stub.GetUser(2);
+
+            // Assert
+            Assert.AreEqual(null, stub.GetUser(0));
+            Assert.AreEqual(null, stub.GetUser(1));
+            Assert.AreEqual("test", stub.GetUser(2));
+        }
+
+        [Test]
+        public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsGreaterThanOrEqual()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+            stub.Stub(x => x.GetUser(Arg<long>.Is.GreaterThanOrEqual(2))).Return("test"); // 1 is inferred as Int32 (not Int64)
+
+            // Assert
+            Assert.AreEqual(null, stub.GetUser(1));
+            Assert.AreEqual("test", stub.GetUser(2));
+            Assert.AreEqual("test", stub.GetUser(3));
+        }
+
+        [Test]
+        public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsLessThan()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+            stub.Stub(x => x.GetUser(Arg<long>.Is.LessThan(2))).Return("test"); // 1 is inferred as Int32 (not Int64)
+
+            // Assert
+            Assert.AreEqual("test", stub.GetUser(1));
+            Assert.AreEqual(null, stub.GetUser(2));
+            Assert.AreEqual(null, stub.GetUser(3));
+        }
+
+        [Test]
+        public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsLessThanOrEqual()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+            stub.Stub(x => x.GetUser(Arg<long>.Is.LessThanOrEqual(2))).Return("test"); // 1 is inferred as Int32 (not Int64)
+
+            // Assert
+            Assert.AreEqual("test", stub.GetUser(1));
+            Assert.AreEqual("test", stub.GetUser(2));
+            Assert.AreEqual(null, stub.GetUser(3));
+        }
+
+        public interface ITestService
+        {
+            string GetUser(long id);
+        }
 	}
 }
