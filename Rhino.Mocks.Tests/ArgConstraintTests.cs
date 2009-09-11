@@ -323,9 +323,11 @@ namespace Rhino.Mocks.Tests
             var stub = MockRepository.GenerateStub<ITestService>();
             stub.Stub(x => x.GetUser(Arg<long>.Is.NotEqual(1))).Return("test"); // 1 is inferred as Int32 (not Int64)
 
+            var actual = stub.GetUser(0);
+
             // Assert
-            Assert.AreNotEqual("test", stub.GetUser(0));
-            Assert.AreNotEqual(null, stub.GetUser(1));
+            Assert.AreEqual("test", actual);
+            Assert.AreEqual(null, stub.GetUser(1));
         }
 
         [Test]
@@ -334,9 +336,6 @@ namespace Rhino.Mocks.Tests
             // Arrange
             var stub = MockRepository.GenerateStub<ITestService>();
             stub.Stub(x => x.GetUser(Arg<long>.Is.GreaterThan(1))).Return("test"); // 1 is inferred as Int32 (not Int64)
-
-            // Act
-            var value = stub.GetUser(2);
 
             // Assert
             Assert.AreEqual(null, stub.GetUser(0));
