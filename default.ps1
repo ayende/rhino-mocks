@@ -3,7 +3,7 @@ properties {
   $lib_dir = "$base_dir\SharedLibs"
   $build_dir = "$base_dir\build" 
   $buildartifacts_dir = "$build_dir\" 
-  $sln_file = "$base_dir\Rhino.Mocks-vs2008.sln" 
+  $sln_file = "$base_dir\Rhino.Mocks.sln" 
   $version = "3.6.0.0"
   $humanReadableversion = "3.6"
   $tools_dir = "$base_dir\Tools"
