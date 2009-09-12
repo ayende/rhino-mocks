@@ -53,7 +53,7 @@
     <Compile Include="TestInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Rhino.Mocks\Rhino.Mocks 3.5.csproj">
+    <ProjectReference Include="..\Rhino.Mocks\Rhino.Mocks.csproj">
       <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
       <Name>Rhino.Mocks 3.5</Name>
     </ProjectReference>

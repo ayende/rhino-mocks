@@ -1,8 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks.Tests 3.5", "Rhino.Mocks.Tests\Rhino.Mocks.Tests 3.5.csproj", "{C63839EC-BEF3-4DCD-BE23-B6DA21E8BE20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks.Tests 3.5", "Rhino.Mocks.Tests\Rhino.Mocks.Tests.csproj", "{C63839EC-BEF3-4DCD-BE23-B6DA21E8BE20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks 3.5", "Rhino.Mocks\Rhino.Mocks 3.5.csproj", "{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks 3.5", "Rhino.Mocks\Rhino.Mocks.csproj", "{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks.Tests.Model", "Rhino.Mocks.Tests.Model\Rhino.Mocks.Tests.Model.csproj", "{3078B943-10A5-41FA-A68A-7C4FC98506A0}"
 EndProject
