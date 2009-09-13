@@ -304,6 +304,71 @@ namespace Rhino.Mocks.Tests
 			
 		}
 
+
+        [Test]
+        public void Mock_object_using_ExpectMethod_with_ArgConstraints_allow_for_multiple_calls_as_default_behavior()
+        {
+            // Arrange
+            var mock = MockRepository.GenerateMock<IDemo>();
+            mock.Expect(x => x.StringArgString(Arg<string>.Is.Equal("input"))).Return("output");
+
+            // Act
+            var firstCallResult = mock.StringArgString("input");
+            var secondCallResult = mock.StringArgString("input");
+
+            // Assert
+            Assert.AreEqual("output", firstCallResult);
+            Assert.AreEqual(firstCallResult, secondCallResult);
+        }
+
+        [Test]
+        public void Stub_object_using_ExpectMethod_with_ArgConstraints_allow_for_multiple_calls_as_default_behavior()
+        {
+            // Arrange
+            var mock = MockRepository.GenerateStub<IDemo>();
+            mock.Expect(x => x.StringArgString(Arg<string>.Is.Equal("input"))).Return("output");
+
+            // Act
+            var firstCallResult = mock.StringArgString("input");
+            var secondCallResult = mock.StringArgString("input");
+
+            // Assert
+            Assert.AreEqual("output", firstCallResult);
+            Assert.AreEqual(firstCallResult, secondCallResult);
+        }
+
+        [Test]
+        public void Stub_object_using_StubMethod_with_ArgConstraints_allow_for_multiple_calls_as_default_behavior()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<IDemo>();
+            stub.Stub(x => x.StringArgString(Arg<string>.Is.Equal("input"))).Return("output");
+
+            // Act
+            var firstCallResult = stub.StringArgString("input");
+            var secondCallResult = stub.StringArgString("input");
+
+            // Assert
+            Assert.AreEqual("output", firstCallResult);
+            Assert.AreEqual(firstCallResult, secondCallResult);
+        }
+
+        [Test]
+        public void Mock_object_using_StubMethod_with_ArgConstraints_allow_for_multiple_calls_as_default_behavior()
+        {
+            // Arrange
+            var mock = MockRepository.GenerateMock<IDemo>();
+            mock.Stub(x => x.StringArgString(Arg<string>.Is.Equal("input"))).Return("output");
+
+            // Act
+            var firstCallResult = mock.StringArgString("input");
+            var secondCallResult = mock.StringArgString("input");
+
+            // Assert
+            Assert.AreEqual("output", firstCallResult);
+            Assert.AreEqual(firstCallResult, secondCallResult);
+        }
+
         [Test]
         public void ImplicitlyConverted_parameter_is_properly_compared_when_using_IsEqual()
         {
