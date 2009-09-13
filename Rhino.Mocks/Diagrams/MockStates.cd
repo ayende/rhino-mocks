@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rhino.Mocks.Impl.RecordMockState" Collapsed="true">
+    <Position X="3.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAIAKAADgQAAhEAAQAAQAEAwAAAAMQAAAgAAEQQ=</HashCode>
+      <FileName>Impl\RecordMockState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.ReplayDynamicMockState" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Impl\ReplayDynamicMockState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.StubRecordMockState" Collapsed="true">
+    <Position X="1.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQ=</HashCode>
+      <FileName>Impl\StubRecordMockState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.StubReplayMockState" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAAAAAAAAEQA=</HashCode>
+      <FileName>Impl\StubReplayMockState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.VerifiedMockState" Collapsed="true">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAQAAgAIAAAAAAAAgBAAAIQAAAgAAEQA=</HashCode>
+      <FileName>Impl\VerifiedMockState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.ReplayMockState" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACIAACAQgAgAAAAAAAAAEgAAAAIQIAAgAAEQA=</HashCode>
+      <FileName>Impl\ReplayMockState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.RecordPartialMockState" Collapsed="true">
+    <Position X="3.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Impl\RecordPartialMockState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.RecordDynamicMockState" Collapsed="true">
+    <Position X="5.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAEAQ=</HashCode>
+      <FileName>Impl\RecordDynamicMockState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Impl.ReplayPartialMockState" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Impl\ReplayPartialMockState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Rhino.Mocks.Interfaces.IMockState" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAQAAgAAAAAAAAAAgAAAAIQAAAgAAEQA=</HashCode>
+      <FileName>Interfaces\IMockState.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rhino.Mocks.Expectations.ConstraintsExpectation" Collapsed="true">
+    <Position X="6" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAAAAAAgAAAAAAAAAAAAKAAAAAQAAAAAEA=</HashCode>
+      <FileName>Expectations\ConstraintsExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.AbstractExpectation" Collapsed="true">
+    <Position X="9.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAABAAYAoYgCLBAgAAoQCAEAgIAAIAAIABQPBQCJDQ=</HashCode>
+      <FileName>Expectations\AbstractExpectation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.AnyArgsExpectation" Collapsed="true">
+    <Position X="12.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAAAAAAgAAAAAAAAIAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expectations\AnyArgsExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.ArgsEqualExpectation" Collapsed="true">
+    <Position X="8.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAAAAAAgAAAAAAAAAAAEIAgAAAAIAAAAAA=</HashCode>
+      <FileName>Expectations\ArgsEqualExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.CallbackExpectation" Collapsed="true">
+    <Position X="10.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQBAAAAAAIAAAAAAgAAAAAAAAAAAAIAAAEAAAAAAAAA=</HashCode>
+      <FileName>Expectations\CallbackExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Rhino.Mocks.Interfaces.IExpectation" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAABAAYAAIAAABAAAAoAAAEAgAAAAAAIABALAQCABA=</HashCode>
+      <FileName>Interfaces\IExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

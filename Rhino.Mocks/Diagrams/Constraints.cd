@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rhino.Mocks.Constraints.AbstractConstraint" Collapsed="true">
+    <Position X="61.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAABACAAAAAAAAAJAAAABAIAAAAAA=</HashCode>
+      <FileName>Constraints\AbstractConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.PublicFieldIs" Collapsed="true">
+    <Position X="54.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.PublicFieldConstraint" Collapsed="true">
+    <Position X="54.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAIAAAAAAAAAAAAAAAAgAAIAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.PropertyIs" Collapsed="true">
+    <Position X="70.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.PropertyConstraint" Collapsed="true">
+    <Position X="70.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAAAAAIAAAAAAAAAAAAAAAAAAAIAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.TypeOf" Collapsed="true">
+    <Position X="79.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAABAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Same" Collapsed="true">
+    <Position X="36.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.PredicateConstraint&lt;T&gt;" Collapsed="true">
+    <Position X="45.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAIAAAAABAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.LambdaConstraint" Collapsed="true">
+    <Position X="56.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAAAIAgAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.CollectionEqual" Collapsed="true">
+    <Position X="63.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.OneOf" Collapsed="true">
+    <Position X="72.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.IsIn" Collapsed="true">
+    <Position X="81.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAIAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.CollectionCount" Collapsed="true">
+    <Position X="38.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.ListElement" Collapsed="true">
+    <Position X="47.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAIAAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.KeyedListElement&lt;T&gt;" Collapsed="true">
+    <Position X="59" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.ContainsAll" Collapsed="true">
+    <Position X="65.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAIAAAAEAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Or" Collapsed="true">
+    <Position X="74.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAACAAAAAAABAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Not" Collapsed="true">
+    <Position X="83.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAABAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.And" Collapsed="true">
+    <Position X="41" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAACAAAAAAABAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Like" Collapsed="true">
+    <Position X="50" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAQAAAAAAAAAEAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Contains" Collapsed="true">
+    <Position X="61.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAIAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.EndsWith" Collapsed="true">
+    <Position X="68" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.StartsWith" Collapsed="true">
+    <Position X="77" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Equal" Collapsed="true">
+    <Position X="86" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.Anything" Collapsed="true">
+    <Position X="43.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Constraints.ComparingConstraint" Collapsed="true">
+    <Position X="52.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAEAAAAAIAAAAQAAAAAIAAAAAA=</HashCode>
+      <FileName>Constraints\Constraints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

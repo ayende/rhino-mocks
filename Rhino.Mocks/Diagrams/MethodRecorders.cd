@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rhino.Mocks.MethodRecorders.MethodRecorderBase" Collapsed="true">
+    <Position X="5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACIEAIIAAAAAoMAACAIEAQCEgQGAAkBFACIEAgAJQA=</HashCode>
+      <FileName>MethodRecorders\MethodRecorderBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rhino.Mocks.MethodRecorders.UnorderedMethodRecorder" Collapsed="true">
+    <Position X="5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACIAQAAEAAAAAAAAAAIBAQAEAAEAAABAACIEAgAAAA=</HashCode>
+      <FileName>MethodRecorders\UnorderedMethodRecorder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.MethodRecorders.OrderedMethodRecorder" Collapsed="true">
+    <Position X="5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>MethodRecorders\OrderedMethodRecorder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Rhino.Mocks.Interfaces.IMethodRecorder" Collapsed="true">
+    <Position X="2.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAEAIIAAAAAAEAACAAEAACEgQAAAEBBACAAAAABQA=</HashCode>
+      <FileName>Interfaces\IMethodRecorder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
