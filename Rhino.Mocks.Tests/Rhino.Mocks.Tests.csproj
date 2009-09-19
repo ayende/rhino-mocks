@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="FieldsProblem\FieldProblem_Alex.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Bill.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JPBoodhoo.cs" />
     <Compile Include="PartialMockTestsAAA.cs" />
     <Compile Include="MultiMocksWithAAA.cs" />
     <Compile Include="Coverage.cs" />

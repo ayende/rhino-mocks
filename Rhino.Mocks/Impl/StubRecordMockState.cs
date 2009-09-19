@@ -65,14 +65,12 @@ namespace Rhino.Mocks.Impl
 
 				foreach (PropertyInfo property in implementedType.GetProperties())
 				{
-					if (property.CanRead && property.CanWrite)
+					if (property.CanRead && CanWriteToPropertyThroughPublicSignature(property))
 					{
 						bool alreadyHasValue = mockedObject.RegisterPropertyBehaviorFor(property);
 						if (property.PropertyType.IsValueType && alreadyHasValue == false)
 						{
-							//make sure that it creates a default value for value types
-							mockedObject.HandleProperty(property.GetSetMethod(true),
-														new object[] { Activator.CreateInstance(property.PropertyType) });
+							CreateDefaultValueForValueTypes(mockedObject, property);
 						}
 					}
 				}
@@ -80,7 +78,18 @@ namespace Rhino.Mocks.Impl
 			}
 		}
 
-		/// <summary>
+	    void CreateDefaultValueForValueTypes(IMockedObject mockedObject, PropertyInfo property)
+	    {
+	        mockedObject.HandleProperty(property.GetSetMethod(true),
+	                                    new object[] { Activator.CreateInstance(property.PropertyType) });
+	    }
+
+	    bool CanWriteToPropertyThroughPublicSignature(PropertyInfo property)
+	    {
+            return property.CanWrite && property.GetSetMethod(false) != null;
+	    }
+
+	    /// <summary>
 		/// We don't care much about expectations here, so we will remove the expectation if
 		/// it is not closed.
 		/// </summary>
