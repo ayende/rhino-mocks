@@ -70,7 +70,7 @@ namespace Rhino.Mocks.Impl
 						bool alreadyHasValue = mockedObject.RegisterPropertyBehaviorFor(property);
 						if (property.PropertyType.IsValueType && alreadyHasValue == false)
 						{
-							CreateDefaultValueForValueTypes(mockedObject, property);
+							CreateDefaultValueForValueTypeProperty(mockedObject, property);
 						}
 					}
 				}
@@ -78,7 +78,7 @@ namespace Rhino.Mocks.Impl
 			}
 		}
 
-	    void CreateDefaultValueForValueTypes(IMockedObject mockedObject, PropertyInfo property)
+	    void CreateDefaultValueForValueTypeProperty(IMockedObject mockedObject, PropertyInfo property)
 	    {
 	        mockedObject.HandleProperty(property.GetSetMethod(true),
 	                                    new object[] { Activator.CreateInstance(property.PropertyType) });
