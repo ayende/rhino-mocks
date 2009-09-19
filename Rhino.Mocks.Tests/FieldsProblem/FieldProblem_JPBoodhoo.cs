@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MbUnit.Framework;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
