@@ -65,7 +65,7 @@ namespace Rhino.Mocks.Impl
 
 				foreach (PropertyInfo property in implementedType.GetProperties())
 				{
-					if (property.CanRead && property.CanWrite)
+					if (property.CanRead && CanWriteToPropertyThroughPublicSignature(property))
 					{
 						bool alreadyHasValue = mockedObject.RegisterPropertyBehaviorFor(property);
 						if (property.PropertyType.IsValueType && alreadyHasValue == false)
@@ -78,13 +78,13 @@ namespace Rhino.Mocks.Impl
 			}
 		}
 
-	    void CreateDefaultValueForValueTypeProperty(IMockedObject mockedObject, PropertyInfo property)
+		private static void CreateDefaultValueForValueTypeProperty(IMockedObject mockedObject, PropertyInfo property)
 	    {
 	        mockedObject.HandleProperty(property.GetSetMethod(true),
 	                                    new object[] { Activator.CreateInstance(property.PropertyType) });
 	    }
 
-	    bool CanWriteToPropertyThroughPublicSignature(PropertyInfo property)
+		private static bool CanWriteToPropertyThroughPublicSignature(PropertyInfo property)
 	    {
             return property.CanWrite && property.GetSetMethod(false) != null;
 	    }
