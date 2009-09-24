@@ -1,4 +1,5 @@
 ﻿#region license
+
 // Copyright (c) 2005 - 2007 Ayende Rahien (ayende@ayende.com)
 // All rights reserved.
 // 
@@ -24,91 +25,61 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 #endregion
 
-
 using System;
-using System.Reflection;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Castle.Core.Interceptor;
+using Rhino.Mocks.Impl.Invocation;
+using Rhino.Mocks.Impl.Invocation.Actions;
+using Rhino.Mocks.Impl.Invocation.Specifications;
 using Rhino.Mocks.Interfaces;
+
+namespace Rhino.Mocks.Impl.InvocationSpecifications
+{
+}
 
 namespace Rhino.Mocks.Impl
 {
-	using System.Runtime.CompilerServices;
+    /// <summary>
+    /// Summary description for RhinoInterceptor.
+    /// </summary>
+    public class RhinoInterceptor : MarshalByRefObject, IInterceptor
+    {
+        readonly MockRepository repository;
+        readonly IMockedObject proxyInstance;
+        readonly IEnumerable<InvocationVisitor> invocation_visitors;
 
-	/// <summary>
-	/// Summary description for RhinoInterceptor.
-	/// </summary>
-	public class RhinoInterceptor : MarshalByRefObject, IInterceptor
-	{
-		private readonly MockRepository repository;
-		private readonly IMockedObject proxyInstance;
 
-		private static MethodInfo[] objectMethods =
-			new MethodInfo[]
-				{
-					typeof (object).GetMethod("ToString"), typeof (object).GetMethod("Equals", new Type[] {typeof (object)}),
-					typeof (object).GetMethod("GetHashCode"), typeof (object).GetMethod("GetType")
-				};
+        /// <summary>
+        /// Creates a new <see cref="RhinoInterceptor"/> instance.
+        /// </summary>
+        public RhinoInterceptor(MockRepository repository, IMockedObject proxyInstance, IEnumerable<InvocationVisitor> invocation_visitors)
+        {
+            this.repository = repository;
+            this.proxyInstance = proxyInstance;
+            this.invocation_visitors = invocation_visitors;
+        }
 
-		/// <summary>
-		/// Creates a new <see cref="RhinoInterceptor"/> instance.
-		/// </summary>
-		public RhinoInterceptor(MockRepository repository, IMockedObject proxyInstance)
-		{
-			this.repository = repository;
-			this.proxyInstance = proxyInstance;
-		}
-
-		/// <summary>
-		/// Intercept a method call and direct it to the repository.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void Intercept(IInvocation invocation)
-		{
-		    proxyInstance.MockedObjectInstance = invocation.Proxy;
-			if (Array.IndexOf(objectMethods, invocation.Method) != -1)
-			{
-				invocation.Proceed();
-				return;
-			}
-			if (invocation.Method.DeclaringType == typeof (IMockedObject))
-			{
-				invocation.ReturnValue = invocation.Method.Invoke(proxyInstance, invocation.Arguments);
-				return;
-			}
-			if (proxyInstance.ShouldCallOriginal(invocation.GetConcreteMethod()))
-			{
-				invocation.Proceed();
-				return;
-			}
-			if (proxyInstance.IsPropertyMethod(invocation.GetConcreteMethod()))
-			{
-				invocation.ReturnValue = proxyInstance.HandleProperty(invocation.GetConcreteMethod(), invocation.Arguments);
-			    repository.RegisterPropertyBehaviorOn(proxyInstance);
-				return;
-			}
-			//This call handle the subscribe / remove this method call is for an event,
-			//processing then continue normally (so we get an expectation for subscribing / removing from the event
-			HandleEvent(invocation, invocation.Arguments);
-			object proxy = repository.GetMockObjectFromInvocationProxy(invocation.Proxy);
-			MethodInfo method = invocation.GetConcreteMethod();
-			invocation.ReturnValue = repository.MethodCall(invocation, proxy, method, invocation.Arguments);
-		}
-
-		private void HandleEvent(IInvocation invocation, object[] args)
-		{
-			if (IsEvent(invocation))
-			{
-				proxyInstance.HandleEvent(invocation.Method, args);
-			}
-		}
-
-		private bool IsEvent(IInvocation invocation)
-		{
-			return
-                invocation.Method.Name.StartsWith("add_") || 
-                invocation.Method.Name.StartsWith("remove_");
-		}
-	}
+        /// <summary>
+        /// Intercept a method call and direct it to the repository.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void Intercept(IInvocation invocation)
+        {
+            proxyInstance.MockedObjectInstance = invocation.Proxy;
+            foreach (var visitor in invocation_visitors)
+            {
+                if (visitor.CanWorkWith(invocation))
+                {
+                    visitor.RunAgainst(invocation);
+                    return;
+                }
+            }
+            if (new IsAnEventInvocation().IsSatisfiedBy(invocation)) new HandleEvent(proxyInstance).PerformAgainst(invocation);
+            new RegularInvocation(repository).PerformAgainst(invocation);
+        }
+    }
 }

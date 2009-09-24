@@ -128,6 +128,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExpectationVerificationInformation.cs" />
+    <Compile Include="Impl\Invocation\Actions\HandleEvent.cs" />
+    <Compile Include="Impl\Invocation\Actions\InvokeMethodAgainstMockedObject.cs" />
+    <Compile Include="Impl\Invocation\Actions\InvokeProperty.cs" />
+    <Compile Include="Impl\Invocation\Actions\Proceed.cs" />
+    <Compile Include="Impl\Invocation\Actions\RegularInvocation.cs" />
+    <Compile Include="Impl\Invocation\InvocationVisitor.cs" />
+    <Compile Include="Impl\Invocation\InvocationVisitorsFactory.cs" />
+    <Compile Include="Impl\Invocation\Specifications\AndSpecification.cs" />
+    <Compile Include="Impl\Invocation\Specifications\FollowsEventNamingStandard.cs" />
+    <Compile Include="Impl\Invocation\Specifications\IsAnEventInvocation.cs" />
+    <Compile Include="Impl\Invocation\Specifications\IsAnInvocationOfAMethodBelongingToObject.cs" />
+    <Compile Include="Impl\Invocation\Specifications\IsAnInvocationOnAMockedObject.cs" />
+    <Compile Include="Impl\Invocation\Specifications\IsAPropertyInvocation.cs" />
+    <Compile Include="Impl\Invocation\Specifications\IsInvocationThatShouldTargetOriginal.cs" />
+    <Compile Include="Impl\Invocation\Specifications\NamedEventExistsOnDeclaringType.cs" />
     <Compile Include="Impl\NullLogger.cs" />
     <Compile Include="Impl\RemotingMock\IRemotingProxyOperation.cs" />
     <Compile Include="Impl\RemotingMock\RemotingMockGenerator.cs" />
@@ -141,7 +156,9 @@
     <Compile Include="Impl\TraceWriterExpectationLogger.cs" />
     <Compile Include="Impl\TraceWriterWithStackTraceExpectationWriter.cs" />
     <Compile Include="Interfaces\IExpectationLogger.cs" />
+    <Compile Include="Interfaces\IInvocationAction.cs" />
     <Compile Include="Interfaces\IPartialMockMarker.cs" />
+    <Compile Include="Interfaces\ISpecification.cs" />
     <Compile Include="Interfaces\OriginalCallOptions.cs" />
     <Compile Include="MethodInvocation.cs" />
     <Compile Include="MockRepositoryAAA.cs" />
