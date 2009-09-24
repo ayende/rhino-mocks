@@ -42,7 +42,7 @@ namespace Rhino.Mocks.Tests.MethodProblems
             }
 
             [Test]
-            public void it_should_not_try_to_treat_it_as_an_event()
+            public void should_not_try_to_treat_it_as_an_event()
             {
                 dependency.AssertWasCalled(generic_parameter => generic_parameter.add_MethodThatShouldNotBeSeenAsAnEvent(item));
             }
