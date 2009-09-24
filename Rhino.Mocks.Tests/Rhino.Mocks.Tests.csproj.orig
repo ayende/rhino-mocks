@@ -1,0 +1,900 @@
+<<<<<<< HEAD
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C63839EC-BEF3-4DCD-BE23-B6DA21E8BE20}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>Rhino.Mocks.Tests</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Rhino.Mocks.Tests</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;DEBUG;DOTNET35</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\Build\Tests\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;dotNet2</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\MbUnit\MbUnit.GUI.exe</StartProgram>
+    <StartArguments>D:\OSS\rhino-tools\rhino-mocks\Rhino.Mocks.Tests\bin\debug\Rhino.Mocks.Tests.dll</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.ADODB, Version=2.8.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Interop.ADODB.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MSHTML, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Interop.MSHTML.dll</HintPath>
+    </Reference>
+    <Reference Include="MbUnit.Framework, Version=1.0.2700.29885, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\MbUnit.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3078.4206, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Name>System.EnterpriseServices</Name>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackToRecord.cs" />
+    <Compile Include="Callbacks\CallbackTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CallOriginalMethodTests.cs" />
+    <Compile Include="ComplexOrderingTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ArgConstraintTests.cs" />
+    <Compile Include="Constraints\ComparableConstraintsTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ConstraintTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ContraintsErrorConditions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\AllPropertiesMatchConstraintTest.cs" />
+    <Compile Include="Constraints\ListConstraintTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ReflectionConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\StringConstraintsTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Alex.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bill.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JPBoodhoo.cs" />
+    <Compile Include="PartialMockTestsAAA.cs" />
+    <Compile Include="MultiMocksWithAAA.cs" />
+    <Compile Include="Coverage.cs" />
+    <Compile Include="CustomAttributesOnMocks.cs" />
+    <Compile Include="DoNotExpectTests.cs" />
+    <Compile Include="DotNet35Tests.cs" />
+    <Compile Include="ExtendingRhinoMocks.cs" />
+    <Compile Include="ExtendingRhinoMocks2.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Adam.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Aharon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Alexey.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andrew.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Benjamin.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Chad.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Chompers.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Dave.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_DavidG.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_dyowee.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Eduardo.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Greg.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Harley.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Henrik.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_ikriv42.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_James.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Jodran.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Joe.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Joshua.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JudahG.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Keith.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_KevinM.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Kuchia.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Kythorn.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_LAFAY.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Lee.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Libardo.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Lopez.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mads.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_leftend.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mark.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Maurice.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mike.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mithresh.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Naraga.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Nolan2.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_oblomov.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_OrenEl.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Rabashani.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Raju.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_RepeatsWithGenerate.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Rob.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Robert.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Kevin.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Liang.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Luke.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MichaelR.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Owen.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Avi.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_BackToMockWithRepeatableMethods.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_BackToRecordWithDynamicMocks.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Blaz.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Brian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bruce.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Daniel.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_David.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Entropy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Eric.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JohanIndexProp.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JohnOpincar.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Matt.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Michael.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Phil.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Roger.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Ross.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Roy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Sam.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_SamW.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Sander.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Shane.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Shanon.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Stephan.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_StevenS.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Thierry.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Tim.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_TrueWill.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Wade.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Wendy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Will.cs" />
+    <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MarkHildreth.cs" />
+    <Compile Include="FieldsProblem\GenericMethodWithOutDecimalParameterTest.cs" />
+    <Compile Include="FieldsProblem\SetupResultAndIgnoreArguments.cs" />
+    <Compile Include="GenericMethods.cs" />
+    <Compile Include="MockingDelegatesTests.cs" />
+    <Compile Include="DoHanlderTests.cs" />
+    <Compile Include="DotNet2Tests.cs" />
+    <Compile Include="DynamicMockTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\AbstractExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\AnyArgsExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\ArgsEqualTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\CallbackExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\ConstraintExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExpectTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\ClassThatImplementsGetHashCodeAndEquals.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_AviOrdering.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bruno.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Marcus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_SpookyET.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\InterfaceInheritance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\UsingEvents.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HandlingProperties.cs" />
+    <Compile Include="IDemo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\MockedObjectsComparerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RangeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RecordMockStateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ReplayMockStateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ValidateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\VerifiedMockStateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IndexerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IntegrationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LastCallTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\IMethodRecorderTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\MethodRecorderBaseTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\OrderedMethodRecorderTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\ProxyMethodExpectationTripletTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\ProxyMethodPairTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\RecorderChangerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\UnorderedMethodRecorderTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MockingAbstractClass.cs" />
+    <Compile Include="MockingClassesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MockingGenericInterfaces.cs" />
+    <Compile Include="MockRepositoryTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MockWithRefAndOutParams.cs" />
+    <Compile Include="MultiMocks.cs" />
+    <Compile Include="OrderTest.cs" />
+    <Compile Include="PartialMockTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertySetterFixture.cs" />
+    <Compile Include="RecordingMocks.cs" />
+    <Compile Include="RecursiveMocks.cs" />
+    <Compile Include="RemotingMockTests.cs" />
+    <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
+    <Compile Include="RefOutParameters.cs" />
+    <Compile Include="Remoting\ContextSwitcher.cs" />
+    <Compile Include="Remoting\ContextSwitchTests.cs" />
+    <Compile Include="Remoting\IDemo.cs" />
+    <Compile Include="Remoting\RemotableDemoClass.cs" />
+    <Compile Include="RhinoMockTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SetupResultTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StubAllTest.cs" />
+    <Compile Include="StubTest.cs" />
+    <Compile Include="TestInfo.cs" />
+    <Compile Include="Throws.cs" />
+    <Compile Include="TraceWriterWithStackTraceExpectationWriterFixture.cs" />
+    <Compile Include="VerifyTests.cs" />
+    <Compile Include="WhenCalledTests.cs" />
+    <Compile Include="WithTestFixture.cs" />
+    <Compile Include="UsingComObject.cs" />
+    <Compile Include="Utilities\MethodCallTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utilities\ReturnValueUtilTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rhino.Mocks.Tests.Model\Rhino.Mocks.Tests.Model.csproj">
+      <Project>{3078B943-10A5-41FA-A68A-7C4FC98506A0}</Project>
+      <Name>Rhino.Mocks.Tests.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhino.Mocks\Rhino.Mocks 2.0.csproj">
+      <Name>Rhino.Mocks</Name>
+      <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ayende-open-source.snk">
+      <Link>ayende-open-source.snk</Link>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+=======
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C63839EC-BEF3-4DCD-BE23-B6DA21E8BE20}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>Rhino.Mocks.Tests</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Rhino.Mocks.Tests</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ayende-open-source.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;DEBUG;DOTNET35</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\Build\Tests\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;dotNet2</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\MbUnit\MbUnit.GUI.exe</StartProgram>
+    <StartArguments>D:\OSS\rhino-tools\rhino-mocks\Rhino.Mocks.Tests\bin\debug\Rhino.Mocks.Tests.dll</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.ADODB, Version=2.8.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Interop.ADODB.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MSHTML, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Interop.MSHTML.dll</HintPath>
+    </Reference>
+    <Reference Include="MbUnit.Framework, Version=1.0.2700.29885, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\MbUnit.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks.CPP.Interfaces, Version=1.0.3078.4206, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Rhino.Mocks.CPP.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Name>System.EnterpriseServices</Name>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackToRecord.cs" />
+    <Compile Include="Callbacks\CallbackTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CallOriginalMethodTests.cs" />
+    <Compile Include="ComplexOrderingTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ArgConstraintTests.cs" />
+    <Compile Include="Constraints\ComparableConstraintsTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ConstraintTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ContraintsErrorConditions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\AllPropertiesMatchConstraintTest.cs" />
+    <Compile Include="Constraints\ListConstraintTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ReflectionConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\StringConstraintsTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Alex.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bill.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JPBoodhoo.cs" />
+    <Compile Include="PartialMockTestsAAA.cs" />
+    <Compile Include="MultiMocksWithAAA.cs" />
+    <Compile Include="Coverage.cs" />
+    <Compile Include="CustomAttributesOnMocks.cs" />
+    <Compile Include="DoNotExpectTests.cs" />
+    <Compile Include="DotNet35Tests.cs" />
+    <Compile Include="ExtendingRhinoMocks.cs" />
+    <Compile Include="ExtendingRhinoMocks2.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_ Sean.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_75_MockingExpcetion.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Adam.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Aharon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Alexey.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andreas.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andrew.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Andy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Benjamin.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Chad.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Chompers.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Christian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Dave.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_DavidG.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Derek.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_dyowee.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Eduardo.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Ernst.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Fabian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Greg.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Harley.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Henrik.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_ikriv42.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_James.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Jeffrey.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Jodran.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Joe.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Joshua.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JudahG.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Keith.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_KevinM.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Kuchia.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Kythorn.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_LAFAY.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Lee.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Libardo.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Lopez.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mads.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_leftend.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mark.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Maurice.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MichaelC.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mike.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Mithresh.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Naraga.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Nolan.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Nolan2.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_oblomov.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Oliver.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_OrenEl.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Rabashani.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Raju.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_RepeatsWithGenerate.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Rob.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Robert.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Kevin.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Liang.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Luke.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MichaelR.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Owen.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Avi.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_BackToMockWithRepeatableMethods.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_BackToRecordWithDynamicMocks.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Blaz.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Brian.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bruce.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Daniel.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_David.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Entropy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Eric.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JohanIndexProp.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_JohnOpincar.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Matt.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Michael.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Phil.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Roger.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Ross.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Roy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Sam.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_SamW.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Sander.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Shane.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Shanon.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Stephan.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_StevenS.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Thierry.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Tim.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_TrueWill.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Wade.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Wendy.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Will.cs" />
+    <Compile Include="FieldsProblem\FieldsProblem_Royston.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_MarkHildreth.cs" />
+    <Compile Include="FieldsProblem\GenericMethodWithOutDecimalParameterTest.cs" />
+    <Compile Include="FieldsProblem\SetupResultAndIgnoreArguments.cs" />
+    <Compile Include="GenericMethods.cs" />
+    <Compile Include="MockingDelegatesTests.cs" />
+    <Compile Include="DoHanlderTests.cs" />
+    <Compile Include="DotNet2Tests.cs" />
+    <Compile Include="DynamicMockTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\AbstractExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\AnyArgsExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\ArgsEqualTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\CallbackExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expectations\ConstraintExpectationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExpectTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\ClassThatImplementsGetHashCodeAndEquals.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_AviOrdering.cs" />
+    <Compile Include="FieldsProblem\FieldProblem_Bruno.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_Marcus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\FieldProblem_SpookyET.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\InterfaceInheritance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FieldsProblem\UsingEvents.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HandlingProperties.cs" />
+    <Compile Include="IDemo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\MockedObjectsComparerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RangeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\RecordMockStateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ReplayMockStateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\ValidateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\VerifiedMockStateTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IndexerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IntegrationTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LastCallTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\IMethodRecorderTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\MethodRecorderBaseTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\OrderedMethodRecorderTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\ProxyMethodExpectationTripletTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\ProxyMethodPairTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\RecorderChangerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodRecorders\UnorderedMethodRecorderTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MockingAbstractClass.cs" />
+    <Compile Include="MockingClassesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MockingGenericInterfaces.cs" />
+    <Compile Include="MockRepositoryTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MockWithRefAndOutParams.cs" />
+    <Compile Include="MultiMocks.cs" />
+    <Compile Include="OrderTest.cs" />
+    <Compile Include="PartialMockTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertySetterFixture.cs" />
+    <Compile Include="RecordingMocks.cs" />
+    <Compile Include="RecursiveMocks.cs" />
+    <Compile Include="RemotingMockTests.cs" />
+    <Compile Include="RecordReplaySyntax\RecordPlaybackTests.cs" />
+    <Compile Include="RefOutParameters.cs" />
+    <Compile Include="Remoting\ContextSwitcher.cs" />
+    <Compile Include="Remoting\ContextSwitchTests.cs" />
+    <Compile Include="Remoting\IDemo.cs" />
+    <Compile Include="Remoting\RemotableDemoClass.cs" />
+    <Compile Include="RhinoMockTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SetupResultTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StubAllTest.cs" />
+    <Compile Include="StubTest.cs" />
+    <Compile Include="TestInfo.cs" />
+    <Compile Include="Throws.cs" />
+    <Compile Include="TraceWriterWithStackTraceExpectationWriterFixture.cs" />
+    <Compile Include="VerifyTests.cs" />
+    <Compile Include="WhenCalledTests.cs" />
+    <Compile Include="WithTestFixture.cs" />
+    <Compile Include="UsingComObject.cs" />
+    <Compile Include="Utilities\MethodCallTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utilities\ReturnValueUtilTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rhino.Mocks.Tests.Model\Rhino.Mocks.Tests.Model.csproj">
+      <Project>{3078B943-10A5-41FA-A68A-7C4FC98506A0}</Project>
+      <Name>Rhino.Mocks.Tests.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhino.Mocks\Rhino.Mocks 2.0.csproj">
+      <Name>Rhino.Mocks</Name>
+      <Project>{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ayende-open-source.snk">
+      <Link>ayende-open-source.snk</Link>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+>>>>>>> c179d176c19eaa02dd60c1579e650517e6c7401b
+</Project>

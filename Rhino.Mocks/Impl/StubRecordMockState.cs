@@ -78,13 +78,13 @@ namespace Rhino.Mocks.Impl
 			}
 		}
 
-	    void CreateDefaultValueForValueTypeProperty(IMockedObject mockedObject, PropertyInfo property)
+		private static void CreateDefaultValueForValueTypeProperty(IMockedObject mockedObject, PropertyInfo property)
 	    {
 	        mockedObject.HandleProperty(property.GetSetMethod(true),
 	                                    new object[] { Activator.CreateInstance(property.PropertyType) });
 	    }
 
-	    bool CanWriteToPropertyThroughPublicSignature(PropertyInfo property)
+		private static bool CanWriteToPropertyThroughPublicSignature(PropertyInfo property)
 	    {
             return property.CanWrite && property.GetSetMethod(false) != null;
 	    }
