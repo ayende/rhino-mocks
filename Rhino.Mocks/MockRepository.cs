@@ -39,6 +39,7 @@ using Castle.DynamicProxy;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Impl;
+using Rhino.Mocks.Impl.Invocation;
 using Rhino.Mocks.Impl.RemotingMock;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.MethodRecorders;
@@ -175,6 +176,7 @@ namespace Rhino.Mocks
         private readonly ProxyMethodExpectationsDictionary repeatableMethods;
 
         private ProxyGenerationOptions proxyGenerationOptions;
+        private InvocationVisitorsFactory invocationVisitorsFactory;
 
         #endregion
 
@@ -220,11 +222,13 @@ namespace Rhino.Mocks
             recorders.Push(rootRecorder);
             proxies = new ProxyStateDictionary();
             delegateProxies = new Hashtable(MockedObjectsEquality.Instance);
+            invocationVisitorsFactory = new InvocationVisitorsFactory();
 
             // clean up Arg data to avoid the static data to be carried from one unit test
             // to another.
             ArgManager.Clear();
         }
+
 
         #endregion
 
@@ -526,7 +530,7 @@ namespace Rhino.Mocks
         private object RemotingMock(Type type, CreateMockState factory)
         {
             ProxyInstance rhinoProxy = new ProxyInstance(this, type);
-            RhinoInterceptor interceptor = new RhinoInterceptor(this, rhinoProxy);
+            RhinoInterceptor interceptor = new RhinoInterceptor(this, rhinoProxy,invocationVisitorsFactory.CreateStandardInvocationVisitors(rhinoProxy, this));
             object transparentProxy = new RemotingMockGenerator().CreateRemotingMock(type, interceptor, rhinoProxy);
             IMockState value = factory(rhinoProxy);
             proxies.Add(transparentProxy, value);
@@ -725,7 +729,8 @@ namespace Rhino.Mocks
                 throw new NotSupportedException("Can't create mocks of sealed classes");
             List<Type> implementedTypesForGenericInvocationDiscoverability = new List<Type>(extras);
             implementedTypesForGenericInvocationDiscoverability.Add(type);
-            RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this, implementedTypesForGenericInvocationDiscoverability.ToArray()));
+            ProxyInstance proxyInstance = new ProxyInstance(this, implementedTypesForGenericInvocationDiscoverability.ToArray());
+            RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance,invocationVisitorsFactory.CreateStandardInvocationVisitors(proxyInstance, this));
             ArrayList types = new ArrayList();
             types.AddRange(extras);
             types.Add(typeof(IMockedObject));
@@ -758,9 +763,10 @@ namespace Rhino.Mocks
             object proxy;
             List<Type> implementedTypesForGenericInvocationDiscoverability = new List<Type>(extras);
             implementedTypesForGenericInvocationDiscoverability.Add(type);
-            RhinoInterceptor interceptor = new RhinoInterceptor(this, new ProxyInstance(this,
-                                                                                        implementedTypesForGenericInvocationDiscoverability
-                                                                                            .ToArray()));
+            ProxyInstance proxyInstance = new ProxyInstance(this,
+                                                             implementedTypesForGenericInvocationDiscoverability
+                                                                 .ToArray());
+            RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance,invocationVisitorsFactory.CreateStandardInvocationVisitors(proxyInstance, this));
 
             List<Type> types = new List<Type>();
             types.AddRange(extras);
@@ -780,7 +786,7 @@ namespace Rhino.Mocks
             object proxy;
 
             ProxyInstance proxyInstance = new ProxyInstance(this, type);
-            RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance);
+            RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance,invocationVisitorsFactory.CreateStandardInvocationVisitors(proxyInstance, this));
 
             Type[] types = new Type[] { typeof(IMockedObject) };
             var delegateTargetInterface = delegateTargetInterfaceCreator.GetDelegateTargetInterface(type);
