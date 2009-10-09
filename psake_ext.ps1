@@ -42,5 +42,5 @@ using System.Runtime.InteropServices;
 		[System.IO.Directory]::CreateDirectory($dir)
 	}
 	Write-Host "Generating assembly info file: $file"
-	Write-Output $asmInfo > $file
+	out-file -filePath $file -encoding UTF8 -inputObject $asmInfo
 }
