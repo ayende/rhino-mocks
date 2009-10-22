@@ -164,6 +164,7 @@
     <Compile Include="FieldsProblem\FieldProblem_Alex.cs" />
     <Compile Include="FieldsProblem\FieldProblem_Bill.cs" />
     <Compile Include="FieldsProblem\FieldProblem_JPBoodhoo.cs" />
+    <Compile Include="MethodProblems\MethodProblem_JPBoodhoo.cs" />
     <Compile Include="PartialMockTestsAAA.cs" />
     <Compile Include="MultiMocksWithAAA.cs" />
     <Compile Include="Coverage.cs" />
@@ -499,6 +500,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DebugType>Full</DebugType>
+    <NoWarn>1607</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\Build\Tests\Release\</OutputPath>
@@ -896,5 +898,5 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
->>>>>>> c179d176c19eaa02dd60c1579e650517e6c7401b
+>>>>>>> ef659c075982661d6189a9fc533c2cbfb12a3700
 </Project>
