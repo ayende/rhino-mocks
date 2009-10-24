@@ -54,7 +54,7 @@ task Init -depends Clean {
 		
 	new-item $release_dir -itemType directory 
 	new-item $buildartifacts_dir -itemType directory 
-	cp $tools_dir\MbUnit\*.* $build_dir
+	cp $tools_dir\xUnit\*.* $build_dir
 } 
 
 task Compile -depends Init { 
@@ -64,7 +64,7 @@ task Compile -depends Init {
 task Test -depends Compile {
   $old = pwd
   cd $build_dir
-  &.\MbUnit.Cons.exe "$build_dir\Rhino.Mocks.Tests.dll" /report-type:Html
+  &.\Xunit.console.exe "$build_dir\Rhino.Mocks.Tests.dll"
   if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute tests"
   }
