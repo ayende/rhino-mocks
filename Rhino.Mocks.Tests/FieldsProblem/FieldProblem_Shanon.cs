@@ -1,13 +1,12 @@
-using MbUnit.Framework;
+using Xunit;
 using RhinoMocksCPPInterfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Shanon
 	{
-		[Test]
-		[Ignore(@"Updating the Castle and NH assmeblies causes this to fail.
+		[Fact(Skip =  @"Updating the Castle and NH assmeblies causes this to fail.
 		
 		Message:Method 'StartLiveOnSlot' in type 'IHaveMethodWithModOptsProxye59cf24cdfbc4797af58984e3c4fdf3f' from assembly 'DynamicProxyGenAssembly2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=a621a9e7e5c32e69' does not have an implementation.
 Source:mscorlib
@@ -33,7 +32,7 @@ StackTrace:
 		{
 			MockRepository mocks = new MockRepository();
 			IHaveMethodWithModOpts mock = mocks.StrictMock<IHaveMethodWithModOpts>();
-			Assert.IsNotNull(mock);
+			Assert.NotNull(mock);
 		}
 	}
 }

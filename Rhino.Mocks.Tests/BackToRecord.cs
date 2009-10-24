@@ -29,32 +29,32 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Tests.FieldsProblem;
 
 namespace Rhino.Mocks.Tests
 {
-    [TestFixture]
+    
     public class BackToRecord
     {
-        [Test]
+        [Fact]
         public void CanMoveToRecordAndThenReplay()
         {
             MockRepository mocks = new MockRepository();
             IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
             Expect.Call(demo.Prop).Return("ayende");
             mocks.Replay(demo);
-            Assert.AreEqual("ayende", demo.Prop);
+            Assert.Equal("ayende", demo.Prop);
             mocks.BackToRecord(demo);
             Expect.Call(demo.Prop).Return("rahien");
             mocks.Replay(demo);
-            Assert.AreEqual("rahien", demo.Prop);
+            Assert.Equal("rahien", demo.Prop);
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void CanMoveToRecordFromVerified()
         {
             MockRepository mocks = new MockRepository();
@@ -62,18 +62,18 @@ namespace Rhino.Mocks.Tests
             Expect.Call(demo.Prop).Return("ayende");
             
             mocks.Replay(demo);
-            Assert.AreEqual("ayende", demo.Prop);
+            Assert.Equal("ayende", demo.Prop);
             mocks.VerifyAll();
 
             mocks.BackToRecord(demo);
 
             Expect.Call(demo.Prop).Return("rahien");
             mocks.Replay(demo);
-            Assert.AreEqual("rahien", demo.Prop);
+            Assert.Equal("rahien", demo.Prop);
             mocks.VerifyAll();
         }
     
-        [Test]
+        [Fact]
         public void CanSpecifyClearOnlyEvents()
         {
             MockRepository mocks = new MockRepository();
@@ -85,11 +85,10 @@ namespace Rhino.Mocks.Tests
 
             raiser.Raise(this, EventArgs.Empty);
 
-            Assert.IsFalse(called);
+            Assert.False(called);
         }
 
-        [Test]
-        [ExpectedException(typeof(ExpectationViolationException), "AbstractClass.Add(5); Expected #0, Actual #1.")]
+        [Fact]
         public void CanClearOnlyOriginalMethodCalls()
         {
             MockRepository mocks = new MockRepository();
@@ -98,12 +97,12 @@ namespace Rhino.Mocks.Tests
             mocks.BackToRecord(abstractClass, BackToRecordOptions.OriginalMethodsToCall);
             mocks.ReplayAll();
 
-            abstractClass.Add(5);
+        	Assert.Throws<ExpectationViolationException>(
+        		"AbstractClass.Add(5); Expected #0, Actual #1.",
+        		() => abstractClass.Add(5));
         }
 
-        [Test]
-        [ExpectedException(typeof(ExpectationViolationException),
-           "IDemo.get_Prop(); Expected #0, Actual #1.")]
+        [Fact]
         public void CanClearOnlyPropertyBehavior()
         {
             MockRepository mocks = new MockRepository();
@@ -114,12 +113,13 @@ namespace Rhino.Mocks.Tests
 
             mocks.ReplayAll();
 
-            string prop = mock.Prop;
+        	Assert.Throws<ExpectationViolationException>("IDemo.get_Prop(); Expected #0, Actual #1.", delegate
+        	{
+        		string prop = mock.Prop;
+        	});
         }
 
-        [Test]
-        [ExpectedException(typeof(ExpectationViolationException),
-           "IDemo.VoidNoArgs(); Expected #1, Actual #0.")]
+        [Fact]
         public void CanMoveToRecordFromReplyWithoutClearingExpectations()
         {
             MockRepository mocks = new MockRepository();
@@ -135,10 +135,12 @@ namespace Rhino.Mocks.Tests
 
             mock.VoidNoArgs();
 
-            mocks.VerifyAll();
+        	Assert.Throws<ExpectationViolationException>(
+        		"IDemo.VoidNoArgs(); Expected #1, Actual #0.",
+        		() => mocks.VerifyAll());
         }
 
-        [Test]
+        [Fact]
         public void CanMoveToRecordFromVerifiedWithoutClearingExpectations()
         {
             MockRepository mocks = new MockRepository();

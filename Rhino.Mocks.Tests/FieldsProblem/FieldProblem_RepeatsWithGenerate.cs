@@ -1,14 +1,13 @@
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 
-	[TestFixture]
+	
 	public class FieldProblem_RepeatsWithGenerate
 	{
-		[Test]
-        [ExpectedException(typeof(ExpectationViolationException), "IRepeatsWithGenerate.GetMyIntValue(); Expected #1, Actual #2.")]
+		[Fact]
         public void RepeatTimes_Fails_When_Called_More_Then_Expected()
         {
             var mockRepository = new MockRepository();
@@ -22,13 +21,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mockRepository.ReplayAll();
 
 		    interfaceMock.GetMyIntValue();
-		    interfaceMock.GetMyIntValue();
-
-            mockRepository.Verify(interfaceMock);
+		    
+			Assert.Throws<ExpectationViolationException>("IRepeatsWithGenerate.GetMyIntValue(); Expected #1, Actual #2.",
+														 () => interfaceMock.GetMyIntValue());
         }
 
-		[Test]
-        [ExpectedException(typeof(ExpectationViolationException), "IRepeatsWithGenerate.GetMyIntValue(); Expected #2, Actual #1.")]
+		[Fact]
         public void RepeatTimes_Works_When_Called_Less_Then_Expected()
         {
 		    var mockRepository = new MockRepository();
@@ -43,7 +41,9 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 		    interfaceMock.GetMyIntValue();
 
-            mockRepository.Verify(interfaceMock);
+			Assert.Throws<ExpectationViolationException>("IRepeatsWithGenerate.GetMyIntValue(); Expected #2, Actual #1.",
+													 () => mockRepository.Verify(interfaceMock));
+   
         }
 	}
 

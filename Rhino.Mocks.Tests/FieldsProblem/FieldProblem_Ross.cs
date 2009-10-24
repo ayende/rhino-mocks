@@ -30,14 +30,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Ross
 	{
-		[Test]
+		[Fact]
 		public void GenericMethodWithConstrait()
 		{
 			MockRepository mocks = new MockRepository();

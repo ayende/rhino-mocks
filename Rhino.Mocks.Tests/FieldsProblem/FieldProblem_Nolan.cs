@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
@@ -15,8 +15,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         String ChildString { get; set; }
     }
 
-    [TestFixture]
-    public class StubDemoTestFixture
+    
+    public class StubDemoTestFixture : IDisposable
     {
 
         #region Variables
@@ -29,8 +29,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
         #region Setup and Teardown
 
-        [SetUp]
-        public void SetUp()
+		public StubDemoTestFixture()
         {
             _mocks = new MockRepository();
 
@@ -40,8 +39,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             _mocks.ReplayAll();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _mocks.VerifyAll();
         }
@@ -50,34 +48,34 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
         #region Tests
 
-        [Test]
+        [Fact]
         public void BaseStubSetsBasePropertiesCorrectly()
         {
             String str = "Base stub";
 
             _mockBase.BaseString = str;
 
-            Assert.AreEqual(str, _mockBase.BaseString);
+            Assert.Equal(str, _mockBase.BaseString);
         }
 
-        [Test]
+        [Fact]
         public void ChildStubSetsChildPropertiesCorrectly()
         {
             String str = "Child stub";
 
             _mockChild.ChildString = str;
 
-            Assert.AreEqual(str, _mockChild.ChildString);
+            Assert.Equal(str, _mockChild.ChildString);
         }
 
-        [Test]
+        [Fact]
         public void ChildStubSetsBasePropertiesCorrectly()
         {
             String str = "Child's base stub";
 
             _mockChild.BaseString = str;
 
-            Assert.AreEqual(str, _mockChild.BaseString);
+            Assert.Equal(str, _mockChild.BaseString);
         }
 
         #endregion

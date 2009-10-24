@@ -27,11 +27,11 @@
 #endregion
 
 
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class IndexerTests
 	{
 		public interface IndexerInterface
@@ -40,14 +40,14 @@ namespace Rhino.Mocks.Tests
 			string this[int id] { get; }
 		}
 
-		[Test]
+		[Fact]
 		public void SettingExpectationOnIndexer()
 		{
 			MockRepository mocks = new MockRepository();
 			IndexerInterface indexer = (IndexerInterface) mocks.StrictMock(typeof (IndexerInterface));
 			Expect.On(indexer).Call(indexer["1"]).Return("First");
 			mocks.ReplayAll();
-			Assert.AreEqual("First", indexer["1"]);
+			Assert.Equal("First", indexer["1"]);
 			mocks.VerifyAll();
 		}
 	}

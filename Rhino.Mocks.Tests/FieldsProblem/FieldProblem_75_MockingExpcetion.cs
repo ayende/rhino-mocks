@@ -28,19 +28,19 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_75_MockingExpcetion
 	{
-		[Test]
+		[Fact]
 		public void MockingException()
 		{
 			MockRepository mocks = new MockRepository();
 			InvalidOperationException mock = (InvalidOperationException)mocks.StrictMock(typeof(InvalidOperationException));
-			Assert.IsNotNull(mock, "Should be able to create a mocked exception");
+			Assert.NotNull(mock);
 		}
 	}
 }

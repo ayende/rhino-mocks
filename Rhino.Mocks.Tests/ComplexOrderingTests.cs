@@ -29,7 +29,7 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests
 {
 	using Generated;
 
-	[TestFixture]	
+		
 	public class ComplexOrderingTests
 	{
 		private IMethodRecorder recorder,nestedRecorder;
@@ -50,8 +50,7 @@ namespace Rhino.Mocks.Tests
 		private IExpectation expectation;
 		private object[] args;
 
-		[SetUp]
-		public void SetUp()
+		public ComplexOrderingTests()
 		{
 			recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			nestedRecorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
@@ -63,12 +62,12 @@ namespace Rhino.Mocks.Tests
 			args = new object[0];
 		}
 
-		[Test]
+		[Fact]
 		public void ComplexOrdering()
 		{
 			string expected = "Unordered: { Unordered: { Object.ToString(); } }";
 			recorder.Record(proxy,method, expectation);
-			Assert.AreEqual(expected, recorder.GetExpectedCallsMessage());
+			Assert.Equal(expected, recorder.GetExpectedCallsMessage());
 		}
 	}
 }

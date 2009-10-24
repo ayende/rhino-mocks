@@ -29,24 +29,23 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-    [TestFixture]
+    
     public class HandlingProperties
     {
         IDemo demo;
         MockRepository mocks;
 
-        [SetUp]
-        public void Setup()
+		public HandlingProperties()
         {
             mocks = new MockRepository();
             demo = (IDemo)mocks.StrictMock(typeof(IDemo));
         }
 
-        [Test]
+        [Fact]
         public void PropertyBehaviorForSingleProperty()
         {
             Expect.Call(demo.Prop).PropertyBehavior();
@@ -54,33 +53,33 @@ namespace Rhino.Mocks.Tests
             for (int i = 0; i < 49; i++)
             {
                 demo.Prop = "ayende" + i;
-                Assert.AreEqual("ayende" + i, demo.Prop);
+                Assert.Equal("ayende" + i, demo.Prop);
             }
             mocks.VerifyAll();
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Last method call was not made on a setter or a getter")]
+        [Fact]
         public void ExceptionIfLastMethodCallIsNotProperty()
         {
-            Expect.Call(demo.EnumNoArgs()).PropertyBehavior();
+        	Assert.Throws<InvalidOperationException>("Last method call was not made on a setter or a getter",
+        	                                         () => Expect.Call(demo.EnumNoArgs()).PropertyBehavior());
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Property must be read/write")]
+        [Fact]
         public void ExceptionIfPropHasOnlyGetter()
         {
-            Expect.Call(demo.ReadOnly).PropertyBehavior();
+        	Assert.Throws<InvalidOperationException>("Property must be read/write",
+        	                                         () => Expect.Call(demo.ReadOnly).PropertyBehavior());
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Property must be read/write")]
+        [Fact]
         public void ExceptionIfPropHasOnlySetter()
         {
-            Expect.Call(demo.WriteOnly).PropertyBehavior();
+        	Assert.Throws<InvalidOperationException>("Property must be read/write",
+        	                                         () => Expect.Call(demo.WriteOnly).PropertyBehavior());
         }
 
-        [Test]
+        [Fact]
         public void IndexedPropertiesSupported()
         {
             IWithIndexers x = (IWithIndexers)mocks.StrictMock(typeof(IWithIndexers));
@@ -90,34 +89,35 @@ namespace Rhino.Mocks.Tests
 
             x[1] = 10;
             x[10] = 100;
-            Assert.AreEqual(10, x[1]);
-            Assert.AreEqual(100, x[10]);
+            Assert.Equal(10, x[1]);
+            Assert.Equal(100, x[10]);
 
             x["1", 2] = "3";
             x["2", 3] = "5";
-            Assert.AreEqual("3", x["1", 2]);
-            Assert.AreEqual("5", x["2", 3]);
+            Assert.Equal("3", x["1", 2]);
+            Assert.Equal("5", x["2", 3]);
 
             mocks.VerifyAll();
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can't return a value for property Item because no value was set and the Property return a value type.")]
+        [Fact]
         public void IndexPropertyWhenValueTypeAndNotFoundThrows()
         {
             IWithIndexers x = (IWithIndexers)mocks.StrictMock(typeof(IWithIndexers));
             Expect.Call(x[1]).PropertyBehavior();
             mocks.ReplayAll();
-            int dummy =  x[1];
+        	Assert.Throws<InvalidOperationException>(
+        		"Can't return a value for property Item because no value was set and the Property return a value type.",
+        		() => GC.KeepAlive(x[1]));
         }
 
-        [Test]
+        [Fact]
         public void IndexPropertyWhenRefTypeAndNotFoundReturnNull()
         {
             IWithIndexers x = (IWithIndexers)mocks.StrictMock(typeof(IWithIndexers));
             Expect.Call(x["",3]).PropertyBehavior();
             mocks.ReplayAll();
-            Assert.IsNull(x["", 2]);
+            Assert.Null(x["", 2]);
         }
 
         public interface IWithIndexers

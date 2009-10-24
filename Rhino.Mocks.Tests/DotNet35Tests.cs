@@ -1,15 +1,15 @@
 #if DOTNET35
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
 	using System;
 	using Exceptions;
 
-	[TestFixture]
+	
 	public class DotNet35Tests
 	{
-		[Test]
+		[Fact]
 		public void NaturalSyntaxForCallingMethods()
 		{
 			MockRepository mocks = new MockRepository();
@@ -25,7 +25,7 @@ namespace Rhino.Mocks.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void NaturalSyntaxForCallingMethods_WithArguments()
 		{
 			MockRepository mocks = new MockRepository();
@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void NaturalSyntaxForCallingMethods_WithArguments_WhenNotCalled_WouldFailVerification()
 		{
 			MockRepository mocks = new MockRepository();
@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void NaturalSyntaxForCallingMethods_WithArguments_WhenCalledWithDifferentArgument()
 		{
 			MockRepository mocks = new MockRepository();
@@ -74,7 +74,7 @@ IDemo.VoidStringArg(""blah""); Expected #1, Actual #0.",delegate
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void CanCallMethodWithParameters_WithoutSpecifyingParameters_WillAcceptAnyParameter()
 		{
 			MockRepository mocks = new MockRepository();

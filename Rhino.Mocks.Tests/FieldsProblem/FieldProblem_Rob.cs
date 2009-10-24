@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	using Exceptions;
 
-	[TestFixture]
+	
 	public class FieldProblem_Rob
 	{
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException),
-			"IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+		[Fact]
 		public void CanFailIfCalledMoreThanOnceUsingDynamicMock()
 		{
 			MockRepository mocks = new MockRepository();
@@ -24,14 +22,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			demo.VoidNoArgs();//should work
-
-			demo.VoidNoArgs();// will fail
+			Assert.Throws<ExpectationViolationException>("IDemo.VoidNoArgs(); Expected #0, Actual #1.", demo.VoidNoArgs);
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException),@"ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.UnexpectedBar>(""foo""); Expected #1, Actual #1.
-ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.ExpectedBar>(""foo""); Expected #1, Actual #0.")]
+		[Fact]
 		public void Ayende_View_On_Mocking()
 		{
 			MockRepository mocks = new MockRepository();
@@ -43,11 +37,20 @@ ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.ExpectedBar>(""foo""); Exp
 					.Return(new List<ExpectedBar>());
 			}
 
-			using (mocks.Playback())
-			{
-				ExpectedBarPerformer cut = new ExpectedBarPerformer(mockSomeSystem);
-				cut.DoStuffWithExpectedBar("foo");
-			}
+			Assert.Throws<ExpectationViolationException>(
+				@"ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.UnexpectedBar>(""foo""); Expected #1, Actual #1.
+ISomeSystem.GetFooFor<Rhino.Mocks.Tests.FieldsProblem.ExpectedBar>(""foo""); Expected #1, Actual #0.",
+				() =>
+				{
+					using (mocks.Playback())
+					{
+						ExpectedBarPerformer cut = new ExpectedBarPerformer(mockSomeSystem);
+						cut.DoStuffWithExpectedBar("foo");
+					}
+				}
+				);
+
+			
 		}
 	}
 

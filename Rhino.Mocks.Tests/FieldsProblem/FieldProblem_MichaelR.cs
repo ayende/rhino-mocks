@@ -27,7 +27,7 @@
 #endregion
 
 
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
@@ -36,10 +36,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	using System.Diagnostics;
 	using System.IO;
 
-	[TestFixture]
+	
 	public class PropertyWithTypeParameterTest
 	{
-		[Test]
+		[Fact]
 		public void CreatedClosedGenericType()
 		{
 			MockRepository mocks = new MockRepository();
@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 
-		[Test]
+		[Fact]
 		public void UsingdoOnMethodWithGenericReturnValue()
 		{
 			MockRepository mocks = new MockRepository();
@@ -61,7 +61,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		/// for KB 957542.
 		/// There is a bug in .Net 3.5 SP1 that this test exposes.
 		/// </summary>
-		[Test]
+		[Fact]
 		public void DoubleGeneric()
 		{
 			string clrInstallationDir = Path.GetDirectoryName(typeof(object).Assembly.Location);
@@ -76,7 +76,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 				if (clrVersion.ProductPrivatePart >= 3053 &&
 					clrVersion.ProductPrivatePart < 3068)
 				{
-					Assert.Ignore("You are running on .NET 3.5 SP1, without the KB 957542 hotfix. This version of the CLR has a bug that cause this test to fail");
+					//"You are running on .NET 3.5 SP1, without the KB 957542 hotfix. This version of the CLR has a bug that cause this test to fail");
+					return;
 				}
 			}
 			MockRepository mocks = new MockRepository();

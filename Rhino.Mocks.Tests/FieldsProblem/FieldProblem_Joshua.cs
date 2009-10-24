@@ -1,12 +1,12 @@
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Joshua
     {
-        [Test]
+        [Fact]
         public void The_value_of_a_variable_used_as_an_out_parameter_should_not_be_used_as_a_constraint_on_an_expectation()
         {
             MockRepository mockRepository = new MockRepository();
@@ -30,7 +30,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             }
             ObjectBeingTested testObject = new ObjectBeingTested(service);
             int returnedValue = testObject.MethodUnderTest();
-            Assert.AreEqual(theNumberToReturnFromTheServiceOutParameter, returnedValue);
+            Assert.Equal(theNumberToReturnFromTheServiceOutParameter, returnedValue);
         }
 
         public class ObjectBeingTested

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.ObjectModel;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_MichaelC
 	{
-		[Test]
+		[Fact]
 		public void EventRaiser_ShouldRaiseEvent_OnlyOnce()
 		{
 			MockRepository mocks = new MockRepository();
@@ -23,14 +23,14 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mock.Load += delegate { countOne++; };
 			mock.Load += delegate { countTwo++; };
 			raiser.Raise(this, EventArgs.Empty);
-			Assert.AreEqual(1, countOne);
-			Assert.AreEqual(1, countTwo);
+			Assert.Equal(1, countOne);
+			Assert.Equal(1, countTwo);
 			raiser.Raise(this, EventArgs.Empty);
-			Assert.AreEqual(2, countOne);
-			Assert.AreEqual(2, countTwo);
+			Assert.Equal(2, countOne);
+			Assert.Equal(2, countTwo);
 			raiser.Raise(this, EventArgs.Empty);
-			Assert.AreEqual(3, countOne);
-			Assert.AreEqual(3, countTwo);
+			Assert.Equal(3, countOne);
+			Assert.Equal(3, countTwo);
 		}
 
 	}

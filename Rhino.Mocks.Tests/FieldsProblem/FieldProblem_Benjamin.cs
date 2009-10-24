@@ -1,14 +1,14 @@
 #if DOTNET35
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 
-	[TestFixture]
+	
 	public class FieldProblem_Benjamin
 	{
 #if DOTNET35 
-		[Test]
+		[Fact]
         public void ThisTestPasses()
         {
             var interfaceStub = MockRepository.GenerateStub<InterfaceINeedToStub>();
@@ -16,10 +16,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             interfaceStub.Stub(x => x.MyStringValue).Return("string");
             interfaceStub.MyIntValue = 4;
 
-            Assert.AreEqual(4, interfaceStub.MyIntValue);
+            Assert.Equal(4, interfaceStub.MyIntValue);
         }
 
-        [Test]
+        [Fact]
         public void ThisTestDoesNotPass()
         {
             var myInterface = MockRepository.GenerateStub<InterfaceINeedToStub>();
@@ -28,7 +28,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             myInterface.MyIntValue = 4;
             myInterface.Stub(x => x.MyStringValue).Return("string");
 
-            Assert.AreEqual(4, myInterface.MyIntValue);
+            Assert.Equal(4, myInterface.MyIntValue);
         }
 #endif
 	}

@@ -29,15 +29,15 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using System.Web.UI;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_David
     {
-        [Test]
+        [Fact]
         public void MockWebUIPageClass()
         {
             MockRepository mocks = new MockRepository();
@@ -48,15 +48,15 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void MockClassWithVirtualMethodCallFromConstructor()
         {
             MockRepository mocks = new MockRepository();
             ClassWithVirtualMethodCallFromConstructor cwvmcfc = (ClassWithVirtualMethodCallFromConstructor)mocks.StrictMock(typeof(ClassWithVirtualMethodCallFromConstructor));
-            Assert.IsNotNull(cwvmcfc);
+            Assert.NotNull(cwvmcfc);
             Expect.Call(cwvmcfc.ToString()).Return("Success");
             mocks.ReplayAll();
-            Assert.AreEqual("Success", cwvmcfc.ToString());
+            Assert.Equal("Success", cwvmcfc.ToString());
             mocks.VerifyAll();
         }
 

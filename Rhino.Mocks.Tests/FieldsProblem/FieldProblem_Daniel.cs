@@ -29,11 +29,11 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Daniel
     {
         public class ClassThatOverrideEquals
@@ -49,7 +49,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         	}
         }
 
-        [Test]
+        [Fact]
         public void MockClassWithEquals()
         {
             MockRepository mocks = new MockRepository();
@@ -57,7 +57,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             c.Equals(c);
             LastCall.Return(false);
             mocks.Replay(c);
-            Assert.IsFalse(c.Equals(c));
+            Assert.False(c.Equals(c));
             mocks.Verify(c);
         }
     }

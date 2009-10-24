@@ -29,48 +29,49 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Utilities;
 
 namespace Rhino.Mocks.Tests.Utilities
 {
-	[TestFixture]
+	
 	public class MethodCallTests
 	{
-		[Test]
+		[Fact]
 		public void MethodCallToString()
 		{
 			string actual = MethodCallUtil.StringPresentation(null, GetMethodInfo("StartsWith", ""), new object[] {"abcd"});
-			Assert.AreEqual("String.StartsWith(\"abcd\");", actual);
+			Assert.Equal("String.StartsWith(\"abcd\");", actual);
 		}
 
-		[Test]
+		[Fact]
 		public void MethodCallToStringWithSeveralArguments()
 		{
 			string actual = MethodCallUtil.StringPresentation(null,GetMethodInfo("IndexOf", "abcd", 4), new object[] {"abcd", 4});
-			Assert.AreEqual("String.IndexOf(\"abcd\", 4);", actual);
+			Assert.Equal("String.IndexOf(\"abcd\", 4);", actual);
 		}
 
-		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: method")]
+		[Fact]
 		public void MethodCallCtorWontAcceptNullMethod()
 		{
-			MethodCallUtil.StringPresentation(null,null, null);
+			Assert.Throws<ArgumentNullException>(
+				"Value cannot be null.\r\nParameter name: method",
+				() => MethodCallUtil.StringPresentation(null, null, null));
 		}
 
-		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: args")]
+		[Fact]
 		public void MethodCallCtorWontAcceptNullArgs()
 		{
             MethodInfo method = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
-			MethodCallUtil.StringPresentation(null,method, null);
+			Assert.Throws<ArgumentNullException>("Value cannot be null.\r\nParameter name: args",
+			                                     () => MethodCallUtil.StringPresentation(null, method, null));
 		}
 
-		[Test]
+		[Fact]
 		public void MethodCallWithArgumentsMissing()
 		{
             MethodInfo method = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
-            Assert.AreEqual("String.StartsWith(missing parameter);", MethodCallUtil.StringPresentation(null,method, new object[0]));
+            Assert.Equal("String.StartsWith(missing parameter);", MethodCallUtil.StringPresentation(null,method, new object[0]));
 
 		}
 

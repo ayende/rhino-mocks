@@ -28,20 +28,20 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
     //Bug 46
-    [TestFixture]
+    
     public class InterfaceInheritance
     {
-        [Test]
+        [Fact]
         public void CreateObjectUsingInterfaceInheritance()
         {
             MockRepository mocks = new MockRepository();
             ILocalizer localizer = (ILocalizer)mocks.StrictMock(typeof(ILocalizer));
-            Assert.IsNotNull(localizer);
+            Assert.NotNull(localizer);
             typeof(ILocalizer).IsAssignableFrom(localizer.GetType());
             typeof(ICloneable).IsAssignableFrom(localizer.GetType());
             mocks.ReplayAll();

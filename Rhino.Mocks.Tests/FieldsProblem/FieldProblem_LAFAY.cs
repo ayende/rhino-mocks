@@ -1,22 +1,21 @@
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_LAFAY
     {
         private IDemo demo;
         private MockRepository mocks;
 
-        [SetUp]
-        public void SetUp()
+		public FieldProblem_LAFAY()
         {
             mocks = new MockRepository();
             demo = mocks.StrictMock(typeof (IDemo)) as IDemo;
         }
 
-        [Test]
+        [Fact]
         public void ExpectTwoCallsReturningMarshalByRef()
         {
             MarshalByRefToReturn res1 = new MarshalByRefToReturn();

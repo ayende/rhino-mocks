@@ -29,7 +29,7 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
@@ -37,7 +37,7 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.Expectations
 {
-	[TestFixture]
+	
 	public class ArgsEqualTests : AbstractExpectationTests
 	{
 		private readonly MethodInfo method = typeof (IDemo).GetMethod("VoidThreeArgs");
@@ -49,123 +49,123 @@ namespace Rhino.Mocks.Tests.Expectations
 			return expectation;
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWithDifferentNumberOfParameters()
 		{
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, "43", 5.2f}, new Range(1, 1));
 			object[] args = new object[] {1, "43"};
-			Assert.IsFalse(expectation.IsExpected(args));
-            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, \"43\", {0:N1});", 5.2),expectation.ErrorMessage);
+			Assert.False(expectation.IsExpected(args));
+            Assert.Equal(String.Format("IDemo.VoidThreeArgs(1, \"43\", {0:N1});", 5.2),expectation.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWhenArgsMatch()
 		{
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, "43", 5.2f}, new Range(1, 1));
 			object[] args = new object[] {1, "43", 5.2f};
-			Assert.IsTrue(expectation.IsExpected(args));
+			Assert.True(expectation.IsExpected(args));
 		}
 		
-		[Test]
+		[Fact]
 		public void ArgsEqualWhenValueTypeArrayArgsMatch()
 		{
 			MethodInfo method = typeof (IDemo).GetMethod("VoidValueTypeArrayArgs");
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] { new ushort[] { 123, 456 } }, new Range(1, 1));
 			object[] args = new object[] { new ushort[] { 123 } };
-			Assert.IsFalse(expectation.IsExpected(args));
-			Assert.AreEqual("IDemo.VoidValueTypeArrayArgs([123, 456]);", expectation.ErrorMessage);
+			Assert.False(expectation.IsExpected(args));
+			Assert.Equal("IDemo.VoidValueTypeArrayArgs([123, 456]);", expectation.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualFalseWhenMatchingAnotherExpectation()
 		{
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, "43", 5.2f}, new Range(1, 1));
 			IExpectation other = new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1));
-			Assert.AreNotEqual(expectation,other);
+			Assert.NotEqual(expectation,other);
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualsReturnsTheExpectedArgs()
 		{
 			object[] args = new object[] {1, "43", 5.2f};
 			ArgsEqualExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), args, new Range(1, 1));
-			Assert.IsTrue(List.Equal(args).Eval(expectation.ExpectedArgs));
+			Assert.True(List.Equal(args).Eval(expectation.ExpectedArgs));
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWhenArgsAreNull()
 		{
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, null, 5.2f}, new Range(1, 1));
 			object[] args = new object[] {1, null, 5.2f};
-			Assert.IsTrue(expectation.IsExpected(args));
+			Assert.True(expectation.IsExpected(args));
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWhenArgsMismatch()
 		{
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, "43", 5.2f}, new Range(1, 1));
 			object[] args = new object[] {1, "43", 6.4f};
-			Assert.IsFalse(expectation.IsExpected(args));
-            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, \"43\", {0:N1});", 5.2), expectation.ErrorMessage);
+			Assert.False(expectation.IsExpected(args));
+            Assert.Equal(String.Format("IDemo.VoidThreeArgs(1, \"43\", {0:N1});", 5.2), expectation.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWithArrayReferenceEqual()
 		{
 			object[] arr = new object[3] {"1", 2, 5.2f};
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, arr}, new Range(1, 1));
 			object[] args = new object[] {1, arr};
-			Assert.IsTrue(expectation.IsExpected(args));
+			Assert.True(expectation.IsExpected(args));
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWithArrayContentEqual()
 		{
 			object[] arr1 = new object[3] {"1", 2, 4.5f},
 				arr2 = new object[3] {"1", 2, 4.5f};
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, arr2}, new Range(1, 1));
 			object[] args = new object[] {1, arr1};
-			Assert.IsTrue(expectation.IsExpected(args));
+			Assert.True(expectation.IsExpected(args));
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWithArrayContentDifferent()
 		{
 			object[] arr1 = new object[3] {"1", 2, 4.5f},
 				arr2 = new object[3] {"1", 5, 4.5f};
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, arr1, 3}, new Range(1, 1));
 			object[] args = new object[] {1, arr2, 3};
-			Assert.IsFalse(expectation.IsExpected(args));
-            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, [\"1\", 2, {0:N1}], 3);", 4.5), expectation.ErrorMessage);
+			Assert.False(expectation.IsExpected(args));
+            Assert.Equal(String.Format("IDemo.VoidThreeArgs(1, [\"1\", 2, {0:N1}], 3);", 4.5), expectation.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void CreateErrorMessageWhenParametersAreNull()
 		{
 			ArgsEqualExpectation expectation =new ArgsEqualExpectation(new FakeInvocation(method), new object[]{1,null, 3.3f}, new Range(1, 1));
-			Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, null, {0:N1});", 3.3),expectation.ErrorMessage);
+			Assert.Equal(String.Format("IDemo.VoidThreeArgs(1, null, {0:N1});", 3.3),expectation.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWithArrayContentLengthDifferent()
 		{
 			object[] arr1 = new object[3] {"1", 2, 4.5f},
 				arr2 = new object[2] {"1", 5};
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), new object[] {1, arr1}, new Range(1, 1));
 			object[] args = new object[] {1, arr2};
-			Assert.IsFalse(expectation.IsExpected(args));
-            Assert.AreEqual(String.Format("IDemo.VoidThreeArgs(1, [\"1\", 2, {0:N1}], missing parameter);", 4.5), expectation.ErrorMessage);
+			Assert.False(expectation.IsExpected(args));
+            Assert.Equal(String.Format("IDemo.VoidThreeArgs(1, [\"1\", 2, {0:N1}], missing parameter);", 4.5), expectation.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void ArgsEqualWithStringArray()
 		{
 			MethodInfo method = typeof (IDemo).GetMethod("VoidThreeStringArgs");
 			string[] str1 = new string[] {"", "1", "1234"},
 				str2 = new string[] {"1", "1234", "54321"};
 			IExpectation expectation = new ArgsEqualExpectation(new FakeInvocation(method), str1, new Range(1, 1));
-			Assert.IsFalse(expectation.IsExpected(str2));
-			Assert.AreEqual("IDemo.VoidThreeStringArgs(\"\", \"1\", \"1234\");", expectation.ErrorMessage);
+			Assert.False(expectation.IsExpected(str2));
+			Assert.Equal("IDemo.VoidThreeStringArgs(\"\", \"1\", \"1234\");", expectation.ErrorMessage);
 		}
 	}
 }

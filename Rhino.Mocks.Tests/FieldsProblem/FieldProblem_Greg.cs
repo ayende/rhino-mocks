@@ -1,19 +1,13 @@
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Greg
     {
-        private MockRepository _mockRepository;
+		private MockRepository _mockRepository = new MockRepository();
 
-        [SetUp]
-        public void Initialize()
-        {
-            _mockRepository = new MockRepository();
-        }
-
-        [Test]
+        [Fact]
         public void IgnoreArguments()
         {
             IFoo myFoo = _mockRepository.StrictMock<IFoo>();
@@ -29,7 +23,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             {
                 Example<int> myExample = new Example<int>(myFoo, myBar);
                 bool success = myExample.ExampleMethod();
-                Assert.IsTrue(success);
+                Assert.True(success);
             }
         }
     }

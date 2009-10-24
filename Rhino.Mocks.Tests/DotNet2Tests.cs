@@ -28,53 +28,51 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
-	public class DotNet2Tests
+	
+	public class DotNet2Tests : IDisposable
 	{
 		MockRepository mocks;
         IDotNet2Features demo;
-		[SetUp]
-		public void Setup()
+		public DotNet2Tests()
 		{
 			mocks = new MockRepository();
             demo = mocks.DynamicMock<IDotNet2Features>();
 		}
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void DefaultValueOfNullableIsNull()
         {
             mocks.ReplayAll();
-            Assert.IsNull(demo.NullableInt(3));
+            Assert.Null(demo.NullableInt(3));
         }
 
-        [Test]
+        [Fact]
         public void CanUseNullAsReturnValueForNullables()
         {
             Expect.Call(demo.NullableInt(5)).Return(null);
             mocks.ReplayAll();
-            Assert.IsNull(demo.NullableInt(5));
+            Assert.Null(demo.NullableInt(5));
         }
 
-        [Test]
+        [Fact]
         public void CanPassNonNullableValues()
         {
             Expect.Call(demo.NullableInt(53)).Return(5);
             mocks.ReplayAll();
-            Assert.AreEqual(5, demo.NullableInt(53));
+            Assert.Equal(5, demo.NullableInt(53));
         }
 
-		[Test]
+		[Fact]
 		public void CanStrictMockOnClassWithInternalMethod()
 		{
 			WithInternalMethod withInternalMethod = mocks.StrictMock<WithInternalMethod>();
@@ -84,11 +82,11 @@ namespace Rhino.Mocks.Tests
 			try
 			{
 				withInternalMethod.Foo();
-				Assert.Fail("Should have thrown");
+				Assert.False(true, "Should have thrown");
 			}
 			catch (Exception e)
 			{
-				Assert.AreEqual("foo", e.Message);
+				Assert.Equal("foo", e.Message);
 			}
 		}
 

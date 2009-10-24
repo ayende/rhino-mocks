@@ -31,28 +31,26 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
-    public class FieldProblem_SpookyET
+    
+    public class FieldProblem_SpookyET : IDisposable
     {
         MockRepository mocks;
 
-        [SetUp]
-        public void Setup()
+		public FieldProblem_SpookyET()
         {
             mocks = new MockRepository();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void MockHttpRequesteRsponse()
         {
             byte[] responseData = Encoding.UTF8.GetBytes("200 OK");
@@ -66,25 +64,25 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
             Stream returnedStream = GetResponseStream(request);
 
-            Assert.AreSame(stream, returnedStream);
+            Assert.Same(stream, returnedStream);
             string returnedString = new StreamReader(returnedStream).ReadToEnd();
-            Assert.AreEqual("200 OK", returnedString);
+            Assert.Equal("200 OK", returnedString);
         }
 
         /// <summary>
         /// Notice the ordering: First we've a Return and then IgnoreArguments, that
         /// broke because I didn't copy the returnValueSet in the expectation swapping.
         /// </summary>
-        [Test]
+        [Fact]
         public void UsingReturnAndThenIgnoreArgs()
         {
             IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
             Expect.On(demo).Call(demo.StringArgString(null)).Return("ayende").IgnoreArguments();
             mocks.ReplayAll();
-            Assert.AreEqual("ayende", demo.StringArgString("rahien"));
+            Assert.Equal("ayende", demo.StringArgString("rahien"));
         }
 
-        [Test]
+        [Fact]
         public void WebRequestWhenDisposing()
         {
             MockRepository mockRepository;

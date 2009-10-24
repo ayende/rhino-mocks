@@ -30,7 +30,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 
@@ -38,7 +38,7 @@ namespace Rhino.Mocks.Tests
 {
     public delegate object ObjectDelegateWithNoParams();
 
-    [TestFixture]
+    
     public class MockingDelegatesTests
     {
         private MockRepository mocks;
@@ -47,13 +47,12 @@ namespace Rhino.Mocks.Tests
         private delegate string StringDelegateWithParams(int a, string b);
         private delegate int IntDelegateWithRefAndOutParams(ref int a, out string b);
 
-        [SetUp]
-        public void SetUp()
+		public MockingDelegatesTests()
         {
             mocks = new MockRepository();
         }
 
-        [Test]
+        [Fact]
         public void CallingMockedDelegatesWithoutOn()
         {
             ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
@@ -61,13 +60,12 @@ namespace Rhino.Mocks.Tests
 
             mocks.ReplayAll();
 
-            Assert.AreEqual(1, d1());
+            Assert.Equal(1, d1());
         }
 
-        [Test]
+        [Fact]
         public void MockTwoDelegatesWithTheSameName()
         {
-            SetUp();
             ObjectDelegateWithNoParams d1 = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
             Tests.ObjectDelegateWithNoParams d2 = (Tests.ObjectDelegateWithNoParams)mocks.StrictMock(typeof(Tests.ObjectDelegateWithNoParams));
 
@@ -76,13 +74,13 @@ namespace Rhino.Mocks.Tests
 
             mocks.ReplayAll();
 
-            Assert.AreEqual(1, d1());
-            Assert.AreEqual(2, d2());
+            Assert.Equal(1, d1());
+            Assert.Equal(2, d2());
 
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void MockObjectDelegateWithNoParams()
         {
             ObjectDelegateWithNoParams d = (ObjectDelegateWithNoParams)mocks.StrictMock(typeof(ObjectDelegateWithNoParams));
@@ -92,13 +90,13 @@ namespace Rhino.Mocks.Tests
 
             mocks.Replay(d);
 
-            Assert.AreEqual("abc", d());
-            Assert.AreEqual("def", d());
+            Assert.Equal("abc", d());
+            Assert.Equal("def", d());
 
             try
             {
                 d();
-                Assert.Fail("Expected an expectation violation to occur.");
+                Assert.False(true, "Expected an expectation violation to occur.");
             }
             catch (ExpectationViolationException)
             {
@@ -106,7 +104,7 @@ namespace Rhino.Mocks.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void MockVoidDelegateWithNoParams()
         {
             VoidDelegateWithParams d = (VoidDelegateWithParams)mocks.StrictMock(typeof(VoidDelegateWithParams));
@@ -121,7 +119,7 @@ namespace Rhino.Mocks.Tests
             try
             {
                 d("hij");
-                Assert.Fail("Expected an expectation violation to occur.");
+                Assert.False(true, "Expected an expectation violation to occur.");
             }
             catch (ExpectationViolationException)
             {
@@ -129,7 +127,7 @@ namespace Rhino.Mocks.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void MockStringDelegateWithParams()
         {
             StringDelegateWithParams d = (StringDelegateWithParams)mocks.StrictMock(typeof(StringDelegateWithParams));
@@ -139,13 +137,13 @@ namespace Rhino.Mocks.Tests
 
             mocks.Replay(d);
 
-            Assert.AreEqual("abc", d(1, "111"));
-            Assert.AreEqual("def", d(2, "222"));
+            Assert.Equal("abc", d(1, "111"));
+            Assert.Equal("def", d(2, "222"));
 
             try
             {
                 d(3, "333");
-                Assert.Fail("Expected an expectation violation to occur.");
+                Assert.False(true, "Expected an expectation violation to occur.");
             }
             catch (ExpectationViolationException)
             {
@@ -153,7 +151,7 @@ namespace Rhino.Mocks.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void MockIntDelegateWithRefAndOutParams()
         {
             IntDelegateWithRefAndOutParams d = (IntDelegateWithRefAndOutParams)mocks.StrictMock(typeof(IntDelegateWithRefAndOutParams));
@@ -164,14 +162,14 @@ namespace Rhino.Mocks.Tests
 
             mocks.Replay(d);
 
-            Assert.AreEqual(1, d(ref a, out b));
-            Assert.AreEqual(5, a);
-            Assert.AreEqual("A", b);
+            Assert.Equal(1, d(ref a, out b));
+            Assert.Equal(5, a);
+            Assert.Equal("A", b);
 
             try
             {
                 d(ref a, out b);
-                Assert.Fail("Expected an expectation violation to occur.");
+                Assert.False(true, "Expected an expectation violation to occur.");
             }
             catch (ExpectationViolationException)
             {
@@ -180,7 +178,7 @@ namespace Rhino.Mocks.Tests
 
         }
 
-        [Test]
+        [Fact]
         public void InterceptsDynamicInvokeAlso()
         {
             IntDelegateWithRefAndOutParams d = (IntDelegateWithRefAndOutParams)mocks.StrictMock(typeof(IntDelegateWithRefAndOutParams));
@@ -192,27 +190,27 @@ namespace Rhino.Mocks.Tests
             mocks.Replay(d);
 
             object[] args = new object[] { 3, null };
-            Assert.AreEqual(1, d.DynamicInvoke(args));
-            Assert.AreEqual(5, args[0]);
-            Assert.AreEqual("A", args[1]);
+            Assert.Equal(1, d.DynamicInvoke(args));
+            Assert.Equal(5, args[0]);
+            Assert.Equal("A", args[1]);
 
             try
             {
                 d.DynamicInvoke(args);
-                Assert.Fail("Expected an expectation violation to occur.");
+                Assert.False(true, "Expected an expectation violation to occur.");
             }
             catch (TargetInvocationException ex)
             {
                 // Expected.
-                Assert.IsTrue(ex.InnerException is ExpectationViolationException);
+                Assert.True(ex.InnerException is ExpectationViolationException);
             }
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Cannot mock the Delegate base type.")]
+        [Fact]
         public void DelegateBaseTypeCannotBeMocked()
         {
-            mocks.StrictMock(typeof(Delegate));
+        	Assert.Throws<InvalidOperationException>("Cannot mock the Delegate base type.",
+        	                                         () => mocks.StrictMock(typeof (Delegate)));
         }
 
         private int Return1_Plus2_A(ref int a, out string b)
@@ -222,7 +220,7 @@ namespace Rhino.Mocks.Tests
             return 1;
         }
 
-        [Test]
+        [Fact]
         public void GenericDelegate()
         {
             Action<int> action = mocks.StrictMock<Action<int>>();

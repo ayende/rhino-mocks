@@ -29,39 +29,39 @@
 
 using System;
 using System.Runtime.InteropServices;
-using MbUnit.Framework;
+using Xunit;
 using MSHTML;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Luke
 	{
-		[Test]
+		[Fact]
 		public void CanMockIE()
 		{
 			MockRepository mockRepository = new MockRepository();
 			IHTMLEventObj2 mock = mockRepository.StrictMock<IHTMLEventObj2>();
-			Assert.IsNotNull(mock);
+			Assert.NotNull(mock);
 		}
 
-		[Test]
+		[Fact]
 		public void CanMockComInterface()
 		{
 			MockRepository mocks = new MockRepository();
 			IServiceProvider serviceProvider = (IServiceProvider)
 											   mocks.StrictMultiMock(typeof(IServiceProvider), typeof(IHTMLDataTransfer));
-			Assert.IsNotNull(serviceProvider);
+			Assert.NotNull(serviceProvider);
 		}
 
-		[Test] 
+		[Fact] 
 		public void TryToMockClassWithProtectedInternalAbstractClass()
 		{
 			MockRepository mockRepository = new MockRepository();
 			mockRepository.StrictMock<SomeClassWithProtectedInternalAbstractClass>();
 		}
 
-		[Test] 
+		[Fact] 
 		public void TryToMockClassWithProtectedAbstractClass()
 		{
 			MockRepository mockRepository = new MockRepository();

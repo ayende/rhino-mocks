@@ -27,55 +27,55 @@
 #endregion
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class StubAllTest
 	{
-		[Test]
+		[Fact]
 		public void StaticAccessorForStubAll()
 		{
 			ICat cat = MockRepository.GenerateStub<ICat>();
 			cat.Eyes = 2;
-			Assert.AreEqual(2, cat.Eyes );
+			Assert.Equal(2, cat.Eyes );
 		}
 
-		[Test]
+		[Fact]
 		public void StubAllHasPropertyBehaviorForAllProperties()
 		{
 			MockRepository mocks = new MockRepository();
 			ICat cat = mocks.Stub<ICat>();
 			cat.Legs = 4;
-			Assert.AreEqual(4, cat.Legs);
+			Assert.Equal(4, cat.Legs);
 
 			cat.Name = "Esther";
-			Assert.AreEqual("Esther", cat.Name);
+			Assert.Equal("Esther", cat.Name);
 
-			Assert.IsNull(cat.Species, "Should return default value if not set");
+			Assert.Null(cat.Species);
 			cat.Species = "Ordinary housecat";
-			Assert.AreEqual("Ordinary housecat", cat.Species);
+			Assert.Equal("Ordinary housecat", cat.Species);
 
 			cat.IsDeclawed = true;
-			Assert.IsTrue(cat.IsDeclawed);
+			Assert.True(cat.IsDeclawed);
 		}
 
-		[Test]
+		[Fact]
 		public void StubAllHasPropertyBehaviorForAllPropertiesWhenStubbingClasses()
 		{
 			MockRepository mocks = new MockRepository();
 			Housecat housecat = mocks.Stub<Housecat>();
 
 			housecat.FurLength = 7;
-			Assert.AreEqual(7, housecat.FurLength);
+			Assert.Equal(7, housecat.FurLength);
 
 			housecat.Color = "Black";
-			Assert.AreEqual("Black", housecat.Color);
+			Assert.Equal("Black", housecat.Color);
 		}
 
-		[Test]
+		[Fact]
 		public void StubAllCanRegisterToEventsAndRaiseThem()
 		{
 			MockRepository mocks = new MockRepository();
@@ -90,10 +90,10 @@ namespace Rhino.Mocks.Tests
 			};
 
 			eventRaiser.Raise(cat, EventArgs.Empty);
-			Assert.IsTrue(raised);
+			Assert.True(raised);
 		}
 
-		[Test]
+		[Fact]
 		public void CallingMethodOnStubAllDoesNotCreateExpectations()
 		{
 			MockRepository mocks = new MockRepository();
@@ -109,20 +109,20 @@ namespace Rhino.Mocks.Tests
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void DemoStubAllLegsProperty()
 		{
 			ICat catStub = MockRepository.GenerateStub<ICat>();
 
 			catStub.Legs = 0;
-			Assert.AreEqual(0, catStub.Legs);
+			Assert.Equal(0, catStub.Legs);
 
 			SomeClass instance = new SomeClass(catStub);
 			instance.SetLegs(10);
-			Assert.AreEqual(10, catStub.Legs);
+			Assert.Equal(10, catStub.Legs);
 		}
 
-		[Test]
+		[Fact]
 		public void StubAllCanCreateExpectationOnMethod()
 		{
 			MockRepository mocks = new MockRepository();
@@ -136,29 +136,29 @@ namespace Rhino.Mocks.Tests
 				cat.GetMood();
 				LastCall.Return("Happy");
 			}
-			Assert.AreEqual("Happy", cat.GetMood());
+			Assert.Equal("Happy", cat.GetMood());
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void StubAllCanHandlePropertiesGettingRegisteredMultipleTimes()
 		{
 			MockRepository mocks = new MockRepository();
 			SpecificFish fish = mocks.Stub<SpecificFish>();
 
 			fish.IsFreshWater = true;
-			Assert.IsTrue(fish.IsFreshWater);
+			Assert.True(fish.IsFreshWater);
 		}
 
-        [Test]
+        [Fact]
         public void StubCanHandlePolymorphicArgConstraints()
         {
             IAquarium aquarium = MockRepository.GenerateStub<IAquarium>();
             aquarium.Stub(x => x.DetermineAge(Arg<MartianFish>.Matches(arg => arg.Planet == "mars"))).Return(100);
             aquarium.Stub(x => x.DetermineAge(Arg<SpecificFish>.Is.TypeOf)).Return(5);
             
-            Assert.IsFalse(typeof(MartianFish).IsAssignableFrom(typeof(SpecificFish)));
-            Assert.AreEqual(5, aquarium.DetermineAge(new SpecificFish()));
+            Assert.False(typeof(MartianFish).IsAssignableFrom(typeof(SpecificFish)));
+            Assert.Equal(5, aquarium.DetermineAge(new SpecificFish()));
         }
 
 	}

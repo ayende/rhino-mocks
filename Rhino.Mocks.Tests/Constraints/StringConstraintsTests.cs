@@ -27,46 +27,46 @@
 #endregion
 
 
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.Constraints
 {
-	[TestFixture]
+	
 	public class StringConstraintsTests
 	{
-		[Test]
+		[Fact]
 		public void StartsWith()
 		{
-			Assert.IsTrue(Text.StartsWith("Hello").Eval("Hello World"));
-			Assert.IsFalse(Text.StartsWith("Hello").Eval("World"));
-			Assert.AreEqual("starts with \"Hello\"", Text.StartsWith("Hello").Message);
+			Assert.True(Text.StartsWith("Hello").Eval("Hello World"));
+			Assert.False(Text.StartsWith("Hello").Eval("World"));
+			Assert.Equal("starts with \"Hello\"", Text.StartsWith("Hello").Message);
 		}
 
-		[Test]
+		[Fact]
 		public void EndsWith()
 		{
-			Assert.IsTrue(Text.EndsWith("World").Eval("Hello World"));
-			Assert.IsFalse(Text.EndsWith("Hello").Eval("World"));
-			Assert.AreEqual("ends with \"Hello\"", Text.EndsWith("Hello").Message);
+			Assert.True(Text.EndsWith("World").Eval("Hello World"));
+			Assert.False(Text.EndsWith("Hello").Eval("World"));
+			Assert.Equal("ends with \"Hello\"", Text.EndsWith("Hello").Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Contains()
 		{
 			AbstractConstraint c = Text.Contains("Ayende");
-			Assert.IsTrue(c.Eval("Ayende Rahien"));
-			Assert.IsFalse(c.Eval("Hello World"));
-			Assert.AreEqual("contains \"Ayende\"", c.Message);
+			Assert.True(c.Eval("Ayende Rahien"));
+			Assert.False(c.Eval("Hello World"));
+			Assert.Equal("contains \"Ayende\"", c.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Like()
 		{
 			AbstractConstraint c = Text.Like("[Rr]ahien");
-			Assert.IsTrue(c.Eval("Ayende Rahien"));
-			Assert.IsFalse(c.Eval("Hello World"));
-			Assert.AreEqual("like \"[Rr]ahien\"", c.Message);
+			Assert.True(c.Eval("Ayende Rahien"));
+			Assert.False(c.Eval("Hello World"));
+			Assert.Equal("like \"[Rr]ahien\"", c.Message);
 		}
 
 	}

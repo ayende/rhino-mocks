@@ -1,9 +1,9 @@
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_ikriv42
     {
         public class D : MarshalByRefObject
@@ -13,13 +13,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             }
         }
 
-       [Test]
+       [Fact]
        public void GenerateMock_Works_With_MarshalByRef()
        {
            MockRepository.GenerateMock<D>();
        }
 
-        [Test]
+        [Fact]
         public void GenerateStub_Works_With_MarshalByRef()
         {
             MockRepository.GenerateStub<D>();

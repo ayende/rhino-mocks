@@ -1,20 +1,19 @@
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
-	public class FieldProblem_leftend
+	
+	public class FieldProblem_leftend : IDisposable
 	{
 		private MockRepository mocks;
 		private IAddAlbumPresenter viewMock;
 		private IAlbum albumMock;
 		private IEventRaiser saveRaiser;
 
-		[SetUp]
-		public void SetUp()
+		public FieldProblem_leftend()
 		{
 			mocks = new MockRepository();
 			viewMock =
@@ -26,20 +25,19 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			saveRaiser = LastCall.GetEventRaiser();
 		}
 
-		[TearDown]
-		public void TearDown()
+		public void Dispose()
 		{
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void VerifyAttachesToViewEvents()
 		{
 			mocks.ReplayAll();
 			new AddAlbumPresenter(viewMock);
 		}
 
-		[Test]
+		[Fact]
 		public void SaveEventShouldSetViewPropertiesCorrectly()
 		{
 			Expect.Call(viewMock.AlbumToSave).Return(albumMock);

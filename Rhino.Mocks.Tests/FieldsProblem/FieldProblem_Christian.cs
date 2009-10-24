@@ -1,11 +1,11 @@
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Christian
     {
-        [Test]
+        [Fact]
         public void PropertiesWillBehaveLikeProperties()
         {
             MockRepository mocks = new MockRepository();
@@ -13,7 +13,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
             mocks.ReplayAll();
 
-            Assert.AreEqual(0, testObject.IntProperty);
+            Assert.Equal(0, testObject.IntProperty);
         }
     }
 

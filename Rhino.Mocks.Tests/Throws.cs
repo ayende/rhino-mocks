@@ -1,7 +1,7 @@
 namespace Rhino.Mocks.Tests
 {
 	using System;
-	using MbUnit.Framework;
+	using Xunit;
 
 	public class Throws
 	{
@@ -11,7 +11,7 @@ namespace Rhino.Mocks.Tests
 			try
 			{
 				action();
-				Assert.Fail("Should have thrown exception");
+				Assert.False(true, "Should have thrown exception");
 			}
 			catch(TException)
 			{
@@ -24,11 +24,11 @@ namespace Rhino.Mocks.Tests
 			try
 			{
 				action();
-				Assert.Fail("Should have thrown exception");
+				Assert.False(true, "Should have thrown exception");
 			}
 			catch (TException e)
 			{
-				Assert.AreEqual(message, e.Message);
+				Assert.Equal(message, e.Message);
 			}
 		}
 	}

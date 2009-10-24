@@ -3,14 +3,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	using System;
 	using System.Diagnostics;
 	using Exceptions;
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class FieldProblem_Shane
 	{
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException),
-		   "Unordered method call! The expected call is: 'Ordered: { ICustomer.get_Id(); }' but was: 'ICustomer.set_IsPreferred(True);'")]
+		[Fact]
 		public void WillMerge_UnorderedRecorder_WhenRecorderHasSingleRecorderInside()
 		{
 			MockRepository mocks = new MockRepository();
@@ -26,10 +24,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 				customer.IsPreferred = true;
 			}
 
-			using (mocks.Playback())
+			Assert.Throws<ExpectationViolationException>("Unordered method call! The expected call is: 'Ordered: { ICustomer.get_Id(); }' but was: 'ICustomer.set_IsPreferred(True);'", () =>
 			{
-				mapper.MarkCustomerAsPreferred(customer);
-			}
+				using (mocks.Playback())
+				{
+					mapper.MarkCustomerAsPreferred(customer);
+				}
+			});
 		}
 	}
 

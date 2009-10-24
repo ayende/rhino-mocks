@@ -30,45 +30,43 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-    [TestFixture]
-    public class MockingGenericInterfaces
+    
+    public class MockingGenericInterfaces : IDisposable
     {
         MockRepository mocks;
 
-        [SetUp]
-        public void Setup()
+		public MockingGenericInterfaces()
         {
             mocks = new MockRepository();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void MockAGenericInterface()
         {
             IList<int> list = mocks.StrictMock<IList<int>>();
-            Assert.IsNotNull(list);
+            Assert.NotNull(list);
             Expect.Call(list.Count).Return(5);
             mocks.ReplayAll();
-            Assert.AreEqual(5, list.Count);
+            Assert.Equal(5, list.Count);
         }
 
-        [Test]
+        [Fact]
         public void DynamicMockOfGeneric()
         {
             IList<int> list = mocks.DynamicMock<IList<int>>();
-            Assert.IsNotNull(list);
+            Assert.NotNull(list);
             Expect.Call(list.Count).Return(5);
             mocks.ReplayAll();
-            Assert.AreEqual(5, list.Count);
+            Assert.Equal(5, list.Count);
             list.Add(4);
         }
     }

@@ -26,18 +26,18 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Kevin
 	{
 		//This is related to an initialization mechanism in use for the CodeGenerationServices on Castle.Contrib
 		//I am not sure if this is related to invalid construction of the object. Resharper complains that invoking virtual methods from ctors is a bad idea. 
 		//It surely seems that it is preventing me from partial mocking a class that has some complex construction. 
 		
-		[Test]
+		[Fact]
 		public void Virtual_protected_method_called_from_ctor_is_not_called_during_partial_mock_construction()
 		{
 			string mockedResult = "mocked result";
@@ -53,11 +53,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mockRepository.VerifyAll();
 
-			Assert.AreEqual(mockedResult, result);
-			Assert.AreEqual(true, concreteProtectedMethodCalledFromCtor.WasAbstractMethodCalledFromCtor);
+			Assert.Equal(mockedResult, result);
+			Assert.Equal(true, concreteProtectedMethodCalledFromCtor.WasAbstractMethodCalledFromCtor);
 		}
 
-		[Test]
+		[Fact]
 		public void Virtual_public_method_called_from_ctor_is_not_called_during_partial_mock_construction()
 		{
 			string mockedResult = "mocked result";
@@ -73,8 +73,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mockRepository.VerifyAll();
 
-			Assert.AreEqual(mockedResult, result);
-			Assert.AreEqual(true, concretePublicMethodCalledFromCtor.WasAbstractMethodCalledFromCtor);
+			Assert.Equal(mockedResult, result);
+			Assert.Equal(true, concretePublicMethodCalledFromCtor.WasAbstractMethodCalledFromCtor);
 		}
 	}
 

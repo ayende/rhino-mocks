@@ -30,37 +30,35 @@
 using System;
 using System.Data;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	/// <summary>
 	/// Summary description for Bug_45.
 	/// </summary>
-	public class ClassThatImplementsGetHashCodeAndEquals
+	public class ClassThatImplementsGetHashCodeAndEquals : IDisposable
 	{
         MockRepository mocks;
 
-        [SetUp]
-        public void Setup()
+        public ClassThatImplementsGetHashCodeAndEquals()
         {
             mocks = new MockRepository();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             mocks.VerifyAll();
         }
 	    
-		[Test]
+		[Fact]
 		public void InitClass()
 		{
 				EmployeeInfo info = (EmployeeInfo)mocks.StrictMock(typeof(EmployeeInfo), "ID001");
 
 				mocks.ReplayAll();
 
-				Assert.IsNotNull(info);
+				Assert.NotNull(info);
 		}
 
 		[Serializable]

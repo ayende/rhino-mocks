@@ -28,7 +28,7 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
@@ -81,14 +81,14 @@ namespace Rhino.Mocks.Tests
         void MoveToCage(Cage cage);
     }
 
-    [TestFixture]
+    
     public class IntegrationTests
     {
         public delegate bool CageDelegate(Cage cage);
 
         public Cage recordedCage;
 
-[Test]
+[Fact]
 public void UsingPartialMocks()
 {
     MockRepository mocks = new MockRepository();
@@ -99,14 +99,14 @@ public void UsingPartialMocks()
     mocks.ReplayAll();
     
     proc.Inc();
-    Assert.AreEqual(1, proc.Register);
+    Assert.Equal(1, proc.Register);
     proc.Inc();
-    Assert.AreEqual(2, proc.Register);
+    Assert.Equal(2, proc.Register);
     
     mocks.VerifyAll();
 }
         
-        [Test]
+        [Fact]
         public void ExampleUsingCallbacks()
         {
             MockRepository mocks = new MockRepository();
@@ -138,7 +138,7 @@ public void UsingPartialMocks()
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void ExampleUsingParameterMatchingAndConstraints()
         {
             MockRepository mocks = new MockRepository();
@@ -152,20 +152,20 @@ public void UsingPartialMocks()
             mocks.ReplayAll();
 
             bird.Eat("seeds", 500);
-            Assert.AreEqual("Chirp, Chirp", bird.Sing());
+            Assert.Equal("Chirp, Chirp", bird.Sing());
             try
             {
                 bird.Sing();
-                Assert.Fail("Exception expected");
+                Assert.False(true, "Exception expected");
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionMessage, e.Message);
+                Assert.Equal(exceptionMessage, e.Message);
             }
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void UnorderedExecutionOfOrderedSequence()
         {
             MockRepository mocks = new MockRepository();
@@ -193,7 +193,7 @@ public void UsingPartialMocks()
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void OrderedExecutionOfUnorderedSequence()
         {
             MockRepository mocks = new MockRepository();
@@ -225,7 +225,7 @@ public void UsingPartialMocks()
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void SetupResultWithNestedOrdering()
         {
             MockRepository mocks = new MockRepository();

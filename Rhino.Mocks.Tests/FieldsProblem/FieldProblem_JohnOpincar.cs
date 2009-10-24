@@ -30,12 +30,12 @@
 using System;
 using System.Globalization;
 using System.Threading;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_JohnOpincar
 	{
 		public interface IDaSchedulerView
@@ -44,8 +44,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDaSchedulerView.set_DateOf(08/08/2006 00:00:00); Expected #1, Actual #0.")]
+		[Fact]
 		public void CanGetExpectationExceptionFromPropertySetter()
 		{
 		    Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -59,7 +58,9 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			//LastCall.IgnoreArguments(); 
 			m_mocks.ReplayAll(); 
 			//presenter.Initialize(); 
-			m_mocks.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"IDaSchedulerView.set_DateOf(08/08/2006 00:00:00); Expected #1, Actual #0.",
+				() => m_mocks.VerifyAll());
 		}
 	}
 }

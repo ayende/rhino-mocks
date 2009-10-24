@@ -1,13 +1,13 @@
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	using System;
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class FieldProblem_Libardo
 	{
 #if DOTNET35
-		[Test]
+		[Fact]
 		public void Can_mix_assert_was_call_with_verify_all()
 		{
 			MockRepository mocks = new MockRepository();

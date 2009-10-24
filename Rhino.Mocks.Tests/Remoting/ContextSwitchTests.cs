@@ -31,7 +31,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Security.Permissions;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 [assembly:EnvironmentPermission(SecurityAction.RequestMinimum)]
 
@@ -43,14 +43,13 @@ namespace Rhino.Mocks.Tests.Remoting
 	/// Test scenarios where mock objects are called from different
 	/// application domain.
 	/// </summary>
-	[TestFixture]
-	public class ContextSwitchTests
+	
+	public class ContextSwitchTests : IDisposable
 	{
 		private AppDomain otherDomain;
 		private ContextSwitcher contextSwitcher;
 
-		[TestFixtureSetUp]
-		public void FixtureSetUp()
+		public ContextSwitchTests()
 		{
 			FileInfo assemblyFile = new FileInfo(
 				Assembly.GetExecutingAssembly().Location);
@@ -66,13 +65,12 @@ namespace Rhino.Mocks.Tests.Remoting
 
 
 
-		[TestFixtureTearDown]
-		public void FixtureTearDown()
+		public void Dispose()
 		{
 			AppDomain.Unload(otherDomain);
 		}
 
-		[Test]
+		[Fact]
 		public void MockInterface()
 		{
 			MockRepository mocks = new MockRepository();
@@ -85,7 +83,7 @@ namespace Rhino.Mocks.Tests.Remoting
 		}
 
 	
-		[Test]
+		[Fact]
 		public void MockInterfaceWithSameName()
 		{
 			MockRepository mocks = new MockRepository();
@@ -100,22 +98,21 @@ namespace Rhino.Mocks.Tests.Remoting
 			mocks.VerifyAll();
 		}
 
-
-
-		[Test, ExpectedException(typeof(InvalidOperationException), "That was expected.")]
+		[Fact]
 		public void MockInterfaceExpectException()
 		{
 			MockRepository mocks = new MockRepository();
 			IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
 			Expect.Call(demo.ReturnIntNoArgs()).Throw(new InvalidOperationException("That was expected."));
 			mocks.ReplayAll();
-			contextSwitcher.DoStuff(demo);
+			Assert.Throws<InvalidOperationException>(
+				"That was expected.",
+				() => contextSwitcher.DoStuff(demo));
 		}
 
 
 
-		[Test, ExpectedException(typeof(ExpectationViolationException),
-						 "IDemo.VoidStringArg(\"34\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(\"bang\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void MockInterfaceUnexpectedCall()
 		{
 			MockRepository mocks = new MockRepository();
@@ -123,45 +120,48 @@ namespace Rhino.Mocks.Tests.Remoting
 			Expect.Call(demo.ReturnIntNoArgs()).Return(34);
 			demo.VoidStringArg("bang");
 			mocks.ReplayAll();
-			contextSwitcher.DoStuff(demo);
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidStringArg(\"34\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(\"bang\"); Expected #1, Actual #0.",
+				() => contextSwitcher.DoStuff(demo));
 		}
 
 
 
-		[Test]
+		[Fact]
 		public void MockClass()
 		{
 			MockRepository mocks = new MockRepository();
 			RemotableDemoClass demo = (RemotableDemoClass)mocks.StrictMock(typeof(RemotableDemoClass));
 			Expect.Call(demo.Two()).Return(44);
 			mocks.ReplayAll();
-			Assert.AreEqual(44, contextSwitcher.DoStuff(demo));
+			Assert.Equal(44, contextSwitcher.DoStuff(demo));
 			mocks.VerifyAll();
 		}
 
 
 
-		[Test, ExpectedException(typeof(InvalidOperationException), "That was expected for class.")]
 		public void MockClassExpectException()
 		{
 			MockRepository mocks = new MockRepository();
 			RemotableDemoClass demo = (RemotableDemoClass)mocks.StrictMock(typeof(RemotableDemoClass));
 			Expect.Call(demo.Two()).Throw(new InvalidOperationException("That was expected for class."));
 			mocks.ReplayAll();
-			contextSwitcher.DoStuff(demo);
+			Assert.Throws<InvalidOperationException>(
+				"That was expected for class.",
+				() => contextSwitcher.DoStuff(demo));
 		}
 
 
-
-		[Test, ExpectedException(typeof(ExpectationViolationException),
-						 "RemotableDemoClass.Two(); Expected #0, Actual #1.")]
+		[Fact]
 		public void MockClassUnexpectedCall()
 		{
 			MockRepository mocks = new MockRepository();
 			RemotableDemoClass demo = (RemotableDemoClass)mocks.StrictMock(typeof(RemotableDemoClass));
 			Expect.Call(demo.Prop).Return(11);
 			mocks.ReplayAll();
-			contextSwitcher.DoStuff(demo);
+			Assert.Throws<ExpectationViolationException>(
+				"RemotableDemoClass.Two(); Expected #0, Actual #1.",
+				() => contextSwitcher.DoStuff(demo));
 		}
 	}
 

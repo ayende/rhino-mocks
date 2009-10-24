@@ -29,11 +29,11 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_AviOrdering
     {
 
@@ -74,7 +74,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
         }
 
-        [Test]
+        [Fact]
         public void SubmitDataToDB()
         {
             //Setup a mock view and ISumbition

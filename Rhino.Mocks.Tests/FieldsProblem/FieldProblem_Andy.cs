@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class FieldProblem_Andy
 	{
-		[Test]
+		[Fact]
 		public void MockingPropertyUsingBaseKeyword()
 		{
 			MockRepository mocks = new MockRepository();
@@ -24,8 +24,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 			
-			Assert.AreEqual("Foo", mock.SubProperty);
-			Assert.AreEqual("Foo2", mock.BaseProperty);
+			Assert.Equal("Foo", mock.SubProperty);
+			Assert.Equal("Foo2", mock.BaseProperty);
 			
 			mocks.VerifyAll();
 		}

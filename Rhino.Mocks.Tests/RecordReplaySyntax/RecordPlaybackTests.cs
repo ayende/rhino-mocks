@@ -27,14 +27,14 @@
 #endregion
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 {
-	[TestFixture]
+	
 	public class RecordPlaybackTests
 	{
-		[Test]
+		[Fact]
 		public void CanRecordPlayback()
 		{
 			MockRepository mockRepository;
@@ -51,8 +51,7 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 			}
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void PlaybackThrowsOtherExceptionDoesntReport()
 		{
 			MockRepository mockRepository;
@@ -62,24 +61,29 @@ namespace Rhino.Mocks.Tests.RecordPlaybackSyntax
 			{
 				Expect.Call(mockedFoo.Bar()).Return(42);
 			}
-			using (mockRepository.Playback())
+			Assert.Throws<ArgumentException>(delegate
 			{
-				throw new ArgumentException();
-			}
+				using (mockRepository.Playback())
+				{
+					throw new ArgumentException();
+				}
+			});
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RecordThrowsOtherExceptionDoesntReport()
 		{
 			MockRepository mockRepository;
 			mockRepository = new MockRepository();
 			IFoo mockedFoo = mockRepository.StrictMock<IFoo>();
-			using (mockRepository.Record())
+			Assert.Throws<ArgumentException>(() =>
 			{
-				mockedFoo.Bar();//create expectation but doesn't setup return value
-				throw new ArgumentException();
-			}
+				using (mockRepository.Record())
+				{
+					mockedFoo.Bar(); //create expectation but doesn't setup return value
+					throw new ArgumentException();
+				}
+			});
 		}
 	}
 

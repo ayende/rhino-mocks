@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Maurice
 	{
-		[Test]
+		[Fact]
 		public void TwoGenericParametersWithConstraints()
 		{
 			MockRepository mocks = new MockRepository();
 			IDemo2 demo = mocks.StrictMock<IDemo2>();
-			Assert.IsNotNull(demo);
+			Assert.NotNull(demo);
 		}
 	}
 

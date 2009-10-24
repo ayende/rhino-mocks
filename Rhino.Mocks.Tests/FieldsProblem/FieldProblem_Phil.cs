@@ -29,7 +29,7 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
@@ -58,11 +58,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	}
 
 
-	[TestFixture]
+	
 	public class FieldProblem_Phil
 	{
 
-		[Test]
+		[Fact]
 		public void VerifyingThatEventWasAttached()
 		{
 			MockRepository mocks = new MockRepository();
@@ -76,7 +76,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			raiser.Raise(this, EventArgs.Empty);
 			mocks.VerifyAll();
 
-			Assert.IsTrue(consumerMock.OnLoadCalled);
+			Assert.True(consumerMock.OnLoadCalled);
 		}
 	}
 }

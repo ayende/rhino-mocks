@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Roger
 	{
-		[Test]
+		[Fact]
 		public void VerifyMockCanBeSetupWhenExternalInterfaceUsingInnerClassWithInternalScope()
 		{
 			MockRepository mocks = new MockRepository();

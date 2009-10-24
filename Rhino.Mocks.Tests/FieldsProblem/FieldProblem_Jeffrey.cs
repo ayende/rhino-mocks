@@ -31,14 +31,14 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Jeffrey
 	{
-		[Test]
+		[Fact]
 		public void DelegateToGenericMock()
 		{
 			MockRepository mocks = new MockRepository();
@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			senderMock.SetFormatter(formatterMock);
 			LastCall.Do((Action<IEMailFormatter<string>>)delegate(IEMailFormatter<string> formatter)
 			{
-				Assert.IsNotNull(formatter);
+				Assert.NotNull(formatter);
 			});
 			mocks.ReplayAll();
 
@@ -56,18 +56,20 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException),"Callback arguments didn't match the method arguments")]
+		[Fact]
 		public void Invalid_DelegateToGenericMock()
 		{
 			MockRepository mocks = new MockRepository();
 			IEMailFormatter<string> formatterMock = mocks.StrictMock<IEMailFormatter<string>>();
 			SmtpEMailSenderBase<string> senderMock = (SmtpEMailSenderBase<string>)mocks.StrictMock(typeof(SmtpEMailSenderBase<string>));
 			senderMock.SetFormatter(formatterMock);
-			LastCall.Do((Action<IEMailFormatter<int>>)delegate(IEMailFormatter<int> formatter)
-			{
-				Assert.IsNotNull(formatter);
-			});
+			Assert.Throws<InvalidOperationException>("Callback arguments didn't match the method arguments",
+			                                         () =>
+			                                         LastCall.Do(
+			                                         	(Action<IEMailFormatter<int>>) delegate(IEMailFormatter<int> formatter)
+			                                         	{
+			                                         		Assert.NotNull(formatter);
+			                                         	}));
 		}
 	}
 	public interface IEMailFormatter<T>

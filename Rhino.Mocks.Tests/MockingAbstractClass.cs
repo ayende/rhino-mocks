@@ -31,35 +31,33 @@ using System;
 
 namespace Rhino.Mocks.Tests
 {
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
-	public class MockingAbstractClass
+	
+	public class MockingAbstractClass : IDisposable
 	{
 		private MockRepository mocks;
 
-		[SetUp]
-		public void Setup()
+		public MockingAbstractClass()
 		{
 			mocks = new MockRepository();
 		}
 
-		[TearDown]
-		public void Teardown()
+		public void Dispose()
 		{
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void MockAbsPropertyGetter()
 		{
 			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
 			Expect.Call(ac.AbPropGet).Return("n");
 			mocks.ReplayAll();
-			Assert.AreEqual("n", ac.AbPropGet);
+			Assert.Equal("n", ac.AbPropGet);
 		}
 
-		[Test]
+		[Fact]
 		public void MockAbsPropertySetter()
 		{
 			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
@@ -69,7 +67,7 @@ namespace Rhino.Mocks.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void MockAbsProp()
 		{
 			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
@@ -77,16 +75,16 @@ namespace Rhino.Mocks.Tests
 			Expect.Call(ac.AbProp).Return("u");
 			mocks.ReplayAll();
 			ac.AbProp = "n";
-			Assert.AreEqual("u", ac.AbProp);
+			Assert.Equal("u", ac.AbProp);
 		}
 
-		[Test]
+		[Fact]
 		public void MockAbstractMethod()
 		{
 			AbsCls ac = (AbsCls)mocks.StrictMock(typeof(AbsCls));
 			Expect.Call(ac.Method()).Return(45);
 			mocks.ReplayAll();
-			Assert.AreEqual(45, ac.Method());
+			Assert.Equal(45, ac.Method());
 	
 		}
 

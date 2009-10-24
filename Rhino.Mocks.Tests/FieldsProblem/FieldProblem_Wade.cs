@@ -28,14 +28,14 @@
 
 
 using System.Runtime.InteropServices;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Wade
 	{
-		[Test]
+		[Fact]
 		public void CanMockClassWithCoClass()
 		{
 			MockRepository mocks = new MockRepository();

@@ -29,7 +29,7 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -37,12 +37,12 @@ using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.Impl
 {
-	[TestFixture]
+	
 	public class RecordMockStateTests
 	{
         MethodInfo method = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
 
-		[Test]
+		[Fact]
 		public void MethodCallOnRecordsAddToExpectations()
 		{
 			MockRepository mocks = new MockRepository();
@@ -50,13 +50,13 @@ namespace Rhino.Mocks.Tests.Impl
 			RecordMockState recordState = new RecordMockState(proxy, mocks);
 			recordState.MethodCall(new FakeInvocation(method), method, "");
 			recordState.LastExpectation.ReturnValue = true;
-			Assert.IsNotNull(Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method), "Record state didn't record the method call.");
+			Assert.NotNull(Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method));
 			recordState.MethodCall(new FakeInvocation(method), method, "");
 			recordState.LastExpectation.ReturnValue = true;
-			Assert.AreEqual(2, recordState.MethodCallsCount);
+			Assert.Equal(2, recordState.MethodCallsCount);
 		}
 
-		[Test]
+		[Fact]
 		public void MethodCallAddExpectation()
 		{
 			MockRepository mocks = new MockRepository();
@@ -64,101 +64,107 @@ namespace Rhino.Mocks.Tests.Impl
 			RecordMockState recordState = new RecordMockState(proxy, mocks);
             recordState.MethodCall(new FakeInvocation(method), method, "1");
 			recordState.LastExpectation.ReturnValue = false;
-			Assert.AreEqual(1, Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method).Count);
+			Assert.Equal(1, Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method).Count);
             recordState.MethodCall(new FakeInvocation(method), method, "2");
 			recordState.LastExpectation.ReturnValue = false;
-			Assert.AreEqual(2, Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method).Count);
+			Assert.Equal(2, Get.Recorder(mocks).GetAllExpectationsForProxyAndMethod(proxy, method).Count);
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This action is invalid when the mock object is in record state.")]
+		[Fact]
 		public void VerifyOnRecordThrows()
 		{
 			MockRepository mocks = new MockRepository();
 			RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
-			recordState.Verify();
+			Assert.Throws<InvalidOperationException>(
+				"This action is invalid when the mock object is in record state.",
+				() => recordState.Verify());
 		}
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object {Rhino.Mocks.Tests.IAnimal} is in record state.")]
+        [Fact]
         public void VerifyOnRecordThrowsOneMockType() {
             MockRepository mocks = new MockRepository();
             RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks, typeof(IAnimal)), mocks);
-            recordState.Verify();
+        	Assert.Throws<InvalidOperationException>(
+        		"This action is invalid when the mock object {Rhino.Mocks.Tests.IAnimal} is in record state.",
+        		() => recordState.Verify());
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object {Rhino.Mocks.Tests.IAnimal, Rhino.Mocks.Tests.IDemo} is in record state.")]
+        [Fact]
         public void VerifyOnRecordThrowsTwoMockTypes() {
             MockRepository mocks = new MockRepository();
             RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks, typeof(IAnimal), typeof(IDemo)), mocks);
-            recordState.Verify();
+        	Assert.Throws<InvalidOperationException>(
+        		"This action is invalid when the mock object {Rhino.Mocks.Tests.IAnimal, Rhino.Mocks.Tests.IDemo} is in record state.",
+        		() => recordState.Verify());
         }
 
-        [Test]
+        [Fact]
 		public void LastExpectationIsFilledOnCall()
 		{
 			MockRepository mocks = new MockRepository();
 			RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
-			Assert.IsNull(recordState.LastExpectation);
+			Assert.Null(recordState.LastExpectation);
             recordState.MethodCall(new FakeInvocation(method), method, "");
-			Assert.IsNotNull(recordState.LastExpectation);
-			Assert.IsTrue(recordState.LastExpectation.IsExpected(new object[] {""}));
+			Assert.NotNull(recordState.LastExpectation);
+			Assert.True(recordState.LastExpectation.IsExpected(new object[] {""}));
 		}
 
-		[Test]
+		[Fact]
 		public void GetMethodOptionsForLastMethod()
 		{
 			MockRepository mocks = new MockRepository();
 			RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
             recordState.MethodCall(new FakeInvocation(method), method, "");
-			Assert.IsNotNull(recordState.LastMethodOptions);
+			Assert.NotNull(recordState.LastMethodOptions);
 		}
 
-		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: proxy")]
+		[Fact]
 		public void PassingNullProxyCauseException()
 		{
-			new RecordMockState(null, null);
+			Assert.Throws<ArgumentNullException>(
+				"Value cannot be null.\r\nParameter name: proxy",
+				() => new RecordMockState(null, null));
 		}
 
-		[Test]
-		[ExpectedException(typeof (ArgumentNullException), "Value cannot be null.\r\nParameter name: repository")]
+		[Fact]
 		public void PassingNullmocksCauseException()
 		{
-			new RecordMockState(new ProxyInstance(null), null);
+			Assert.Throws<ArgumentNullException>(
+				"Value cannot be null.\r\nParameter name: repository",
+				() => new RecordMockState(new ProxyInstance(null), null));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Previous method 'String.StartsWith(\"\");' requires a return value or an exception to throw.")]
+		[Fact]
 		public void CantMoveToReplayStateWithoutclosingLastMethod()
 		{
 			MockRepository mocks = new MockRepository();
 			ProxyInstance proxy = new ProxyInstance(mocks);
 			RecordMockState recordState = new RecordMockState(proxy, mocks);
             recordState.MethodCall(new FakeInvocation(method), method, "");
-			recordState.Replay();
+			Assert.Throws<InvalidOperationException>(
+				"Previous method 'String.StartsWith(\"\");' requires a return value or an exception to throw.",
+				() => recordState.Replay());
 		}
 
-        [Test]
+        [Fact]
         public void ArgsEqualExpectationUsedForMethodsWithNoOutParameters()
         {
             MockRepository mocks = new MockRepository();
             RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
-            Assert.IsNull(recordState.LastExpectation);
+            Assert.Null(recordState.LastExpectation);
             recordState.MethodCall(new FakeInvocation(method), method, "");
-            Assert.IsInstanceOfType(typeof(ArgsEqualExpectation), recordState.LastExpectation);
+            Assert.IsType(typeof(ArgsEqualExpectation), recordState.LastExpectation);
         }
 
-        [Test]
+        [Fact]
         public void ConstraintsExpectationUsedForMethodsWithNoOutParameters()
         {
             MethodInfo methodWithOutParams = typeof(Double).GetMethod("TryParse", new Type[] { typeof(string), typeof(Double).MakeByRefType() });
             MockRepository mocks = new MockRepository();
             RecordMockState recordState = new RecordMockState(new ProxyInstance(mocks), mocks);
-            Assert.IsNull(recordState.LastExpectation);
+            Assert.Null(recordState.LastExpectation);
             recordState.MethodCall(new FakeInvocation(methodWithOutParams), methodWithOutParams, "", 0);
-            Assert.IsInstanceOfType(typeof(ConstraintsExpectation), recordState.LastExpectation);
+			Assert.IsType(typeof(ConstraintsExpectation), recordState.LastExpectation);
         }
 	}
 

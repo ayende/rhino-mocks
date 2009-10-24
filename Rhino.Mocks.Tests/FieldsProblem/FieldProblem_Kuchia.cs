@@ -1,22 +1,23 @@
-using MbUnit.Framework;
+using System;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
-    public class FieldProblem_Kuchia
+    
+    public class FieldProblem_Kuchia : IDisposable
     {
         private MockRepository _mocks;
         private IProblem _problem;
         private IDaoFactory _daoFactory;
         private IBLFactory _blFactory;
 
-        [Test]
+        [Fact]
         public void Method1_CallWithMocks_Returns10()
         {
             int result = Problem.Method1();
             Mocks.ReplayAll();
             Mocks.VerifyAll();
-            Assert.AreEqual(10, result);
+            Assert.Equal(10, result);
 
         }
 
@@ -59,8 +60,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _problem = null;
             _blFactory = null;

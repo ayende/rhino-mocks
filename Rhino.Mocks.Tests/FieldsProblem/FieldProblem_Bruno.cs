@@ -29,7 +29,7 @@
 
 using System;
 using System.EnterpriseServices;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
@@ -38,10 +38,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         void SomeMethod();
     }
 
-    [TestFixture]
+    
     public class ReproFixture
     {
-        [Test]
+        [Fact]
         public void TestMethod1()
         {
             ServiceDomain.Enter(new ServiceConfig());

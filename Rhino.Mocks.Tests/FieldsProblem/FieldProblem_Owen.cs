@@ -31,7 +31,7 @@ using System;
 using System.Text;
 using Rhino.Mocks;
 using System.Data;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
@@ -86,7 +86,7 @@ namespace Rhino.Mocks.Tests
 
 
 	#region TestFixture
-	[TestFixture]
+	
 	public class FieldProblem_Owen
 	{
 		MockRepository m_objMockRepository;
@@ -97,8 +97,7 @@ namespace Rhino.Mocks.Tests
 
 		IMetric m_objIMetric;
 
-		[TestFixtureSetUp]
-		public void TFsetup()
+		public FieldProblem_Owen()
 		{
 			#region Mock Objects
 			m_objMockRepository = new MockRepository();
@@ -122,8 +121,7 @@ namespace Rhino.Mocks.Tests
 			m_objIMetric = Metric.GetByName(m_objIApplication, "Risk");
 			m_objMockRepository.VerifyAll();
 		}
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IApplicationSession.get_IMetricBroker(); Expected #0, Actual #1.")]
+		[Fact]
 		public void T001_SavingShouldNotInvalidateOtherCachedSingleObjects()
 		{
 			m_objMockRepository.BackToRecord(m_objIApplication);
@@ -148,8 +146,12 @@ namespace Rhino.Mocks.Tests
 			//missing expectations here. 
 
 			//cause a stack overflow error
-			IMetric objMetric = m_objIMetric.Numerator;
-			m_objMockRepository.VerifyAll();
+			
+			Assert.Throws<ExpectationViolationException>("IApplicationSession.get_IMetricBroker(); Expected #0, Actual #1.",
+			                                             () =>
+			                                             {
+															 IMetric objMetric = m_objIMetric.Numerator;
+			                                             });
 		}
 
 	}

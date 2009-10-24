@@ -1,13 +1,13 @@
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Roy
     {
-        [Test]
+        [Fact]
         public void StubNeverFailsTheTest()
         {
             MockRepository repository = new MockRepository();
@@ -19,11 +19,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             }
 
             int result = resultGetter.GetSomeNumber("b");
-            Assert.AreEqual(0, result);
+            Assert.Equal(0, result);
             repository.VerifyAll(); //<- should not fail the test methinks
         }
 
-        [Test]
+        [Fact]
         public void CanGetSetupResultFromStub()
         {
             MockRepository repository = new MockRepository();
@@ -35,23 +35,26 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             }
 
             int result = resultGetter.GetSomeNumber("a");
-            Assert.AreEqual(1, result);
+            Assert.Equal(1, result);
             repository.VerifyAll(); 
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException),
-            "You have already specified constraints for this method. (IGetResults.GetSomeNumber(contains \"b\");)")]
+        [Fact]
         public void CannotCallLastCallConstraintsMoreThanOnce()
         {
             MockRepository repository = new MockRepository();
             IGetResults resultGetter = repository.Stub<IGetResults>();
-            using (repository.Record())
-            {
-                resultGetter.GetSomeNumber("a");
-                LastCall.Constraints(Text.Contains("b"));
-                LastCall.Constraints(Text.Contains("a"));
-            }
+        	Assert.Throws<InvalidOperationException>(
+        		"You have already specified constraints for this method. (IGetResults.GetSomeNumber(contains \"b\");)",
+        		() =>
+        		{
+        			using (repository.Record())
+        			{
+        				resultGetter.GetSomeNumber("a");
+        				LastCall.Constraints(Text.Contains("b"));
+        				LastCall.Constraints(Text.Contains("a"));
+        			}
+        		});
         }
     }
 

@@ -29,7 +29,7 @@
 
 using System;
 using System.Data;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
@@ -37,20 +37,19 @@ using Rhino.Mocks.Tests.Callbacks;
 
 namespace Rhino.Mocks.Tests.Constraints
 {
-	[TestFixture]
+	
 	public class ConstraintTests
 	{
 		private IDemo demo;
 		private MockRepository mocks;
 
-		[SetUp]
-		public void SetUp()
+		public ConstraintTests()
 		{
 			mocks = new MockRepository();
 			demo = (IDemo) this.mocks.StrictMock(typeof (IDemo));
 		}
 
-        [Test]
+        [Fact]
 		public void UsingPredicate()
 		{
 			demo.VoidStringArg(null);
@@ -71,8 +70,7 @@ namespace Rhino.Mocks.Tests.Constraints
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Predicate accept System.Data.DataSet but parameter is System.String which is not compatible")]
+		[Fact]
 		public void UsingPredicateConstraintWhenTypesNotMatching()
 		{
 			demo.VoidStringArg(null);
@@ -83,12 +81,12 @@ namespace Rhino.Mocks.Tests.Constraints
 				}));
 			mocks.Replay(demo);
 
-			demo.VoidStringArg("ab");
-
-			mocks.VerifyAll();
+			Assert.Throws<InvalidOperationException>(
+				"Predicate accept System.Data.DataSet but parameter is System.String which is not compatible",
+				() => demo.VoidStringArg("ab"));
 		}
 
-        [Test]
+        [Fact]
         public void UsingPredicateConstraintWithSubtype()
         {
             demo.VoidStringArg(null);
@@ -104,8 +102,7 @@ namespace Rhino.Mocks.Tests.Constraints
             mocks.VerifyAll();
         }
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidStringArg(\"cc\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(Predicate (ConstraintTests.JustPredicate(obj);)); Expected #1, Actual #0.")]
+		[Fact]
 		public void UsingPredicateWhenExpectationViolated()
 		{
 			demo.VoidStringArg(null);
@@ -114,9 +111,9 @@ namespace Rhino.Mocks.Tests.Constraints
 				);
 			mocks.Replay(demo);
 
-			demo.VoidStringArg("cc");
-
-			mocks.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidStringArg(\"cc\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(Predicate (ConstraintTests.JustPredicate(obj);)); Expected #1, Actual #0.",
+				() => demo.VoidStringArg("cc"));
 		}
 		
 		public bool JustPredicate(string s)
@@ -124,51 +121,51 @@ namespace Rhino.Mocks.Tests.Constraints
 			return false;
 		}
 
-        [Test]
+        [Fact]
         public void AndSeveralConstraings()
         {
             AbstractConstraint all = Is.NotEqual("bar") & Is.TypeOf(typeof(string)) & Is.NotNull();
-            Assert.IsTrue(all.Eval("foo"));
-            Assert.AreEqual("not equal to bar and type of {System.String} and not equal to null", all.Message);
+            Assert.True(all.Eval("foo"));
+            Assert.Equal("not equal to bar and type of {System.String} and not equal to null", all.Message);
         }
 
-		 [Test]
+		 [Fact]
         public void AndSeveralConstraings_WithGenerics()
         {
             AbstractConstraint all = Is.NotEqual("bar") && Is.TypeOf<string>() && Is.NotNull();
-            Assert.IsTrue(all.Eval("foo"));
-            Assert.AreEqual("not equal to bar and type of {System.String} and not equal to null", all.Message);
+            Assert.True(all.Eval("foo"));
+            Assert.Equal("not equal to bar and type of {System.String} and not equal to null", all.Message);
         }
 
-		[Test]
+		[Fact]
 		public void AndConstraints()
 		{
 			AbstractConstraint start = Text.StartsWith("Ayende"), end = Text.EndsWith("Rahien");
 			AbstractConstraint combine = start & end;
-			Assert.IsTrue(combine.Eval("Ayende Rahien"));
-			Assert.AreEqual("starts with \"Ayende\" and ends with \"Rahien\"", combine.Message);
+			Assert.True(combine.Eval("Ayende Rahien"));
+			Assert.Equal("starts with \"Ayende\" and ends with \"Rahien\"", combine.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void NotConstraint()
 		{
 			AbstractConstraint start = Text.StartsWith("Ayende");
 			AbstractConstraint negate = !start;
-			Assert.IsTrue(negate.Eval("Rahien"));
-			Assert.AreEqual("not starts with \"Ayende\"", negate.Message);
+			Assert.True(negate.Eval("Rahien"));
+			Assert.Equal("not starts with \"Ayende\"", negate.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void OrConstraints()
 		{
 			AbstractConstraint start = Text.StartsWith("Ayende"), end = Text.EndsWith("Rahien");
 			AbstractConstraint combine = start | end;
-			Assert.IsTrue(combine.Eval("Ayende"));
-			Assert.IsTrue(combine.Eval("Rahien"));
-			Assert.AreEqual("starts with \"Ayende\" or ends with \"Rahien\"", combine.Message);
+			Assert.True(combine.Eval("Ayende"));
+			Assert.True(combine.Eval("Rahien"));
+			Assert.Equal("starts with \"Ayende\" or ends with \"Rahien\"", combine.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void SettingConstraintOnAMock()
 		{
 			demo.VoidStringArg("Ayende");
@@ -178,48 +175,54 @@ namespace Rhino.Mocks.Tests.Constraints
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "IDemo.VoidStringArg(\"Hello, world\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(contains \"World\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void ConstraintFailingThrows()
 		{
 			demo.VoidStringArg("Ayende");
 			LastCall.On(demo).Constraints(Text.Contains("World"));
 			mocks.Replay(demo);
-			demo.VoidStringArg("Hello, world");
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidStringArg(\"Hello, world\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(contains \"World\"); Expected #1, Actual #0.",
+				() => demo.VoidStringArg("Hello, world"));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "The number of constraints is not the same as the number of the method's parameters!")]
+		[Fact]
 		public void ConstraintWithTooMuchForArguments()
 		{
 			demo.VoidStringArg("Ayende");
-			LastCall.On(demo).Constraints(Text.Contains("World"), Is.Equal("Rahien"));
+			Assert.Throws<InvalidOperationException>(
+				"The number of constraints is not the same as the number of the method's parameters!",
+				() => LastCall.On(demo).Constraints(Text.Contains("World"), Is.Equal("Rahien")));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "The number of constraints is not the same as the number of the method's parameters!")]
+		[Fact]
 		public void ConstraintWithTooFewForArguments()
 		{
 			demo.VoidThreeArgs(1, "Ayende", 3.14f);
-			LastCall.On(demo).Constraints(Text.Contains("World"), Is.Equal("Rahien"));
+			Assert.Throws<InvalidOperationException>(
+				"The number of constraints is not the same as the number of the method's parameters!",
+				() => LastCall.On(demo).Constraints(Text.Contains("World"), Is.Equal("Rahien")));
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "IDemo.VoidStringArg(contains \"World\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void ConstraintsThatWerentCallCauseVerifyFailure()
 		{
 			this.demo.VoidStringArg("Ayende");
 			LastCall.On(this.demo).Constraints(Text.Contains("World"));
 			this.mocks.Replay(this.demo);
-			this.mocks.Verify(this.demo);
+			Assert.Throws<ExpectationViolationException>("IDemo.VoidStringArg(contains \"World\"); Expected #1, Actual #0.",
+			                                             () => this.mocks.Verify(this.demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This method has already been set to ConstraintsExpectation.")]
+		[Fact]
 		public void AddConstraintAndThenTryToIgnoreArgs()
 		{
 			this.demo.VoidStringArg("Ayende");
-			LastCall.On(this.demo).Constraints(Text.Contains("World")).Callback<string>("".StartsWith);
+			Assert.Throws<InvalidOperationException>("This method has already been set to ConstraintsExpectation."
+			                                         ,
+			                                         () =>
+			                                         LastCall.On(this.demo).Constraints(Text.Contains("World")).Callback<string>(
+			                                         	"".StartsWith));
 		}
 
 	}

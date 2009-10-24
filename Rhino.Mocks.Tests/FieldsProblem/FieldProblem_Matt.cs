@@ -30,12 +30,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Matt
     {
 
@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             }
         }
 
-        [Test]
+        [Fact]
         public void ClearedModelSetsItemsOnView()
         {
             MockRepository mocks = new MockRepository();

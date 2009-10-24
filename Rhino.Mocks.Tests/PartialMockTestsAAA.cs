@@ -29,72 +29,73 @@
 #endregion
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
 {
-  [TestFixture]
+  
   public class PartialMockTestsAAA
   {
     private AbstractClass abs;
 
-    [SetUp]
-    public void SetUp()
+	public PartialMockTestsAAA()
     {
       abs = (AbstractClass) MockRepository.GeneratePartialMock(typeof (AbstractClass), new Type[] {});
     }
 
-    [Test]
+    [Fact]
     public void AutomaticallCallBaseMethodIfNoExpectationWasSet()
     {
-      Assert.AreEqual(1, abs.Increment());
-      Assert.AreEqual(6, abs.Add(5));
-      Assert.AreEqual(6, abs.Count);
+      Assert.Equal(1, abs.Increment());
+      Assert.Equal(6, abs.Add(5));
+      Assert.Equal(6, abs.Count);
       abs.VerifyAllExpectations();
     }
 
-    [Test]
+    [Fact]
     public void CanMockVirtualMethods()
     {
       abs.Expect(x => x.Increment()).Return(5);
       abs.Expect(x => x.Add(2)).Return(3);
 
-      Assert.AreEqual(5, abs.Increment());
-      Assert.AreEqual(3, abs.Add(2));
-      Assert.AreEqual(0, abs.Count);
+      Assert.Equal(5, abs.Increment());
+      Assert.Equal(3, abs.Add(2));
+      Assert.Equal(0, abs.Count);
       abs.VerifyAllExpectations();
     }
 
-    [Test]
+    [Fact]
     public void CanMockAbstractMethods()
     {
       abs.Expect(x => x.Decrement()).Return(5);
-      Assert.AreEqual(5, abs.Decrement());
-      Assert.AreEqual(0, abs.Count);
+      Assert.Equal(5, abs.Decrement());
+      Assert.Equal(0, abs.Count);
       abs.VerifyAllExpectations();
     }
 
-    [Test]
-    [ExpectedException(typeof (InvalidOperationException), "Can't create a partial mock from an interface")]
+    [Fact]
     public void CantCreatePartialMockFromInterfaces()
     {
-      MockRepository.GeneratePartialMock<IDemo>();
+    	Assert.Throws<InvalidOperationException>(
+    		"Can't create a partial mock from an interface",
+    		() => MockRepository.GeneratePartialMock<IDemo>());
     }
 
-    [Test]
-    [ExpectedException(typeof (ExpectationViolationException), "AbstractClass.Decrement(); Expected #0, Actual #1.")]
+    [Fact]
     public void CallAnAbstractMethodWithoutSettingExpectation()
     {
-      abs.Decrement();
+    	Assert.Throws<ExpectationViolationException>(
+    		"AbstractClass.Decrement(); Expected #0, Actual #1.",
+    		() => abs.Decrement());
     }
 
-    [Test]
+    [Fact]
     public void CanMockWithCtorParams()
     {
       var withParameters = MockRepository.GeneratePartialMock<WithParameters>(1);
       withParameters.Expect(x => x.Int).Return(4);
-      Assert.AreEqual(4, withParameters.Int);
+      Assert.Equal(4, withParameters.Int);
       withParameters.VerifyAllExpectations();
     }
   }

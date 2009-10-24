@@ -29,26 +29,26 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Impl;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Bruce
     {
-        [Test]
+        [Fact]
         public void CreateClassWithDefaultCtor()
         {
             MockRepository mocks = new MockRepository();
             ClassWithDefaultCtor cwdc = (ClassWithDefaultCtor)mocks.DynamicMock(typeof(ClassWithDefaultCtor));
-            Assert.IsNotNull(cwdc);
+            Assert.NotNull(cwdc);
         }
 
-        [Test]
+        [Fact]
         public void HandlingArraysWithValueTypeArrays()
         {
-            Assert.IsTrue(Validate.ArgsEqual(new object[] { new ushort[0] }, new object[] { new ushort[0] }));
+            Assert.True(Validate.ArgsEqual(new object[] { new ushort[0] }, new object[] { new ushort[0] }));
         }
 
         public class ClassWithDefaultCtor

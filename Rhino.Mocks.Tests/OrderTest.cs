@@ -30,17 +30,18 @@
 using System;
 using System.Text;
 
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-    [TestFixture]
+    
     public class OrderedTests
     {
         private delegate void ConfigureMockDelegate(MockRepository mocks, I1 mockObject);
 
         #region TestOrderedTimesMin0
-        [Test(Description="Test that a Times min of 0 works correctly inside an ordered recorder")]
+		//Test that a Times min of 0 works correctly inside an ordered recorder
+        [Fact]
         public void TestOrderedTimesMin0()
         {
             ConfigureMockDelegate deleg = new ConfigureMockDelegate(ConfigureOrderedTimesMin0);
@@ -78,7 +79,8 @@ namespace Rhino.Mocks.Tests
         #endregion
 
         #region TestOrderedTimesMinNonZeroMaxHigherThanMin
-        [Test(Description="Test that a Times non-zero min with a higher max works correctly inside an ordered recorder")]
+
+        [Fact]
         public void TestOrderedTimesMinNonZeroMaxHigherThanMin()
         {
             ConfigureMockDelegate deleg = new ConfigureMockDelegate(ConfigureOrderedTimesMinNonZeroMaxHigherThanMin);
@@ -107,8 +109,8 @@ namespace Rhino.Mocks.Tests
         #endregion
 
         #region TestOrderedAtLeastOnce
-        [Test(Description = "Test that 'at least once' works correctly inside an ordered recorder")]
-        public void TestOrderedAtLeastOnce()
+		[Fact]
+		public void TestOrderedAtLeastOnce()
         {
             ConfigureMockDelegate deleg = new ConfigureMockDelegate(ConfigureOrderedAtLeastOnce);
 
@@ -135,8 +137,8 @@ namespace Rhino.Mocks.Tests
         #endregion
 
         #region TestOrderedTimesMin0WithNestedUnordered
-        [Test(Description = "Test that a Times min of 0 works correctly when followed by an nested unordered section")]
-        public void TestOrderedTimesMin0WithNestedUnordered()
+		[Fact]
+		public void TestOrderedTimesMin0WithNestedUnordered()
         {
             ConfigureMockDelegate deleg = new ConfigureMockDelegate(ConfigureOrderedTimesMin0WithNestedUnordered);
 
@@ -218,7 +220,7 @@ namespace Rhino.Mocks.Tests
             {
                 if (isValid)
                 {
-                    Assert.Fail("Order {0} was supposed to be ok, but got error: {1}", methodOrder, ex.Message);
+					Assert.False(true, string.Format("Order {0} was supposed to be ok, but got error: {1}", methodOrder, ex.Message));
                 }
                 else
                 {
@@ -228,7 +230,7 @@ namespace Rhino.Mocks.Tests
 
             if (!isValid)
             {
-                Assert.Fail("Order {0} was supposed to fail, but did not.", methodOrder);
+				Assert.False(true, string.Format("Order {0} was supposed to fail, but did not.", methodOrder));
             }
         }
         #endregion

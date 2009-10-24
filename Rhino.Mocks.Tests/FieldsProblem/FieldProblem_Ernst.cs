@@ -28,16 +28,16 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Ernst
 	{
-		[Test]
+		[Fact]
 		public void CallOriginalMethodProblem2()
 		{
 			MockRepository mockRepository = new MockRepository();
@@ -54,7 +54,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mockRepository.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void CanUseBackToRecordOnMethodsThatCallToCallOriginalMethod()
 		{
 			MockRepository repository = new MockRepository();
@@ -78,7 +78,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			try
 			{
 				mock.Method();
-				Assert.Fail();
+				Assert.False(true);
 			}
 			catch
 			{
@@ -87,7 +87,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 
 
-		[Test]
+		[Fact]
 		public void CanUseBackToRecordOnMethodsThatCallPropertyBehavior()
 		{
 			MockRepository repository = new MockRepository();
@@ -98,7 +98,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			repository.ReplayAll();
 			mock.Id = 4;
 			int d = mock.Id;
-			Assert.AreEqual(4,d );
+			Assert.Equal(4,d );
 			repository.VerifyAll();
 
 			repository.BackToRecordAll();
@@ -107,7 +107,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			repository.ReplayAll();
 
-			Assert.AreEqual(5, mock.Id);
+			Assert.Equal(5, mock.Id);
 
 			repository.VerifyAll();
 		}

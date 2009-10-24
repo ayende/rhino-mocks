@@ -30,17 +30,16 @@
 using System;
 using System.Text;
 
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldsProblem_Royston
     {
         private MockRepository mMocks;
-        [SetUp]
-        public void SetUp()
+		public FieldsProblem_Royston()
         {
             mMocks = new MockRepository();
         }
@@ -50,7 +49,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			int Property { get; }
 		}
 
-		[Test]
+		[Fact]
 		public void DuplicateTypeTest()
 		{
 			// Let's just create two mocks of the same type, based on
@@ -68,7 +67,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mMocks.VerifyAll();
 		}
 
-        [Test]
+        [Fact]
         public void TestVirtualEntrypoint()
         {
             IIntf1 i1 = CreateAndConfigureMock();
@@ -80,7 +79,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mMocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void TestNonVirtualEntrypoint()
         {
             IIntf1 i1 = CreateAndConfigureMock();
@@ -92,7 +91,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             mMocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void BackToRecordProblem()
         {
             IIntf1 i1 = (IIntf1)mMocks.StrictMock(typeof(IIntf1));

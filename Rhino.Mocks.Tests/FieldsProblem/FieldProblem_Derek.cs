@@ -28,38 +28,36 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture] 
-	public class FieldProblem_Derek
+	 
+	public class FieldProblem_Derek : IDisposable
 	{
 		private MockRepository mockRepository;
 
 
-		[SetUp]
-		public void Setup()
+		public FieldProblem_Derek()
 		{
 			mockRepository = new MockRepository();
 		}
 
 
-		[TearDown]
-		public void TearDown()
+		public void Dispose()
 
 		{
 			mockRepository.VerifyAll();
 		}
 
 
-		[Test]
+		[Fact]
 		public void TestInvalidValue()
 		{
 			IMockInterface mockedInterface = mockRepository.StrictMock<IMockInterface>();
 			Expect.Call(mockedInterface.InvalidValue).Return(100UL);
 			mockRepository.ReplayAll();
-			Assert.AreEqual(100UL, mockedInterface.InvalidValue);
+			Assert.Equal(100UL, mockedInterface.InvalidValue);
 		}
 	}
 

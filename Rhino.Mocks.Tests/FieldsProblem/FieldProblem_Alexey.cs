@@ -6,7 +6,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	using System.Data.SqlClient;
 	using Exceptions;
-	using MbUnit.Framework;
+	using Xunit;
 
 	public interface ITestInterface
 	{
@@ -21,10 +21,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 	}
 
-	[TestFixture]
+	
 	public class FieldProblem_Alexey
 	{
-		[Test]
+		[Fact]
 		public void MockInterfaceWithGenericMethodWithConstraints()
 		{
 			MockRepository mockery = new MockRepository();
@@ -39,8 +39,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mockery.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "ITestInterface.AddService<System.IDisposable, System.Data.SqlClient.SqlConnection>(); Expected #1, Actual #0.")]
+		[Fact]
 		public void MockInterfaceWithGenericMethodWithConstraints_WhenNotValid()
 		{
 			MockRepository mockery = new MockRepository();
@@ -50,11 +49,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			LastCall.Return(mockObj);
 			mockery.ReplayAll();
 
-			mockery.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"ITestInterface.AddService<System.IDisposable, System.Data.SqlClient.SqlConnection>(); Expected #1, Actual #0.",
+				() => mockery.VerifyAll());
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "ITestInterface.AddService<System.IDisposable, System.Data.SqlClient.SqlConnection>(); Expected #1, Actual #0.")]
+		[Fact]
 		public void MockInterfaceWithGenericMethodWithConstraints_WhenNotValid_UsingDynamicMock()
 		{
 			MockRepository mockery = new MockRepository();
@@ -64,10 +64,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			LastCall.Return(mockObj);
 			mockery.ReplayAll();
 
-			mockery.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"ITestInterface.AddService<System.IDisposable, System.Data.SqlClient.SqlConnection>(); Expected #1, Actual #0.",
+				() => mockery.VerifyAll());
 		}
 
-		[Test]
+		[Fact]
 		public void MockInterfaceWithGenericMethodWithConstraints_UsingDynamicMock()
 		{
 			MockRepository mockery = new MockRepository();

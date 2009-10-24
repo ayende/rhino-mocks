@@ -28,83 +28,87 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class MockRepositoryTests
 	{
 		private MockRepository mocks;
 		private IDemo demo;
 
-		[SetUp]
-		public void SetUp()
+		public MockRepositoryTests()
 		{
 			mocks = new MockRepository();
 			demo = this.mocks.StrictMock(typeof(IDemo)) as IDemo;
 		}
 
-		[Test]
+		[Fact]
 		public void CreatesNewMockObject()
 		{
-			Assert.IsNotNull(demo, "Couldn't creates a demo mock.");
+			Assert.NotNull(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void CallMethodOnMockObject()
 		{
 			demo.ReturnStringNoArgs();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.ReturnStringNoArgs(); Expected #1, Actual #0.")]
+		[Fact]
 		public void RecordWithBadReplayCauseException()
 		{
 			demo.ReturnStringNoArgs();
 			LastCall.On(demo).Return(null);
 			mocks.Replay(demo);
-			mocks.Verify(demo);
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.ReturnStringNoArgs(); Expected #1, Actual #0.",
+				() => mocks.Verify(demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.ReturnStringNoArgs(); Expected #2, Actual #1.")]
+		[Fact]
 		public void RecordTwoMethodsButReplayOneCauseException()
 		{
 			demo.ReturnStringNoArgs();
 			LastCall.On(demo).Return(null).Repeat.Twice();
 			mocks.Replay(demo);
 			demo.ReturnStringNoArgs();
-			mocks.Verify(demo);
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.ReturnStringNoArgs(); Expected #2, Actual #1.",
+				() => mocks.Verify(demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ObjectNotMockFromThisRepositoryException), "The object is not a mock object that belong to this repository.")]
+		[Fact]
 		public void CallingReplayOnNonMockThrows()
 		{
 			MockRepository mocks = new MockRepository();
-			mocks.Replay(new object());
+			Assert.Throws<ObjectNotMockFromThisRepositoryException>(
+				"The object is not a mock object that belong to this repository.",
+				() => mocks.Replay(new object()));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ObjectNotMockFromThisRepositoryException), "The object is not a mock object that belong to this repository.")]
+		[Fact]
 		public void CallingVerifyOnNonMockThrows()
 		{
 			MockRepository mocks = new MockRepository();
-			mocks.Verify(new object());
+			Assert.Throws<ObjectNotMockFromThisRepositoryException>(
+				"The object is not a mock object that belong to this repository.",
+				() => mocks.Verify(new object()));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object is in replay state.")]
+		[Fact]
 		public void TryingToReplayMockMoreThanOnceThrows()
 		{
 			mocks.Replay(demo);
-			mocks.Replay(demo);
+			Assert.Throws<InvalidOperationException>(
+				"This action is invalid when the mock object is in replay state.",
+				() => mocks.Replay(demo));
 		}
 
-		[Test]
+		[Fact]
 		public void CallingReplayAndThenReplayAll()
 		{
 			mocks.Replay(demo);
@@ -112,7 +116,7 @@ namespace Rhino.Mocks.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void CallingVerifyAndThenVerifyAll()
 		{
 			mocks.ReplayAll();
@@ -120,91 +124,96 @@ namespace Rhino.Mocks.Tests
 			mocks.VerifyAll();
 		}
 
-		[Test]
-        [ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object {Rhino.Mocks.Tests.IDemo} is in record state.")]
-		public void CallingVerifyWithoutReplayFirstCauseException()
+		[Fact]
+        public void CallingVerifyWithoutReplayFirstCauseException()
 		{
-			mocks.Verify(demo);
+			Assert.Throws<InvalidOperationException>(
+				"This action is invalid when the mock object {Rhino.Mocks.Tests.IDemo} is in record state.",
+				() => mocks.Verify(demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object is in verified state.")]
+		[Fact]
 		public void UsingVerifiedObjectThrows()
 		{
 			mocks.Replay(demo);
 			mocks.Verify(demo);
-			demo.ReturnIntNoArgs();
+			Assert.Throws<InvalidOperationException>(
+				"This action is invalid when the mock object is in verified state.",
+				() => demo.ReturnIntNoArgs());
 		}
 
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "This action is invalid when the mock object is in replay state.")]
+		[Fact]
 		public void CallingLastMethodOptionsOnReplay()
 		{
 			demo.VoidNoArgs();
 			mocks.Replay(demo);
-			LastCall.On(demo);
+			Assert.Throws<InvalidOperationException>(
+				"This action is invalid when the mock object is in replay state.",
+				() => LastCall.On(demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Previous method 'IDemo.StringArgString(\"\");' requires a return value or an exception to throw.")]
+		[Fact]
 		public void NotClosingMethodBeforeReplaying()
 		{
 			demo.StringArgString("");
-			mocks.Replay(demo);
+			Assert.Throws<InvalidOperationException>(
+				"Previous method 'IDemo.StringArgString(\"\");' requires a return value or an exception to throw.",
+				() => mocks.Replay(demo));
 		}
 
-		[Test]
+		[Fact]
 		public void GetmocksFromProxy()
 		{
 			IMockedObject mockedObj = demo as IMockedObject;
-			Assert.IsNotNull(mockedObj, "Could not get IMockObject from mocked object");
+			Assert.NotNull(mockedObj);
 			MockRepository MockRepository = mockedObj.Repository;
-			Assert.IsNotNull(MockRepository);
-			Assert.AreSame(mocks, MockRepository);
+			Assert.NotNull(MockRepository);
+			Assert.Same(mocks, MockRepository);
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?")]
+		[Fact]
 		public void CallingLastCallWithoutHavingLastCallThrows()
 		{
-			LastCall.On(demo);
+			Assert.Throws<InvalidOperationException>(
+				"There is no matching last call on this object. Are you sure that the last call was a virtual or interface method call?",
+				() => LastCall.On(demo));
 		}
 
-		[Test]
+		[Fact]
 		public void SetReturnValue()
 		{
 			demo.ReturnStringNoArgs();
 			string retVal = "Ayende";
 			LastCall.On(demo).Return(retVal);
 			mocks.Replay(demo);
-			Assert.AreEqual(retVal, demo.ReturnStringNoArgs());
+			Assert.Equal(retVal, demo.ReturnStringNoArgs());
 			mocks.Verify(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void SetReturnValueAndNumberOfRepeats()
 		{
 			demo.ReturnStringNoArgs();
 			string retVal = "Ayende";
 			LastCall.On(demo).Return(retVal).Repeat.Twice();
 			mocks.Replay(demo);
-			Assert.AreEqual(retVal, demo.ReturnStringNoArgs());
-			Assert.AreEqual(retVal, demo.ReturnStringNoArgs());
+			Assert.Equal(retVal, demo.ReturnStringNoArgs());
+			Assert.Equal(retVal, demo.ReturnStringNoArgs());
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentException), "Reserved value, must be zero")]
+		[Fact]
 		public void SetMethodToThrow()
 		{
 			demo.VoidStringArg("test");
 			LastCall.On(demo).Throw(new ArgumentException("Reserved value, must be zero"));
 			mocks.Replay(demo);
-			demo.VoidStringArg("test");
+			Assert.Throws<ArgumentException>("Reserved value, must be zero",
+			                                 () => demo.VoidStringArg("test"));
 		}
 
-		[Test]
+		[Fact]
 		public void SettingMethodToThrowTwice()
 		{
 			demo.VoidStringArg("test");
@@ -216,64 +225,68 @@ namespace Rhino.Mocks.Tests
 				try
 				{
 					demo.VoidStringArg("test");
-					Assert.Fail("Expected exception");
+					Assert.False(true, "Expected exception");
 				}
 				catch (ArgumentException e)
 				{
-					Assert.AreEqual(exceptionMessage, e.Message);
+					Assert.Equal(exceptionMessage, e.Message);
 				}
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void ReturnningValueType()
 		{
 			demo.ReturnIntNoArgs();
 			LastCall.On(demo).Return(2);
 			mocks.Replay(demo);
-			Assert.AreEqual(2, demo.ReturnIntNoArgs());
+			Assert.Equal(2, demo.ReturnIntNoArgs());
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Previous method 'IDemo.ReturnIntNoArgs();' requires a return value or an exception to throw.")]
+		[Fact]
 		public void CallingSecondMethodWithoutSetupRequiredInfoOnFirstOne()
 		{
 			demo.ReturnIntNoArgs();
-			demo.ReturnIntNoArgs();
+			Assert.Throws<InvalidOperationException>(
+				"Previous method 'IDemo.ReturnIntNoArgs();' requires a return value or an exception to throw.",
+				() => demo.ReturnIntNoArgs());
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Type 'System.DateTime' doesn't match the return type 'System.Int32' for method 'IDemo.ReturnIntNoArgs();'")]
+		[Fact]
 		public void TryingToSetUnrelatedTypeAsReturnValueThrows()
 		{
 			demo.ReturnIntNoArgs();
-			LastCall.On(demo).Return(new DateTime());
+			Assert.Throws<InvalidOperationException>(
+				"Type 'System.DateTime' doesn't match the return type 'System.Int32' for method 'IDemo.ReturnIntNoArgs();'",
+				() => LastCall.On(demo).Return(new DateTime()));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Type 'null' doesn't match the return type 'System.Int32' for method 'IDemo.ReturnIntNoArgs();'")]
+		[Fact]
 		public void ReturnNullForValueType()
 		{
 			demo.ReturnIntNoArgs();
-			LastCall.On(demo).Return(null);
+			Assert.Throws<InvalidOperationException>(
+				"Type 'null' doesn't match the return type 'System.Int32' for method 'IDemo.ReturnIntNoArgs();'",
+				() => LastCall.On(demo).Return(null));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Type 'System.Int32' doesn't match the return type 'System.Void' for method 'IDemo.VoidNoArgs();'")]
+		[Fact]
 		public void ReturnValueForVoidMethod()
 		{
 			demo.VoidNoArgs();
-			LastCall.On(demo).Return(3);
+			Assert.Throws<InvalidOperationException>(
+				"Type 'System.Int32' doesn't match the return type 'System.Void' for method 'IDemo.VoidNoArgs();'",
+				() => LastCall.On(demo).Return(3));
 		}
 
-		[Test]
+		[Fact]
 		public void ReturnDerivedType()
 		{
 			demo.EnumNoArgs();
 			LastCall.On(demo).Return(DemoEnum.Demo);
 		}
 
-		[Test]
+		[Fact]
 		public void SetExceptionAndThenSetReturn()
 		{
 			demo.EnumNoArgs();
@@ -284,73 +297,77 @@ namespace Rhino.Mocks.Tests
 			try
 			{
 				demo.EnumNoArgs();
-				Assert.Fail("Expected exception");
+				Assert.False(true, "Expected exception");
 			}
 			catch (Exception)
 			{
 			}
 			DemoEnum d = DemoEnum.NonDemo;
 			d = (DemoEnum)demo.EnumNoArgs();
-			Assert.AreEqual(d, DemoEnum.Demo);
+			Assert.Equal(d, DemoEnum.Demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
+		[Fact]
 		public void SetReturnValueAndExceptionThrows()
 		{
 			demo.EnumNoArgs();
 			LastCall.On(demo).Throw(new Exception());
-			LastCall.On(demo).Return(DemoEnum.Demo);
+			Assert.Throws<InvalidOperationException>(
+				"Can set only a single return value or exception to throw or delegate to execute on the same method call.",
+				() => LastCall.On(demo).Return(DemoEnum.Demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
+		[Fact]
 		public void SetExceptionAndThenThrows()
 		{
 			demo.EnumNoArgs();
 			LastCall.On(demo).Throw(new Exception());
-			LastCall.On(demo).Return(DemoEnum.Demo);
+			Assert.Throws<InvalidOperationException>(
+				"Can set only a single return value or exception to throw or delegate to execute on the same method call.",
+				() => LastCall.On(demo).Return(DemoEnum.Demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
+		[Fact]
 		public void SetTwoReturnValues()
 		{
 			demo.EnumNoArgs();
 			LastCall.On(demo).Return(DemoEnum.Demo);
-			LastCall.On(demo).Return(DemoEnum.Demo);
+			Assert.Throws<InvalidOperationException>(
+				"Can set only a single return value or exception to throw or delegate to execute on the same method call.",
+				() => LastCall.On(demo).Return(DemoEnum.Demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Can set only a single return value or exception to throw or delegate to execute on the same method call.")]
+		[Fact]
 		public void SetTwoExceptions()
 		{
 			demo.EnumNoArgs();
 			LastCall.On(demo).Throw(new Exception());
-			LastCall.On(demo).Throw(new Exception());
+			Assert.Throws<InvalidOperationException>(
+				"Can set only a single return value or exception to throw or delegate to execute on the same method call.",
+				() => LastCall.On(demo).Throw(new Exception()));
 
 		}
 
-		[Test]
+		[Fact]
 		public void ExpectMethodOnce()
 		{
 			demo.EnumNoArgs();
 			LastCall.On(demo).Return(DemoEnum.NonDemo).Repeat.Once();
 			mocks.Replay(demo);
 			DemoEnum d = (DemoEnum)demo.EnumNoArgs();
-			Assert.AreEqual(d, DemoEnum.NonDemo);
+			Assert.Equal(d, DemoEnum.NonDemo);
 			try
 			{
 				demo.EnumNoArgs();
-				Assert.Fail("Expected exception");
+				Assert.False(true, "Expected exception");
 			}
 			catch (ExpectationViolationException e)
 			{
-				Assert.AreEqual("IDemo.EnumNoArgs(); Expected #1, Actual #2.", e.Message);
+				Assert.Equal("IDemo.EnumNoArgs(); Expected #1, Actual #2.", e.Message);
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void ExpectMethodAlways()
 		{
 			demo.EnumNoArgs();
@@ -362,16 +379,17 @@ namespace Rhino.Mocks.Tests
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidStringArg(\"World\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(\"Hello\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void DifferentArgumentsCauseException()
 		{
 			demo.VoidStringArg("Hello");
 			mocks.Replay(demo);
-			demo.VoidStringArg("World");
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidStringArg(\"World\"); Expected #0, Actual #1.\r\nIDemo.VoidStringArg(\"Hello\"); Expected #1, Actual #0.",
+				() => demo.VoidStringArg("World"));
 		}
 
-		[Test]
+		[Fact]
 		public void VerifyingArguments()
 		{
 			demo.VoidStringArg("Hello");
@@ -380,7 +398,7 @@ namespace Rhino.Mocks.Tests
 			mocks.Verify(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void IgnoreArgument()
 		{
 			demo.VoidStringArg("Hello");
@@ -390,56 +408,55 @@ namespace Rhino.Mocks.Tests
 			mocks.Verify(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void IgnoreArgsAndReturnValue()
 		{
 			demo.StringArgString("Hello");
 			string objToReturn = "World";
 			LastCall.On(demo).IgnoreArguments().Repeat.Twice().Return(objToReturn);
 			mocks.Replay(demo);
-			Assert.AreEqual(objToReturn, demo.StringArgString("foo"));
-			Assert.AreEqual(objToReturn, demo.StringArgString("bar"));
+			Assert.Equal(objToReturn, demo.StringArgString("foo"));
+			Assert.Equal(objToReturn, demo.StringArgString("bar"));
 			mocks.Verify(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void RepeatThreeTimes()
 		{
 			demo.StringArgString("Hello");
 			string objToReturn = "World";
 			LastCall.On(demo).IgnoreArguments().Repeat.Times(3).Return(objToReturn);
 			mocks.Replay(demo);
-			Assert.AreEqual(objToReturn, demo.StringArgString("foo"));
-			Assert.AreEqual(objToReturn, demo.StringArgString("bar"));
-			Assert.AreEqual(objToReturn, demo.StringArgString("bar"));
+			Assert.Equal(objToReturn, demo.StringArgString("foo"));
+			Assert.Equal(objToReturn, demo.StringArgString("bar"));
+			Assert.Equal(objToReturn, demo.StringArgString("bar"));
 			mocks.Verify(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void RepeatOneToThreeTimes()
 		{
 			demo.StringArgString("Hello");
 			string objToReturn = "World";
 			LastCall.On(demo).IgnoreArguments().Repeat.Times(1, 3).Return(objToReturn);
 			mocks.Replay(demo);
-			Assert.AreEqual(objToReturn, demo.StringArgString("foo"));
-			Assert.AreEqual(objToReturn, demo.StringArgString("bar"));
+			Assert.Equal(objToReturn, demo.StringArgString("foo"));
+			Assert.Equal(objToReturn, demo.StringArgString("bar"));
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof(Exception), "Ugh! It's alive!")]
+		[Fact]
 		public void ThrowingExceptions()
 		{
 			demo.StringArgString("Ayende");
 			LastCall.On(demo).Throw(new Exception("Ugh! It's alive!")).IgnoreArguments();
 			mocks.Replay(demo);
-			demo.StringArgString(null);
+			Assert.Throws<Exception>("Ugh! It's alive!",
+			                         () => demo.StringArgString(null));
 		}
 
 
-		[Test]
-		[ExpectedException(typeof(Exception), "Ugh! It's alive!")]
+		[Fact]
 		public void ThrowingExceptionsWhenOrdered()
 		{
 			using (mocks.Ordered())
@@ -448,33 +465,33 @@ namespace Rhino.Mocks.Tests
 				LastCall.On(demo).Throw(new Exception("Ugh! It's alive!")).IgnoreArguments();
 			}
 			mocks.Replay(demo);
-			demo.StringArgString(null);
+			Assert.Throws<Exception>("Ugh! It's alive!",
+			                         () => demo.StringArgString(null));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+		[Fact]
 		public void ExpectationExceptionWhileUsingDisposableThrowTheCorrectExpectation()
 		{
 			mocks.Replay(demo);
-			demo.VoidNoArgs();
-			mocks.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidNoArgs(); Expected #0, Actual #1.",
+				() => demo.VoidNoArgs());
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+		[Fact]
 		public void MockObjectThrowsForUnexpectedCall()
 		{
 			MockRepository mocks = new MockRepository();
 			IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
 			mocks.ReplayAll();
-			demo.VoidNoArgs();
-			mocks.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidNoArgs(); Expected #0, Actual #1.",
+				() => demo.VoidNoArgs());
 		}
 
 
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+		[Fact]
 		public void MockObjectThrowsForUnexpectedCall_WhenVerified_IfFirstExceptionWasCaught()
 		{
 			MockRepository mocks = new MockRepository();
@@ -485,10 +502,12 @@ namespace Rhino.Mocks.Tests
 				demo.VoidNoArgs();
 			}
 			catch (Exception) { }
-			mocks.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidNoArgs(); Expected #0, Actual #1.",
+				() => mocks.VerifyAll());
 		}
 
-		[Test]
+		[Fact]
 		public void DyamicMockAcceptUnexpectedCall()
 		{
 			MockRepository mocks = new MockRepository();
@@ -498,23 +517,27 @@ namespace Rhino.Mocks.Tests
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RepositoryThrowsWithConstructorArgsForMockInterface()
 		{
 			MockRepository mocks = new MockRepository();
-			IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo), "Foo");
+			Assert.Throws<ArgumentException>(() =>
+			{
+				IDemo demo = (IDemo) mocks.StrictMock(typeof (IDemo), "Foo");
+			});
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
+		[Fact]
 		public void RepositoryThrowsWithConstructorArgsForMockDelegate()
 		{
 			MockRepository mocks = new MockRepository();
-			EventHandler handler = (EventHandler)mocks.StrictMock(typeof(EventHandler), "Foo");
+			Assert.Throws<ArgumentException>(() =>
+			{
+				EventHandler handler = (EventHandler) mocks.StrictMock(typeof (EventHandler), "Foo");
+			});
 		}
 
-		[Test]
+		[Fact]
 		public void RepositoryThrowsWithWrongConstructorArgsForMockClass()
 		{
 			MockRepository mocks = new MockRepository();
@@ -524,77 +547,75 @@ namespace Rhino.Mocks.Tests
             {
                 object o = mocks.StrictMock(typeof(object), "Foo"); 
    
-                Assert.Fail("The above call should have failed");
+                Assert.False(true, "The above call should have failed");
             }
             catch(ArgumentException argEx)
             {
-                Assert.Contains(argEx.Message,"Can not instantiate proxy of class: System.Object.");
+				Assert.Contains("Can not instantiate proxy of class: System.Object.", argEx.Message);
             }
 		}
 
-		[Test]
-		[ExpectedArgumentNullException]
+		[Fact]
 		public void IsInReplayModeThrowsWhenPassedNull()
 		{
-			mocks.IsInReplayMode(null);
+			Assert.Throws<ArgumentNullException>(() => mocks.IsInReplayMode(null));
 		}
 
-		[Test]
-		[ExpectedArgumentException]
+		[Fact]
 		public void IsInReplayModeThrowsWhenPassedNonMock()
 		{
-			mocks.IsInReplayMode(new object());
+			Assert.Throws<ArgumentException>(() => mocks.IsInReplayMode(new object()));
 		}
 
-		[Test]
+		[Fact]
 		public void IsInReplayModeReturnsTrueWhenMockInReplay()
 		{
 			mocks.Replay(demo);
 
-			Assert.IsTrue(mocks.IsInReplayMode(demo));
+			Assert.True(mocks.IsInReplayMode(demo));
 		}
 
-		[Test]
+		[Fact]
 		public void IsInReplayModeReturnsFalseWhenMockInRecord()
 		{
-			Assert.IsFalse(mocks.IsInReplayMode(demo));
+			Assert.False(mocks.IsInReplayMode(demo));
 		}
 
-        [Test]
+        [Fact]
         public void GenerateMockForClassWithNoDefaultConstructor() 
         {
-            Assert.IsNotNull(MockRepository.GenerateMock<ClassWithNonDefaultConstructor>(null, 0));            
+            Assert.NotNull(MockRepository.GenerateMock<ClassWithNonDefaultConstructor>(null, 0));            
         }
 
-        [Test]
+        [Fact]
         public void GenerateMockForClassWithDefaultConstructor() 
         {
-            Assert.IsNotNull(MockRepository.GenerateMock<ClassWithDefaultConstructor>());
+            Assert.NotNull(MockRepository.GenerateMock<ClassWithDefaultConstructor>());
         }
 
-        [Test]
+        [Fact]
         public void GenerateMockForInterface() 
         {
-            Assert.IsNotNull(MockRepository.GenerateMock<IDemo>());
+            Assert.NotNull(MockRepository.GenerateMock<IDemo>());
         }
 
-		[Test]
+		[Fact]
 		public void GenerateStrictMockWithRemoting()
 		{
             IDemo mock = MockRepository.GenerateStrictMockWithRemoting<IDemo>();
-			Assert.IsNotNull(mock);
+			Assert.NotNull(mock);
 #if DOTNET35
-			Assert.IsTrue(mock.GetMockRepository().IsInReplayMode(mock));
+			Assert.True(mock.GetMockRepository().IsInReplayMode(mock));
 #endif
 		}
 
-		[Test]
+		[Fact]
 		public void GenerateDynamicMockWithRemoting()
 		{
             IDemo mock = MockRepository.GenerateDynamicMockWithRemoting<IDemo>();
-			Assert.IsNotNull(mock);
+			Assert.NotNull(mock);
 #if DOTNET35
-			Assert.IsTrue(mock.GetMockRepository().IsInReplayMode(mock));
+			Assert.True(mock.GetMockRepository().IsInReplayMode(mock));
 #endif
         }
 

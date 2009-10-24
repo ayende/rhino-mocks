@@ -29,27 +29,26 @@
 
 using System;
 using System.Collections;
-using MbUnit.Core.Exceptions;
-using MbUnit.Framework;
+using System.ServiceModel;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Tests.Callbacks;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class RhinoMockTests
 	{
 		private MockRepository mocks;
 		private IDemo demo;
 
-		[SetUp]
-		public void SetUp()
+		public RhinoMockTests()
 		{
 			mocks = new MockRepository();
 			demo = this.mocks.StrictMock(typeof (IDemo)) as IDemo;
 		}
 
-		[Test]
+		[Fact]
 		public void CallsAreNotOrderDependant()
 		{
 			this.demo.ReturnStringNoArgs();
@@ -61,7 +60,7 @@ namespace Rhino.Mocks.Tests
 			this.mocks.Verify(this.demo);
 		}
 
-		[Test]
+		[Fact]
 		public void OrderedCallsTrackingAsExpected()
 		{
 			RecordOrdered(mocks, demo);
@@ -75,8 +74,7 @@ namespace Rhino.Mocks.Tests
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(); }' but was: 'IDemo.VoidStringArg(\"Hello\");'")]
+		[Fact]
 		public void GetDocumentationMessageWhenExpectationNotMet()
 		{
 			RecordOrdered(mocks, demo);
@@ -84,13 +82,15 @@ namespace Rhino.Mocks.Tests
 
 			demo.ReturnStringNoArgs();
 			demo.VoidNoArgs();
-			demo.VoidStringArg("Hello");
+			
 
-			mocks.Verify(demo);
+			Assert.Throws<ExpectationViolationException>(
+				"Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(); }' but was: 'IDemo.VoidStringArg(\"Hello\");'",
+				() => demo.VoidStringArg("Hello"));
+			
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "Message: Called to prefar foo for bar\nIDemo.VoidNoArgs(); Expected #1, Actual #0.")]
+		[Fact]
 		public void WillDisplayDocumentationMessageIfNotCalled()
 		{
 			demo.VoidNoArgs();
@@ -100,12 +100,12 @@ namespace Rhino.Mocks.Tests
 			
 			mocks.Replay(demo);
 
-			mocks.Verify(demo);
+			Assert.Throws<ExpectationViolationException>(
+				"Message: Called to prefar foo for bar\nIDemo.VoidNoArgs(); Expected #1, Actual #0.",
+				() => mocks.Verify(demo));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), @"IDemo.VoidNoArgs(); Expected #1, Actual #2.
-Message: Should be called only once")]
+		[Fact]
 		public void WillDiplayDocumentationMessageIfCalledTooMuch()
 		{
 			demo.VoidNoArgs();
@@ -114,21 +114,28 @@ Message: Should be called only once")]
 			mocks.ReplayAll();
 
 			demo.VoidNoArgs();
-			demo.VoidNoArgs();
-			
+			;
+
+			Assert.Throws<ExpectationViolationException>(
+				@"IDemo.VoidNoArgs(); Expected #1, Actual #2.
+Message: Should be called only once",
+				() => demo.VoidNoArgs());
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Invalid call, the last call has been used or no call has been made (make sure that you are calling a virtual (C#) / Overridable (VB) method).")]
+		[Fact]
 		public void LastMockedObjectIsNullAfterDisposingMockRepository()
 		{
 		    MockRepository mocks = new MockRepository();
 				mocks.ReplayAll();				
 		    mocks.VerifyAll();
-			LastCall.IgnoreArguments();
+			;
+
+			Assert.Throws<InvalidOperationException>(
+				"Invalid call, the last call has been used or no call has been made (make sure that you are calling a virtual (C#) / Overridable (VB) method).",
+				() => LastCall.IgnoreArguments());
 		}
 
-		[Test]
+		[Fact]
 		public void MixOrderedAndUnorderedBehaviour()
 		{
 			using (mocks.Ordered())
@@ -145,17 +152,17 @@ Message: Should be called only once")]
 				LastCall.On(demo).Return("World");
 			}
 			mocks.Replay(demo);
-			Assert.AreEqual(EnumDemo.Dozen, demo.EnumNoArgs());
-			Assert.AreEqual(EnumDemo.Dozen, demo.EnumNoArgs());
+			Assert.Equal(EnumDemo.Dozen, demo.EnumNoArgs());
+			Assert.Equal(EnumDemo.Dozen, demo.EnumNoArgs());
 			demo.VoidStringArg("Ayende");
 			demo.VoidThreeStringArgs("1", "2", "3");
 			demo.VoidStringArg("Rahien");
-			Assert.AreEqual("World", demo.StringArgString("Hello"));
+			Assert.Equal("World", demo.StringArgString("Hello"));
 
 			mocks.Verify(demo);
 		}
 
-		[Test]
+		[Fact]
 		public void ChangingRecordersWhenReplayingDoesNotInterruptVerification()
 		{
 			demo.VoidStringArg("ayende");
@@ -167,18 +174,21 @@ Message: Should be called only once")]
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Can't start replaying because Ordered or Unordered properties were call and not yet disposed.")]
+		[Fact]
 		public void CallingReplayInOrderringThrows()
 		{
 			demo.VoidStringArg("ayende");
-			using (mocks.Ordered())
-			{
-				mocks.Replay(demo);
-			}
+			Assert.Throws<InvalidOperationException>("Can't start replaying because Ordered or Unordered properties were call and not yet disposed.",
+			                                         () =>
+			                                         {
+			                                         	using (mocks.Ordered())
+			                                         	{
+			                                         		mocks.Replay(demo);
+			                                         	}
+			                                         });
 		}
 
-		[Test]
+		[Fact]
 		public void UsingSeveralObjectAndMixingOrderAndUnorder()
 		{
 			IList second = mocks.StrictMock(typeof (IList)) as IList;
@@ -204,21 +214,20 @@ Message: Should be called only once")]
 			mocks.Replay(demo);
 			mocks.Replay(second);
 
-			Assert.AreEqual(EnumDemo.Dozen, demo.EnumNoArgs());
-			Assert.AreEqual(EnumDemo.Dozen, demo.EnumNoArgs());
+			Assert.Equal(EnumDemo.Dozen, demo.EnumNoArgs());
+			Assert.Equal(EnumDemo.Dozen, demo.EnumNoArgs());
 			second.Clear();
 			demo.VoidStringArg("Ayende");
-			Assert.AreEqual(3, second.Count);
+			Assert.Equal(3, second.Count);
 			demo.VoidThreeStringArgs("1", "2", "3");
-			Assert.AreEqual(3, second.Count);
+			Assert.Equal(3, second.Count);
 			demo.VoidStringArg("Rahien");
-			Assert.AreEqual("World", demo.StringArgString("Hello"));
+			Assert.Equal("World", demo.StringArgString("Hello"));
 			second.IndexOf(null);
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.EnumNoArgs(); }' but was: 'IList.Clear();'")]
+		[Fact]
 		public void SeveralMocksUsingOrdered()
 		{
 			IList second = mocks.StrictMock(typeof (IList)) as IList;
@@ -245,10 +254,12 @@ Message: Should be called only once")]
 			mocks.Replay(second);
 
 			demo.EnumNoArgs();
-			second.Clear();
+			Assert.Throws<ExpectationViolationException>(
+				"Unordered method call! The expected call is: 'Ordered: { IDemo.EnumNoArgs(); }' but was: 'IList.Clear();'",
+				() => second.Clear());
 		}
 
-		[Test]
+		[Fact]
 		public void RecursiveExpectationsOnUnordered()
 		{
 			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
@@ -260,8 +271,7 @@ Message: Should be called only once")]
 			mocks.Verify(demo);
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(callback method: RhinoMockTests.CallMethodOnDemo); }' but was: 'IDemo.VoidStringArg(\"Ayende\");'")]
+		[Fact]
 		public void RecursiveExpectationsOnOrdered()
 		{
 			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
@@ -272,23 +282,26 @@ Message: Should be called only once")]
 				demo.VoidStringArg("Ayende");
 			}
 			mocks.Replay(demo);
-			demo.VoidNoArgs();
+			Assert.Throws<ExpectationViolationException>(
+				"Unordered method call! The expected call is: 'Ordered: { IDemo.VoidNoArgs(callback method: RhinoMockTests.CallMethodOnDemo); }' but was: 'IDemo.VoidStringArg(\"Ayende\");'",
+				() => demo.VoidNoArgs());
 		}
 
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "IDemo.VoidThreeStringArgs(\"c\", \"b\", \"a\"); Expected #0, Actual #1.\r\nIDemo.VoidThreeStringArgs(\"a\", \"b\", \"c\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void GetArgsOfEpectedAndActualMethodCallOnException()
 		{
 			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			demo.VoidThreeStringArgs("a","b","c");
 			mocks.Replay(demo);
-			demo.VoidThreeStringArgs("c","b","a");
+
+			Assert.Throws<ExpectationViolationException>(
+				"IDemo.VoidThreeStringArgs(\"c\", \"b\", \"a\"); Expected #0, Actual #1.\r\nIDemo.VoidThreeStringArgs(\"a\", \"b\", \"c\"); Expected #1, Actual #0.",
+				() => demo.VoidThreeStringArgs("c", "b", "a"));
 		}
 
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "Unordered method call! The expected call is: 'Ordered: { IDemo.VoidStringArg(\"Ayende\"); }' but was: 'IDemo.VoidThreeStringArgs(\"\", \"\", \"\");'")]
+		[Fact]
 		public void SteppingFromInnerOrderringToOuterWithoutFullifingAllOrderringInInnerThrows()
 		{
 			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
@@ -300,10 +313,13 @@ Message: Should be called only once")]
 			}
 			mocks.Replay(demo);
 			demo.VoidNoArgs();
-			demo.VoidThreeStringArgs("", "", "");
+
+			Assert.Throws<ExpectationViolationException>(
+				"Unordered method call! The expected call is: 'Ordered: { IDemo.VoidStringArg(\"Ayende\"); }' but was: 'IDemo.VoidThreeStringArgs(\"\", \"\", \"\");'",
+				() => demo.VoidThreeStringArgs("", "", ""));
 		}
 
-		[Test]
+		[Fact]
 		public void Overrideing_ToString()
 		{
 			MockRepository mocks = new MockRepository();
@@ -311,20 +327,18 @@ Message: Should be called only once")]
 				mocks.StrictMock(typeof (ObjectThatOverrideToString));
 			Expect.On(oid).Call(oid.ToString()).Return("bla");
 			mocks.ReplayAll();
-			Assert.AreEqual("bla", oid.ToString());
+			Assert.Equal("bla", oid.ToString());
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof (AssertionException), "ErrorMessage")]
+		[Fact]
 		public void CallbackThatThrows()
 		{
 			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
 			demo.VoidNoArgs();
 			LastCall.Callback(new DelegateDefinations.NoArgsDelegate(ThrowFromCallback));
 			mocks.ReplayAll();
-			demo.VoidNoArgs();
-
+			Assert.Throws<AddressAlreadyInUseException>(demo.VoidNoArgs);
 		}
 
 		#region Private Methods
@@ -352,8 +366,7 @@ Message: Should be called only once")]
 
 		private bool ThrowFromCallback()
 		{
-			Assert.Fail("ErrorMessage");
-			return true;
+			throw new AddressAlreadyInUseException();
 		}
 
 		public class ObjectThatOverrideToString

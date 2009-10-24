@@ -28,7 +28,7 @@
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	using System;
-	using MbUnit.Framework;
+	using Xunit;
 	using Rhino.Mocks.Constraints;
 
 	public class ClassWithFinalizer
@@ -39,10 +39,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 	}
 
-	[TestFixture]
+	
 	public class FieldProblem_Eric
 	{
-		[Test]
+		[Fact]
 		public void MockAClassWithFinalizer()
 		{
 			MockRepository mocks = new MockRepository();
@@ -55,10 +55,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 		#region Nested type: Class1Test
 
-		[TestFixture]
+		
 		public class Class1Test
 		{
-			[Test]
+			[Fact]
 			public void ThisWorks()
 			{
 				MockRepository mockery = new MockRepository();
@@ -76,11 +76,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 				using (mockery.Playback())
 				{
 					ClassUnderTest cut = new ClassUnderTest();
-					Assert.AreEqual(3, cut.doit(mockFoo), "should work.");
+					Assert.Equal(3, cut.doit(mockFoo));
 				}
 			}
 
-			[Test]
+			[Fact]
 			public void ThisDoesnt()
 			{
 				MockRepository mockery = new MockRepository();
@@ -98,7 +98,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 				using (mockery.Playback())
 				{
 					ClassUnderTest cut = new ClassUnderTest();
-					Assert.AreEqual(3, cut.doit(mockFoo), "should work.");
+					Assert.Equal(3, cut.doit(mockFoo));
 				}
 			}
 		}

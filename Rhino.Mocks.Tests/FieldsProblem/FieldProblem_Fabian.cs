@@ -27,12 +27,12 @@
 #endregion
 
 
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Fabian
 	{
 		public delegate R Func<A1, R>(A1 a1);
@@ -47,7 +47,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			void Add(TKey key, TValue value);
 		}
 
-		[Test]
+		[Fact]
 		public void TestExpectCall()
 		{
 			MockRepository mocks = new MockRepository();
@@ -59,12 +59,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 
 			int i = mockCache.GetValue("a");
-			Assert.AreEqual(1,i );
+			Assert.Equal(1,i );
 
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void TestLastCall()
 		{
 			MockRepository mocks = new MockRepository();
@@ -80,7 +80,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void TestExpectCallWithNonGenericDelegate()
 		{
 			MockRepository mocks = new MockRepository();
@@ -91,7 +91,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			int i = mockCache.GetValue("a");
 
-			Assert.AreEqual(2, i);
+			Assert.Equal(2, i);
 
 			mocks.VerifyAll();
 		}

@@ -29,14 +29,14 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_JohanIndexProp 
     {
-        [Test]
+        [Fact]
         public void StrictMockWithIndexedProp()
         {
             MockRepository mocks = new MockRepository();
@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             index.set_Foo("Foo",2);
             mocks.ReplayAll();
 
-            Assert.AreEqual(5, index.get_Foo("Blah"));
+            Assert.Equal(5, index.get_Foo("Blah"));
             index.set_Foo("Foo", 2);
 
             mocks.VerifyAll();

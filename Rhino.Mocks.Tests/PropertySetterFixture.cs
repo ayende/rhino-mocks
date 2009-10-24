@@ -1,12 +1,12 @@
-﻿using MbUnit.Framework;
+﻿using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class PropertySetterFixture
 	{
-		[Test]
+		[Fact]
 		public void Setter_Expectation_With_Custom_Ignore_Arguments()
 		{
 			MockRepository mocks = new MockRepository();
@@ -26,8 +26,7 @@ namespace Rhino.Mocks.Tests
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IBar.set_Foo(any); Expected #1, Actual #0.")]
+		[Fact]
 		public void Setter_Expectation_Not_Fullfilled()
 		{
 			MockRepository mocks = new MockRepository();
@@ -39,14 +38,15 @@ namespace Rhino.Mocks.Tests
 				Expect.Call(bar.Foo).SetPropertyAndIgnoreArgument();
 			}
 
-			using (mocks.Playback())
+			Assert.Throws<ExpectationViolationException>("IBar.set_Foo(any); Expected #1, Actual #0.", () =>
 			{
-			}
-
-			mocks.VerifyAll();
+				using (mocks.Playback())
+				{
+				}
+			});
 		}
 
-		[Test]
+		[Fact]
 		public void Setter_Expectation_With_Correct_Argument()
 		{
 			MockRepository mocks = new MockRepository();
@@ -66,8 +66,7 @@ namespace Rhino.Mocks.Tests
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IBar.set_Foo(0); Expected #0, Actual #1.\r\nIBar.set_Foo(1); Expected #1, Actual #0.")]
+		[Fact]
 		public void Setter_Expectation_With_Wrong_Argument()
 		{
 			MockRepository mocks = new MockRepository();
@@ -79,12 +78,9 @@ namespace Rhino.Mocks.Tests
 				Expect.Call(bar.Foo).SetPropertyWithArgument(1);
 			}
 
-			using (mocks.Playback())
-			{
-				bar.Foo = 0;
-			}
-
-			mocks.VerifyAll();
+			mocks.Playback();
+			Assert.Throws<ExpectationViolationException>(
+				"IBar.set_Foo(0); Expected #0, Actual #1.\r\nIBar.set_Foo(1); Expected #1, Actual #0.", () => { bar.Foo = 0; });
 		}
 	}
 

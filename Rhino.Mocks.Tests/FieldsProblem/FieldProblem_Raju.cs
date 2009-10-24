@@ -1,9 +1,9 @@
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Raju
     {
         public class A
@@ -26,7 +26,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
                 return i;
             }
         }
-        [Test]
+        [Fact]
         public void TestMethod1()
         {
             MockRepository mock = new MockRepository();
@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
             int ret = myInterface.retValue(a);
             mock.VerifyAll();
-            Assert.IsTrue(ret == 5);
+            Assert.True(ret == 5);
         }
     }
 }

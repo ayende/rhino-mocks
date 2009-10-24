@@ -2,13 +2,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	using System;
 	using System.Collections.Generic;
-	using MbUnit.Framework;
+	using Xunit;
 	using Rhino.Mocks.Constraints;
 
-	[TestFixture]
+	
 	public class FieldProblem_Lee
 	{
-		[Test]
+		[Fact]
 		public void IgnoringArgumentsOnGenericMethod()
 		{
 			MockRepository mocks = new MockRepository();
@@ -20,24 +20,24 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 
 			bool result = mock.Foo(16);
-			Assert.IsTrue(result);
+			Assert.True(result);
 			mocks.VerifyAll();
 		}
 
 
-		[Test]
+		[Fact]
 		public void WithGenericMethods()
 		{
 			MockRepository mocks = new MockRepository();
 			IFunkyList<int> list = mocks.DynamicMock<IFunkyList<int>>();
-			Assert.IsNotNull(list);
+			Assert.NotNull(list);
 			List<Guid> results = new List<Guid>();
 			Expect.Call(list.FunkItUp<Guid>(null, null))
 				.IgnoreArguments()
 				.Constraints(Is.Equal("1"), Is.Equal(2))
 				.Return(results);
 			mocks.ReplayAll();
-			Assert.AreSame(results, list.FunkItUp<Guid>("1", 2));
+			Assert.Same(results, list.FunkItUp<Guid>("1", 2));
 		}
     }
 

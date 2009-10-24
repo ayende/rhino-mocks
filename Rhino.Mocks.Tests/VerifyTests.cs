@@ -31,37 +31,34 @@ using Rhino.Mocks.Exceptions;
 namespace Rhino.Mocks.Tests
 {
 	using System;
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
-	public class VerifyTests
+	
+	public class VerifyTests : IDisposable
 	{
 		private MockRepository mocks;
 		private ConcreteDemo demoParam;
 		private IDemo demo;
 
-		[SetUp]
-		public void SetUp()
+		public  VerifyTests()
 		{
 			mocks = new MockRepository();
 			demoParam = mocks.StrictMock(typeof(ConcreteDemo)) as ConcreteDemo;
 			demo = mocks.StrictMock(typeof(IDemo)) as IDemo;
 		}
 
-		[TearDown]
-		public void Teardown()
+		public void Dispose()
 		{
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException))]
+		[Fact]
 		public void MockParameterToStringShouldBeIgnoredIfItIsInVerifyState()
 		{
 			demo.VoidConcreteDemo(demoParam);
 			mocks.ReplayAll();
 			mocks.Verify(demoParam);
-			mocks.Verify(demo);
+			Assert.Throws<ExpectationViolationException>(() => mocks.Verify(demo));
 		}
 	}
 }

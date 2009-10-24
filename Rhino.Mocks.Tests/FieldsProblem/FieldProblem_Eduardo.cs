@@ -1,12 +1,12 @@
 #if DOTNET35
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class FieldProblem_Eduardo
 	{
-		[Test]
+		[Fact]
 		public void CanSetExpectationOnReadWritePropertyUsingRecordPlaybackSyntax()
 		{
 			var mocks = new MockRepository();
@@ -23,7 +23,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void CanSetExpectationOnReadWritePropertyUsingAAASyntax()
 		{
 			var demo = MockRepository.GenerateMock<IDemo>();

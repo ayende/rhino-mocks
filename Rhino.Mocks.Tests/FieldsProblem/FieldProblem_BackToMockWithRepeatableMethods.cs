@@ -26,25 +26,25 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_BackToMockWithRepeatableMethods
     {
-        [Test]
+        [Fact]
         public void UsingBackToRecordWithSetUpResult()
         {
             MockRepository mocks = new MockRepository();
             IDemo demo = (IDemo) mocks.StrictMock(typeof(IDemo));
             SetupResult.For(demo.Prop).Return("Here is 1 sample greeting");
             mocks.Replay(demo);
-            Assert.AreEqual("Here is 1 sample greeting",demo.Prop);
+            Assert.Equal("Here is 1 sample greeting",demo.Prop);
             mocks.BackToRecord(demo);
             SetupResult.For(demo.Prop).Return("Here is another sample greeting");
             mocks.Replay(demo);
-            Assert.AreEqual("Here is another sample greeting", demo.Prop);
+            Assert.Equal("Here is another sample greeting", demo.Prop);
             mocks.VerifyAll();
         }
     }

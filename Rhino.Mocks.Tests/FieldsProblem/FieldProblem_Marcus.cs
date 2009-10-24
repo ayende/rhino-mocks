@@ -28,48 +28,46 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
-    public class FieldProblem_ByMarcus
+    
+    public class FieldProblem_ByMarcus : IDisposable
     {
         MockRepository mocks;
 
-        [SetUp]
-        public void Setup()
+		public  FieldProblem_ByMarcus()
         {
             mocks = new MockRepository();
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             mocks.VerifyAll();
         }
 
-        [Test]
+        [Fact]
         public void RepositoryWithoutMocks_ReturnWithoutException()
         {
             //nothing here, it works all in the setup/teardown		
         }
 
-        [Test]
+        [Fact]
         public void ConstructorThatThrowsInMock()
         {
 
             try
             {
                 ClassWithThrowingCtor c = mocks.StrictMock(typeof(ClassWithThrowingCtor)) as ClassWithThrowingCtor;
-                Assert.IsNotNull(c);
-                Assert.Fail("Exception expected");
+                Assert.NotNull(c);
+                Assert.False(true, "Exception expected");
             }
             catch (Exception e)
             {
                 string expectedExceptionStartsWith = @"Exception in constructor: System.Exception: I'm a ctor that throws";
                 string actualExceptionStartString = e.Message.Substring(0,expectedExceptionStartsWith.Length);
-                Assert.AreEqual(expectedExceptionStartsWith, actualExceptionStartString);
+                Assert.Equal(expectedExceptionStartsWith, actualExceptionStartString);
 
             }
         }

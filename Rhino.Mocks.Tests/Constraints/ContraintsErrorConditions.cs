@@ -28,35 +28,35 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.Constraints
 {
 
-	[TestFixture]
+	
 	public class ContraintsErrorConditions
 	{
-		[Test]
+		[Fact]
 		public void ComparingConstraintsWhenParameterIsNotIComparable()
 		{
-			Assert.IsFalse(Is.GreaterThan(4).Eval(new object()));
+			Assert.False(Is.GreaterThan(4).Eval(new object()));
 		}
 
-		[Test]
+		[Fact]
 		public void TextWhenParameterIsNotString()
 		{
-			Assert.IsFalse(Text.Contains("one").Eval(1));
-			Assert.IsFalse(Text.EndsWith("one").Eval(1));
-			Assert.IsFalse(Text.StartsWith("one").Eval(1));
-			Assert.IsFalse(Text.Like("one").Eval(1));
+			Assert.False(Text.Contains("one").Eval(1));
+			Assert.False(Text.EndsWith("one").Eval(1));
+			Assert.False(Text.StartsWith("one").Eval(1));
+			Assert.False(Text.Like("one").Eval(1));
 		}
 
 
-		[Test]
+		[Fact]
 		public void PropertyIsWhenParameterIsNull()
 		{
-			Assert.IsFalse(Property.Value("Capacity",500).Eval(null));
+			Assert.False(Property.Value("Capacity",500).Eval(null));
 		}
 	}
 }

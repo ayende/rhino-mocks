@@ -2,22 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ADODB;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_dyowee
 	{
-		[Test]
+		[Fact]
 		public void MockingRecordSet()
 		{
 			MockRepository mr = new MockRepository();
 			Recordset mock = mr.StrictMock<ADODB.Recordset>();
-			Assert.IsNotNull(mock);
+			Assert.NotNull(mock);
 			Expect.Call(mock.ActiveConnection).Return("test");
 			mr.ReplayAll();
-			Assert.AreEqual("test", mock.ActiveConnection);
+			Assert.Equal("test", mock.ActiveConnection);
 			mr.VerifyAll();
 		}
 	}

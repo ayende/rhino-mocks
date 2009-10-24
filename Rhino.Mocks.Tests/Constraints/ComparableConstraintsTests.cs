@@ -28,118 +28,118 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.Constraints
 {
-	[TestFixture]
+	
 	public class ComparableConstraintsTests
 	{
-		[Test]
+		[Fact]
 		public void GreaterThan()
 		{
-			Assert.IsTrue(Is.GreaterThan(1).Eval(3));
-			Assert.IsFalse(Is.GreaterThan(1.5).Eval(1.0));
-			Assert.AreEqual("greater than 5", Is.GreaterThan(5).Message);
+			Assert.True(Is.GreaterThan(1).Eval(3));
+			Assert.False(Is.GreaterThan(1.5).Eval(1.0));
+			Assert.Equal("greater than 5", Is.GreaterThan(5).Message);
 		}
 
-		[Test]
+		[Fact]
 		public void LessThan()
 		{
-			Assert.IsFalse(Is.LessThan(1).Eval(3));
-			Assert.IsTrue(Is.LessThan(1.5).Eval(1.0));
-			Assert.AreEqual("less than 5", Is.LessThan(5).Message);
+			Assert.False(Is.LessThan(1).Eval(3));
+			Assert.True(Is.LessThan(1.5).Eval(1.0));
+			Assert.Equal("less than 5", Is.LessThan(5).Message);
 		}
 
-		[Test]
+		[Fact]
 		public void LessThanOrEqual()
 		{
-			Assert.IsFalse(Is.LessThanOrEqual(1).Eval(3));
-			Assert.IsTrue(Is.LessThanOrEqual(4.5f).Eval(4.5f));
-			Assert.IsTrue(Is.LessThanOrEqual(1.5).Eval(1.0));
-			Assert.AreEqual("less than or equal to 5", Is.LessThanOrEqual(5).Message);
+			Assert.False(Is.LessThanOrEqual(1).Eval(3));
+			Assert.True(Is.LessThanOrEqual(4.5f).Eval(4.5f));
+			Assert.True(Is.LessThanOrEqual(1.5).Eval(1.0));
+			Assert.Equal("less than or equal to 5", Is.LessThanOrEqual(5).Message);
 		}
 
-		[Test]
+		[Fact]
 		public void GreaterThanOrEqual()
 		{
-			Assert.IsTrue(Is.GreaterThanOrEqual(1).Eval(3));
-			Assert.IsTrue(Is.GreaterThanOrEqual(3L).Eval(3L));
-			Assert.IsFalse(Is.GreaterThanOrEqual(1.5).Eval(1.0));
-			Assert.AreEqual("greater than or equal to 5", Is.GreaterThanOrEqual(5).Message);
+			Assert.True(Is.GreaterThanOrEqual(1).Eval(3));
+			Assert.True(Is.GreaterThanOrEqual(3L).Eval(3L));
+			Assert.False(Is.GreaterThanOrEqual(1.5).Eval(1.0));
+			Assert.Equal("greater than or equal to 5", Is.GreaterThanOrEqual(5).Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Equal()
 		{
-			Assert.IsFalse(Is.Equal(1).Eval(3));
-			Assert.IsTrue(Is.Equal(3L).Eval(3L));
-			Assert.IsFalse(Is.Equal("Hi").Eval("Bye"));
-			Assert.IsTrue(Is.Equal("Bye").Eval("Bye"));
-			Assert.AreEqual("equal to Rahien", Is.Equal("Rahien").Message);
+			Assert.False(Is.Equal(1).Eval(3));
+			Assert.True(Is.Equal(3L).Eval(3L));
+			Assert.False(Is.Equal("Hi").Eval("Bye"));
+			Assert.True(Is.Equal("Bye").Eval("Bye"));
+			Assert.Equal("equal to Rahien", Is.Equal("Rahien").Message);
 		}
 
-		[Test]
+		[Fact]
 		public void NotEqual()
 		{
-			Assert.IsTrue(Is.NotEqual(1).Eval(3));
-			Assert.IsFalse(Is.NotEqual(3L).Eval(3L));
-			Assert.IsTrue(Is.NotEqual("Hi").Eval("Bye"));
-			Assert.IsFalse(Is.NotEqual("Bye").Eval("Bye"));
-			Assert.AreEqual("not equal to Rahien", Is.NotEqual("Rahien").Message);
+			Assert.True(Is.NotEqual(1).Eval(3));
+			Assert.False(Is.NotEqual(3L).Eval(3L));
+			Assert.True(Is.NotEqual("Hi").Eval("Bye"));
+			Assert.False(Is.NotEqual("Bye").Eval("Bye"));
+			Assert.Equal("not equal to Rahien", Is.NotEqual("Rahien").Message);
 		}
 
-		[Test]
+		[Fact]
 		public void IsNull()
 		{
-			Assert.IsTrue(Is.Null().Eval(null));
-			Assert.IsFalse(Is.Null().Eval(""));
-			Assert.AreEqual("equal to null", Is.Null().Message);
+			Assert.True(Is.Null().Eval(null));
+			Assert.False(Is.Null().Eval(""));
+			Assert.Equal("equal to null", Is.Null().Message);
 		}
 
-		[Test]
+		[Fact]
 		public void IsNotNull()
 		{
-			Assert.IsFalse(Is.NotNull().Eval(null));
-			Assert.IsTrue(Is.NotNull().Eval(""));
-			Assert.AreEqual("not equal to null", Is.NotNull().Message);
+			Assert.False(Is.NotNull().Eval(null));
+			Assert.True(Is.NotNull().Eval(""));
+			Assert.Equal("not equal to null", Is.NotNull().Message);
 		}
 	    
-	     [Test]
+	     [Fact]
         public void Same()
         {
             object o1 = new object();
             object o2 = new object();
 
-            Assert.IsTrue(Is.Same(o1).Eval(o1));
-            Assert.IsFalse(Is.Same(o1).Eval(o2));
+            Assert.True(Is.Same(o1).Eval(o1));
+            Assert.False(Is.Same(o1).Eval(o2));
 
             // Now assert that two different objects that are .Equal to each other are the same
             o1 = 5;
             o2 = 5;
-            Assert.IsFalse(Object.ReferenceEquals(o1, o2), "Internal test failure: o1 and o2 should be different objects");
-            Assert.IsTrue(Is.Same(o1).Eval(o1));
-            Assert.IsFalse(Is.Same(o1).Eval(o2));
+            Assert.False(Object.ReferenceEquals(o1, o2), "Internal test failure: o1 and o2 should be different objects");
+            Assert.True(Is.Same(o1).Eval(o1));
+            Assert.False(Is.Same(o1).Eval(o2));
 
-            Assert.AreEqual("same as FooBar", Is.Same("FooBar").Message);
+            Assert.Equal("same as FooBar", Is.Same("FooBar").Message);
         }
 
-        [Test]
+        [Fact]
         public void NotSame()
         {
             object o1 = new object();
             object o2 = new object();
 
-            Assert.IsTrue(Is.NotSame(o1).Eval(o2));
-            Assert.IsFalse(Is.NotSame(o1).Eval(o1));
+            Assert.True(Is.NotSame(o1).Eval(o2));
+            Assert.False(Is.NotSame(o1).Eval(o1));
 
             // Now assert that two different objects that are .Equal to each other are not the same
             o1 = 5;
             o2 = 5;
-            Assert.IsFalse(Object.ReferenceEquals(o1, o2), "Internal test failure: o1 and o2 should be different objects");
-            Assert.IsTrue(Is.NotSame(o1).Eval(o2));
-            Assert.IsFalse(Is.NotSame(o1).Eval(o1));
+            Assert.False(Object.ReferenceEquals(o1, o2), "Internal test failure: o1 and o2 should be different objects");
+            Assert.True(Is.NotSame(o1).Eval(o2));
+            Assert.False(Is.NotSame(o1).Eval(o1));
         }
 	}
 

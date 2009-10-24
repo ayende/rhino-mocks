@@ -27,39 +27,39 @@
 #endregion
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class StubTest
 	{
-		[Test]
+		[Fact]
 		public void StaticAccessorForStub()
 		{
 			IAnimal animal = MockRepository.GenerateStub<IAnimal>();
 			animal.Eyes = 2;
-			Assert.AreEqual(2, animal.Eyes );
+			Assert.Equal(2, animal.Eyes );
 		}
 
-		[Test]
+		[Fact]
 		public void StubHasPropertyBehaviorForAllProperties()
 		{
 			MockRepository mocks = new MockRepository();
 			IAnimal animal = mocks.Stub<IAnimal>();
 			animal.Legs = 4;
-			Assert.AreEqual(4, animal.Legs);
+			Assert.Equal(4, animal.Legs);
 
 			animal.Name = "Rose";
-			Assert.AreEqual("Rose", animal.Name);
+			Assert.Equal("Rose", animal.Name);
 
-			Assert.IsNull(animal.Species, "Should return default value if not set");
+			Assert.Null(animal.Species);
 			animal.Species = "Caucasusian Shepherd";
-			Assert.AreEqual("Caucasusian Shepherd", animal.Species);
+			Assert.Equal("Caucasusian Shepherd", animal.Species);
 		}
 
-		[Test]
+		[Fact]
 		public void CanRegisterToEventsAndRaiseThem()
 		{
 			MockRepository mocks = new MockRepository();
@@ -74,10 +74,10 @@ namespace Rhino.Mocks.Tests
 			};
 
 			eventRaiser.Raise(animal, EventArgs.Empty);
-			Assert.IsTrue(raised);
+			Assert.True(raised);
 		}
 
-		[Test]
+		[Fact]
 		public void CallingMethodOnStubsDoesNotCreateExpectations()
 		{
 			MockRepository mocks = new MockRepository();
@@ -92,20 +92,20 @@ namespace Rhino.Mocks.Tests
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void DemoLegsProperty()
 		{
 			IAnimal animalStub = MockRepository.GenerateStub<IAnimal>();
 
 			animalStub.Legs = 0;
-			Assert.AreEqual(0, animalStub.Legs);
+			Assert.Equal(0, animalStub.Legs);
 
 			SomeClass instance = new SomeClass(animalStub);
 			instance.SetLegs(10);
-			Assert.AreEqual(10, animalStub.Legs);
+			Assert.Equal(10, animalStub.Legs);
 		}
 
-		[Test]
+		[Fact]
 		public void CanCreateExpectationOnMethod()
 		{
 			MockRepository mocks = new MockRepository();
@@ -118,7 +118,7 @@ namespace Rhino.Mocks.Tests
 				animal.GetMood();
 				LastCall.Return("Happy");
 			}
-			Assert.AreEqual("Happy", animal.GetMood());
+			Assert.Equal("Happy", animal.GetMood());
 			mocks.VerifyAll();
 		}
 	}

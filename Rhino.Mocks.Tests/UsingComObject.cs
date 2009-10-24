@@ -29,11 +29,11 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-    [TestFixture]
+    
     public class UsingComObject
     {
         public interface IMockTest
@@ -41,7 +41,7 @@ namespace Rhino.Mocks.Tests
             Scripting.FileSystemObject GetFileSystemObject();
         }
         
-        [Test]
+        [Fact]
         public void UsingScriptingFileSystem()
         {
             MockRepository mocks = new MockRepository();
@@ -50,7 +50,7 @@ namespace Rhino.Mocks.Tests
             IMockTest test = mocks.StrictMock(typeof(IMockTest)) as IMockTest;
             Expect.Call(test.GetFileSystemObject()).Return(fso);
             mocks.ReplayAll();
-            Assert.AreSame(fso, test.GetFileSystemObject());
+            Assert.Same(fso, test.GetFileSystemObject());
             mocks.VerifyAll();
 
         }

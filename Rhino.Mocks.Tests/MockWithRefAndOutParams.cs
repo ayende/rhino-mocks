@@ -29,26 +29,25 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class MockWithRefAndOutParams
 	{
 		MockRepository mocks;
 		IRefAndOut target;
 		private RemotingProxyWithOutRef remotingTarget;
 
-		[SetUp]
-		public void Setup()
+		public MockWithRefAndOutParams()
 		{
 			mocks = new MockRepository();
 			target = (IRefAndOut)mocks.StrictMock(typeof(IRefAndOut));
 			remotingTarget = mocks.StrictMock<RemotingProxyWithOutRef>();
 		}
 
-		[Test]
+		[Fact]
 		public void RefString()
 		{
 			string s = "";
@@ -56,10 +55,10 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new RefStrDel(SayHello));
 			mocks.ReplayAll();
 			target.RefStr(ref s);
-			Assert.AreEqual("Hello", s);
+			Assert.Equal("Hello", s);
 		}
 
-		[Test]
+		[Fact]
 		public void OutString()
 		{
 			string s = "";
@@ -67,10 +66,10 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new OutStrDel(OutSayHello));
 			mocks.ReplayAll();
 			target.OutStr(out s);
-			Assert.AreEqual("Hello", s);
+			Assert.Equal("Hello", s);
 		}
 
-		[Test]
+		[Fact]
 		public void OutInt()
 		{
 			int i = 0;
@@ -78,10 +77,10 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new OutIntDel(OutFive));
 			mocks.ReplayAll();
 			target.OutInt(out i);
-			Assert.AreEqual(5, i);
+			Assert.Equal(5, i);
 		}
 
-		[Test]
+		[Fact]
 		public void RefInt()
 		{
 			int i = 0;
@@ -89,11 +88,11 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new RefIntDel(RefFive));
 			mocks.ReplayAll();
 			target.RefInt(ref i);
-			Assert.AreEqual(5, i);
+			Assert.Equal(5, i);
 		}
 
 
-		[Test]
+		[Fact]
 		public void RemotingRefString()
 		{
 			string s = "";
@@ -101,10 +100,10 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new RefStrDel(SayHello));
 			mocks.ReplayAll();
 			remotingTarget.RefStr(ref s);
-			Assert.AreEqual("Hello", s);
+			Assert.Equal("Hello", s);
 		}
 
-		[Test]
+		[Fact]
 		public void RemotingOutString()
 		{
 			string s = "";
@@ -112,10 +111,10 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new OutStrDel(OutSayHello));
 			mocks.ReplayAll();
 			remotingTarget.OutStr(out s);
-			Assert.AreEqual("Hello", s);
+			Assert.Equal("Hello", s);
 		}
 
-		[Test]
+		[Fact]
 		public void RemotingOutInt()
 		{
 			int i = 0;
@@ -123,10 +122,10 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new OutIntDel(OutFive));
 			mocks.ReplayAll();
 			remotingTarget.OutInt(out i);
-			Assert.AreEqual(5, i);
+			Assert.Equal(5, i);
 		}
 
-		[Test]
+		[Fact]
 		public void RemotingRefInt()
 		{
 			int i = 0;
@@ -134,7 +133,7 @@ namespace Rhino.Mocks.Tests
 			LastCall.Do(new RefIntDel(RefFive));
 			mocks.ReplayAll();
 			remotingTarget.RefInt(ref i);
-			Assert.AreEqual(5, i);
+			Assert.Equal(5, i);
 		}
 
 		private void RefFive(ref int i)

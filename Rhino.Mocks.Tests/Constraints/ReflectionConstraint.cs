@@ -29,58 +29,59 @@
 
 using System;
 using System.Collections;
-using MbUnit.Framework;
+using System.Reflection;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.Constraints
 {
-	[TestFixture]
+	
 	public class ReflectionConstraint
 	{
-		[Test]
+		[Fact]
 		public void IsTypeOf()
 		{
 			AbstractConstraint typeOf = Is.TypeOf(typeof (int));
-			Assert.IsTrue(typeOf.Eval(3));
-			Assert.IsFalse(typeOf.Eval(""));
-			Assert.IsFalse(typeOf.Eval(null));
-			Assert.AreEqual("type of {System.Int32}", typeOf.Message);
+			Assert.True(typeOf.Eval(3));
+			Assert.False(typeOf.Eval(""));
+			Assert.False(typeOf.Eval(null));
+			Assert.Equal("type of {System.Int32}", typeOf.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void PropertyValue()
 		{
 			AbstractConstraint constraint = Property.Value("Length", 6);
-			Assert.IsTrue(constraint.Eval("Ayende"));
-			Assert.IsFalse(constraint.Eval(new ArrayList()));
-			Assert.AreEqual("property 'Length' equal to 6", constraint.Message);
+			Assert.True(constraint.Eval("Ayende"));
+			Assert.False(constraint.Eval(new ArrayList()));
+			Assert.Equal("property 'Length' equal to 6", constraint.Message);
 		}
 
 
-		[Test]
+		[Fact]
 		public void PropertyNull()
 		{
 			Exception withoutInner = new Exception(), withInner = new Exception("", withoutInner);
 			AbstractConstraint constraint = Property.IsNull("InnerException");
-			Assert.IsTrue(constraint.Eval(withoutInner));
-			Assert.IsFalse(constraint.Eval(withInner));
-			Assert.AreEqual("property 'InnerException' equal to null", constraint.Message);
+			Assert.True(constraint.Eval(withoutInner));
+			Assert.False(constraint.Eval(withInner));
+			Assert.Equal("property 'InnerException' equal to null", constraint.Message);
 		}
 
-        [Test]
+        [Fact]
         public void PropertyConstraint()
         {
             Exception innerException = new Exception("This is the inner exception");
             Exception outerException = new Exception("This is the outer exception", innerException);
 
-            Assert.IsTrue(
+            Assert.True(
                 Property.ValueConstraint("InnerException",
                     Property.ValueConstraint("Message",
                         Text.Contains("inner")
                     )
                 ).Eval(outerException)
             );
-            Assert.IsFalse(
+            Assert.False(
                 Property.ValueConstraint("InnerException",
                     Property.ValueConstraint("Message",
                         Text.Contains("outer")
@@ -89,18 +90,17 @@ namespace Rhino.Mocks.Tests.Constraints
             );
         }
 
-		[Test]
+		[Fact]
 		public void PropertyNotNull()
 		{
 			Exception withoutInner = new Exception(), withInner = new Exception("", withoutInner);
 			AbstractConstraint constraint = Property.IsNotNull("InnerException");
-			Assert.IsFalse(constraint.Eval(withoutInner));
-			Assert.IsTrue(constraint.Eval(withInner));
-			Assert.AreEqual("not property 'InnerException' equal to null", constraint.Message);
+			Assert.False(constraint.Eval(withoutInner));
+			Assert.True(constraint.Eval(withInner));
+			Assert.Equal("not property 'InnerException' equal to null", constraint.Message);
 		}
 
-        [Test]
-        [ExpectedException(typeof(System.Reflection.AmbiguousMatchException))]
+        [Fact]
         public void AmbiguousPropertyAccess()
         {
             DerivedPropertyAccessFodder o = new DerivedPropertyAccessFodder();
@@ -109,10 +109,10 @@ namespace Rhino.Mocks.Tests.Constraints
 
             // This will fail with an AmbiguousMatchException because 'Property' is not
             // unique: there are two public Property properties.
-            Assert.IsTrue(constraint.Eval(o));
+        	Assert.Throws<AmbiguousMatchException>(() => Assert.True(constraint.Eval(o)));
         }
 
-        [Test(Description="Tests that Property.Value() can disambiguate between properties of the same name")]
+        [Fact]
         public void DisambiguatedPropertyEqualAccess()
         {
             DerivedPropertyAccessFodder o = new DerivedPropertyAccessFodder();
@@ -120,38 +120,38 @@ namespace Rhino.Mocks.Tests.Constraints
             AbstractConstraint constraint;
             
             constraint = Property.Value(typeof(BasePropertyAccessFodder), "Property", 1);
-            Assert.IsTrue(constraint.Eval(o), "Base True");
+            Assert.True(constraint.Eval(o), "Base True");
             constraint = Property.Value(typeof(BasePropertyAccessFodder), "Property", 0);
-            Assert.IsFalse(constraint.Eval(o), "Base False");
+            Assert.False(constraint.Eval(o), "Base False");
 
             constraint = Property.Value(typeof(IPropertyAccessFodder1), "Property", 2);
-            Assert.IsTrue(constraint.Eval(o), "Interface1 True");
+            Assert.True(constraint.Eval(o), "Interface1 True");
             constraint = Property.Value(typeof(IPropertyAccessFodder1), "Property", 0);
-            Assert.IsFalse(constraint.Eval(o), "Interface1 False");
+            Assert.False(constraint.Eval(o), "Interface1 False");
 
             constraint = Property.Value(typeof(IPropertyAccessFodder2), "Property", null);
-            Assert.IsTrue(constraint.Eval(o), "Interface2 True");
+            Assert.True(constraint.Eval(o), "Interface2 True");
             constraint = Property.Value(typeof(IPropertyAccessFodder2), "Property", 0);
-            Assert.IsFalse(constraint.Eval(o), "Interface2 False");
+            Assert.False(constraint.Eval(o), "Interface2 False");
 
             constraint = Property.Value(typeof(DerivedPropertyAccessFodder), "Property", "4");
-            Assert.IsTrue(constraint.Eval(o), "Derived True");
+            Assert.True(constraint.Eval(o), "Derived True");
             constraint = Property.Value(typeof(DerivedPropertyAccessFodder), "Property", "0");
-            Assert.IsFalse(constraint.Eval(o), "Derived False");
+            Assert.False(constraint.Eval(o), "Derived False");
 
             // Also test that we can use the disambiguation to access private properties
             constraint = Property.Value(typeof(BasePropertyAccessFodder), "PrivateProperty", 5);
-            Assert.IsTrue(constraint.Eval(o), "BasePrivate True");
+            Assert.True(constraint.Eval(o), "BasePrivate True");
             constraint = Property.Value(typeof(BasePropertyAccessFodder), "PrivateProperty", 0);
-            Assert.IsFalse(constraint.Eval(o), "BasePrivate False");
+            Assert.False(constraint.Eval(o), "BasePrivate False");
 
             constraint = Property.Value(typeof(DerivedPropertyAccessFodder), "PrivateProperty", 6);
-            Assert.IsTrue(constraint.Eval(o), "DerivedPrivate True");
+            Assert.True(constraint.Eval(o), "DerivedPrivate True");
             constraint = Property.Value(typeof(DerivedPropertyAccessFodder), "PrivateProperty", 0);
-            Assert.IsFalse(constraint.Eval(o), "DerivedPrivate False");
+            Assert.False(constraint.Eval(o), "DerivedPrivate False");
         }
 
-        [Test(Description = "Tests that Property.ValueConstraint() can disambiguate between properties of the same name")]
+        [Fact]
         public void DisambiguatedPropertyConstraintAccess()
         {
             DerivedPropertyAccessFodder o = new DerivedPropertyAccessFodder();
@@ -159,63 +159,63 @@ namespace Rhino.Mocks.Tests.Constraints
             AbstractConstraint constraint;
 
             constraint = Property.ValueConstraint(typeof(BasePropertyAccessFodder), "Property", Is.Equal(1));
-            Assert.IsTrue(constraint.Eval(o), "Base True");
+            Assert.True(constraint.Eval(o), "Base True");
             constraint = Property.ValueConstraint(typeof(BasePropertyAccessFodder), "Property", Is.Equal(0));
-            Assert.IsFalse(constraint.Eval(o), "Base False");
+            Assert.False(constraint.Eval(o), "Base False");
 
             constraint = Property.ValueConstraint(typeof(IPropertyAccessFodder1), "Property", Is.Equal(2));
-            Assert.IsTrue(constraint.Eval(o), "Interface1 True");
+            Assert.True(constraint.Eval(o), "Interface1 True");
             constraint = Property.ValueConstraint(typeof(IPropertyAccessFodder1), "Property", Is.Equal(0));
-            Assert.IsFalse(constraint.Eval(o), "Interface1 False");
+            Assert.False(constraint.Eval(o), "Interface1 False");
 
             constraint = Property.ValueConstraint(typeof(IPropertyAccessFodder2), "Property", Is.Equal(null));
-            Assert.IsTrue(constraint.Eval(o), "Interface2 True");
+            Assert.True(constraint.Eval(o), "Interface2 True");
             constraint = Property.ValueConstraint(typeof(IPropertyAccessFodder2), "Property", Is.Equal(0));
-            Assert.IsFalse(constraint.Eval(o), "Interface2 False");
+            Assert.False(constraint.Eval(o), "Interface2 False");
 
             constraint = Property.ValueConstraint(typeof(DerivedPropertyAccessFodder), "Property", Is.Equal("4"));
-            Assert.IsTrue(constraint.Eval(o), "Derived True");
+            Assert.True(constraint.Eval(o), "Derived True");
             constraint = Property.ValueConstraint(typeof(DerivedPropertyAccessFodder), "Property", Is.Equal("0"));
-            Assert.IsFalse(constraint.Eval(o), "Derived False");
+            Assert.False(constraint.Eval(o), "Derived False");
 
             // Also test that we can use the disambiguation to access private properties
             constraint = Property.ValueConstraint(typeof(BasePropertyAccessFodder), "PrivateProperty", Is.Equal(5));
-            Assert.IsTrue(constraint.Eval(o), "BasePrivate True");
+            Assert.True(constraint.Eval(o), "BasePrivate True");
             constraint = Property.ValueConstraint(typeof(BasePropertyAccessFodder), "PrivateProperty", Is.Equal(0));
-            Assert.IsFalse(constraint.Eval(o), "BasePrivate False");
+            Assert.False(constraint.Eval(o), "BasePrivate False");
 
             constraint = Property.ValueConstraint(typeof(DerivedPropertyAccessFodder), "PrivateProperty", Is.Equal(6));
-            Assert.IsTrue(constraint.Eval(o), "DerivedPrivate True");
+            Assert.True(constraint.Eval(o), "DerivedPrivate True");
             constraint = Property.ValueConstraint(typeof(DerivedPropertyAccessFodder), "PrivateProperty", Is.Equal(0));
-            Assert.IsFalse(constraint.Eval(o), "DerivedPrivate False");
+            Assert.False(constraint.Eval(o), "DerivedPrivate False");
         }
 
-        [Test(Description = "Tests that Property.IsNull() can disambiguate between properties of the same name")]
-        public void DisambiguatedPropertyIsNullAccess()
+		[Fact]
+		public void DisambiguatedPropertyIsNullAccess()
         {
             DerivedPropertyAccessFodder o = new DerivedPropertyAccessFodder();
 
             AbstractConstraint constraint;
 
             constraint = Property.IsNull(typeof(BasePropertyAccessFodder), "Property");
-            Assert.IsFalse(constraint.Eval(o), "Base False");
+            Assert.False(constraint.Eval(o), "Base False");
 
             constraint = Property.IsNull(typeof(IPropertyAccessFodder2), "Property");
-            Assert.IsTrue(constraint.Eval(o), "Interface2 True");
+            Assert.True(constraint.Eval(o), "Interface2 True");
         }
 
-        [Test(Description = "Tests that Property.IsNotNull() can disambiguate between properties of the same name")]
-        public void DisambiguatedPropertyIsNotNullAccess()
+		[Fact]
+		public void DisambiguatedPropertyIsNotNullAccess()
         {
             DerivedPropertyAccessFodder o = new DerivedPropertyAccessFodder();
 
             AbstractConstraint constraint;
 
             constraint = Property.IsNotNull(typeof(BasePropertyAccessFodder), "Property");
-            Assert.IsTrue(constraint.Eval(o), "Base True");
+            Assert.True(constraint.Eval(o), "Base True");
 
             constraint = Property.IsNotNull(typeof(IPropertyAccessFodder2), "Property");
-            Assert.IsFalse(constraint.Eval(o), "Interface2 False");
+            Assert.False(constraint.Eval(o), "Interface2 False");
         }
 
         #region PropertyAccess fodder types
@@ -246,65 +246,65 @@ namespace Rhino.Mocks.Tests.Constraints
 
         #region PublicFieldConstraints
 
-        [Test(Description="Tests that PublicField.Value() properly evaluates a public field.")]
-        public void PublicFieldValue()
+		[Fact]
+		public void PublicFieldValue()
         {
             string barTestValue = "my bar";
 
             AbstractConstraint constraint = PublicField.Value("BarField", barTestValue);
-            Assert.IsTrue(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned false when field was correct");
-            Assert.IsFalse(constraint.Eval(new FooMessage(string.Empty, "your bar")), "Returned true when field was incorrect");
+            Assert.True(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned false when field was correct");
+            Assert.False(constraint.Eval(new FooMessage(string.Empty, "your bar")), "Returned true when field was incorrect");
         }
 
-        [Test(Description = "Tests that PublicField.Value() does not verify a property.")]
-        public void PublicFieldValueDoesNotVerifyProperties()
+		[Fact]
+		public void PublicFieldValueDoesNotVerifyProperties()
         {
             string fooTestValue = "my foo";
 
             AbstractConstraint constraint = PublicField.Value("FooProperty", fooTestValue);
-            Assert.IsFalse(constraint.Eval(new FooMessage(fooTestValue, string.Empty)), "Returned false when trying to validate a property rather than a field.");
+            Assert.False(constraint.Eval(new FooMessage(fooTestValue, string.Empty)), "Returned false when trying to validate a property rather than a field.");
         }
 
-        [Test(Description = "Tests that PublicField.Value() properly evaluates a public field that is from an implemented interface type.")]
-        public void PublicFieldValueOnImplementedInterfaceType()
+		[Fact]
+		public void PublicFieldValueOnImplementedInterfaceType()
         {
             string barTestValue = "my bar";
             BarMessage message = new BarMessage(string.Empty, barTestValue);
 
             AbstractConstraint baseConstraint = PublicField.Value(typeof(FooMessage), "BarField", barTestValue);
-            Assert.IsTrue(baseConstraint.Eval(message), "Returned false when field was correct and field was declared in supplied type..");
+            Assert.True(baseConstraint.Eval(message), "Returned false when field was correct and field was declared in supplied type..");
 
             AbstractConstraint constraint = PublicField.Value(typeof(BarMessage), "BarField", barTestValue);
-            Assert.IsFalse(constraint.Eval(message), "Returned true when field was correct but type was not declared on the suppleid type.");
+            Assert.False(constraint.Eval(message), "Returned true when field was correct but type was not declared on the suppleid type.");
         }
 
-        [Test(Description="Tests that PublicField.ValueConstraint() properly evaluates a public field using a supplied AbstractConstraint.")]
-        public void PublicFieldValueConstraint()
+		[Fact]
+		public void PublicFieldValueConstraint()
         {
             FooMessage message = new FooMessage("my foo", "my bar");
             
-            Assert.IsTrue(PublicField.ValueConstraint("BarField", Text.Contains("bar")).Eval(message), "Returned false when supplied constraint was valid.");
-            Assert.IsFalse(PublicField.ValueConstraint("BarField", Text.Contains("foo")).Eval(message), "Returned true when supplied constraint was invalid.");
+            Assert.True(PublicField.ValueConstraint("BarField", Text.Contains("bar")).Eval(message), "Returned false when supplied constraint was valid.");
+            Assert.False(PublicField.ValueConstraint("BarField", Text.Contains("foo")).Eval(message), "Returned true when supplied constraint was invalid.");
         }
 
-        [Test(Description = "Tests that PublicField.IsNull() properly evaluates if a public field is null.")]
-        public void PublicFieldNull()
+		[Fact]
+		public void PublicFieldNull()
         {
             string barTestValue = "my bar";
 
             AbstractConstraint constraint = PublicField.IsNull("BarField");
-            Assert.IsTrue(constraint.Eval(new FooMessage(null, null)), "Returned false when field was null.");
-            Assert.IsFalse(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned true when field was not null");
+            Assert.True(constraint.Eval(new FooMessage(null, null)), "Returned false when field was null.");
+            Assert.False(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned true when field was not null");
         }
 
-        [Test(Description = "Tests that PublicField.IsNotNull() properly evaluates if a public field is not null.")]
-        public void PublicFieldNotNull()
+		[Fact]
+		public void PublicFieldNotNull()
         {
             string barTestValue = "my bar";
 
             AbstractConstraint constraint = PublicField.IsNotNull("BarField");
-            Assert.IsTrue(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned false when field was not null.");
-            Assert.IsFalse(constraint.Eval(new FooMessage(null, null)), "Returned true when field was null");
+            Assert.True(constraint.Eval(new FooMessage(string.Empty, barTestValue)), "Returned false when field was not null.");
+            Assert.False(constraint.Eval(new FooMessage(null, null)), "Returned true when field was null");
         }
 
         #region Types for testing PublicFieldConstraints

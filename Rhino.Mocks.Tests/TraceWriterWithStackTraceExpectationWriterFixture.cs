@@ -1,13 +1,13 @@
 namespace Rhino.Mocks.Tests
 {
 	using System.IO;
-	using MbUnit.Framework;
+	using Xunit;
 	using Rhino.Mocks.Impl;
 
-	[TestFixture]
+	
 	public class TraceWriterWithStackTraceExpectationWriterFixture
 	{
-		[Test]
+		[Fact]
 		public void WillPrintLogInfoWithStackTrace()
 		{
 			TraceWriterWithStackTraceExpectationWriter expectationWriter = new TraceWriterWithStackTraceExpectationWriter();
@@ -23,8 +23,8 @@ namespace Rhino.Mocks.Tests
 			mock.VoidNoArgs();
 			mocks.VerifyAll();
 
-			Assert.Contains(writer.GetStringBuilder().ToString(),
-				"WillPrintLogInfoWithStackTrace");
+			Assert.Contains("WillPrintLogInfoWithStackTrace",
+				writer.GetStringBuilder().ToString());
 		}
 	}
 }

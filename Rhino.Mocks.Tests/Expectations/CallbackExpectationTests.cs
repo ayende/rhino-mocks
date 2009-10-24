@@ -29,7 +29,7 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -37,7 +37,7 @@ using Rhino.Mocks.Tests.Callbacks;
 
 namespace Rhino.Mocks.Tests.Expectations
 {
-	[TestFixture]
+	
 	public class CallbackExpectationTests :AbstractExpectationTests
 	{
 		private MockRepository mocks;
@@ -53,8 +53,7 @@ namespace Rhino.Mocks.Tests.Expectations
 			return expectation;
 		}
 
-		[SetUp]
-		public void SetUp()
+		public CallbackExpectationTests()
 		{
 			mocks = new MockRepository();
 			demo = (IDemo) mocks.StrictMock(typeof (IDemo));
@@ -62,44 +61,52 @@ namespace Rhino.Mocks.Tests.Expectations
 			callbackCalled = false;
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException),"Callback arguments didn't match the method arguments")]
+		[Fact]
 		public void ExceptionWhenArgsDontMatch()
 		{
-			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.NoArgsDelegate(VoidNoArgs), new Range(1, 1));
+			Assert.Throws<InvalidOperationException>("Callback arguments didn't match the method arguments",
+			                                         () =>
+			                                         callback =
+			                                         new CallbackExpectation(new FakeInvocation(method),
+			                                                                 new DelegateDefinations.NoArgsDelegate(VoidNoArgs),
+			                                                                 new Range(1, 1))
+				);
 		}
 
-		[Test]
+		[Fact]
 		public void CallMethodWhenTestIsExpected()
 		{
 			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.ThreeArgsDelegate(ThreeArgsDelegateMethod), new Range(1, 1));
 			callback.IsExpected(new object[] {1, "", 3.3f});
-			Assert.IsTrue(callbackCalled);
+			Assert.True(callbackCalled);
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Callbacks must return a boolean")]
+		[Fact]
 		public void CallbackDoesntReturnBool()
 		{
-			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.VoidThreeArgsDelegate(VoidThreeArgsDelegateMethod), new Range(1, 1));
-			callback.IsExpected(new object[] {1, "", 3.3f});
-			Assert.IsTrue(callbackCalled);
+			Assert.Throws<InvalidOperationException>("Callbacks must return a boolean", 
+				() =>
+				new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.VoidThreeArgsDelegate(VoidThreeArgsDelegateMethod), new Range(1, 1)));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Callback arguments didn't match the method arguments")]
+		[Fact]
 		public void CallbackWithDifferentSignature_NumArgsDifferent()
 		{
-			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.StringDelegate("".StartsWith), new Range(1, 1));
-			callback.IsExpected(new object[] {1, "", 3.3f});
-			Assert.IsTrue(callbackCalled);
+			Assert.Throws<InvalidOperationException>("Callback arguments didn't match the method arguments",
+			                                         () =>
+													 new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.StringDelegate("".StartsWith), new Range(1, 1)));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "Callback arguments didn't match the method arguments")]
+		[Fact]
 		public void CallBackWithDifferentSignature()
 		{
-			callback = new CallbackExpectation(new FakeInvocation(method), new DelegateDefinations.IntArgDelegate(OneArg), new Range(1, 1));
+			Assert.Throws<InvalidOperationException>(
+				"Callback arguments didn't match the method arguments",
+				() =>
+					callback = new CallbackExpectation(
+						new FakeInvocation(method), 
+						new DelegateDefinations.IntArgDelegate(OneArg), 
+						new Range(1, 1)));
 		}
 
 		#region Implementation

@@ -29,14 +29,14 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_BackToRecordWithDynamicMocks
     {
-        [Test]
+        [Fact]
         public void BackToRecordOnADynamicMock()
         {
             MockRepository repository = new MockRepository();

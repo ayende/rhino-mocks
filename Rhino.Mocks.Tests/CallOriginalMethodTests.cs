@@ -32,13 +32,13 @@ using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
-    using MbUnit.Framework;
+    using Xunit;
 
-    [TestFixture]
+    
     public class CallOriginalMethodTests
     {
 
-        [Test]
+        [Fact]
         public void CallOriginalMethodOnPropGetAndSet()
         {
             MockRepository mocks = new MockRepository();
@@ -53,27 +53,29 @@ namespace Rhino.Mocks.Tests
             for (int i = 0; i < 10; i++)
             {
                 demo.Prop = i;
-                Assert.AreEqual(i, demo.Prop);
+                Assert.Equal(i, demo.Prop);
             }
             mocks.VerifyAll();
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can't use CallOriginalMethod on method ReturnIntNoArgs because the method is abstract.")]
+        [Fact]
         public void CantCallOriginalMethodOnInterface()
         {
             MockRepository mocks = new MockRepository();
             IDemo demo = (IDemo)mocks.StrictMock(typeof(IDemo));
-            SetupResult.For(demo.ReturnIntNoArgs()).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
+        	Assert.Throws<InvalidOperationException>(
+        		"Can't use CallOriginalMethod on method ReturnIntNoArgs because the method is abstract.",
+        		() => SetupResult.For(demo.ReturnIntNoArgs()).CallOriginalMethod(OriginalCallOptions.CreateExpectation));
         }
 
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException), "Can't use CallOriginalMethod on method Six because the method is abstract.")]
+        [Fact]
         public void CantCallOriginalMethodOnAbstractMethod()
         {
             MockRepository mocks = new MockRepository();
             MockingClassesTests.AbstractDemo demo = (MockingClassesTests.AbstractDemo)mocks.StrictMock(typeof(MockingClassesTests.AbstractDemo));
-            SetupResult.For(demo.Six()).CallOriginalMethod(OriginalCallOptions.CreateExpectation);
+        	Assert.Throws<InvalidOperationException>(
+        		"Can't use CallOriginalMethod on method Six because the method is abstract.",
+        		() => SetupResult.For(demo.Six()).CallOriginalMethod(OriginalCallOptions.CreateExpectation));
         }
 
     }

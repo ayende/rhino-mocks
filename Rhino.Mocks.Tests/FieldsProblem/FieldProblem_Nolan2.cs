@@ -1,5 +1,5 @@
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem.FieldProblem_Nolan2
 {
@@ -14,7 +14,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem.FieldProblem_Nolan2
         bool TimeToGoHome();
     }
 
-    [TestFixture]
+    
     public class When_mocking_properties_with_RhinoMocks_stub
     {
         protected IDemo _demo;
@@ -36,51 +36,49 @@ namespace Rhino.Mocks.Tests.FieldsProblem.FieldProblem_Nolan2
             _demo.SomeObject = _newObject;
         }
 
-        [SetUp]
-        public virtual void SetUp()
+		public When_mocking_properties_with_RhinoMocks_stub()
         {
             _demo = MockRepository.GenerateStub<IDemo>();
             SetValuesOnMock();
         }
 
-        [Test]
+        [Fact]
         public void Should_mock_value_int_property()
         {
-            Assert.AreEqual(_newInt, _demo.SomeInt);
+            Assert.Equal(_newInt, _demo.SomeInt);
         }
 
-        [Test]
+        [Fact]
         public void Should_mock_value_date_property()
         {
-            Assert.AreEqual(_newDate, _demo.SomeDate);
+            Assert.Equal(_newDate, _demo.SomeDate);
         }
 
-        [Test]
+        [Fact]
         public void Should_mock_nullable_value_date_property()
         {
-            Assert.AreEqual(_newNullableDate, _demo.SomeNullableDate);
+            Assert.Equal(_newNullableDate, _demo.SomeNullableDate);
         }
 
-        [Test]
+        [Fact]
         public void Should_mock_nulled_value_date_property()
         {
-            Assert.AreEqual(_newNulledDate, _demo.SomeNulledDate);
+            Assert.Equal(_newNulledDate, _demo.SomeNulledDate);
         }
 
-        [Test]
+        [Fact]
         public void Should_mock_reference_property()
         {
-            Assert.AreEqual(_newObject, _demo.SomeObject);
+            Assert.Equal(_newObject, _demo.SomeObject);
         }
     }
 #if DOTNET35
-    [TestFixture]
+    
     public class
         When_mocking_properties_with_RhinoMocks_stub_and_setting_expectations_afterward :
             When_mocking_properties_with_RhinoMocks_stub
     {
-        [SetUp]
-        public override void SetUp()
+		public When_mocking_properties_with_RhinoMocks_stub_and_setting_expectations_afterward()
         {
             _demo = MockRepository.GenerateStub<IDemo>();
             SetValuesOnMock();
@@ -91,13 +89,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem.FieldProblem_Nolan2
         }
     }
 
-    [TestFixture]
+    
     public class
         When_mocking_properties_with_RhinoMocks_stub_and_setting_expectations_beforehand :
             When_mocking_properties_with_RhinoMocks_stub
     {
-        [SetUp]
-        public override void SetUp()
+		public When_mocking_properties_with_RhinoMocks_stub_and_setting_expectations_beforehand()
         {
             _demo = MockRepository.GenerateStub<IDemo>();
 

@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using System.IO;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Chompers
 	{
-		[Test]
+		[Fact]
 		public void MockingPropertyThatReturnsStream()
 		{
 			MockRepository mocks = new MockRepository();
@@ -19,7 +19,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 			messagePart.Data.WriteByte(127);
 			stream.Seek(0, SeekOrigin.Begin);
-			Assert.AreEqual(127,  stream.ReadByte());
+			Assert.Equal(127,  stream.ReadByte());
 		}
 	}
 

@@ -1,10 +1,10 @@
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Constraints;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_JudahG
 	{
 		public interface IView
@@ -12,7 +12,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			int? Foo { get; set; }
 		}
 
-		[Test]
+		[Fact]
 		public void IsMatching()
 		{
 			MockRepository mocks = new MockRepository();

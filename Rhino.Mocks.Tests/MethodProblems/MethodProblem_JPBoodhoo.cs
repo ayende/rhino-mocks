@@ -1,4 +1,4 @@
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.MethodProblems
 {
@@ -24,7 +24,7 @@ namespace Rhino.Mocks.Tests.MethodProblems
             }
         }
 
-        [TestFixture]
+        
         public class when_stubbing_a_call_to_a_method_that_matches_the_naming_prefix_for_an_event_but_is_not_an_event
         {
             InterfaceWithAMethodThatHasANameThatShouldNotBeRecognizedAsAnEvent dependency;
@@ -32,8 +32,7 @@ namespace Rhino.Mocks.Tests.MethodProblems
             object item;
 
 
-            [SetUp]
-            public void setup()
+			public when_stubbing_a_call_to_a_method_that_matches_the_naming_prefix_for_an_event_but_is_not_an_event()
             {
                 item = new object();
                 dependency = MockRepository.GenerateStub<InterfaceWithAMethodThatHasANameThatShouldNotBeRecognizedAsAnEvent>();
@@ -41,7 +40,7 @@ namespace Rhino.Mocks.Tests.MethodProblems
                 system_under_test.do_something(item);
             }
 
-            [Test]
+            [Fact]
             public void should_not_try_to_treat_it_as_an_event()
             {
                 dependency.AssertWasCalled(generic_parameter => generic_parameter.add_MethodThatShouldNotBeSeenAsAnEvent(item));

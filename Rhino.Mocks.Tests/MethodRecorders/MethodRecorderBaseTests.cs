@@ -30,7 +30,7 @@
 using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
@@ -41,7 +41,7 @@ using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.MethodRecorders
 {
-	[TestFixture]
+	
 	public class MethodRecorderBaseTests
 	{
 		private IMethodRecorder recorder;
@@ -51,8 +51,7 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 		private IExpectation expectation;
 		private object[] args;
 
-		[SetUp]
-		public void SetUp()
+		public MethodRecorderBaseTests()
 		{
 			recorder = new UnorderedMethodRecorder(new ProxyMethodExpectationsDictionary());
 			testRecorder = new TestMethodRecorder();
@@ -64,14 +63,14 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 			args = new object[0];
 		}
 
-		[Test]
+		[Fact]
 		public void DoRecordCalled()
 		{
 			recorder.Record(proxy, method, expectation);
-			Assert.IsTrue(testRecorder.DoRecordCalled);
+			Assert.True(testRecorder.DoRecordCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoGetRecordedExpectationCalled()
 		{
 			BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic;
@@ -79,56 +78,56 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 				GetField("replayerToCall", bindingFlags).
 				SetValue(recorder, testRecorder);
 			recorder.GetRecordedExpectation(new FakeInvocation(method), proxy, method, args);
-			Assert.IsTrue(testRecorder.DoGetRecordedExpectationCalled);
+			Assert.True(testRecorder.DoGetRecordedExpectationCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoGetAllExpectationsForProxyAndMethodCalled()
 		{
 			recorder.GetAllExpectationsForProxyAndMethod(proxy, method);
-			Assert.IsTrue(testRecorder.DoGetAllExpectationsForProxyAndMethodCalled);
+			Assert.True(testRecorder.DoGetAllExpectationsForProxyAndMethodCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoGetAllExpectationsForProxyCalled()
 		{
 			recorder.GetAllExpectationsForProxy(proxy);
-			Assert.IsTrue(testRecorder.DoGetAllExpectationsForProxyCalled);
+			Assert.True(testRecorder.DoGetAllExpectationsForProxyCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoReplaceExpectationCalled()
 		{
 			recorder.ReplaceExpectation(proxy, method, expectation, expectation);
-			Assert.IsTrue(testRecorder.DoReplaceExpectationCalled);
+			Assert.True(testRecorder.DoReplaceExpectationCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoHasExpectationsCalled()
 		{
 			bool dummy = recorder.HasExpectations;
-			Assert.IsTrue(testRecorder.DoHasExpectationsCalled);
+			Assert.True(testRecorder.DoHasExpectationsCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoAddRecorderCalled()
 		{
 			recorder.AddRecorder(recorder);
-			Assert.IsTrue(testRecorder.DoAddRecorderCalled);
+			Assert.True(testRecorder.DoAddRecorderCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoGetRecordedExpectationOrNullCalled()
 		{
 			recorder.GetRecordedExpectationOrNull(proxy, method, args);
-			Assert.IsTrue(testRecorder.DoGetRecordedExpectationOrNullCalled);
+			Assert.True(testRecorder.DoGetRecordedExpectationOrNullCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DoRemoveExpectationCalled()
 		{
 			recorder.RemoveExpectation(new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1)));
-			Assert.IsTrue(testRecorder.DoRemoveExpectationCalled);
+			Assert.True(testRecorder.DoRemoveExpectationCalled);
 		}
 
 		internal class TestMethodRecorder : MethodRecorderBase

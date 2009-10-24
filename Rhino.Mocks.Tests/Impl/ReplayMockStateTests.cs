@@ -29,7 +29,7 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Tests.Expectations;
@@ -38,7 +38,7 @@ using Castle.Core.Interceptor;
 
 namespace Rhino.Mocks.Tests.Impl
 {
-	[TestFixture]
+	
 	public class ReplayMockStateTests
 	{
 		private static MockRepository mocks;
@@ -47,8 +47,7 @@ namespace Rhino.Mocks.Tests.Impl
 		private ReplayMockState replay;
 		private ProxyInstance proxy;
 
-		[SetUp]
-		public void SetUp()
+		public ReplayMockStateTests()
 		{
 			mocks = new MockRepository();
 			proxy = new ProxyInstance(mocks);
@@ -59,29 +58,32 @@ namespace Rhino.Mocks.Tests.Impl
 		}
 
 
-		[Test]
+		[Fact]
 		public void CreatingReplayMockStateFromRecordMockStateCopiesTheExpectationList()
 		{
-			Assert.AreEqual(1, Get.Recorder(mocks).GetAllExpectationsForProxy(proxy).Count);
+			Assert.Equal(1, Get.Recorder(mocks).GetAllExpectationsForProxy(proxy).Count);
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "String.StartsWith(\"2\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void ExpectedMethodCallOnReplay()
 		{
 			ReplayMockState replay = new ReplayMockState(record);
-			replay.Verify();
+			Assert.Throws<ExpectationViolationException>(
+				"String.StartsWith(\"2\"); Expected #1, Actual #0.",
+				() => replay.Verify());
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "String.EndsWith(\"2\"); Expected #0, Actual #1.")]
+		[Fact]
 		public void UnexpectedMethodCallOnReplayThrows()
 		{
 			MethodInfo endsWith = MethodCallTests.GetMethodInfo("EndsWith", "2");
-            replay.MethodCall(new FakeInvocation(endsWith), endsWith, "2");
+
+			Assert.Throws<ExpectationViolationException>(
+				"String.EndsWith(\"2\"); Expected #0, Actual #1.",
+				() => replay.MethodCall(new FakeInvocation(endsWith), endsWith, "2"));
 		}
 
-		[Test]
+		[Fact]
 		public void VerifyWhenAllExpectedCallsWereCalled()
 		{
 			MethodInfo methodInfo = CreateMethodInfo();
@@ -90,23 +92,25 @@ namespace Rhino.Mocks.Tests.Impl
 			this.replay.Verify();
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "String.StartsWith(\"2\"); Expected #1, Actual #0.")]
+		[Fact]
 		public void VerifyWhenNotAllExpectedCallsWereCalled()
 		{
 			ReplayMockState replay = new ReplayMockState(record);
-			replay.Verify();
+			Assert.Throws<ExpectationViolationException>(
+				"String.StartsWith(\"2\"); Expected #1, Actual #0.",
+				() => replay.Verify());
 		}
 
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException), "String.EndsWith(null); Expected #0, Actual #1.")]
+		[Fact]
 		public void VerifyWhenMismatchArgsContainsNull()
 		{
 			MethodInfo endsWith = MethodCallTests.GetMethodInfo("EndsWith", "2");
-            replay.MethodCall(new FakeInvocation(endsWith), endsWith, new object[1] { null });
+			Assert.Throws<ExpectationViolationException>(
+				"String.EndsWith(null); Expected #0, Actual #1.",
+				() => replay.MethodCall(new FakeInvocation(endsWith), endsWith, new object[1] {null}));
 		}
 
-		[Test]
+		[Fact]
 		public void VerifyReportsAllMissingExpectationsWhenCalled()
 		{
 			record.LastExpectation.ReturnValue = true;
@@ -126,11 +130,11 @@ namespace Rhino.Mocks.Tests.Impl
 				string message = "String.StartsWith(\"2\"); Expected #1, Actual #0.\r\n" +
 					"String.StartsWith(\"r\"); Expected #1, Actual #0.\r\n" +
 					"String.StartsWith(\"y\"); Expected #2, Actual #0.";
-				Assert.AreEqual(message, e.Message);
+				Assert.Equal(message, e.Message);
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void VerifyReportsAllMissingExpectationWhenCalledOnOrdered()
 		{
 			using (mocks.Ordered())
@@ -153,7 +157,7 @@ namespace Rhino.Mocks.Tests.Impl
 				string message = "String.StartsWith(\"2\"); Expected #1, Actual #0.\r\n" +
 					"String.StartsWith(\"r\"); Expected #1, Actual #0.\r\n" +
 					"String.StartsWith(\"y\"); Expected #2, Actual #0.";
-				Assert.AreEqual(message, e.Message);
+				Assert.Equal(message, e.Message);
 			}
 		}
 

@@ -1,9 +1,9 @@
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Oliver
 	{
 		public interface ITestGen<T>
@@ -16,7 +16,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			int Foo { get; set;}
 		}
 
-		[Test]
+		[Fact]
 		public void StubGenericInterface_CanReadWriteProperties()
 		{
 			MockRepository mocks = new MockRepository();
@@ -25,12 +25,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 
 			test.Foo = 10;
-			Assert.AreEqual(10, test.Foo);
+			Assert.Equal(10, test.Foo);
 
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void StubInterface_CanReadWriteProperties()
 		{
 			MockRepository mocks = new MockRepository();
@@ -39,12 +39,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 
 			test.Foo = 10;
-			Assert.AreEqual(10, test.Foo);
+			Assert.Equal(10, test.Foo);
 
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void MockGenericInterface_CanSetProperties()
 		{
 			MockRepository mocks = new MockRepository();
@@ -55,12 +55,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 
 			test.Foo = 10;
-			Assert.AreEqual(10, test.Foo);
+			Assert.Equal(10, test.Foo);
 
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void MockNormalInterface_CanSetProperties()
 		{
 			MockRepository mocks = new MockRepository();
@@ -71,7 +71,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			mocks.ReplayAll();
 
 			test.Foo = 10;
-			Assert.AreEqual(10, test.Foo);
+			Assert.Equal(10, test.Foo);
 
 			mocks.VerifyAll();
 		}

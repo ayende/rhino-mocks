@@ -1,11 +1,11 @@
 #if DOTNET35
 using System;
 using System.ComponentModel;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Adam
     {
         public interface IFoo
@@ -15,7 +15,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         }
 
 
-        [Test]
+        [Fact]
         public void ShouldRaiseEventWhenEverPropIsSet()
         {
             var foo = MockRepository.GenerateMock<IFoo>();
@@ -33,7 +33,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             foo.Str = "3";
             foo.Str = "4";
 
-            Assert.AreEqual(4, calls);
+            Assert.Equal(4, calls);
         }
     }
 }

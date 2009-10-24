@@ -28,57 +28,57 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.Impl
 {
-	[TestFixture]
+	
 	public class VerifiedMockStateTests
 	{
 		IMockState verify;
 
-		[SetUp]
-		public void Setup()
+		public VerifiedMockStateTests()
 		{
 			verify = new VerifiedMockState(null);
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This action is invalid when the mock object is in verified state.")]
+		[Fact]
 		public void ThrowsOnLastMethodOptions()
 		{
-			verify.LastMethodOptions.Return(null);
+			Assert.Throws<InvalidOperationException>("This action is invalid when the mock object is in verified state.",
+			                                         () => verify.LastMethodOptions.Return(null));
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This action is invalid when the mock object is in verified state.")]
+		[Fact]
 		public void ThrowOnMethodCall()
 		{
-			verify.MethodCall(null, typeof(Object).GetMethod("ToString"));
+			Assert.Throws<InvalidOperationException>("This action is invalid when the mock object is in verified state.",
+														 () => verify.MethodCall(null, typeof(Object).GetMethod("ToString"))); 
+			
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This action is invalid when the mock object is in verified state.")]
+		[Fact]
 		public void ThrowsOnVerify()
 		{
-			verify.Verify();
+			Assert.Throws<InvalidOperationException>("This action is invalid when the mock object is in verified state.",
+												 () => verify.Verify());
 		}
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This action is invalid when the mock object is in verified state.")]
+		[Fact]
 		public void ThrowsOnVerifyState()
 		{
-			verify = verify.VerifyState;
+			Assert.Throws<InvalidOperationException>("This action is invalid when the mock object is in verified state.",
+												 () => GC.KeepAlive(verify.VerifyState));
 		}
 
 
-		[Test]
-		[ExpectedException(typeof (InvalidOperationException), "This action is invalid when the mock object is in verified state.")]
+		[Fact]
 		public void ThrowsOnReplay()
 		{
-			verify.Replay();
+			Assert.Throws<InvalidOperationException>("This action is invalid when the mock object is in verified state.",
+											 () => verify.Replay());
 		}
 	}
 }

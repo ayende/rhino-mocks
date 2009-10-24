@@ -29,7 +29,7 @@
 
 using System;
 using System.Reflection;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
@@ -38,22 +38,21 @@ using Rhino.Mocks.Tests.Expectations;
 
 namespace Rhino.Mocks.Tests.MethodRecorders
 {
-	[TestFixture]
+	
 	public class ProxyMethodExpectationTripletTests
 	{
 		private MethodInfo endsWith;
 		private AnyArgsExpectation expectation;
 		private ProxyInstance proxy;
 
-		[SetUp]
-		public void SetUp()
+		public ProxyMethodExpectationTripletTests()
 		{
 			endsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
 			expectation = new AnyArgsExpectation(new FakeInvocation(endsWith), new Range(1, 1));
 			proxy = new ProxyInstance(null);
 		}
 
-		[Test]
+		[Fact]
 		public void EqualsTest()
 		{
 			ProxyInstance proxy1 = new ProxyInstance(null);
@@ -64,79 +63,82 @@ namespace Rhino.Mocks.Tests.MethodRecorders
 				expectation2 = new AnyArgsExpectation(new FakeInvocation(method2), new Range(1, 1));
 			ProxyMethodExpectationTriplet same1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				same2 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1);
-			Assert.AreEqual(same1, same2);
-			Assert.AreEqual(same2, same1);
+			Assert.Equal(same1, same2);
+			Assert.Equal(same2, same1);
 
 			ProxyMethodExpectationTriplet proxyDiff1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				proxyDiff2 = new ProxyMethodExpectationTriplet(proxy2, method1, expectation1);
-			Assert.AreNotEqual(proxyDiff2, proxyDiff1);
-			Assert.AreNotEqual(proxyDiff1, proxyDiff2);
+			Assert.NotEqual(proxyDiff2, proxyDiff1);
+			Assert.NotEqual(proxyDiff1, proxyDiff2);
 
 			ProxyMethodExpectationTriplet methodDiff1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				methodDiff2 = new ProxyMethodExpectationTriplet(proxy1, method2, expectation1);
 
-			Assert.AreNotEqual(methodDiff1, methodDiff2);
-			Assert.AreNotEqual(methodDiff2, methodDiff1);
+			Assert.NotEqual(methodDiff1, methodDiff2);
+			Assert.NotEqual(methodDiff2, methodDiff1);
 
 
 			ProxyMethodExpectationTriplet expectationDiff1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				expectationDiff2 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation2);
 
-			Assert.AreNotEqual(expectationDiff1, expectationDiff2);
-			Assert.AreNotEqual(expectationDiff2, expectationDiff1);
+			Assert.NotEqual(expectationDiff1, expectationDiff2);
+			Assert.NotEqual(expectationDiff2, expectationDiff1);
 
 
 			ProxyMethodExpectationTriplet allDiff1 = new ProxyMethodExpectationTriplet(proxy1, method1, expectation1),
 				allDiff2 = new ProxyMethodExpectationTriplet(proxy2, method2, expectation2);
 
-			Assert.AreNotEqual(allDiff1, allDiff2);
-			Assert.AreNotEqual(allDiff2, allDiff1);
+			Assert.NotEqual(allDiff1, allDiff2);
+			Assert.NotEqual(allDiff2, allDiff1);
 
 
 		}
 
-		[Test]
+		[Fact]
 		public void ReturnSamevaluesAsInCtor()
 		{
 			ProxyMethodExpectationTriplet triplet = new ProxyMethodExpectationTriplet(proxy, this.endsWith, this.expectation);
-			Assert.AreEqual(proxy, triplet.Proxy);
-			Assert.AreEqual(endsWith, triplet.Method);
-			Assert.AreEqual(expectation, triplet.Expectation);
+			Assert.Equal(proxy, triplet.Proxy);
+			Assert.Equal(endsWith, triplet.Method);
+			Assert.Equal(expectation, triplet.Expectation);
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentNullException), "Value cannot be null.\r\nParameter name: proxy")]
+		[Fact]
 		public void ProxyNullThrows()
 		{
-			new ProxyMethodExpectationTriplet(null, endsWith, expectation);
+			Assert.Throws<ArgumentNullException>(
+				"Value cannot be null.\r\nParameter name: proxy",
+				() => new ProxyMethodExpectationTriplet(null, endsWith, expectation));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentNullException), "Value cannot be null.\r\nParameter name: method")]
+		[Fact]
 		public void MethodNullThrows()
 		{
-			new ProxyMethodExpectationTriplet(proxy, null, expectation);
+			Assert.Throws<ArgumentNullException>(
+				"Value cannot be null.\r\nParameter name: method",
+				() => new ProxyMethodExpectationTriplet(proxy, null, expectation));
 		}
 
-		[Test]
-		[ExpectedException(typeof(ArgumentNullException), "Value cannot be null.\r\nParameter name: expectation")]
+		[Fact]
 		public void ExpectationNullThrows()
 		{
-			new ProxyMethodExpectationTriplet(proxy, endsWith, null);
+			Assert.Throws<ArgumentNullException>(
+				"Value cannot be null.\r\nParameter name: expectation",
+				() => new ProxyMethodExpectationTriplet(proxy, endsWith, null));
 		}
 
-		[Test]
+		[Fact]
 		public void FalseOnEqualToNull()
 		{
 			ProxyMethodExpectationTriplet triplet = new ProxyMethodExpectationTriplet(proxy, this.endsWith, this.expectation);
-			Assert.IsFalse(triplet.Equals(null));
+			Assert.False(triplet.Equals(null));
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCodeReturnSameValue()
 		{
 			ProxyMethodExpectationTriplet triplet = new ProxyMethodExpectationTriplet(proxy, this.endsWith, this.expectation);
-			Assert.AreEqual(triplet.GetHashCode(), triplet.GetHashCode());
+			Assert.Equal(triplet.GetHashCode(), triplet.GetHashCode());
 		}
 	}
 }

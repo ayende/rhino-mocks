@@ -1,10 +1,10 @@
 #if DOTNET35
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
     public class FieldProblem_Harley
     {
 
@@ -14,8 +14,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             event ChangeTestEvent ChangeTestProperty;
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Fact]
         public void TestSampleMatrixChanged()
         {
             var repository = new MockRepository();
@@ -25,8 +24,8 @@ namespace Rhino.Mocks.Tests.FieldsProblem
             new ClassRaisingException(mockTestClass);
 
             repository.ReplayAll();
-            fireChangeTestProperty.Raise(true);
-            repository.VerifyAll();
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => fireChangeTestProperty.Raise(true));
         }
     }
 

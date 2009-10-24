@@ -30,18 +30,17 @@
 using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests
 {
-	[TestFixture]
+	
 	public class ExtendingRhinoMocks2
 	{
-		[Test]
-		[ExpectedException(typeof (ExpectationViolationException))]
+		[Fact]
 		public void DeleteThisTest()
 		{
 			MockRepository mockRepository = new MockRepository();
@@ -51,9 +50,7 @@ namespace Rhino.Mocks.Tests
 
 			mockRepository.ReplayAll();
 
-			mock.Method("invalidParameter");
-
-			mockRepository.VerifyAll();
+			Assert.Throws<ExpectationViolationException>(() => mock.Method("invalidParameter"));
 		}
 	}
 

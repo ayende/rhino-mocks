@@ -30,16 +30,14 @@
 #if DOTNET35
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Kythorn
 	{
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException),
-			"Cannot assert on an object that is not in replay mode. Did you forget to call ReplayAll() ?")]
+		[Fact]
 		public void CallingAssertWasCalledOnAnObjectThatIsInRecordModeShouldResultInFailure()
 		{
 			var service = MockRepository.GenerateStub<IService>();
@@ -47,10 +45,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			service.Stub(x => x.GetString()).Return("Test");
 			var presenter = new Presenter(view, service);
 			presenter.OnViewLoaded();
-			view.AssertWasCalled(x => x.Message = "Test");
+			Assert.Throws<InvalidOperationException>(
+				"Cannot assert on an object that is not in replay mode. Did you forget to call ReplayAll() ?",
+				() => view.AssertWasCalled(x => x.Message = "Test"));
 		}
 
-		[Test]
+		[Fact]
 		public void CanUseStubSyntaxOnMocksInRecordMode()
 		{
 			MockRepository mocks = new MockRepository();
@@ -63,7 +63,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			view.AssertWasCalled(x => x.Message = "Test");
 		}
 
-		[Test]
+		[Fact]
 		public void Success()
 		{
 			var service = MockRepository.GenerateStub<IService>();

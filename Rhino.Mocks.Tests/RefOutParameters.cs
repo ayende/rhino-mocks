@@ -29,11 +29,11 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests
 {
-    [TestFixture]
+    
     public class RefOutParameters
     {
         public class MyClass
@@ -44,7 +44,7 @@ namespace Rhino.Mocks.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void UseTheOutMethodToSpecifyOutputAndRefParameters()
         {
             MockRepository mocks = new MockRepository();
@@ -59,24 +59,25 @@ namespace Rhino.Mocks.Tests
             
             mocks.VerifyAll();
             
-            Assert.AreEqual(100, i);
-            Assert.AreEqual("s", s);
-            Assert.AreEqual("b", s2);
+            Assert.Equal(100, i);
+            Assert.Equal("s", s);
+            Assert.Equal("b", s2);
         }
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "Output and ref parameters has already been set for this expectation")]
-        public void UseTheOutMethodToSpecifyOutputAndRefParameters_CanOnlyBeCalledOnce()
+		[Fact]
+		public void UseTheOutMethodToSpecifyOutputAndRefParameters_CanOnlyBeCalledOnce()
         {
             MockRepository mocks = new MockRepository();
             MyClass myClass = (MyClass) mocks.StrictMock(typeof (MyClass));
             int i;
             string s = null, s2;
             myClass.MyMethod(out i, ref s, 1, out s2);
-			LastCall.OutRef(100, "s", "b").OutRef(100, "s", "b");
+			Assert.Throws<InvalidOperationException>(
+				"Output and ref parameters has already been set for this expectation",
+				() => LastCall.OutRef(100, "s", "b").OutRef(100, "s", "b"));
         }
 
-    	[Test]
+    	[Fact]
     	public void GivingLessParametersThanWhatIsInTheMethodWillNotThrow()
     	{
     		   MockRepository mocks = new MockRepository();
@@ -91,9 +92,9 @@ namespace Rhino.Mocks.Tests
             
             mocks.VerifyAll();
             
-            Assert.AreEqual(100, i);
-            Assert.IsNull(s);
-            Assert.IsNull(s2);
+            Assert.Equal(100, i);
+            Assert.Null(s);
+            Assert.Null(s2);
     	}
     }
 }

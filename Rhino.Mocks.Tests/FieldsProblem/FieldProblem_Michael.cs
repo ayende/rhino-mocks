@@ -29,11 +29,11 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Michael
 	{
 		public interface IProvider
@@ -42,24 +42,24 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			int GetInt32();
 		}
 		
-		[Test]
+		[Fact]
 		public void TestChar()
 		{
 			MockRepository mocks = new MockRepository();
 			IProvider mockProvider = (IProvider)mocks.StrictMock(typeof(IProvider));
 			SetupResult.For(mockProvider.GetChar()).Return('X');
 			mocks.ReplayAll();
-			Assert.AreEqual('X', mockProvider.GetChar()); // actual is a random char
+			Assert.Equal('X', mockProvider.GetChar()); // actual is a random char
 		}
 
-		[Test]
+		[Fact]
 		public void TestInt32()
 		{
 			MockRepository mocks = new MockRepository();
 			IProvider mockProvider = (IProvider)mocks.StrictMock(typeof(IProvider));
 			SetupResult.For(mockProvider.GetInt32()).Return(100);
 			mocks.ReplayAll();
-			Assert.AreEqual(100, mockProvider.GetInt32()); // actual is 100
+			Assert.Equal(100, mockProvider.GetInt32()); // actual is 100
 		}
 
 	}

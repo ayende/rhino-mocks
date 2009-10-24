@@ -1,11 +1,11 @@
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class SetupResultAndIgnoreArguments
 	{
-		[Test]
+		[Fact]
 		public void CanUseSetupResultAndIgnoreArguments_WhenUsingUnorderedBlock()
 		{
 			MockRepository mocks = new MockRepository();
@@ -19,10 +19,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			Assert.AreEqual(2, fetcher.GetUsersWithCriteriaLike("foo").Length);
+			Assert.Equal(2, fetcher.GetUsersWithCriteriaLike("foo").Length);
 		}
 
-		[Test]
+		[Fact]
 		public void CanUseSetupResultAndIgnoreArguments_WhenUsingOrderedBlock()
 		{
 			MockRepository mocks = new MockRepository();
@@ -36,7 +36,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			Assert.AreEqual(2, fetcher.GetUsersWithCriteriaLike("foo").Length);
+			Assert.Equal(2, fetcher.GetUsersWithCriteriaLike("foo").Length);
 		}
 	}
 

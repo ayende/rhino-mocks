@@ -29,39 +29,40 @@
 
 using System;
 using System.Runtime.InteropServices;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Aharon
 	{
-		[Test]
+		[Fact]
 		public void CanCreateInterfaceWithGuid()
 		{
 			MockRepository mocks = new MockRepository();
 			IUniqueID bridgeRemote = mocks.StrictMock<IUniqueID>();
-			Assert.IsNotNull(bridgeRemote);
+			Assert.NotNull(bridgeRemote);
 		}
 
 
-		[Test]
+		[Fact]
 		public void MockingDataset()
 		{
 			MockRepository mocks = new MockRepository();
 			MyDataSet controller = mocks.StrictMock<MyDataSet>();
-			Assert.IsNotNull(controller);
+			Assert.NotNull(controller);
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException),"Accepter.Accept(Rhino.Mocks.Tests.FieldsProblem.Accepter); Expected #0, Actual #1.")]
+		[Fact]
 		public void PassingMockToMock_WhenErrorOccurs()
 		{
 			MockRepository mocks = new MockRepository();
 			Accepter accepter = mocks.StrictMock<Accepter>();
 			mocks.ReplayAll();
-			accepter.Accept(accepter);
+			Assert.Throws<ExpectationViolationException>(
+				"Accepter.Accept(Rhino.Mocks.Tests.FieldsProblem.Accepter); Expected #0, Actual #1.",
+				() => accepter.Accept(accepter));
 
 		}
 	}

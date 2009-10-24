@@ -1,22 +1,22 @@
+using System;
 using System.Web.Security;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
-	public class FieldProblem_StevenS
+	
+	public class FieldProblem_StevenS : IDisposable
 	{
 		private MockRepository mocks;
 		private MembershipProvider myMembershipProvider;
 
-		[SetUp]
-		public void MyTestInitialize()
+		public FieldProblem_StevenS()
 		{
 			mocks = new MockRepository();
 			myMembershipProvider = mocks.StrictMock<MembershipProvider>();
 		} 
 
-        [Test]
+        [Fact]
         public void LoadFromUserId()
         {
             SetupResult.For(myMembershipProvider.Name).Return("Foo");
@@ -28,7 +28,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
         	myMembershipProvider.GetUser("foo", false);
         }
 
-		[Test]
+		[Fact]
 		public void LoadFromUserId_Object()
 		{
 			SetupResult.For(myMembershipProvider.Name).Return("Foo");
@@ -42,8 +42,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		} 
 
 
-		[TearDown]
-		public void MyTestTearDown()
+		public void Dispose()
 		{
 			mocks.VerifyAll();
 		}

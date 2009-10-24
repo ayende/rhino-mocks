@@ -29,12 +29,12 @@
 
 using System;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Exceptions;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-    [TestFixture]
+    
 	public class FieldProblem_Entropy
 	{
 		public interface IMyObject
@@ -44,7 +44,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			object SomeProperty { get; set; }
 		}
 
-		[Test]
+		[Fact]
 		public void NestedOrderedAndAtLeastOnce()
 		{
 			MockRepository mocks = new MockRepository();
@@ -61,17 +61,16 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
 			myObject.DoSomething();
 
 			mocks.VerifyAll();
 		}
 
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), "IMyObject.DoSomething(); Expected #1, Actual #0.")]
+		[Fact]
 		public void ShouldFailInNestedOrderringIfMethodWasNotCalled()
 		{
 			MockRepository mocks = new MockRepository();
@@ -88,11 +87,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			}
 
 			mocks.ReplayAll();
-			myObject.DoSomethingElse(); 
-			mocks.VerifyAll();
+			myObject.DoSomethingElse();
+			Assert.Throws<ExpectationViolationException>(
+				"IMyObject.DoSomething(); Expected #1, Actual #0.",
+				() => mocks.VerifyAll());
 		}
 
-		[Test]
+		[Fact]
 		public void NestedInorderedAndAtLeastOnce()
 		{
 			MockRepository mocks = new MockRepository();
@@ -109,15 +110,14 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
 			myObject.DoSomething();
 			mocks.VerifyAll();
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), @"IMyObject.DoSomething(); Expected #0, Actual #1.")]
+		[Fact]
 		public void UnorderedAndAtLeastOnce_CallingAnExtraMethod()
 		{
 			MockRepository mocks = new MockRepository();
@@ -131,16 +131,16 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
-			myObject.DoSomething();
-
-			mocks.VerifyAll();
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			
+			Assert.Throws<ExpectationViolationException>(
+				@"IMyObject.DoSomething(); Expected #0, Actual #1.",
+				() => myObject.DoSomething());
 		}
 
-		[Test]
-		[ExpectedException(typeof(ExpectationViolationException), @"IMyObject.DoSomething(); Expected #0, Actual #1.")]
+		[Fact]
 		public void OrderedAndAtLeastOnce_CallingAnExtraMethod()
 		{
 			MockRepository mocks = new MockRepository();
@@ -154,12 +154,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			mocks.ReplayAll();
 
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
-			Assert.IsNull(myObject.SomeProperty);
-			myObject.DoSomething();
-
-			mocks.VerifyAll();
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			Assert.Null(myObject.SomeProperty);
+			
+			Assert.Throws<ExpectationViolationException>(
+				@"IMyObject.DoSomething(); Expected #0, Actual #1.",
+				() => myObject.DoSomething());
 		}
 
 	}

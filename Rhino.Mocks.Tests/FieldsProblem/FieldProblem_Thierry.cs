@@ -28,14 +28,14 @@
 
 
 using System.Collections.Generic;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Thierry
 	{
-		[Test]
+		[Fact]
 		public void ReproducedWithOutArraysContainingMockedObject2()
 		{
 			MockRepository mocks = new MockRepository();
@@ -54,11 +54,11 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 
 			pluginMng.GetPlugins(out allPlugins);
 
-			Assert.AreEqual(1, allPlugins.Length);
-			Assert.AreSame(plugin, allPlugins[0]);
+			Assert.Equal(1, allPlugins.Length);
+			Assert.Same(plugin, allPlugins[0]);
 		}
 
-		[Test]
+		[Fact]
 		public void MockGenericMethod1()
 		{
 			MockRepository mocks = new MockRepository();
@@ -70,12 +70,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			Expect.Call(stubbed.DoNothing<byte>(myValue)).Return(returnedValue);
 			mocks.ReplayAll();
 			int x = stubbed.DoNothing<byte>(myValue);
-			Assert.AreEqual(myValue, x);
+			Assert.Equal(myValue, x);
 
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void MockGenericMethod2()
 		{
 			MockRepository mocks = new MockRepository();
@@ -85,12 +85,12 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			Expect.Call(stubbed.DoNothing<byte>(myValue)).Return(myValue);
 			mocks.ReplayAll();
 			byte x = stubbed.DoNothing<byte>(myValue);
-			Assert.AreEqual(myValue, x);
+			Assert.Equal(myValue, x);
 
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void CanMockComplexReturnType()
 		{
 			MockRepository mocks = new MockRepository();
@@ -102,7 +102,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			Expect.Call(stubbed.DoNothing<IList<byte>>(null)).Return(bytes);
 			mocks.ReplayAll();
 			IList<byte> bytesResult = stubbed.DoNothing<IList<byte>>(null);
-			Assert.AreEqual(bytes, bytesResult);
+			Assert.Equal(bytes, bytesResult);
 
 			mocks.VerifyAll();
 		}

@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	[TestFixture]
+	
 	public class FieldProblem_Mark
 	{
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "After specifying Repeat.Never(), you cannot specify a return value, exception to throw or an action to execute")]
+		[Fact]
 		public void GoodExplanationForUsingRepeatNeverAndReturn()
 		{
 			MockRepository mocks = new MockRepository();
@@ -18,18 +17,15 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			Log log = new Log(null, eventLogMock, "MOCK", true, false);
 
 			Expect.Call(eventLogMock.WriteLog(EventLogEntryType.SuccessAudit, "MOCK", null, null, 0)).Return(true);
-			//Actually I don't expect this one. But Repeat.Never() doesn't work.
-			Expect.Call(eventLogMock.WriteLog(EventLogEntryType.FailureAudit, "MOCK", null, null, 0))
-				.Repeat.Never().Return(true);
-			mocks.ReplayAll();
-
-			log.Audit(AuditOptions.Succes, null, null,null, 0);
-			mocks.VerifyAll();
+			
+			Assert.Throws<InvalidOperationException>(
+				"After specifying Repeat.Never(), you cannot specify a return value, exception to throw or an action to execute",
+				() => Expect.Call(eventLogMock.WriteLog(EventLogEntryType.FailureAudit, "MOCK", null, null, 0))
+				.Repeat.Never().Return(true));
 		}
 
 		//This is exactly like the one above, but the calls to repeat and return are reverse
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), "After specifying Repeat.Never(), you cannot specify a return value, exception to throw or an action to execute")]
+		[Fact]
 		public void GoodExplanationForUsingReturnAndRepeatNever()
 		{
 			MockRepository mocks = new MockRepository();
@@ -37,13 +33,10 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			Log log = new Log(null, eventLogMock, "MOCK", true, false);
 
 			Expect.Call(eventLogMock.WriteLog(EventLogEntryType.SuccessAudit, "MOCK", null, null, 0)).Return(true);
-			//Actually I don't expect this one. But Repeat.Never() doesn't work.
-			Expect.Call(eventLogMock.WriteLog(EventLogEntryType.FailureAudit, "MOCK", null, null, 0))
-				.Return(true).Repeat.Never();
-			mocks.ReplayAll();
-
-			log.Audit(AuditOptions.Succes, null, null, null, 0);
-			mocks.VerifyAll();
+			Assert.Throws<InvalidOperationException>(
+				"After specifying Repeat.Never(), you cannot specify a return value, exception to throw or an action to execute",
+				() => Expect.Call(eventLogMock.WriteLog(EventLogEntryType.FailureAudit, "MOCK", null, null, 0))
+				.Return(true).Repeat.Never());
 		}
 	}
 

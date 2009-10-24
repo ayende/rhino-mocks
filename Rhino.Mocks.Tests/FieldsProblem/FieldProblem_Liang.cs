@@ -28,7 +28,7 @@
 
 
 using System;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
@@ -88,26 +88,24 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 		}
 	}
 
-	[TestFixture]
-	public class PresenterBaseTestFixture
+	
+	public class PresenterBaseTestFixture  : IDisposable
 	{
 		private MockRepository mocks;
 		private IView viewMocks;
 
-		[SetUp]
-		public void SetUp()
+		public PresenterBaseTestFixture()
 		{
 			mocks = new MockRepository();
 			viewMocks = (IView) mocks.DynamicMock(typeof (IView));
 		}
 
-		[TearDown]
-		public void TearDown()
+		public void Dispose()
 		{
 			mocks.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void TestEventInitialization()
 		{
 			viewMocks.Init += null; //also set expectation

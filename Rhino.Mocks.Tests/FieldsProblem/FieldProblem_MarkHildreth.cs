@@ -4,16 +4,16 @@ using System.Text;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class FieldProblem_MarkHildreth
 	{
-		[Test]
+		[Fact]
 		public void CanStubMyEntity()
 		{
 			MyEntity stub = MockRepository.GenerateStub<MyEntity>();
-			Assert.IsNotNull(stub);
+			Assert.NotNull(stub);
 		}
 
 		public class Entity

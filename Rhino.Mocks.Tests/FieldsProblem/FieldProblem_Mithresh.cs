@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	using MbUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class FieldProblem_Mithresh
 	{
-		[Test]
+		[Fact]
 		public void TestOutMethod()
 		{
 
@@ -26,7 +26,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			using(mocks.Playback())
 			{
 				mockProxy.Addnumber(out intTest);
-				Assert.AreEqual(4, intTest);
+				Assert.Equal(4, intTest);
 			}
 
 		}

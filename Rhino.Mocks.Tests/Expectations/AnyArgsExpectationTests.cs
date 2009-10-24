@@ -31,14 +31,14 @@ using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
 using Castle.DynamicProxy;
-using MbUnit.Framework;
+using Xunit;
 using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Tests.Expectations
 {
-	[TestFixture]
+	
 	public class AnyArgsExpectationTests : AbstractExpectationTests
 	{
 		private ArgsEqualExpectation equal;
@@ -53,39 +53,38 @@ namespace Rhino.Mocks.Tests.Expectations
 		}
 
 
-		[SetUp]
-		public void SetUp()
+		public AnyArgsExpectationTests()
 		{
             method = typeof(int).GetMethod("CompareTo", new Type[] { typeof(object) });
 			equal = new ArgsEqualExpectation(new FakeInvocation(this.method), new object[] {1}, new Range(1, 1));
 			any = new AnyArgsExpectation(this.equal);
 		}
 
-		[Test]
+		[Fact]
 		public void AnyArgsExpectationReturnTrueForDifferentArgs()
 		{
-			Assert.IsFalse(equal.IsExpected(new object[0]));
-			Assert.IsTrue(any.IsExpected(new object[0]));
+			Assert.False(equal.IsExpected(new object[0]));
+			Assert.True(any.IsExpected(new object[0]));
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorMessageContainsAnyForParameters()
 		{
 			string IsExpected = "Int32.CompareTo(any);";
-			Assert.AreEqual(IsExpected, any.ErrorMessage);
+			Assert.Equal(IsExpected, any.ErrorMessage);
 		}
 
-		[Test]
+		[Fact]
 		public void AnyArgsIsNotEqualsToNonAnyArgsExpectation()
 		{
 			IExpectation other = new ArgsEqualExpectation(new FakeInvocation(method), new object[0], new Range(1, 1));
-			Assert.AreNotEqual(any, other );
+			Assert.NotEqual(any, other );
 		}
 
-		[Test]
+		[Fact]
 		public void AnyArgsEqualToAnyOtherAnyArgs()
 		{
-			Assert.AreEqual(any, new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1)));
+			Assert.Equal(any, new AnyArgsExpectation(new FakeInvocation(method), new Range(1, 1)));
 		}
 	}
 

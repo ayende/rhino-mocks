@@ -3,15 +3,14 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 	using System;
 	using System.Data;
 	using Exceptions;
-	using MbUnit.Framework;
+	using Xunit;
 	using Rhino.Mocks;
 
-	[TestFixture]
+	
 	public class FieldProblem_Andrew
 	{
 #if DOTNET35
-		[Test]
-		[ExpectedException((typeof(ExpectationViolationException)), "IDbCommand.set_Connection(null); Expected #1, Actual #0.")]
+		[Fact]
 		public void Will_get_unexpect_error()
 		{
 			var stubConnection = MockRepository.GenerateStub<IDbConnection>();
@@ -24,13 +23,13 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			try
 			{
 				executor.ExecuteNonQuery(mockCommand);
-				Assert.Fail("exception was expected");
+				Assert.False(true, "exception was expected");
 			}
 			catch (TestException)
 			{
 			}
 
-			mockCommand.VerifyAllExpectations();
+			Assert.Throws<ExpectationViolationException>("IDbCommand.set_Connection(null); Expected #1, Actual #0.", () => mockCommand.VerifyAllExpectations());
 		}
 #endif
 	}

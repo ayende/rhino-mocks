@@ -29,25 +29,24 @@
 
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using Xunit;
 
 namespace Rhino.Mocks.Tests.FieldsProblem
 {
 	using Castle.Core.Interceptor;
 	using Castle.DynamicProxy;
 
-	[TestFixture]
+	
 	public class FieldProblem_James
 	{
 		private MockRepository m_mockery;
 
-		[SetUp]
-		public void Setup()
+		public FieldProblem_James()
 		{
 			m_mockery = new MockRepository();
 		}
 
-		[Test]
+		[Fact]
 		public void ShouldBeAbleToMockGenericMethod()
 		{
 			ILookupMapper<int> mapper = m_mockery.StrictMock<ILookupMapper<int>>();
@@ -59,7 +58,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			m_mockery.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void ShouldBeAbleToMockGenericMethod2()
 		{
 			ILookupMapper<int> mapper = m_mockery.StrictMock<ILookupMapper<int>>();
@@ -70,7 +69,7 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			m_mockery.VerifyAll();
 		}
 
-		[Test]
+		[Fact]
 		public void CanMockMethodsReturnIntPtr()
 		{
 			IFooWithIntPtr mock = m_mockery.StrictMock<IFooWithIntPtr>();
@@ -82,17 +81,18 @@ namespace Rhino.Mocks.Tests.FieldsProblem
 			using(m_mockery.Playback())
 			{
 				IntPtr buffer = mock.Buffer(15);
-				Assert.AreEqual(IntPtr.Zero, buffer);
+				Assert.Equal(IntPtr.Zero, buffer);
 			}
 		}
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException),"Type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]' doesn't match the return type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[System.Int32]' for method 'ILookupMapper`1.FindOneFoo();'")]
+		[Fact]
 		public void ShouldGetValidErrorWhenGenericTypeMismatchOccurs()
 		{
 			ILookupMapper<int> mapper = m_mockery.StrictMock<ILookupMapper<int>>();
 			Foo<string> retval = new Foo<string>();
-			Expect.Call<object>(mapper.FindOneFoo()).Return(retval);
+			Assert.Throws<InvalidOperationException>(
+				"Type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]' doesn't match the return type 'Rhino.Mocks.Tests.FieldsProblem.Foo`1[System.Int32]' for method 'ILookupMapper`1.FindOneFoo();'",
+				() => Expect.Call<object>(mapper.FindOneFoo()).Return(retval));
 		}
 	}
 
