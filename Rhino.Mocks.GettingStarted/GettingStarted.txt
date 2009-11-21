@@ -1,0 +1,9 @@
+﻿This project was created to show users how RhinoMocks works in running code.  Tangible examples that teach the basics of mocking and get users familiar with the concepts of mocking and stubbing.
+
+If there are items you would like to see added here or explained more fully please post to the RhinoMocks discussion group:
+
+http://groups.google.com/group/RhinoMocks
+
+Cheers,
+
+Tim Barcz
