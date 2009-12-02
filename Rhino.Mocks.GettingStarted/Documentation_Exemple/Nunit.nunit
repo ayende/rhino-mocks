@@ -1,0 +1,22 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Release" />
+  <Config name="Release" binpathtype="Auto">
+    <assembly path="00-RhinoMocksIntroduction\00-RhinoMocksIntroduction\bin\Release\RhinoMocksIntroduction.dll" />
+    <assembly path="01-RhinoMocksGenerics\01-RhinoMocksGenerics\bin\Release\RhinoMocksGenerics.dll" />
+    <assembly path="02-RhinoMocksPartialMocks\02-RhinoMocksPartialMocks\bin\Release\RhinoMocksPartialMocks.dll" />
+    <assembly path="03-RhinoMocksStubs\03-RhinoMocksStubs\bin\Release\RhinoMocksStubs.dll" />
+    <assembly path="04-RhinoMocksOrderedUnordered\04-RhinoMocksOrderedUnordered\bin\Release\RhinoMocksOrderedUnordered.dll" />
+    <assembly path="05-RhinoMocksMockingDelegates\05-RhinoMocksMockingDelegates\bin\Release\RhinoMockDelegates.dll" />
+    <assembly path="06-RhinoMocksEvents\06-RhinoMocksEvents\bin\Release\RhinoMocksEvents.dll" />
+    <assembly path="07-RhinoMocksIEventRaiser\07-RhinoMocksIEventRaiser\bin\Release\RhinoMocksIEventRaiser.dll" />
+    <assembly path="08-RhinoMocksProperties\08-RhinoMocksProperties\bin\Release\RhinoMocksProperties.dll" />
+    <assembly path="09-RhinoMocksTheDoHandler\09-RhinoMocksTheDoHandler\bin\Release\RhinoMocksTheDoHandler.dll" />
+    <assembly path="10-RhinoMocksConstraints\10-RhinoMocksConstraints\bin\Release\RhinoMocksConstraints.dll" />
+    <assembly path="11-RhinoMocksMethodOptions\11-RhinoMocksMethodOptions\bin\Release\RhinoMocksMethodOptions.dll" />
+    <assembly path="12-RhinoMocksSetupResult\12-RhinoMocksSetupResult\bin\Release\RhinoMocksSetupResult.dll" />
+    <assembly path="13-RhinoMocksMockingClasses\13-RhinoMocksMockingClasses\bin\Release\RhinoMocksMockingClasses.dll" />
+    <assembly path="14-RhinoMocksInternalMembers\14-RhinoMocksInternalMembers\bin\Release\RhinoMocksInternalMembers.dll" />
+    <assembly path="15-RhinoMocksRecordPlaybackSyntax\15-RhinoMocksRecordPlaybackSyntax\bin\Release\RhinoMocksRecordPlaybackSyntax.dll" />
+    <assembly path="16-RhinoMocksWithSyntax\16-RhinoMocksWithSyntax\bin\Release\RhinoMocksWithSyntax.dll" />
+  </Config>
+</NUnitProject>
