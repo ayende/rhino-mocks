@@ -1,4 +1,5 @@
-﻿namespace RhinoMocksIntroduction
+﻿using System;
+namespace RhinoMocksIntroduction
 {
     /// <summary>
     /// Minimum implementation to pass the test

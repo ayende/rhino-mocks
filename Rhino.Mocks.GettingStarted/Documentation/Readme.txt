@@ -1,8 +1,10 @@
 This solution contains samples for RhinoMock taken from the documentation :
 http://www.ayende.com/wiki/Rhino+Mocks+Documentation.ashx
 
-Lot of exemples writes in the documentation are taken from real project.
-For each one, I wrote the minimum implementation to compile and pass the test
+Lot of examples written in the documentation comes from real project.
+For every one, I wrote the minimum implementation to compile and pass the test.
+
+I wrote the implementation by using a syntax modern and the Arrange/Act/Assert pattern as well.
 
 The library used to compile the project are in the directory lib. Currently, it's :
 - nunit 2.5.2

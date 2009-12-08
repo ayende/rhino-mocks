@@ -41,6 +41,24 @@ namespace RhinoMocksMethodOptions
         }
 
         /// <summary>
+        /// The return value of a method, if it has one with AAA syntax.
+        /// </summary>
+        [Test]
+        public void setReturnValueOneMethod_AAA()
+        {
+            //Arrange
+            this.view.Replay();
+            this.view.Expect(v => view.Ask(null, null)).Return(null);           
+
+            //Act
+            object obj = this.view.Ask(null, null);
+
+            //Assert
+            Assert.AreEqual(null, obj);
+            this.view.VerifyAllExpectations();
+        }
+
+        /// <summary>
         /// The exception the method will throw:
         /// </summary>
         [Test]
@@ -54,6 +72,24 @@ namespace RhinoMocksMethodOptions
             view.Ask(null, null);
 
             mocks.VerifyAll();
+        }
+
+        /// <summary>
+        /// The exception the method will throw with AAA syntax
+        /// </summary>
+        [Test]
+        [ExpectedException(typeof(Exception))]
+        public void setThrowException_AAA()
+        {
+            //Arrange
+            this.view.Replay();
+            this.view.Expect(v => v.Ask(null, null)).Throw(new Exception("Demo"));
+
+            //Act
+            view.Ask(null, null);
+
+            //Assert
+            this.view.VerifyAllExpectations();
         }
 
         /// <summary>
@@ -73,6 +109,25 @@ namespace RhinoMocksMethodOptions
         }
 
         /// <summary>
+        /// The number of times this method is expected to repeat 
+        /// (there are a number of convenience methods there) with AAA syntax
+        /// </summary>
+        [Test]
+        public void setReturnValueTwice_AAA()
+        {
+            //Arrange
+            this.view.Replay();
+            this.view.Expect(v => v.Ask(null, null)).Return(null).Repeat.Twice();
+
+            //Act
+            this.view.Ask(null, null);
+            this.view.Ask(null, null);
+
+            //Assert
+            this.view.VerifyAllExpectations();
+        }
+
+        /// <summary>
         /// To ignore the method arguments:
         /// </summary>
         [Test]
@@ -85,6 +140,24 @@ namespace RhinoMocksMethodOptions
             Assert.AreEqual(null, view.Ask("1", null));
          
             mocks.VerifyAll();
+        }
+
+        /// <summary>
+        /// To ignore the method arguments with AAA
+        /// </summary>
+        [Test]
+        public void setReturnValueWhateverArguments_AAA()
+        {
+            //Assert
+            this.view.Replay();
+            this.view.Expect(v => v.Ask(null, null)).Return(null).IgnoreArguments();
+
+            //Act
+            object obj = this.view.Ask("1", null);
+
+            //Assert
+            Assert.AreEqual(null, obj);
+            this.view.VerifyAllExpectations();
         }
 
         /// <summary>
@@ -101,6 +174,25 @@ namespace RhinoMocksMethodOptions
             Assert.AreEqual(null, view.Ask("Someone", "MyText"));
 
             mocks.VerifyAll();
+        }
+
+        /// <summary>
+        /// To set the constraints of the method with AAA syntax
+        /// </summary>
+        [Test]
+        public void setReturnValueWithContraintsArguments_AAA()
+        {
+            //Arrange
+            this.view.Replay();
+            this.view.Expect(v =>v.Ask(null, null)).Return(null)
+                .Constraints(Rhino.Mocks.Constraints.Text.StartsWith("Some"), Rhino.Mocks.Constraints.Text.EndsWith("Text"));
+
+            //Act
+            object obj = view.Ask("Someone", "MyText");
+            
+            //Assert
+            Assert.AreEqual(null, obj);
+            this.view.VerifyAllExpectations();
         }
 
         /// <summary>
@@ -144,6 +236,24 @@ namespace RhinoMocksMethodOptions
         }
 
         /// <summary>
+        /// To emulate simple property accessors on a property:
+        /// </summary>
+        [Test]
+        public void emulateProperty_AAA()
+        {
+            //Arrange
+            this.view.Replay();
+            this.view.Expect(v => v.Name).PropertyBehavior();
+
+            //Act
+            view.Name = "Ayende";
+
+            //Assert
+            Assert.AreEqual("Ayende", view.Name);
+            this.view.VerifyAllExpectations();
+        }
+
+        /// <summary>
         /// Used as Delegate to controlProgrammaticallyReturn
         /// </summary>
         /// <param name="first"></param>
@@ -166,6 +276,27 @@ namespace RhinoMocksMethodOptions
             Assert.AreEqual("Ayende Rahien", view.Ask("Ayende", "Rahien"));
 
             mocks.VerifyAll();
+        }
+
+        /// <summary>
+        /// To control programmatically what the method call
+        /// will return or throw (see The Do() Handler)with AAA syntax
+        /// </summary>
+        [Test]
+        public void controlProgrammaticallyReturn_AAA()
+        {
+            //Arrange
+            this.view.Replay();
+            this.view.Expect(v => v.Ask(null, null)).
+                Do((ViewAskDelegate)delegate(string s1, string s2) { return s1 + " " + s2; }).
+                IgnoreArguments();
+
+            //Act
+            string sentence = view.Ask("Ayende", "Rahien").ToString();
+
+            //Assert
+            Assert.AreEqual("Ayende Rahien", sentence);
+            this.view.VerifyAllExpectations();
         }
     }
 }

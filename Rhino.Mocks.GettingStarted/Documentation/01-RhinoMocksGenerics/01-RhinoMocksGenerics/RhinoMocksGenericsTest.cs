@@ -20,11 +20,27 @@ namespace RhinoMocksGenerics
         {
             MockRepository mocks = new MockRepository();
             IList<int> list = mocks.StrictMock<IList<int>>();
-            Assert.IsNotNull(list);
+
             Expect.Call(list.Count).Return(5);
+
             mocks.ReplayAll();
             Assert.AreEqual(5, list.Count);
             mocks.VerifyAll();
+        }
+
+        [Test]
+        public void MockAGenericInterface_AAA()
+        {
+            //Arrange
+            IList<int> list = MockRepository.GenerateStrictMock<IList<int>>();
+            list.Expect(l => l.Count).Return(5);
+
+            //Act
+            int count = list.Count;
+
+            //Assert
+            Assert.AreEqual(5, count);
+            list.VerifyAllExpectations();
         } 
     }
 }

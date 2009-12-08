@@ -26,5 +26,25 @@ namespace RhinoMocksPartialMocks
             Assert.AreEqual(2, proc.Register);
             mocks.VerifyAll();
         }
+
+        [Test]
+        public void UsingPartialMocks_AAA()
+        {
+            //Arrange
+            ProcessorBase proc = MockRepository.GeneratePartialMock<ProcessorBase>();
+            proc.Expect(p => p.Add(1)).Return(1);
+            proc.Expect(p => p.Add(1)).Return(2);
+
+            //Act
+            proc.Inc();
+            int step1 = proc.Register;
+            proc.Inc();
+            int step2 = proc.Register;
+
+            //Assert
+            Assert.AreEqual(1, step1);
+            Assert.AreEqual(2, step2);
+            proc.VerifyAllExpectations();
+        }
     }
 }

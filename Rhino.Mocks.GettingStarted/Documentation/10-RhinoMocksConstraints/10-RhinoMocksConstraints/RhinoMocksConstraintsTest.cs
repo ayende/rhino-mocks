@@ -34,5 +34,24 @@ namespace RhinoMocksConstraints
 
             mocks.VerifyAll();
         }
+
+        [Test]
+        public void ConstraintsGroupingTest_AAA()
+        {
+            //Arrange
+            IValidationMessagesLogger loggerMock = MockRepository.GenerateMock<IValidationMessagesLogger>(null);
+
+            loggerMock.Expect(l => l.LogMessage(null)).IgnoreArguments().Constraints(
+                new PropertyConstraint("Text", Rhino.Mocks.Constraints.Text.Contains("Whoa!")) &&
+              Property.Value("MessageKind", ValidationMessageKind.Error))
+                .Repeat.Once();
+
+            //Act
+            IValidator Validator = new Validator();
+            Validator.Validate("input", loggerMock);//a validator that uses logger internally to log validation messages.
+
+            //Assert
+            loggerMock.VerifyAllExpectations();
+        }
     }
 }

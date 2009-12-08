@@ -58,5 +58,23 @@ namespace RhinoMocksTheDoHandler
             string actual = new Speaker("Ayende", "Rahien", nameSource).Introduce();
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void SayHelloWorld_AAA()
+        {
+            //Arrange
+            INameSource nameSource = MockRepository.GenerateStrictMock<INameSource>();
+            nameSource.Expect(n => n.CreateName(null, null)).IgnoreArguments().
+                Do(new NameSourceDelegate(Formal)); 
+
+            
+            //Act
+            string actual = new Speaker("Ayende", "Rahien", nameSource).Introduce();
+
+            //Assert
+            string expected = "Hi, my name is Ayende Rahien";
+            Assert.AreEqual(expected, actual);
+            nameSource.VerifyAllExpectations();
+        }
     }
 }

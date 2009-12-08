@@ -54,5 +54,27 @@ namespace RhinoMocksMockingClasses
             Assert.AreEqual(999, list.Capacity);
             mocks.VerifyAll(); ;
         }
+
+        /// <summary>
+        /// Use the generic StrictMock<>() if you are using .Net 2.0 or higher:
+        /// </summary>
+        [Test]
+        public void AbuseArrayList_UsingCreateMockGenerics_AAA()
+        {
+            //Arrange
+            ArrayList list = MockRepository.GenerateStrictMock<ArrayList>();
+
+            //Act
+            // Setup the expectation of a call on the mock
+            list.Expect(l => l.Capacity).Return(999);
+
+            int capacity = list.Capacity;
+
+            //Assert
+            // Evaluate the values from the mock
+            Assert.AreEqual(999, capacity);
+            list.VerifyAllExpectations();
+        }
+
     }
 }

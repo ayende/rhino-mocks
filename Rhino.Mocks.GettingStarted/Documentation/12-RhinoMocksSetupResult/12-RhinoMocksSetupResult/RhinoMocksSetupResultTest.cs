@@ -43,6 +43,6 @@ namespace RhinoMocksSetupResult
            demo.VoidNoArgs();
 
            mocks.VerifyAll();
-        } 
+        }
     }
 }

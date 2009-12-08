@@ -19,10 +19,10 @@ namespace RhinoMocksIntroduction
 
         public void TransferFunds(IBankAccount accountOne, IBankAccount accountTwo, int p)
         {
-            m_DatabaseManager.BeginTransaction();
-            accountOne.Withdraw(p);
-            accountTwo.Deposit(p);           
-            m_DatabaseManager.Dispose();
+            m_DatabaseManager.BeginTransaction();         
+            accountTwo.Deposit(p);
+            accountOne.Withdraw(p);            
+            m_DatabaseManager.Dispose();        
         }
     }
 }

@@ -15,7 +15,7 @@ namespace RhinoMocksStubs
     public class RhinoMocksStubsTest
     {
         /// <summary>
-        /// Wrong way to create a stub
+        /// Wrong way to create a stub, it's not a true test
         /// </summary>
         [Test]
         public void CreateAnimalStub()
@@ -29,22 +29,25 @@ namespace RhinoMocksStubs
         }
 
         /// <summary>
-        /// Good way to create a stub
+        /// Wrong way to create a stub with AAA method, it's not a true test
         /// </summary>
         [Test]
-        // Tests stub creation with the GenerateStub method
-        public void CreateAnimalStub_GenerateStub()
+        public void CreateAnimalStub_AAA()
         {
-            IAnimal animal = MockRepository.GenerateStub<IAnimal>();
-            animal.Name = "Snoopy";
-            Assert.AreEqual("Snoopy", animal.Name);
+            //Arrange
+            MockRepository mocks = new MockRepository();
+            IAnimal animal = MockRepository.GenerateMock<IAnimal>();
+            animal.Expect(a => a.Legs).PropertyBehavior();
+            animal.Expect(a => a.Eyes).PropertyBehavior();
+            animal.Expect(a => a.Name).PropertyBehavior();
+            animal.Expect(a => a.Species).PropertyBehavior();
         }
 
         /// <summary>
-        /// Second way by using object implementation in place of static one
+        /// Good way to create a stub using object implementation in place of static one
         /// </summary>
         [Test]
-        public void CreateAnimalStub_MockRepositoryStub()
+        public void CreateAnimalStub_GenerateStub()
         {
 
             MockRepository mocks = new MockRepository();
@@ -52,6 +55,22 @@ namespace RhinoMocksStubs
 
             animal.Name = "Snoopy";
 
+            Assert.AreEqual("Snoopy", animal.Name);
+        }
+
+        /// <summary>
+        /// Good way to create a stub with AAA methods
+        /// </summary>
+        [Test]
+        public void CreateAnimalStub_GenerateStub_AAA()
+        {
+            //Arrange
+            IAnimal animal = MockRepository.GenerateStub<IAnimal>();
+
+            //Act
+            animal.Name = "Snoopy";
+
+            //Assert
             Assert.AreEqual("Snoopy", animal.Name);
         }
     }

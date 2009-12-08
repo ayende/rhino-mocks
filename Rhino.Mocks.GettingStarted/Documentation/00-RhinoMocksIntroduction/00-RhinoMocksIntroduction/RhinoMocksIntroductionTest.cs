@@ -23,16 +23,38 @@ namespace RhinoMocksIntroduction
         public void SaveProjectAs_CanBeCanceled()
         {
             MockRepository mocks = new MockRepository();
-            IProjectView projectView = mocks.StrictMock<IProjectView>();
-
+            IProjectView view = mocks.StrictMock<IProjectView>();
             Project prj = new Project("Example Project");
-            IProjectPresenter presenter = new ProjectPresenter(prj, projectView);
-            Expect.Call(projectView.Title).Return(prj.Name);
-            Expect.Call(projectView.Ask(null, null)).Return(null);
+            IProjectPresenter presenter = new ProjectPresenter(prj, view);
+
+            Expect.Call(view.Title).Return(prj.Name);
+            Expect.Call(view.Ask(null, null)).Return("a");
 
             mocks.ReplayAll();
             Assert.IsFalse(presenter.SaveProjectAs());
             mocks.VerifyAll();
+        }
+
+        /// <summary>
+        /// This Test is the same than above using Arrange/Act/Assert pattern
+        /// </summary>
+        [Test]
+        public void SaveProjectAs_CanBeCanceled_AAA()
+        {
+            //Arrange
+            IProjectView view = MockRepository.GenerateStrictMock<IProjectView>();
+            Project prj = new Project("Example Project");
+            IProjectPresenter presenter = new ProjectPresenter(prj, view);
+
+            view.Expect(v => v.Title).Return(null);
+            view.Expect(v => v.Ask(Arg<string>.Is.Null, Arg<string>.Is.Null)).Return(null);
+
+            //Act
+            bool isProjectSave = presenter.SaveProjectAs();
+
+            //Assert
+            Assert.IsFalse(isProjectSave);
+            view.VerifyAllExpectations();
         }
 
         [Test]
@@ -48,13 +70,42 @@ namespace RhinoMocksIntroduction
         }
 
         [Test]
+        [ExpectedException(typeof(ExpectationViolationException),
+            ExpectedMessage = "IDemo.VoidNoArgs(); Expected #0, Actual #1.")]
+        public void MockObjectThrowsForUnexpectedCall_AAA()
+        {
+            //Arrange
+            IDemo demo = MockRepository.GenerateStrictMock<IDemo>();
+
+            //Act
+            demo.VoidNoArgs();
+
+            //Assert is a different, we expect an exception
+        }
+
+        [Test]
         public void DyamicMockAcceptUnexpectedCall()
         {
             MockRepository mocks = new MockRepository();
             IDemo demo = mocks.DynamicMock<IDemo>();
+
             mocks.ReplayAll();
             demo.VoidNoArgs();
+            Assert.Pass();
             mocks.VerifyAll();//works like a charm
+        }
+
+        [Test]
+        public void DyamicMockAcceptUnexpectedCall_AAA()
+        {
+            //Arrange
+            IDemo demo = MockRepository.GenerateMock<IDemo>();
+
+            //Act
+            demo.VoidNoArgs();
+
+            //Assert
+            Assert.Pass();
         }
     }
 }

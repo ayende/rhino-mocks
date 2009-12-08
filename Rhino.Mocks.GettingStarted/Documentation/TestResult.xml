@@ -1,19 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\Nunit.nunit" total="35" errors="1" failures="0" not-run="2" inconclusive="0" ignored="2" skipped="0" invalid="0" date="2009-11-29" time="16:09:25">
-  <environment nunit-version="2.5.2.9222" clr-version="2.0.50727.3603" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\fabien\programmation\csharp\tutorials\RhinoMocks\13-RhinoMocksMockingClasses\13-RhinoMocksMockingClasses\bin\Release" machine-name="TREVOR-FA454B09" user="Fabien" user-domain="TREVOR-FA454B09" />
+<test-results name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\Nunit.nunit" total="57" errors="1" failures="0" not-run="2" inconclusive="0" ignored="2" skipped="0" invalid="0" date="2009-12-06" time="21:06:13">
+  <environment nunit-version="2.5.2.9222" clr-version="2.0.50727.3603" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\fabien\programmation\csharp\tutorials\RhinoMocks" machine-name="TREVOR-FA454B09" user="Fabien" user-domain="TREVOR-FA454B09" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\Nunit.nunit" executed="True" success="False" time="2.156" asserts="0">
+  <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\Nunit.nunit" executed="True" success="False" time="2.625" asserts="0">
     <results>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\00-RhinoMocksIntroduction\00-RhinoMocksIntroduction\bin\Release\RhinoMocksIntroduction.dll" executed="True" success="True" time="0.438" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\00-RhinoMocksIntroduction\00-RhinoMocksIntroduction\bin\Release\RhinoMocksIntroduction.dll" executed="True" success="True" time="0.578" asserts="0">
         <results>
-          <test-suite name="RhinoMocksIntroduction" executed="True" success="True" time="0.438" asserts="0">
+          <test-suite name="RhinoMocksIntroduction" executed="True" success="True" time="0.578" asserts="0">
             <results>
-              <test-suite name="RhinoMocksIntroductionTest" executed="True" success="True" time="0.438" asserts="0">
+              <test-suite name="RhinoMocksIntroductionTest" executed="True" success="True" time="0.578" asserts="0">
                 <results>
-                  <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.DyamicMockAcceptUnexpectedCall" executed="True" success="True" time="0.313" asserts="0" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.DyamicMockAcceptUnexpectedCall" executed="True" success="True" time="0.422" asserts="0" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.DyamicMockAcceptUnexpectedCall_AAA" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.MockObjectThrowsForUnexpectedCall" executed="True" success="True" time="0.016" asserts="0" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.MockObjectThrowsForUnexpectedCall_AAA" executed="True" success="True" time="0.016" asserts="0" />
                   <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.SaveProjectAs_CanBeCanceled" executed="True" success="True" time="0.078" asserts="1" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksIntroductionTest.SaveProjectAs_CanBeCanceled_AAA" executed="True" success="True" time="0.016" asserts="1" />
                 </results>
               </test-suite>
             </results>
@@ -24,48 +27,51 @@
         <results>
           <test-suite name="RhinoMocksGenerics" executed="True" success="True" time="0.109" asserts="0">
             <results>
-              <test-suite name="RhinoMocksGenericsTest" executed="True" success="True" time="0.094" asserts="0">
+              <test-suite name="RhinoMocksGenericsTest" executed="True" success="True" time="0.109" asserts="0">
                 <results>
-                  <test-case name="RhinoMocksGenerics.RhinoMocksGenericsTest.MockAGenericInterface" executed="True" success="True" time="0.094" asserts="2" />
+                  <test-case name="RhinoMocksGenerics.RhinoMocksGenericsTest.MockAGenericInterface" executed="True" success="True" time="0.109" asserts="1" />
+                  <test-case name="RhinoMocksGenerics.RhinoMocksGenericsTest.MockAGenericInterface_AAA" executed="True" success="True" time="0.000" asserts="1" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\02-RhinoMocksPartialMocks\02-RhinoMocksPartialMocks\bin\Release\RhinoMocksPartialMocks.dll" executed="True" success="True" time="0.063" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\02-RhinoMocksPartialMocks\02-RhinoMocksPartialMocks\bin\Release\RhinoMocksPartialMocks.dll" executed="True" success="True" time="0.078" asserts="0">
         <results>
-          <test-suite name="RhinoMocksPartialMocks" executed="True" success="True" time="0.063" asserts="0">
+          <test-suite name="RhinoMocksPartialMocks" executed="True" success="True" time="0.078" asserts="0">
             <results>
               <test-suite name="RhinoMocksPartialMocksTest" executed="True" success="True" time="0.063" asserts="0">
                 <results>
                   <test-case name="RhinoMocksPartialMocks.RhinoMocksPartialMocksTest.UsingPartialMocks" executed="True" success="True" time="0.063" asserts="2" />
+                  <test-case name="RhinoMocksPartialMocks.RhinoMocksPartialMocksTest.UsingPartialMocks_AAA" executed="True" success="True" time="0.000" asserts="2" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\03-RhinoMocksStubs\03-RhinoMocksStubs\bin\Release\RhinoMocksStubs.dll" executed="True" success="True" time="0.094" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\03-RhinoMocksStubs\03-RhinoMocksStubs\bin\Release\RhinoMocksStubs.dll" executed="True" success="True" time="0.109" asserts="0">
         <results>
           <test-suite name="RhinoMocksStubs" executed="True" success="True" time="0.094" asserts="0">
             <results>
               <test-suite name="RhinoMocksStubsTest" executed="True" success="True" time="0.094" asserts="0">
                 <results>
                   <test-case name="RhinoMocksStubs.RhinoMocksStubsTest.CreateAnimalStub" executed="True" success="True" time="0.078" asserts="0" />
+                  <test-case name="RhinoMocksStubs.RhinoMocksStubsTest.CreateAnimalStub_AAA" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="RhinoMocksStubs.RhinoMocksStubsTest.CreateAnimalStub_GenerateStub" executed="True" success="True" time="0.016" asserts="1" />
-                  <test-case name="RhinoMocksStubs.RhinoMocksStubsTest.CreateAnimalStub_MockRepositoryStub" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksStubs.RhinoMocksStubsTest.CreateAnimalStub_GenerateStub_AAA" executed="True" success="True" time="0.000" asserts="1" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\04-RhinoMocksOrderedUnordered\04-RhinoMocksOrderedUnordered\bin\Release\RhinoMocksOrderedUnordered.dll" executed="True" success="False" time="0.391" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\04-RhinoMocksOrderedUnordered\04-RhinoMocksOrderedUnordered\bin\Release\RhinoMocksOrderedUnordered.dll" executed="True" success="False" time="0.500" asserts="0">
         <results>
-          <test-suite name="RhinoMocksIntroduction" executed="True" success="False" time="0.391" asserts="0">
+          <test-suite name="RhinoMocksIntroduction" executed="True" success="False" time="0.500" asserts="0">
             <results>
-              <test-suite name="RhinoMocksOrderedUnorderedTest" executed="True" success="False" time="0.359" asserts="0">
+              <test-suite name="RhinoMocksOrderedUnorderedTest" executed="True" success="False" time="0.500" asserts="0">
                 <results>
                   <test-case name="RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransactions" executed="True" success="False" time="0.219" asserts="0">
                     <failure>
@@ -79,45 +85,48 @@ at Rhino.Mocks.Impl.ReplayMockState.MethodCall(IInvocation invocation, MethodInf
 at Rhino.Mocks.MockRepository.MethodCall(IInvocation invocation, Object proxy, MethodInfo method, Object[] args)
 at Rhino.Mocks.Impl.RhinoInterceptor.Intercept(IInvocation invocation)
 at Castle.DynamicProxy.AbstractInvocation.Proceed()
-at IDatabaseManagerProxyd3a584443b5e4fbf8625dee03d317953.Dispose()
+at IDatabaseManagerProxy6639ed54be654b57adfada990da22b28.Dispose()
 at RhinoMocksIntroduction.Bank.TransferFunds(IBankAccount accountOne, IBankAccount accountTwo, Int32 p) in C:\fabien\programmation\csharp\tutorials\RhinoMocks\04-RhinoMocksOrderedUnordered\04-RhinoMocksOrderedUnordered\Implementation\Bank.cs:line 25
-at RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransactions() in C:\fabien\programmation\csharp\tutorials\RhinoMocks\04-RhinoMocksOrderedUnordered\04-RhinoMocksOrderedUnordered\RhinoMocksOrderedUnorderedTest.cs:line 79
+at RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransactions() in C:\fabien\programmation\csharp\tutorials\RhinoMocks\04-RhinoMocksOrderedUnordered\04-RhinoMocksOrderedUnordered\RhinoMocksOrderedUnorderedTest.cs:line 123
 ]]></stack-trace>
                     </failure>
                   </test-case>
-                  <test-case name="RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.SaveProjectAs_NewNameWithoutConflicts" executed="True" success="True" time="0.125" asserts="2" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransactions_AAA" executed="True" success="True" time="0.016" asserts="0" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.SaveProjectAs_NewNameWithoutConflicts" executed="True" success="True" time="0.141" asserts="2" />
+                  <test-case name="RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.SaveProjectAs_NewNameWithoutConflicts_AAA" executed="True" success="True" time="0.016" asserts="2" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\05-RhinoMocksMockingDelegates\05-RhinoMocksMockingDelegates\bin\Release\RhinoMockDelegates.dll" executed="True" success="True" time="0.078" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\05-RhinoMocksMockingDelegates\05-RhinoMocksMockingDelegates\bin\Release\RhinoMockDelegates.dll" executed="True" success="True" time="0.109" asserts="0">
         <results>
-          <test-suite name="RhinoMockDelegates" executed="True" success="True" time="0.078" asserts="0">
+          <test-suite name="RhinoMockDelegates" executed="True" success="True" time="0.109" asserts="0">
             <results>
-              <test-suite name="RhinoMocksMockingDelegatesTest" executed="True" success="True" time="0.078" asserts="0">
+              <test-suite name="RhinoMocksMockingDelegatesTest" executed="True" success="True" time="0.109" asserts="0">
                 <results>
-                  <test-case name="RhinoMockDelegates.RhinoMocksMockingDelegatesTest.GenericDelegate" executed="True" success="True" time="0.078" asserts="0" />
+                  <test-case name="RhinoMockDelegates.RhinoMocksMockingDelegatesTest.GenericDelegate" executed="True" success="True" time="0.063" asserts="0" />
+                  <test-case name="RhinoMockDelegates.RhinoMocksMockingDelegatesTest.GenericDelegate_AAA" executed="True" success="True" time="0.047" asserts="0" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\06-RhinoMocksEvents\06-RhinoMocksEvents\bin\Release\RhinoMocksEvents.dll" executed="True" success="True" time="0.125" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\06-RhinoMocksEvents\06-RhinoMocksEvents\bin\Release\RhinoMocksEvents.dll" executed="True" success="True" time="0.188" asserts="0">
         <results>
-          <test-suite name="RhinoMocksEvents" executed="True" success="True" time="0.125" asserts="0">
+          <test-suite name="RhinoMocksEvents" executed="True" success="True" time="0.188" asserts="0">
             <results>
-              <test-suite name="EventWasRaisedTest" executed="True" success="True" time="0.047" asserts="0">
+              <test-suite name="EventWasRaisedTest" executed="True" success="True" time="0.031" asserts="0">
                 <results>
-                  <test-case name="RhinoMocksEvents.EventWasRaisedTest.VerifyingThatAnEventWasFired" executed="True" success="True" time="0.047" asserts="0" />
+                  <test-case name="RhinoMocksEvents.EventWasRaisedTest.VerifyingThatAnEventWasFired" executed="True" success="True" time="0.031" asserts="0" />
                 </results>
               </test-suite>
-              <test-suite name="SubscribeToEventTest" executed="True" success="True" time="0.078" asserts="0">
+              <test-suite name="SubscribeToEventTest" executed="True" success="True" time="0.047" asserts="0">
                 <results>
                   <test-case name="RhinoMocksEvents.SubscribeToEventTest.VerifyingThatEventWasAttached" executed="True" success="True" time="0.047" asserts="0" />
-                  <test-case name="RhinoMocksEvents.SubscribeToEventTest.VerifyingThatEventWasAttached_AAA" executed="True" success="True" time="0.031" asserts="0" />
+                  <test-case name="RhinoMocksEvents.SubscribeToEventTest.VerifyingThatEventWasAttached_AAA" executed="True" success="True" time="0.000" asserts="0" />
                 </results>
               </test-suite>
             </results>
@@ -138,77 +147,89 @@ at RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransac
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\08-RhinoMocksProperties\08-RhinoMocksProperties\bin\Release\RhinoMocksProperties.dll" executed="True" success="True" time="0.266" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\08-RhinoMocksProperties\08-RhinoMocksProperties\bin\Release\RhinoMocksProperties.dll" executed="True" success="True" time="0.281" asserts="0">
         <results>
-          <test-suite name="RhinoMocksProperties" executed="True" success="True" time="0.266" asserts="0">
+          <test-suite name="RhinoMocksProperties" executed="True" success="True" time="0.281" asserts="0">
             <results>
-              <test-suite name="RhinoMocksPropertiesTest" executed="True" success="True" time="0.266" asserts="0">
+              <test-suite name="RhinoMocksPropertiesTest" executed="True" success="True" time="0.281" asserts="0">
                 <results>
-                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.PropertyBehaviorForSingleProperty" executed="True" success="True" time="0.047" asserts="49" />
+                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.PropertyBehaviorForSingleProperty" executed="True" success="True" time="0.031" asserts="49" />
+                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.PropertyBehaviorForSingleProperty_AAA" executed="True" success="True" time="0.000" asserts="49" />
                   <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.setPropertyExpectation" executed="True" success="True" time="0.125" asserts="0" />
-                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.setPropertyReturnValue" executed="True" success="True" time="0.094" asserts="1" />
+                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.setPropertyExpectation_AAA" executed="True" success="True" time="0.016" asserts="0" />
+                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.setPropertyReturnValue" executed="True" success="True" time="0.078" asserts="1" />
+                  <test-case name="RhinoMocksProperties.RhinoMocksPropertiesTest.setPropertyReturnValue_AAA" executed="True" success="True" time="0.000" asserts="1" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\09-RhinoMocksTheDoHandler\09-RhinoMocksTheDoHandler\bin\Release\RhinoMocksTheDoHandler.dll" executed="True" success="True" time="0.031" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\09-RhinoMocksTheDoHandler\09-RhinoMocksTheDoHandler\bin\Release\RhinoMocksTheDoHandler.dll" executed="True" success="True" time="0.078" asserts="0">
         <results>
-          <test-suite name="RhinoMocksTheDoHandler" executed="True" success="True" time="0.031" asserts="0">
+          <test-suite name="RhinoMocksTheDoHandler" executed="True" success="True" time="0.078" asserts="0">
             <results>
-              <test-suite name="RhinoMocksTheDoHandlerTest" executed="True" success="True" time="0.031" asserts="0">
+              <test-suite name="RhinoMocksTheDoHandlerTest" executed="True" success="True" time="0.063" asserts="0">
                 <results>
                   <test-case name="RhinoMocksTheDoHandler.RhinoMocksTheDoHandlerTest.SayHelloWorld" executed="True" success="True" time="0.031" asserts="1" />
+                  <test-case name="RhinoMocksTheDoHandler.RhinoMocksTheDoHandlerTest.SayHelloWorld_AAA" executed="True" success="True" time="0.016" asserts="1" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\10-RhinoMocksConstraints\10-RhinoMocksConstraints\bin\Release\RhinoMocksConstraints.dll" executed="True" success="True" time="0.047" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\10-RhinoMocksConstraints\10-RhinoMocksConstraints\bin\Release\RhinoMocksConstraints.dll" executed="True" success="True" time="0.063" asserts="0">
         <results>
-          <test-suite name="RhinoMocksConstraints" executed="True" success="True" time="0.047" asserts="0">
+          <test-suite name="RhinoMocksConstraints" executed="True" success="True" time="0.063" asserts="0">
             <results>
-              <test-suite name="RhinoMocksConstraintsTest" executed="True" success="True" time="0.047" asserts="0">
+              <test-suite name="RhinoMocksConstraintsTest" executed="True" success="True" time="0.063" asserts="0">
                 <results>
                   <test-case name="RhinoMocksConstraints.RhinoMocksConstraintsTest.ConstraintsGroupingTest" executed="True" success="True" time="0.047" asserts="0" />
+                  <test-case name="RhinoMocksConstraints.RhinoMocksConstraintsTest.ConstraintsGroupingTest_AAA" executed="True" success="True" time="0.016" asserts="0" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\11-RhinoMocksMethodOptions\11-RhinoMocksMethodOptions\bin\Release\RhinoMocksMethodOptions.dll" executed="True" success="True" time="0.094" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\11-RhinoMocksMethodOptions\11-RhinoMocksMethodOptions\bin\Release\RhinoMocksMethodOptions.dll" executed="True" success="True" time="0.125" asserts="0">
         <results>
-          <test-suite name="RhinoMocksMethodOptions" executed="True" success="True" time="0.094" asserts="0">
+          <test-suite name="RhinoMocksMethodOptions" executed="True" success="True" time="0.125" asserts="0">
             <results>
-              <test-suite name="RhinoMocksMethodOptionsTest" executed="True" success="True" time="0.078" asserts="0">
+              <test-suite name="RhinoMocksMethodOptionsTest" executed="True" success="True" time="0.109" asserts="0">
                 <results>
                   <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.callOriginalMethod" executed="False">
                     <reason>
                       <message><![CDATA[Not implemented]]></message>
                     </reason>
                   </test-case>
-                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.controlProgrammaticallyReturn" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.controlProgrammaticallyReturn" executed="True" success="True" time="0.016" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.controlProgrammaticallyReturn_AAA" executed="True" success="True" time="0.000" asserts="1" />
                   <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.emulateProperty" executed="True" success="True" time="0.016" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.emulateProperty_AAA" executed="True" success="True" time="0.000" asserts="1" />
                   <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueOneMethod" executed="True" success="True" time="0.000" asserts="1" />
-                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueTwice" executed="True" success="True" time="0.000" asserts="0" />
-                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueWhateverArguments" executed="True" success="True" time="0.016" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueOneMethod_AAA" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueTwice" executed="True" success="True" time="0.016" asserts="0" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueTwice_AAA" executed="True" success="True" time="0.000" asserts="0" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueWhateverArguments" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueWhateverArguments_AAA" executed="True" success="True" time="0.000" asserts="1" />
                   <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueWithCallbackMethod" executed="False">
                     <reason>
                       <message><![CDATA[Not implemented]]></message>
                     </reason>
                   </test-case>
                   <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueWithContraintsArguments" executed="True" success="True" time="0.000" asserts="1" />
-                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setThrowException" executed="True" success="True" time="0.000" asserts="0" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setReturnValueWithContraintsArguments_AAA" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setThrowException" executed="True" success="True" time="0.016" asserts="0" />
+                  <test-case name="RhinoMocksMethodOptions.RhinoMocksMethodOptionsTest.setThrowException_AAA" executed="True" success="True" time="0.000" asserts="0" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\12-RhinoMocksSetupResult\12-RhinoMocksSetupResult\bin\Release\RhinoMocksSetupResult.dll" executed="True" success="True" time="0.047" asserts="0">
+      <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\12-RhinoMocksSetupResult\12-RhinoMocksSetupResult\bin\Release\RhinoMocksSetupResult.dll" executed="True" success="True" time="0.063" asserts="0">
         <results>
           <test-suite name="RhinoMocksSetupResult" executed="True" success="True" time="0.047" asserts="0">
             <results>
@@ -225,10 +246,11 @@ at RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransac
         <results>
           <test-suite name="RhinoMocksMockingClasses" executed="True" success="True" time="0.016" asserts="0">
             <results>
-              <test-suite name="RhinoMocksMockingClassesTest" executed="True" success="True" time="0.000" asserts="0">
+              <test-suite name="RhinoMocksMockingClassesTest" executed="True" success="True" time="0.016" asserts="0">
                 <results>
                   <test-case name="RhinoMocksMockingClasses.RhinoMocksMockingClassesTest.AbuseArrayList_UsingCreateMockGenerics" executed="True" success="True" time="0.000" asserts="1" />
-                  <test-case name="RhinoMocksMockingClasses.RhinoMocksMockingClassesTest.AbuseArrayList_UsingGenerateStub" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksMockingClasses.RhinoMocksMockingClassesTest.AbuseArrayList_UsingCreateMockGenerics_AAA" executed="True" success="True" time="0.000" asserts="1" />
+                  <test-case name="RhinoMocksMockingClasses.RhinoMocksMockingClassesTest.AbuseArrayList_UsingGenerateStub" executed="True" success="True" time="0.016" asserts="1" />
                 </results>
               </test-suite>
             </results>
@@ -237,11 +259,11 @@ at RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransac
       </test-suite>
       <test-suite name="C:\fabien\programmation\csharp\tutorials\RhinoMocks\14-RhinoMocksInternalMembers\14-RhinoMocksInternalMembers\bin\Release\RhinoMocksInternalMembers.dll" executed="True" success="True" time="0.047" asserts="0">
         <results>
-          <test-suite name="RhinoMocksInternalMembers" executed="True" success="True" time="0.031" asserts="0">
+          <test-suite name="RhinoMocksInternalMembers" executed="True" success="True" time="0.047" asserts="0">
             <results>
-              <test-suite name="RhinoMocksInternalMembersTest" executed="True" success="True" time="0.031" asserts="0">
+              <test-suite name="RhinoMocksInternalMembersTest" executed="True" success="True" time="0.047" asserts="0">
                 <results>
-                  <test-case name="RhinoMocksInternalMembers.RhinoMocksInternalMembersTest.MockingInternalMethodsAndPropertiesOfInternalClass" executed="True" success="True" time="0.031" asserts="2" />
+                  <test-case name="RhinoMocksInternalMembers.RhinoMocksInternalMembersTest.MockingInternalMethodsAndPropertiesOfInternalClass" executed="True" success="True" time="0.047" asserts="2" />
                 </results>
               </test-suite>
             </results>
@@ -267,8 +289,8 @@ at RhinoMocksIntroduction.RhinoMocksOrderedUnorderedTest.MovingFundsUsingTransac
             <results>
               <test-suite name="RhinoMocksWithSyntaxTest" executed="True" success="True" time="0.078" asserts="0">
                 <results>
-                  <test-case name="RhinoMocksWithSyntax.RhinoMocksWithSyntaxTest.withSyntaxeTest" executed="True" success="True" time="0.047" asserts="1" />
-                  <test-case name="RhinoMocksWithSyntax.RhinoMocksWithSyntaxTest.withSyntaxeTest2" executed="True" success="True" time="0.031" asserts="1" />
+                  <test-case name="RhinoMocksWithSyntax.RhinoMocksWithSyntaxTest.withSyntaxeTest" executed="True" success="True" time="0.031" asserts="1" />
+                  <test-case name="RhinoMocksWithSyntax.RhinoMocksWithSyntaxTest.withSyntaxeTest2" executed="True" success="True" time="0.047" asserts="1" />
                 </results>
               </test-suite>
             </results>

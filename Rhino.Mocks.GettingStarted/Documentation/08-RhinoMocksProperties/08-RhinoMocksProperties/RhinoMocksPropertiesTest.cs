@@ -38,10 +38,22 @@ namespace RhinoMocksProperties
         }
 
         /// <summary>
-        /// This test doesnt compile. 
-        /// CreateType method is unknow and any resource about it is available on the net.
-        /// Perhaps, this method isn't support anymore
+        /// Here is how you set the return value for a get property:
         /// </summary>
+        [Test]
+        public void setPropertyReturnValue_AAA()
+        {
+            //Arrange
+            IList list = MockRepository.GenerateStrictMock<IList>();
+            list.Expect(l => l.Count).Return(42).Repeat.Any();
+
+            //Act
+            int count = list.Count;
+
+            //Assert
+            Assert.AreEqual(42, count);
+        }
+
         [Test]
         public void setPropertyExpectation()
         {
@@ -49,6 +61,22 @@ namespace RhinoMocksProperties
             ArrayList list = mocks.StrictMock<ArrayList>();//Capacity property doesn't exist in IList
             list.Capacity = 500;//Will create an expectation for this call
             LastCall.IgnoreArguments();//Ignore the amount that is passed.
+        }
+
+        [Test]
+        public void setPropertyExpectation_AAA()
+        {
+            //Arrange
+            ArrayList list = MockRepository.GenerateStrictMock<ArrayList>();//Capacity property doesn't exist in IList
+            //It's a strict mock, expectation must be param
+            list.Expect(l => l.Capacity = Arg<int>.Is.Anything);
+
+            //Act
+            list.Capacity = 100;
+
+            //Assert
+            list.AssertWasCalled(l => l.Capacity = Arg<int>.Is.Anything);
+            list.VerifyAllExpectations();
         }
 
         [Test]
@@ -69,6 +97,24 @@ namespace RhinoMocksProperties
             }
 
             mocks.VerifyAll();
+        }
+
+        [Test]
+        public void PropertyBehaviorForSingleProperty_AAA()
+        {
+
+            //Arrange
+            IDemo demo = MockRepository.GenerateStrictMock<IDemo>();
+            demo.Expect(d => d.Prop).PropertyBehavior();
+
+            //Act & Assert
+            for (int i = 0; i < 49; i++)
+            {
+                demo.Prop = "ayende" + i;
+                Assert.AreEqual("ayende" + i, demo.Prop);
+            }
+
+            demo.VerifyAllExpectations();
         }
     }
 }
