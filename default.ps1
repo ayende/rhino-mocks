@@ -51,6 +51,16 @@ task Init -depends Clean {
 		-version $version `
 		-clsCompliant "false" `
 		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+	
+	Generate-Assembly-Info `
+		-file "$base_dir\Rhino.Mocks.GettingStarted\Properties\AssemblyInfo.cs" `
+		-title "Rhino Mocks Tests $version" `
+		-description "Mocking Framework for .NET" `
+		-company "Hibernating Rhinos" `
+		-product "Rhino Mocks Tests $version" `
+		-version $version `
+		-clsCompliant "false" `
+		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
 		
 	new-item $release_dir -itemType directory 
 	new-item $buildartifacts_dir -itemType directory 
