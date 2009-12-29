@@ -2,7 +2,7 @@ properties {
   $base_dir  = resolve-path .
   $lib_dir = "$base_dir\SharedLibs"
   $build_dir = "$base_dir\build" 
-  $buildartifacts_dir = "$build_dir\" 
+  
   $sln_file = "$base_dir\Rhino.Mocks.sln" 
   $version = "3.6.0.0"
   $humanReadableversion = "3.6"
@@ -17,7 +17,7 @@ include .\psake_ext.ps1
 task default -depends Release
 
 task Clean { 
-  remove-item -force -recurse $buildartifacts_dir -ErrorAction SilentlyContinue 
+  remove-item -force -recurse $build_dir -ErrorAction SilentlyContinue 
   remove-item -force -recurse $release_dir -ErrorAction SilentlyContinue 
 } 
 
@@ -63,12 +63,12 @@ task Init -depends Clean {
 		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
 		
 	new-item $release_dir -itemType directory 
-	new-item $buildartifacts_dir -itemType directory 
+	new-item $build_dir -itemType directory 
 	cp $tools_dir\xUnit\*.* $build_dir
 } 
 
 task Compile -depends Init { 
-  & msbuild $sln_file /p:OutDir=$buildartifacts_dir /p:Configuration=Release
+  & msbuild "$sln_file" "/p:OutDir=$build_dir\\" /p:Configuration=Release
   if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute msbuild"
   }
