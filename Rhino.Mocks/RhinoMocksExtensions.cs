@@ -29,7 +29,6 @@
 #if DOTNET35
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Generated;
 using Rhino.Mocks.Interfaces;
