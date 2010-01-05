@@ -124,7 +124,7 @@ task Upload -depends Release {
     if($log -eq $null -or $log.Length -eq 0) {
       $log = git log -n 1 --oneline		
     }
-		&$uploader "$global:uploadCategory" "$release_dir\Rhino.Mocks-$humanReadableversion-Build-$env:ccnetnumericlabel.zip" "$log"
+		&$uploader "$uploadCategory" "$release_dir\Rhino.Mocks-$humanReadableversion-Build-$env:ccnetnumericlabel.zip" "$log"
 		
 		if ($lastExitCode -ne 0) {
       write-host "Failed to upload to S3: $lastExitCode"
