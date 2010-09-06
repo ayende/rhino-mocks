@@ -147,6 +147,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExpectationVerificationInformation.cs" />
+    <Compile Include="Impl\ConsoleLogger.cs" />
     <Compile Include="Impl\Invocation\Actions\HandleEvent.cs" />
     <Compile Include="Impl\Invocation\Actions\InvokeMethodAgainstMockedObject.cs" />
     <Compile Include="Impl\Invocation\Actions\InvokeProperty.cs" />
