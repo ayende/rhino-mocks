@@ -30,8 +30,6 @@
 using System;
 using System.Reflection;
 using Castle.Core.Interceptor;
-using Rhino.Mocks.Constraints;
-using Rhino.Mocks.Expectations;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;
 
@@ -175,7 +173,7 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 				} 
 				else
 				{
-					expectation = expectationBuilder.BuildDefaultExpectation(invocation, method, args);
+					expectation = expectationBuilder.BuildDefaultExpectation(invocation, method, args, GetDefaultCallCountRangeExpectation);
 				}
 				repository.Recorder.Record(mockedObject, method, expectation);
 				LastExpectation = expectation;
@@ -298,6 +296,15 @@ You can use the property directly to achieve the same result: mockObject.SomePro
             return new InvalidOperationException(string.Format("This action is invalid when the mock object {0}is in record state.", mockedTypes));
         }
 
+        /// <summary>
+        /// Get the default call count range expectation
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Range GetDefaultCallCountRangeExpectation()
+        {
+            return new Range(1, 1);
+        }
+
         #endregion
 
         #region Internal
@@ -313,44 +320,4 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 
         #endregion
 	}
-
-    /// <summary>
-    /// Responsible for building expectations
-    /// </summary>
-    public class ExpectationBuilder
-    {
-        public IExpectation BuildDefaultExpectation(IInvocation invocation, MethodInfo method, object[] args)
-        {
-            var parameters = method.GetParameters();
-            if (!Array.Exists(parameters, p => p.IsOut))
-            {
-                return new ArgsEqualExpectation(invocation, args, GetDefaultCallCountRangeExpectation());
-            }
-
-            //The value of an incoming out parameter variable is ignored
-            var constraints = new AbstractConstraint[parameters.Length];
-            for (var i = 0; i < parameters.Length; i++)
-            {
-                constraints[i] = parameters[i].IsOut ? Is.Anything() : Is.Equal(args[i]);
-            }
-            return new ConstraintsExpectation(invocation, constraints, GetDefaultCallCountRangeExpectation());
-        }
-
-        public IExpectation BuildParamExpectation(IInvocation invocation, MethodInfo method)
-        {
-            ArgManager.CheckMethodSignature(method);
-            var expectation = new ConstraintsExpectation(invocation, ArgManager.GetAllConstraints(), new Range(1, null));
-            expectation.OutRefParams = ArgManager.GetAllReturnValues();
-            return expectation;
-        }
-
-        /// <summary>
-        /// Get the default call count range expectation
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Range GetDefaultCallCountRangeExpectation()
-        {
-            return new Range(1, 1);
-        }
-    }
 }
