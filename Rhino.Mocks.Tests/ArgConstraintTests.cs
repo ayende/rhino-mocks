@@ -454,23 +454,48 @@ namespace Rhino.Mocks.Tests
             Assert.Equal(null, stub.GetUser(3));
         }
 
-        [Fact]
-        public void Can_use_partial_constraints_API()
-        {
-            // Arrange
-            var stub = MockRepository.GenerateStub<ITestService>();
-
-            stub.Stub(x => x.GetUserId(Arg<string>.Is.Equal("Tim"), "Barcz")).Return(12);
-
-            // Act & Assert
-            Assert.Equal(12, stub.GetUserId("Tim","Barcz"));
-
-        }
-
         public interface ITestService
         {
             string GetUser(long id);
             int GetUserId(string firstName, string lastName);
         }
 	}
+
+    public class ArgConstraintTests2
+    {
+
+        [Fact]
+        public void Can_use_partial_constraints_API()
+        {
+            // Arrange
+            var stub = MockRepository.GenerateStub<ITestService>();
+
+            //stub.Stub(x => x.GetUser(1)).Return("tim").Repeat.Once();
+            stub.Stub(x => x.GetUser(Arg<int>.Is.Anything)).Return("barcz");
+
+            
+            Console.WriteLine(stub.GetUser(1));
+            Console.WriteLine(stub.GetUser(1));
+
+            // stub.Stub(x => x.GetUserId("Tim", "Barcz")).Return(12);
+
+            //stub.Stub(x => 
+            //    x.GetUserId(
+            //        Arg<string>.Is.Equal("Tim"), 
+            //        "Barcz"))
+            //    .Return(12);
+
+            // Act & Assert
+            //Assert.Equal(12, stub.GetUserId("Tim","Barcz"));
+            //Assert.NotNull(stub);
+        }
+
+
+        public interface ITestService
+        {
+            string GetUser(long id);
+            int GetUserId(string firstName, string lastName);
+        }
+
+    }
 }
