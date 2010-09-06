@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rhino.Mocks.Expectations.AbstractExpectation" Collapsed="true">
+    <Position X="11.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAABAAYAoYgCLBAgAAoQCAEAgIAAIAAIABQPBQCJDQ=</HashCode>
+      <FileName>Expectations\AbstractExpectation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.ConstraintsExpectation" Collapsed="true">
+    <Position X="8" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAAAAAAgAAAAAAAAAAAAKAAAAAQAAAAAEA=</HashCode>
+      <FileName>Expectations\ConstraintsExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.AnyArgsExpectation" Collapsed="true">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAAAAAAgAAAAAAAAIAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expectations\AnyArgsExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.ArgsEqualExpectation" Collapsed="true">
+    <Position X="10.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAAAAAAgAAAAAAAAAAAEIAgAAAAIAAAAAA=</HashCode>
+      <FileName>Expectations\ArgsEqualExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rhino.Mocks.Expectations.CallbackExpectation" Collapsed="true">
+    <Position X="14.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQBAAAAAAIAAAAAAgAAAAAAAAAAAAIAAAEAAAAAAAAA=</HashCode>
+      <FileName>Expectations\CallbackExpectation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
