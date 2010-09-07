@@ -24,7 +24,7 @@ namespace Rhino.Mocks.Impl
 	    /// <param name="message">The message.</param>
 	    public void Log(string message)
 	    {
-	        WriteLine(message);
+	        Debug.WriteLine(message);
 	    }
 
 	    /// <summary>
