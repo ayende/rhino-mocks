@@ -14,6 +14,15 @@ namespace Rhino.Mocks.Impl
         #region IExpectationLogger Members
 
         /// <summary>
+        /// Logs the message
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public void Log(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        /// <summary>
         /// Logs the expectation as is was recorded
         /// </summary>
         /// <param name="invocation">The invocation.</param>

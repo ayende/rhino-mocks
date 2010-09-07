@@ -23,7 +23,17 @@ namespace Rhino.Mocks.Impl
 		{
 			this.writer = writer;
 		}
-		/// <summary>
+
+	    /// <summary>
+	    /// Logs the message
+	    /// </summary>
+	    /// <param name="message">The message.</param>
+	    public void Log(string message)
+	    {
+	        writer.WriteLine(message);
+	    }
+
+	    /// <summary>
 		/// Logs the expectation as it was recorded
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>
