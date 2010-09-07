@@ -175,6 +175,7 @@ You can use the property directly to achieve the same result: mockObject.SomePro
 				{
 					expectation = expectationBuilder.BuildDefaultExpectation(invocation, method, args, GetDefaultCallCountRangeExpectation);
 				}
+                RhinoMocks.Logger.Log(string.Format("{0} -> {1} ", expectation.ErrorMessage, expectation.GetType()));
 				repository.Recorder.Record(mockedObject, method, expectation);
 				LastExpectation = expectation;
 				methodCallsCount++;
