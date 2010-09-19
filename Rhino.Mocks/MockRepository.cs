@@ -785,7 +785,7 @@ namespace Rhino.Mocks
 
             object proxy;
 
-            ProxyInstance proxyInstance = new ProxyInstance(this, type);
+            ProxyInstance proxyInstance = new ProxyInstance(this);
             RhinoInterceptor interceptor = new RhinoInterceptor(this, proxyInstance,invocationVisitorsFactory.CreateStandardInvocationVisitors(proxyInstance, this));
 
             Type[] types = new Type[] { typeof(IMockedObject) };
