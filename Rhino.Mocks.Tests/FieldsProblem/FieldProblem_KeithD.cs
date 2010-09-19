@@ -1,10 +1,22 @@
 ﻿namespace Rhino.Mocks.Tests.FieldsProblem
 {
     using System;
+    using Rhino.Mocks.Interfaces;
     using Xunit;
 
     public class FieldProblem_KeithD
     {
+        [Fact]
+        public void ImplementedTypesOfTargetOfMockedDelegateDoesNotContainDelegateType()
+        {
+            var mockDelegate = MockRepository.GenerateMock<EventHandler>();
+
+            var mockTarget = mockDelegate.Target as IMockedObject;
+
+            Assert.NotNull(mockTarget);
+            Assert.DoesNotContain(typeof(EventHandler), mockTarget.ImplementedTypes);
+        }
+
         [Fact]
         public void CanStubReturningAnonymousDelegateTwice()
         {
