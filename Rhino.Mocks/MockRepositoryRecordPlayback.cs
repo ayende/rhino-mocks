@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 
 namespace Rhino.Mocks
 {
-	internal class PlaybackModeChanger : IDisposable
+	internal class PlaybackModeChanger : IModeChanger
 	{
 		private readonly MockRepository m_repository;
 
@@ -67,7 +67,7 @@ namespace Rhino.Mocks
 		}
 	}
 
-	internal class RecordModeChanger : IDisposable
+	internal class RecordModeChanger : IModeChanger
 	{
 		private readonly MockRepository m_repository;
 
@@ -83,4 +83,20 @@ namespace Rhino.Mocks
 			m_repository.ReplayAll();
 		}
 	}
+
+    ///<summary>
+    /// Interface which allows for the optional usage:
+    ///   using(mockRepository.Record()) {
+    ///      Expect.Call(mock.Method()).Return(retVal);
+    ///   }
+    ///   using(mockRepository.Playback()) {
+    ///      // Execute code
+    ///   }
+    /// N.B. mockRepository.ReplayAll() and mockRepository.VerifyAll()
+    ///      calls are taken care of by Record/Playback
+    ///</summary>
+    public interface IModeChanger : IDisposable
+    {
+        
+    }
 }
