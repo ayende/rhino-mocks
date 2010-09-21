@@ -31,36 +31,6 @@ using System.Runtime.InteropServices;
 
 namespace Rhino.Mocks
 {
-	///<summary>
-	/// Adds optional new usage:
-	///   using(mockRepository.Record()) {
-	///      Expect.Call(mock.Method()).Return(retVal);
-	///   }
-	///   using(mockRepository.Playback()) {
-	///      // Execute code
-	///   }
-	/// N.B. mockRepository.ReplayAll() and mockRepository.VerifyAll()
-	///      calls are taken care of by Record/Playback
-	///</summary>
-	public partial class MockRepository
-	{
-		///<summary>
-		///</summary>
-		///<returns></returns>
-		public IDisposable Record()
-		{
-			return new RecordModeChanger(this);
-		}
-
-		///<summary>
-		///</summary>
-		///<returns></returns>
-		public IDisposable Playback()
-		{
-			return new PlaybackModeChanger(this);
-		}
-	}
-
 	internal class PlaybackModeChanger : IDisposable
 	{
 		private readonly MockRepository m_repository;
