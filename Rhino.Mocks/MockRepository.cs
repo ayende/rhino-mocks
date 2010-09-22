@@ -1285,7 +1285,7 @@ namespace Rhino.Mocks
         ///<summary>
         ///</summary>
         ///<returns></returns>
-        public IDisposable Record()
+        public IModeChanger Record()
         {
             return new RecordModeChanger(this);
         }
@@ -1293,7 +1293,7 @@ namespace Rhino.Mocks
         ///<summary>
         ///</summary>
         ///<returns></returns>
-        public IDisposable Playback()
+        public IModeChanger Playback()
         {
             return new PlaybackModeChanger(this);
         }
