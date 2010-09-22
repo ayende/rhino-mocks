@@ -855,11 +855,7 @@ namespace Rhino.Mocks
         /// </summary>
         protected internal static IMockedObject GetMockedObject(object mockedInstance)
         {
-            IMockedObject mockedObj = GetMockedObjectOrNull(mockedInstance);
-            if (mockedObj == null)
-                throw new InvalidOperationException("The object '" + mockedInstance +
-                                                    "' is not a mocked object.");
-            return mockedObj;
+            return mockedInstance.AsMockObject();
         }
 
         /// <summary>
@@ -869,26 +865,7 @@ namespace Rhino.Mocks
         /// </summary>
         protected internal static IMockedObject GetMockedObjectOrNull(object mockedInstance)
         {
-            Delegate mockedDelegate = mockedInstance as Delegate;
-
-            if (mockedDelegate != null)
-            {
-                mockedInstance = mockedDelegate.Target;
-            }
-
-            // must be careful not to call any methods on mocked objects,
-            // or it may cause infinite recursion
-            if (mockedInstance is IMockedObject)
-            {
-                return (IMockedObject)mockedInstance;
-            }
-
-            if (RemotingMockGenerator.IsRemotingProxy(mockedInstance))
-            {
-                return RemotingMockGenerator.GetMockedObjectFromProxy(mockedInstance);
-            }
-
-            return null;
+            return mockedInstance.AsMockObjectOrNull();
         }
 
         /// <summary>Pops the recorder.</summary>
