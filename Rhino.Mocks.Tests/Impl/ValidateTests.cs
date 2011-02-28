@@ -36,7 +36,64 @@ namespace Rhino.Mocks.Tests.Impl
 {
 	
 	public class ValidateTests
-	{
+    {
+        private class AllObjectsCreatedEqualEqualityComparerImpl : IEqualityComparer
+        {
+            #region Implementation of IEqualityComparer
+
+            /// <summary>
+            /// Determines whether the specified objects are equal.
+            /// </summary>
+            /// <returns>
+            /// true if the specified objects are equal; otherwise, false.
+            /// </returns>
+            /// <param name="x">The first object to compare.
+            ///                 </param><param name="y">The second object to compare.
+            ///                 </param><exception cref="T:System.ArgumentException"><paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other.
+            ///                 </exception>
+            public bool Equals(object x, object y)
+            {
+                return true;
+            }
+
+            /// <summary>
+            /// Returns a hash code for the specified object.
+            /// </summary>
+            /// <returns>
+            /// A hash code for the specified object.
+            /// </returns>
+            /// <param name="obj">The <see cref="T:System.Object"/> for which a hash code is to be returned.
+            ///                 </param><exception cref="T:System.ArgumentNullException">The type of <paramref name="obj"/> is a reference type and <paramref name="obj"/> is null.
+            ///                 </exception>
+            public int GetHashCode(object obj)
+            {
+                throw new NotImplementedException();
+            }
+
+            #endregion
+        }
+
+        [Fact]
+        public void ValidateUseEqualityComparerIfNotNull()
+        {
+            string string1 = "string1";
+            string string2 = "string2";
+
+            Assert.False(Validate.AreEqual(string1, string2));
+
+            try
+            {
+                // Implementation isn't important here. Just want to know that it gets called
+                Validate.EqualityComparer = new AllObjectsCreatedEqualEqualityComparerImpl();
+
+                Assert.True(Validate.AreEqual(string1, string2));
+            }
+            finally
+            {
+                Validate.EqualityComparer = null;
+            }
+        }
+
 		[Fact]
 		public void IsNotNullWhenNotNull()
 		{
