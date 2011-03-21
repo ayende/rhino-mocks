@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks.Tests", "Rhino.Mocks.Tests\Rhino.Mocks.Tests.csproj", "{C63839EC-BEF3-4DCD-BE23-B6DA21E8BE20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Mocks", "Rhino.Mocks\Rhino.Mocks.csproj", "{1E8FECC7-9E9B-4275-A938-D956F5E5D4F8}"
