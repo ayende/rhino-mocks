@@ -30,7 +30,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
