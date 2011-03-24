@@ -778,21 +778,17 @@ namespace Rhino.Mocks
             if (typeof (Delegate).Equals(type))
                 throw new InvalidOperationException("Cannot mock the Delegate base type.");
 
-            object proxy;
-
             var proxyInstance = new ProxyInstance(this, type);
             var interceptor = new RhinoInterceptor(this, proxyInstance, invocationVisitorsFactory.CreateStandardInvocationVisitors(proxyInstance, this));
 
             var types = new[] {typeof (IMockedObject)};
             var delegateTargetInterface = delegateTargetInterfaceCreator.GetDelegateTargetInterface(type);
-            object target = GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(
-                delegateTargetInterface,
-                types, proxyGenerationOptions, interceptor);
+            var target = GetProxyGenerator(type).CreateInterfaceProxyWithoutTarget(delegateTargetInterface, types, proxyGenerationOptions, interceptor);
 
-            proxy = Delegate.CreateDelegate(type, target, delegateTargetInterface.Name + ".Invoke");
+            object proxy = Delegate.CreateDelegate(type, target, "Invoke");
             delegateProxies.Add(target, proxy);
 
-            IMockState value = mockStateFactory(GetMockedObject(proxy));
+            var value = mockStateFactory(GetMockedObject(proxy));
             proxies.Add(proxy, value);
             return proxy;
         }
