@@ -92,7 +92,6 @@ task Merge {
 	Rename-Item $build_dir\Rhino.Mocks.dll Rhino.Mocks.Partial.dll
 	
 	& $tools_dir\ILMerge.exe Rhino.Mocks.Partial.dll `
-		Castle.DynamicProxy2.dll `
 		Castle.Core.dll `
 		/out:Rhino.Mocks.dll `
 		/t:library `
