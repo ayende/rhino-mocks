@@ -111,7 +111,7 @@ namespace Rhino.Mocks.Impl
 			List<string> errors = new List<string>();
 			for (int i = 0; i < parameterInfos.Length; i++)
 			{
-				if ((args[i] == null && parameterInfos[i].ParameterType.IsValueType) ||
+                if ((args[i] == null && !NullIsValidValueFor(parameterInfos[i].ParameterType)) ||
 					(args[i] != null && parameterInfos[i].ParameterType.IsInstanceOfType(args[i])==false))
 				{
 					string type = "null";
@@ -127,7 +127,18 @@ namespace Rhino.Mocks.Impl
 			}
 		}
 
-		/// <summary>
+	    private static bool NullIsValidValueFor(Type type)
+	    {
+            if (!type.IsValueType)
+                return true;
+
+            if (Nullable.GetUnderlyingType(type) != null)
+                return true;
+
+	        return false;
+	    }
+
+	    /// <summary>
 		/// The most common signature for events
 		/// Here to allow intellisense to make better guesses about how 
 		/// it should suggest parameters.
