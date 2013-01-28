@@ -308,7 +308,7 @@ You can use the property directly to achieve the same result: mockObject.SomePro
             AbstractConstraint[] constraints = new AbstractConstraint[parameters.Length];
             for (int i = 0; i < parameters.Length; i++)
             {
-                constraints[i] = parameters[i].IsOut ? Is.Anything() : Is.Equal(args[i]);
+				constraints[i] = parameters[i].IsOut && !parameters[i].IsIn ? Is.Anything() : Is.Equal(args[i]);
             }
             return new ConstraintsExpectation(invocation, constraints, GetDefaultCallCountRangeExpectation());
         }
