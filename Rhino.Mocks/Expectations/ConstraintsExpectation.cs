@@ -52,7 +52,7 @@ namespace Rhino.Mocks.Expectations
         /// <param name="expectedRange">Number of method calls for this expectations</param>
 		public ConstraintsExpectation(IInvocation invocation,AbstractConstraint[] constraints, Range expectedRange) : base(invocation, expectedRange)
 		{
-			Validate.IsNotNull(constraints, "constraints");
+            Validate.IsNotNull(()=>constraints);
 			this.constraints = constraints;
 			ConstraintsMatchMethod();
 		}
@@ -64,7 +64,7 @@ namespace Rhino.Mocks.Expectations
 		/// <param name="constraints">Constraints.</param>
 		public ConstraintsExpectation(IExpectation expectation, AbstractConstraint[] constraints) : base(expectation)
 		{
-			Validate.IsNotNull(constraints, "constraints");
+			Validate.IsNotNull(() => constraints);
 			this.constraints = constraints;
 			ConstraintsMatchMethod();
 		}

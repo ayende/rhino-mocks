@@ -1,3 +1,4 @@
+using System;
 using Castle.Core.Interceptor;
 using Rhino.Mocks.Interfaces;
 
@@ -8,7 +9,15 @@ namespace Rhino.Mocks.Impl
 	/// </summary>
 	public class NullLogger : IExpectationLogger
 	{
-		/// <summary>
+	    /// <summary>
+	    /// Logs the message
+	    /// </summary>
+	    /// <param name="message">The message.</param>
+	    public void Log(string message)
+	    {
+	    }
+
+	    /// <summary>
 		/// Logs the expectation as is was recorded
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>

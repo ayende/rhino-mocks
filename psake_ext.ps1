@@ -14,7 +14,8 @@ param(
 	[string]$product, 
 	[string]$copyright, 
 	[string]$version,
-	[string]$file = $(throw "file is a required parameter.")
+	[string]$file = $(throw "file is a required parameter."),
+	[string]$internalsVisibleTo
 )
   $commit = Get-Git-Commit
   $asmInfo = "using System;
@@ -33,6 +34,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyInformationalVersionAttribute(""$version / $commit"")]
 [assembly: AssemblyFileVersionAttribute(""$version"")]
 [assembly: AssemblyDelaySignAttribute(false)]
+[assembly: InternalsVisibleTo(""$internalsVisibleTo"")]
 "
 
 	$dir = [System.IO.Path]::GetDirectoryName($file)

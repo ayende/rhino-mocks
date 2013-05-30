@@ -51,6 +51,16 @@ namespace Rhino.Mocks.Tests.Impl
 				() => Validate.IsNotNull(null, "test"));
 		}
 
+        [Fact]
+        public void IsNotNull_throws_exception_when_argument_is_null()
+        {
+            string sample = null;
+
+            Assert.Throws<ArgumentNullException>(
+                "Value cannot be null.\r\nParameter name:sample",
+                () => Validate.IsNotNull(() => sample));
+        }
+
 		[Fact]
 		public void ArgsEqualWhenNoArgs()
 		{

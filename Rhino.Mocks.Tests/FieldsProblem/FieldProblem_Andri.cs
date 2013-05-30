@@ -1,4 +1,4 @@
-#region license
+﻿#region license
 // Copyright (c) 2005 - 2007 Ayende Rahien (ayende@ayende.com)
 // All rights reserved.
 // 
@@ -25,42 +25,44 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
-
-using Castle.Core.Interceptor;
-
-namespace Rhino.Mocks.Interfaces
+namespace Rhino.Mocks.Tests.FieldsProblem
 {
-	/// <summary>
-	/// Log expectations - allows to see what is going on inside Rhino Mocks
-	/// </summary>
-	public interface IExpectationLogger
+	using System;
+	using Xunit;
+	using Rhino.Mocks.Constraints;
+
+	
+	public class FieldProblem_Andri
 	{
+		public class AndriTest
+		{
+			/// <summary>
+			/// The value of a variable used as a ref parameter should be used as a constraint on an expectation
+			/// even when if it is marked with an InteropServices.OutAttribute
+			/// </summary>
+			[Fact]
+			public void OutByRefTest()
+			{
+				MockRepository mockery = new MockRepository();
+				IFoo mockFoo = mockery.StrictMock<IFoo>();
+				int three = 3;
+				int six = 6;
+				using (mockery.Record())
+				{
+					SetupResult.For(mockFoo.foo(ref three)).OutRef(six).Return(true);
+				}
 
-	    /// <summary>
-	    /// Logs the message
-	    /// </summary>
-	    /// <param name="message">The message.</param>
-	    void Log(string message);
+				Assert.Throws<Rhino.Mocks.Exceptions.ExpectationViolationException>(() => mockFoo.foo(ref six));
+			}
+		}
 
-		/// <summary>
-		/// Logs the expectation as is was recorded
-		/// </summary>
-		/// <param name="invocation">The invocation.</param>
-		/// <param name="expectation">The expectation.</param>
-		void LogRecordedExpectation(IInvocation invocation, IExpectation expectation);
+		#region Nested type: IFoo
 
-		/// <summary>
-		/// Logs the expectation as it was recorded
-		/// </summary>
-		/// <param name="invocation">The invocation.</param>
-		/// <param name="expectation">The expectation.</param>
-		void LogReplayedExpectation(IInvocation invocation, IExpectation expectation);
+		public interface IFoo
+		{
+			bool foo([System.Runtime.InteropServices.Out] [System.Runtime.InteropServices.In] ref int fooSquared);
+		}
 
-		/// <summary>
-		/// Logs the unexpected method call.
-		/// </summary>
-		/// <param name="invocation">The invocation.</param>
-		/// <param name="message">The message.</param>
-		void LogUnexpectedMethodCall(IInvocation invocation, string message);
+		#endregion
 	}
 }
