@@ -32,7 +32,7 @@ namespace Rhino.Mocks.Impl
             var constraints = new AbstractConstraint[parameters.Length];
             for (var i = 0; i < parameters.Length; i++)
             {
-                constraints[i] = parameters[i].IsOut ? Is.Anything() : Is.Equal(args[i]);
+                constraints[i] = parameters[i].IsOut && !parameters[i].IsIn ? Is.Anything() : Is.Equal(args[i]);
             }
             return new ConstraintsExpectation(invocation, constraints, callCallRangeExpectation());
         }
