@@ -28,7 +28,9 @@
 
 
 using System;
+using System.Linq.Expressions;
 using Rhino.Mocks.Interfaces;
+using System.Reflection;
 using System.Collections;
 
 namespace Rhino.Mocks.Impl
@@ -52,6 +54,27 @@ namespace Rhino.Mocks.Impl
 			if (obj == null)
 				throw new ArgumentNullException(name);
 		}
+
+        /// <summary>
+        /// Validates that the passed argument is not null
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reference">The reference.</param>
+        public static void IsNotNull<T>(Expression<Func<T>> reference)
+        {
+            if (reference.Body.GetConstantValue<T>() == null) throw new ArgumentNullException(GetParameterName(reference));
+        }
+
+        /// <summary>
+        /// Validates that the passed argument is not null
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reference">The reference.</param>
+        /// <param name="message">The message.</param>
+        public static void IsNotNull<T>(Expression<Func<T>> reference, string message)
+        {
+            if (reference.Body.GetConstantValue<T>() == null) throw new ArgumentNullException(GetParameterName(reference), message);
+        }
 
 		/// <summary>
 		/// Validate that the arguments are equal.
@@ -133,6 +156,31 @@ namespace Rhino.Mocks.Impl
             //otherwise we get into endless loop.
             return MockedObjectsEquality.Instance.Equals(expected,actual);
         }
+
+        private static string GetParameterName(Expression reference)
+        {
+            var lambda = reference as LambdaExpression;
+            var member = lambda.Body as MemberExpression;
+
+            return member.Member.Name;
+        }
+
+        private static T GetConstantValue<T>(this Expression expression)
+        {
+            if (expression.NodeType == ExpressionType.Constant)
+                return (T)(((ConstantExpression)expression).Value);
+
+            if (expression.NodeType == ExpressionType.MemberAccess)
+            {
+                var memberExpr = (MemberExpression)expression;
+                var memberInfo = memberExpr.Member as FieldInfo;
+                if (memberInfo != null)
+                    return (T)memberInfo.GetValue(memberExpr.Expression.GetConstantValue<object>());
+            }
+
+            return Expression.Lambda<Func<T>>(Expression.Convert(expression, typeof(T)), new ParameterExpression[0]).Compile()();
+        }
+
 		#endregion
 	}
 }

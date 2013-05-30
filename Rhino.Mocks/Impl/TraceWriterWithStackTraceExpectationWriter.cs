@@ -1,3 +1,5 @@
+using System;
+
 namespace Rhino.Mocks.Impl
 {
 	using System.Diagnostics;
@@ -16,7 +18,16 @@ namespace Rhino.Mocks.Impl
 		/// </summary>
 		public TextWriter AlternativeWriter;
 
-		/// <summary>
+	    /// <summary>
+	    /// Logs the message
+	    /// </summary>
+	    /// <param name="message">The message.</param>
+	    public void Log(string message)
+	    {
+	        Debug.WriteLine(message);
+	    }
+
+	    /// <summary>
 		/// Logs the expectation as is was recorded
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>

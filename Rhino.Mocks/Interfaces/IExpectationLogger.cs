@@ -35,6 +35,13 @@ namespace Rhino.Mocks.Interfaces
 	/// </summary>
 	public interface IExpectationLogger
 	{
+
+	    /// <summary>
+	    /// Logs the message
+	    /// </summary>
+	    /// <param name="message">The message.</param>
+	    void Log(string message);
+
 		/// <summary>
 		/// Logs the expectation as is was recorded
 		/// </summary>
