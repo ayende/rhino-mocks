@@ -28,7 +28,7 @@
 
 
 using System;
-using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 
 namespace Rhino.Mocks.Utilities
 {

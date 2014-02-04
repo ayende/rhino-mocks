@@ -26,13 +26,9 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-
-using System;
 using System.Reflection;
-using Castle.Core.Interceptor;
-using Rhino.Mocks.Interfaces;
-using Rhino.Mocks.Utilities;
 using Castle.DynamicProxy;
+using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl
 {

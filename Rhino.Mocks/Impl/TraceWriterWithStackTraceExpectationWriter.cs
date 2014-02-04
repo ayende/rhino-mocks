@@ -2,7 +2,7 @@ namespace Rhino.Mocks.Impl
 {
 	using System.Diagnostics;
 	using System.IO;
-	using Castle.Core.Interceptor;
+	using Castle.DynamicProxy;
 	using Interfaces;
 	using Utilities;
 

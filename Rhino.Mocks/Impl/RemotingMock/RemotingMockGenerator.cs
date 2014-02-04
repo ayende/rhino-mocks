@@ -2,7 +2,7 @@ namespace Rhino.Mocks.Impl.RemotingMock
 {
     using System;
     using Rhino.Mocks.Interfaces;
-    using Castle.Core.Interceptor;
+    using Castle.DynamicProxy;
 
     /// <summary>
     /// Generates remoting proxies and provides utility functions

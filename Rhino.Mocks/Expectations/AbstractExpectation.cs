@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using Rhino.Mocks.Utilities;

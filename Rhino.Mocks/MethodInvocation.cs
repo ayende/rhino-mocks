@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks

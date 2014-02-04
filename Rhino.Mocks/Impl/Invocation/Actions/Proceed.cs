@@ -1,4 +1,4 @@
-using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 using Rhino.Mocks.Interfaces;
 
 namespace Rhino.Mocks.Impl.Invocation.Actions

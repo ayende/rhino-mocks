@@ -29,7 +29,7 @@
 #endregion
 
 using System;
-using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 using Rhino.Mocks.Constraints;
 using System.Reflection;
 
