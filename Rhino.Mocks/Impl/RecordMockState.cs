@@ -208,7 +208,14 @@ You can use the property directly to achieve the same result: mockObject.SomePro
                         {
                             if (type == expectation.Method.ReturnType)
                             {
+
                                 returnValue = dependentMock.MockedObjectInstance;
+                                if (returnValue != null)
+                                {
+                                    object delegateInstance = repository.GetMockObjectFromInvocationProxy(returnValue);
+                                    if (delegateInstance != null)
+                                        returnValue = delegateInstance;
+                                }
                                 return true;
                             }
                         }
