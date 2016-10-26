@@ -89,4 +89,27 @@ namespace Rhino.Mocks.Constraints
 			return false;
 		}
 	}
+
+    ///<summary>
+    /// Interface for constraints that match a type
+    ///</summary>
+    ///<typeparam name="T">Type of the Argument</typeparam>
+    public abstract class AbstractConstraint<T> : AbstractConstraint
+    {
+        public override bool Eval(object obj)
+        {
+            if (obj is T)
+            {
+                return Eval((T) obj);
+            }
+            return false;
+        }
+
+        ///<summary>
+        /// Determines if the object pass the constraints
+        ///</summary>
+        ///<param name="obj">object to evaluate</param>
+        ///<returns></returns>
+        public abstract bool Eval(T obj);
+    }
 }
