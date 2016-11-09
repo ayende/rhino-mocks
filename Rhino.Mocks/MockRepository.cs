@@ -1051,12 +1051,15 @@ namespace Rhino.Mocks
         /// </summary>
         protected virtual ProxyGenerator GetProxyGenerator(Type type)
         {
-            if (!generatorMap.ContainsKey(type))
+            lock (generatorMap)
             {
-                generatorMap[type] = new ProxyGenerator();
-            }
+                if (!generatorMap.ContainsKey(type))
+                {
+                    generatorMap[type] = new ProxyGenerator();
+                }
 
-            return generatorMap[type];
+                return generatorMap[type];
+            }
         }
 
 
