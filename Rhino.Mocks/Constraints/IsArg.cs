@@ -34,7 +34,7 @@ namespace Rhino.Mocks.Constraints
 {
 
 	/// <summary>
-	/// Provides access to the constraintes defined in the class <see cref="Is"/> to be used in context
+	/// Provides access to the constraints defined in the class <see cref="Is"/> to be used in context
 	/// with the <see cref="Arg&lt;T&gt;"/> syntax.
 	/// </summary>
 	/// <typeparam name="T">The type of the argument</typeparam>
@@ -45,7 +45,7 @@ namespace Rhino.Mocks.Constraints
 
 
 		/// <summary>
-		/// Evaluate a greater than constraint for <see cref="IComparable"/>.
+		/// Evaluate a greater-than constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be greater than</param>
 		public T GreaterThan(IComparable objToCompare)
@@ -56,7 +56,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// Evaluate a less than constraint for <see cref="IComparable"/>.
+		/// Evaluate a less-than constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be less than</param>
 		public T LessThan(IComparable objToCompare)
@@ -67,7 +67,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// Evaluate a less than or equal constraint for <see cref="IComparable"/>.
+		/// Evaluate a less-than-or-equal constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be less than or equal to</param>
 		public T LessThanOrEqual(IComparable objToCompare)
@@ -78,7 +78,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// Evaluate a greater than or equal constraint for <see cref="IComparable"/>.
+		/// Evaluate a greater-than-or-equal constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be greater than or equal to</param>
 		public T GreaterThanOrEqual(IComparable objToCompare)
@@ -163,7 +163,7 @@ namespace Rhino.Mocks.Constraints
 
 
 		/// <summary>
-		/// Evaluate a same as constraint.
+		/// Evaluate a same-as constraint.
 		/// </summary>
 		/// <param name="obj">The object the parameter should the same as.</param>
 		public T Same(object obj)
@@ -174,7 +174,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// Evaluate a not same as constraint.
+		/// Evaluate a not-same-as constraint.
 		/// </summary>
 		/// <param name="obj">The object the parameter should not be the same as.</param>
 		public T NotSame(object obj)
@@ -184,7 +184,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// A constraints that accept anything
+		/// A constraint that accepts anything
 		/// </summary>
 		/// <returns></returns>
 		public T Anything
@@ -197,7 +197,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// A constraint that accept only nulls
+		/// A constraint that accepts only nulls
 		/// </summary>
 		/// <returns></returns>
 		public T Null
@@ -210,7 +210,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// A constraint that accept only non null values
+		/// A constraint that accepts only non null values
 		/// </summary>
 		/// <returns></returns>
 		public T NotNull
@@ -223,7 +223,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
 		/// <summary>
-		/// A constraint that accept only value of the specified type.
+		/// A constraint that accepts only values of the specified type.
 		/// The check is performed on the type that has been defined
 		/// as the argument type.
 		/// </summary>

@@ -49,7 +49,7 @@ namespace Rhino.Mocks.Constraints
 		 * The parameter must implement IComparable 
 		 */ 
 		/// <summary>
-		/// Evaluate a greater than constraint for <see cref="IComparable"/>.
+		/// Evaluate a greater-than constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be greater than</param>
 		public static AbstractConstraint GreaterThan(IComparable objToCompare)
@@ -64,7 +64,7 @@ namespace Rhino.Mocks.Constraints
 		 * The parameter must implement IComparable 
 		 */ 
 		/// <summary>
-		/// Evaluate a less than constraint for <see cref="IComparable"/>.
+		/// Evaluate a less-than constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be less than</param>
 		public static AbstractConstraint LessThan(IComparable objToCompare)
@@ -79,7 +79,7 @@ namespace Rhino.Mocks.Constraints
 		* The parameter must implement IComparable 
 		*/ 
 		/// <summary>
-		/// Evaluate a less than or equal constraint for <see cref="IComparable"/>.
+		/// Evaluate a less-than-or-equal constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be less than or equal to</param>
 		public static AbstractConstraint LessThanOrEqual(IComparable objToCompare)
@@ -94,7 +94,7 @@ namespace Rhino.Mocks.Constraints
 		* The parameter must implement IComparable 
 		*/ 
 		/// <summary>
-		/// Evaluate a greater than or equal constraint for <see cref="IComparable"/>.
+		/// Evaluate a greater-than-or-equal constraint for <see cref="IComparable"/>.
 		/// </summary>
 		/// <param name="objToCompare">The object the parameter should be greater than or equal to</param>
 		public static AbstractConstraint GreaterThanOrEqual(IComparable objToCompare)
@@ -132,7 +132,7 @@ namespace Rhino.Mocks.Constraints
 		}
 
         /// <summary>
-        /// Evaluate a same as constraint.
+        /// Evaluate a same-as constraint.
         /// </summary>
         /// <param name="obj">The object the parameter should the same as.</param>
         public static AbstractConstraint Same(object obj)
@@ -141,7 +141,7 @@ namespace Rhino.Mocks.Constraints
         }
 
         /// <summary>
-        /// Evaluate a not same as constraint.
+        /// Evaluate a not-same-as constraint.
         /// </summary>
         /// <param name="obj">The object the parameter should not be the same as.</param>
         public static AbstractConstraint NotSame(object obj)
@@ -155,7 +155,7 @@ namespace Rhino.Mocks.Constraints
 		 * This constraint always succeeds
 		 */ 
 		/// <summary>
-		/// A constraints that accept anything
+		/// A constraint that accepts anything
 		/// </summary>
 		/// <returns></returns>
 		public static AbstractConstraint Anything()
@@ -166,11 +166,11 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: Null
 		 * 
-		 * Determines whatever the parameter is null
+		 * Whatever the parameter, as long as it is null
 		 * 
 		 */
 		/// <summary>
-		/// A constraint that accept only nulls
+		/// A constraint that accepts only nulls
 		/// </summary>
 		/// <returns></returns>
 		public static AbstractConstraint Null()
@@ -181,11 +181,11 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: NotNull
 		 * 
-		 * Determines whatever the parameter is not null
+		 * Whatever parameter, as long as it is not null
 		 * 
 		 */
 		/// <summary>
-		/// A constraint that accept only non null values
+		/// A constraint that accepts only non null values
 		/// </summary>
 		/// <returns></returns>
 		public static AbstractConstraint NotNull()
@@ -196,11 +196,11 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: TypeOf
 		 * 
-		 * Determines whatever the parameter if of the specified type.
+		 * Whatever parameter, as long as it is of the specified type.
 		 * 
 		 */
 		/// <summary>
-		/// A constraint that accept only value of the specified type
+		/// A constraint that accepts only values of the specified type
 		/// </summary>
 		public static AbstractConstraint TypeOf(Type type)
 		{
@@ -210,11 +210,11 @@ namespace Rhino.Mocks.Constraints
         /*
 		 * Method: TypeOf
 		 * 
-		 * Determines whatever the parameter if of the specified type.
+		 * Whatever parameter, as long as it is of the specified type.
 		 * 
 		 */
         /// <summary>
-        /// A constraint that accept only value of the specified type
+        /// A constraint that accepts only values of the specified type
         /// </summary>
 		public static AbstractConstraint TypeOf<T>()
 		{
