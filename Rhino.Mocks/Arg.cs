@@ -62,7 +62,7 @@ namespace Rhino.Mocks
 		/// <summary>
 		/// Define a simple constraint for this argument. (Use Matches in simple cases.)
 		/// Example: 
-		///   Arg&lt;int&gt;.Is.Anthing
+		///   Arg&lt;int&gt;.Is.Anything
 		///   Arg&lt;string&gt;.Is.Equal("hello")
 		/// </summary>
 		public static IsArg<T> Is { get { return new IsArg<T>(); } }
