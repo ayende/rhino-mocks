@@ -166,7 +166,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: Null
 		 * 
-		 * Determines whatever the parameter is null
+		 * Whatever the parameter, as long as it is null
 		 * 
 		 */
 		/// <summary>
@@ -181,7 +181,7 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: NotNull
 		 * 
-		 * Determines whatever the parameter is not null
+		 * Whatever parameter, as long as it is not null
 		 * 
 		 */
 		/// <summary>
@@ -196,11 +196,11 @@ namespace Rhino.Mocks.Constraints
 		/*
 		 * Method: TypeOf
 		 * 
-		 * Determines whatever the parameter if of the specified type.
+		 * Whatever parameter, as long as it is of the specified type.
 		 * 
 		 */
 		/// <summary>
-		/// A constraint that accepts only value of the specified type
+		/// A constraint that accepts only values of the specified type
 		/// </summary>
 		public static AbstractConstraint TypeOf(Type type)
 		{
@@ -210,11 +210,11 @@ namespace Rhino.Mocks.Constraints
         /*
 		 * Method: TypeOf
 		 * 
-		 * Determines whatever the parameter if of the specified type.
+		 * Whatever parameter, as long as it is of the specified type.
 		 * 
 		 */
         /// <summary>
-        /// A constraint that accepts only value of the specified type
+        /// A constraint that accepts only values of the specified type
         /// </summary>
 		public static AbstractConstraint TypeOf<T>()
 		{
