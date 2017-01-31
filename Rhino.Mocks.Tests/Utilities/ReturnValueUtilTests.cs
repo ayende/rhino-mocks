@@ -26,9 +26,10 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-
+using System.Collections;
 using Xunit;
 using Rhino.Mocks.Utilities;
+using System.Collections.Generic;
 
 namespace Rhino.Mocks.Tests.Utilities
 {
@@ -38,6 +39,7 @@ namespace Rhino.Mocks.Tests.Utilities
 		[Fact]
 		public void DefaultReturnValue()
 		{
+			Assert.Null(ReturnValueUtil.DefaultValue(typeof(void), null));
 			Assert.Null(ReturnValueUtil.DefaultValue(typeof (string),null));
 			Assert.Equal(0, ReturnValueUtil.DefaultValue(typeof (int),null));
 			Assert.Equal((short) 0, ReturnValueUtil.DefaultValue(typeof (short),null));
@@ -48,10 +50,63 @@ namespace Rhino.Mocks.Tests.Utilities
 			Assert.Equal(TestEnum.DefaultValue, ReturnValueUtil.DefaultValue(typeof (TestEnum),null));
 		}
 
+		[Fact]
+		public void DefaultReturnValue_WhenTheReturnTypeIsACollectionInterface_ReturnAnEmptyCollection()
+		{
+			Assert.NotNull(ReturnValueUtil.DefaultValue(typeof (IEnumerable), null) as IEnumerable);
+
+			var defaultValueForCollections = ReturnValueUtil.DefaultValue(typeof (ICollection), null) as ICollection;
+			Assert.NotNull(defaultValueForCollections);
+			Assert.Equal(0, defaultValueForCollections.Count);
+
+			var defaultValueForLists = ReturnValueUtil.DefaultValue(typeof (IList), null) as IList;
+			Assert.NotNull(defaultValueForLists);
+			Assert.Equal(0, defaultValueForLists.Count);
+
+			var defaultValueForDictionaries = ReturnValueUtil.DefaultValue(typeof (IDictionary), null) as IDictionary;
+			Assert.NotNull(defaultValueForDictionaries);
+			Assert.Equal(0, defaultValueForDictionaries.Keys.Count);
+			Assert.Equal(0, defaultValueForDictionaries.Values.Count);
+		}
+
+		[Fact]
+		public void DefaultReturnValue_WhenTheReturnTypeIsAGenericCollectionInterface_ReturnAnEmptyCollection()
+		{
+			var defValForGenericEnumerable = ReturnValueUtil.DefaultValue(typeof (IEnumerable<IFoo>), null);
+			Assert.NotNull(defValForGenericEnumerable);
+
+			var defValForAGenericCollection = ReturnValueUtil.DefaultValue(typeof (ICollection<IFoo>), null) as ICollection<IFoo>;
+			Assert.NotNull(defValForAGenericCollection);
+			Assert.Equal(0, defValForAGenericCollection.Count);
+
+			var defValForAGenericList = ReturnValueUtil.DefaultValue(typeof (IList<IFoo>), null) as IList<IFoo>;
+			Assert.NotNull(defValForAGenericList);
+			Assert.Equal(0, defValForAGenericList.Count);
+
+			var defValForAGenericDictionary =
+				ReturnValueUtil.DefaultValue(typeof (IDictionary<IFoo, TestEnum>), null) as IDictionary<IFoo, TestEnum>;
+			Assert.NotNull(defValForAGenericDictionary);
+			Assert.Equal(0, defValForAGenericDictionary.Keys.Count);
+			Assert.Equal(0, defValForAGenericDictionary.Values.Count);
+		}
+
+		[Fact]
+		public void DefaultReturnValue_WhenTheReturnTypeImplementsAdditionalsInterfacesToIEnumerable_ReturnNull()
+		{
+			object defVal = ReturnValueUtil.DefaultValue(typeof (IFoo), null);
+
+			Assert.Null(defVal);
+		}
+
 		private enum TestEnum
 		{
 			DefaultValue,
 			NonDefaultValue
+		}
+
+		public interface IFoo : IEnumerable
+		{
+			string Bar { get; set; }
 		}
 	}
 }

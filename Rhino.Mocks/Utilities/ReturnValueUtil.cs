@@ -28,6 +28,8 @@
 
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Castle.Core.Interceptor;
 
 namespace Rhino.Mocks.Utilities
@@ -39,7 +41,8 @@ namespace Rhino.Mocks.Utilities
 	{
 		/// <summary>
 		/// The default value for a type.
-		/// Null for reference types and void
+		/// Empty Collections for IEnumerable, ICollection, IList and IDictionary types
+		/// Null for the rest of reference types and void
 		/// 0 for value types.
 		/// First element for enums
 		/// Note that we need to get the value even for opened generic types, such as those from
@@ -52,8 +55,40 @@ namespace Rhino.Mocks.Utilities
 		{
 			type = GenericsUtil.GetRealType(type, invocation);
 			if (type.IsValueType == false || type==typeof(void))
-				return null;
+				return TryInstantiateCollectionInterfacesOrReturnNull(type);
+
 			return Activator.CreateInstance(type);
+		}
+
+		private static object TryInstantiateCollectionInterfacesOrReturnNull(Type returnType)
+		{
+			if (!returnType.IsInterface) return null;
+
+			if (returnType.IsGenericType)
+			{
+				Type[] arguments = returnType.GetGenericArguments();
+
+				Type typeDefinition = returnType.GetGenericTypeDefinition();
+
+				if (typeDefinition == typeof(IList<>) ||
+				    typeDefinition == typeof(IEnumerable<>) ||
+				    typeDefinition == typeof(ICollection<>))
+					return Activator.CreateInstance(typeof(List<>).MakeGenericType(arguments));
+
+				if (typeDefinition == typeof(IDictionary<,>))
+					return Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(arguments));
+
+				return null;
+			}
+			if (returnType == (typeof(IList)) ||
+				returnType == typeof(IEnumerable) ||
+				returnType.Equals(typeof(ICollection)))
+				return new ArrayList();
+
+			if (returnType.Equals(typeof(IDictionary)))
+				return new Dictionary<object, object>();
+
+			return null;
 		}
 	}
 }

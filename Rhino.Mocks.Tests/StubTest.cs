@@ -27,6 +27,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using Xunit;
 using Rhino.Mocks.Interfaces;
 
@@ -57,6 +58,17 @@ namespace Rhino.Mocks.Tests
 			Assert.Null(animal.Species);
 			animal.Species = "Caucasusian Shepherd";
 			Assert.Equal("Caucasusian Shepherd", animal.Species);
+		}
+
+		[Fact]
+		public void DefaultValue_OfAMethodThatHasNoExpectationsAndReturnACollection_ReturnAnEmptyCollection()
+		{
+			var animal = MockRepository.GenerateStub<IAnimal>();
+
+			var parents = animal.GetParents();
+
+			Assert.NotNull(parents);
+			Assert.Equal(0, parents.Count);
 		}
 
 		[Fact]
@@ -132,6 +144,8 @@ namespace Rhino.Mocks.Tests
 
 		event EventHandler Hungry;
 		string GetMood();
+
+		IList<IAnimal> GetParents();
 	}
 
 	public class SomeClass
